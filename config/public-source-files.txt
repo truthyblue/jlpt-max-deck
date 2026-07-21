@@ -18,6 +18,7 @@ config/public-sources.json
 docs/anki.md
 docs/build.md
 docs/privacy-and-licensing.md
+docs/releases/v1.0.0.md
 docs/troubleshooting.md
 pyproject.toml
 scripts/bootstrap-public.ps1

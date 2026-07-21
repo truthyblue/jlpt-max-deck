@@ -753,20 +753,28 @@ def verify_release_pin(
     root: Path,
     *,
     compute_source_hash: Callable[[Path], str] = _compute_public_build_source_hash,
+    allow_source_hash_drift: bool = False,
 ) -> str:
+    """Validate the release pin and bind it to the current builder by default.
+
+    Contributor checks may allow only the final builder-source hash comparison
+    to drift. The pin document itself is always validated first.
+    """
     pin = validate_release_pin_document(root)
     expected = pin.get("public_builder_source_hash")
     if not isinstance(expected, str):
         raise PublicTreeError(f"{RELEASE_PIN} lacks a valid public builder source hash")
     actual = compute_source_hash(root)
-    if actual != expected:
+    if actual != expected and not allow_source_hash_drift:
         raise PublicTreeError(
             "public build source hash differs from config/public-release.json"
         )
     return actual
 
 
-def verify(root: Path) -> tuple[int, str, str]:
+def verify(
+    root: Path, *, allow_release_pin_drift: bool = False
+) -> tuple[int, str, str]:
     root = root.resolve()
     allowlisted = read_allowlist(root)
     verify_directory_tree(root)
@@ -775,7 +783,9 @@ def verify(root: Path) -> tuple[int, str, str]:
     scan_private_tokens(root, actual)
     validate_public_contract_files(root)
     verify_runtime_allowlist(root)
-    source_hash = verify_release_pin(root)
+    source_hash = verify_release_pin(
+        root, allow_source_hash_drift=allow_release_pin_drift
+    )
     return len(actual), source, source_hash
 
 
@@ -789,13 +799,24 @@ def parse_args() -> argparse.Namespace:
         default=ROOT,
         help="public repository root (defaults to this script's repository)",
     )
+    parser.add_argument(
+        "--allow-release-pin-drift",
+        action="store_true",
+        help=(
+            "allow only the current builder source hash to differ from the "
+            "valid release pin (for contributor checks)"
+        ),
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
     try:
-        count, source, source_hash = verify(args.root)
+        count, source, source_hash = verify(
+            args.root,
+            allow_release_pin_drift=args.allow_release_pin_drift,
+        )
     except PublicTreeError as exc:
         print(f"public tree verification failed: {exc}", file=sys.stderr)
         return 1

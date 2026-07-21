@@ -31,22 +31,18 @@ jobs:
           enable-cache: true
           python-version: "3.13"
 
-      - name: Restore canonical metadata line endings
-        if: runner.os == 'Windows'
-        run: >-
-          python -c
-          "from pathlib import Path;
-          paths = [Path('.gitattributes'),
-          *Path('site/assets').glob('*.css'),
-          *Path('site/assets').glob('*.js')];
-          [path.write_bytes(path.read_bytes().replace(b'\r\n', b'\n'))
-          for path in paths]"
-
-      - name: Verify publication boundary
-        run: python scripts/verify-public-tree.py
-
       - name: Install locked dependencies
         run: uv sync --locked --python 3.13
+
+      - name: Verify contributor publication boundary
+        if: github.event_name == 'pull_request'
+        run: >-
+          uv run --locked python scripts/verify-public-tree.py
+          --allow-release-pin-drift
+
+      - name: Verify strict publication boundary
+        if: github.event_name != 'pull_request'
+        run: uv run --locked python scripts/verify-public-tree.py
 
       - name: Run public synthetic tests
         run: uv run --locked python test/run_tests.py fast --verbose
@@ -91,4 +87,4 @@ jobs:
           }
 
       # Publisher PDFs and the release bundle are intentionally absent from CI.
-      # Release acceptance separately rebuilds the 17-PDF deck on both systems.
+      # Release notes separately record each platform with a real 17-PDF build.

@@ -12,7 +12,8 @@ JLPT MAX Deck은 한국어권 JLPT 학습자를 위한 개인용 Anki 덱 빌더
 [웹 시작 가이드](https://truthyblue.github.io/jlpt-max-deck/) ·
 [덱 구성 보기](#한-단어를-더-깊이-익히는-카드) · [Anki 설치·가져오기](docs/anki.md) ·
 [빌드 시작하기](docs/build.md) ·
-[저작권과 라이선스](docs/privacy-and-licensing.md) · [문제 해결](docs/troubleshooting.md)
+[저작권과 라이선스](docs/privacy-and-licensing.md) · [문제 해결](docs/troubleshooting.md) ·
+[v1.0.0 릴리스 노트](docs/releases/v1.0.0.md)
 
 ## 한 단어를 더 깊이 익히는 카드
 
@@ -45,6 +46,12 @@ JLPT MAX Deck은 한국어권 JLPT 학습자를 위한 개인용 Anki 덱 빌더
 제공됩니다. 낮은 급수에서 히라가나로 먼저 등장하고 대표 한자 표제어가 더 높은
 급수에서 확인되는 101개 어휘에는 같은 노트에 `어휘(히라가나)` 카드를 하나 더
 둡니다.
+
+어휘 카드의 답을 열면 단어 음성이 먼저 재생됩니다. 오른쪽 위 `재생`
+메뉴에서 `예문 자동재생`을 켜면 단어 뒤에 첫 예문 또는 모든 예문을
+순서대로 들을 수 있습니다. 이 선택은 기기마다 따로 저장됩니다. 모든 카드의
+답 아래에는 사용법·업데이트·오류 제보 페이지로 가는 `덱 안내 · 업데이트`
+링크가 있습니다.
 
 ## `出す`의 세 용법을 익히고, 실제 문제에서 다시 확인
 
@@ -121,21 +128,28 @@ MP3 음성 17,475개와 정적 파일 14개로 구성됩니다.
 
 ## 빠른 시작
 
-준비물은 macOS 또는 Windows x64, [uv](https://docs.astral.sh/uv/), 필요한 PDF
-17개, 그리고 같은 GitHub Release의 아래 파일입니다.
+준비물은 macOS 12 이상 또는 Windows x64, [uv](https://docs.astral.sh/uv/),
+필요한 PDF 17개, 그리고 [v1.0.0 GitHub Release](https://github.com/truthyblue/jlpt-max-deck/releases/tag/v1.0.0)의
+아래 파일 네 개입니다.
 
 - `JLPT-MAX-public-bundle.zip`
 - `JLPT-MAX-public-bundle.zip.sha256`
 - `public-release.json`
+- `public-distribution-manifest.json`
 
 Python 3.13과 정확한 의존성은 `uv.lock`에 따라 설치됩니다. 첫 설치에는
 네트워크가 필요할 수 있습니다.
 
 ### 1. 공개 릴리스 받기
 
-세 파일을 같은 GitHub Release에서 받은 뒤 검증하고 압축을 풉니다. 운영체제별
+네 파일을 같은 v1.0.0 Release에서 받은 뒤 검증하고 압축을 풉니다. 운영체제별
 명령과 현재 릴리스의 정확한 검증값은 [빌드 가이드](docs/build.md#2-release-asset-확인)에
 있습니다.
+
+웹 시작 가이드의 한 줄 명령은 v1.0.0에 고정된 시작 스크립트를 씁니다.
+성공하면 macOS는 `$HOME/JLPT-MAX-public-release-v1.0.0`, Windows는
+`%USERPROFILE%\JLPT-MAX-public-release-v1.0.0`에 결과를 남깁니다. 다운로드·압축 해제·전용
+환경에 쓴 임시 폴더는 성공해도, 실패해도 자동으로 정리됩니다.
 
 ### 2. PDF 17개 준비
 
@@ -174,12 +188,18 @@ Set-Location .\build\public-bundle
 ## 빌드가 끝나면
 
 결과 폴더에서 Anki에 넣는 파일은
-<code>JLPT-MAX덱-1.0.0.apkg</code> 하나입니다. Mac·Windows에서는 Anki
+<code>JLPT-MAX덱-1.0.0.apkg</code> 하나입니다. macOS·Windows·Linux에서는 Anki
 Desktop으로, iPhone·iPad에서는 AnkiMobile로, Android에서는 AnkiDroid로 이
 APKG를 직접 가져올 수 있습니다. 휴대기기에 APKG를 로컬 전송해 직접 가져오면
 미디어 17,489개를 별도로 내려받는 시간을 기다리지 않고 바로 학습할 수 있습니다.
 설치 앱을 고르는 법, AirDrop·USB 전송과 기기별 메뉴는
 [Anki 설치·가져오기 가이드](docs/anki.md)에 있습니다.
+
+Linux에서는 APKG를 가져와 공부할 수 있지만, v1.0.0 빌더로 PDF 17개를 처리하는
+전체 빌드는 지원하지 않습니다. v1.0.0의 실제 PDF 17개 전체 빌드는 macOS에서
+검증했습니다. Windows는 공개 자료로 하는 자동 테스트는 통과했지만, PDF 17개를 쓴
+전체 빌드는 아직 수행하지 않았습니다. 정확한 검증값은 [v1.0.0 릴리스 노트](docs/releases/v1.0.0.md)에
+적었습니다.
 
 빌더는 필요한 PDF, 카드·덱 구조와 미디어가 해당 릴리스와 맞는지 자동으로 확인합니다.
 모든 검증을 통과한 경우에만 APKG와 리포트를 출력합니다. 세부 검증값과 결과

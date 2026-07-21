@@ -20,6 +20,34 @@ SPEC.loader.exec_module(VERIFY)
 
 
 class PublicRepositoryVerifierTest(unittest.TestCase):
+    def test_ci_uses_repository_line_endings_and_event_scoped_verifier(self) -> None:
+        workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertNotIn("Restore canonical metadata line endings", workflow)
+        sync = "uv sync --locked --python 3.13"
+        contributor_verify = "--allow-release-pin-drift"
+        strict_verify = "Verify strict publication boundary"
+        tests = "uv run --locked python test/run_tests.py fast --verbose"
+        self.assertIn("if: github.event_name == 'pull_request'", workflow)
+        self.assertIn("if: github.event_name != 'pull_request'", workflow)
+        self.assertLess(workflow.index(sync), workflow.index(contributor_verify))
+        self.assertLess(
+            workflow.index(contributor_verify), workflow.index(strict_verify)
+        )
+        self.assertLess(workflow.index(strict_verify), workflow.index(tests))
+
+        attributes = (ROOT / ".gitattributes").read_text(encoding="utf-8")
+        for rule in (
+            ".gitattributes text eol=lf",
+            "*.css text eol=lf",
+            "*.js text eol=lf",
+            "*.py text eol=lf",
+            "*.yml text eol=lf",
+        ):
+            with self.subTest(rule=rule):
+                self.assertIn(rule, attributes)
+
     def test_pages_workflow_separates_build_and_deploy_permissions(self) -> None:
         workflow = (ROOT / ".github" / "workflows" / "pages.yml").read_text(
             encoding="utf-8"
@@ -301,6 +329,71 @@ class PublicRepositoryVerifierTest(unittest.TestCase):
                 VERIFY.verify_release_pin(
                     root, compute_source_hash=lambda unused_root: "b" * 64
                 )
+
+            self.assertEqual(
+                VERIFY.verify_release_pin(
+                    root,
+                    compute_source_hash=lambda unused_root: "b" * 64,
+                    allow_source_hash_drift=True,
+                ),
+                "b" * 64,
+            )
+
+    def test_release_pin_drift_mode_still_rejects_an_invalid_pin(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "config").mkdir()
+            digest = "a" * 64
+            invalid_pin = {
+                "archive_bytes": 1,
+                "archive_sha256": digest,
+                "bundle_manifest_sha256": digest,
+                "payload_hash": "b" * 64,
+                "policy_version": "public-release-pin-v1",
+                "public_builder_source_hash": digest,
+                "schema_version": 1,
+                "status": "passed",
+                "unresolved": 0,
+            }
+            (root / "config" / "public-release.json").write_text(
+                json.dumps(invalid_pin), encoding="utf-8"
+            )
+            with self.assertRaisesRegex(
+                VERIFY.PublicTreeError, "release pin is not passed and closed"
+            ):
+                VERIFY.verify_release_pin(
+                    root,
+                    compute_source_hash=lambda unused_root: "b" * 64,
+                    allow_source_hash_drift=True,
+                )
+
+    def test_release_pin_drift_cli_is_opt_in(self) -> None:
+        with patch.object(VERIFY.sys, "argv", ["verify-public-tree.py"]):
+            self.assertFalse(VERIFY.parse_args().allow_release_pin_drift)
+        with patch.object(
+            VERIFY.sys,
+            "argv",
+            ["verify-public-tree.py", "--allow-release-pin-drift"],
+        ):
+            self.assertTrue(VERIFY.parse_args().allow_release_pin_drift)
+
+    def test_main_forwards_the_contributor_drift_choice(self) -> None:
+        args = type(
+            "Args",
+            (),
+            {"root": ROOT, "allow_release_pin_drift": True},
+        )()
+        with (
+            patch.object(VERIFY, "parse_args", return_value=args),
+            patch.object(
+                VERIFY,
+                "verify",
+                return_value=(98, "git index + filesystem", "a" * 64),
+            ) as verify,
+            patch("builtins.print"),
+        ):
+            self.assertEqual(VERIFY.main(), 0)
+        verify.assert_called_once_with(ROOT, allow_release_pin_drift=True)
 
 
 if __name__ == "__main__":

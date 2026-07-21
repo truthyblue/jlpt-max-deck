@@ -38,8 +38,16 @@ if ! command -v uv >/dev/null 2>&1; then
   exit 1
 fi
 
-release_url="https://github.com/truthyblue/jlpt-max-deck/releases/latest/download"
-work_root="$(mktemp -d "$HOME/JLPT-MAX-public-build-$(date +%Y%m%d-%H%M%S).XXXXXX")"
+release_tag="v1.0.0"
+release_url="https://github.com/truthyblue/jlpt-max-deck/releases/download/$release_tag"
+output_root="$HOME/JLPT-MAX-public-release-$release_tag"
+work_root="$(mktemp -d "${TMPDIR:-/tmp}/JLPT-MAX-public-$release_tag.XXXXXX")"
+cleanup() {
+  if [[ -n "${work_root:-}" && -d "$work_root" ]]; then
+    rm -rf -- "$work_root"
+  fi
+}
+trap cleanup EXIT
 download_root="$work_root/download"
 mkdir -p "$download_root"
 
@@ -48,6 +56,7 @@ assets=(
   JLPT-MAX-public-bundle.zip
   JLPT-MAX-public-bundle.zip.sha256
   public-release.json
+  public-distribution-manifest.json
 )
 for asset in "${assets[@]}"; do
   curl --proto '=https' --proto-redir '=https' --tlsv1.2 \
@@ -74,8 +83,10 @@ if [[ ! -f "$bundle_root/scripts/build-public.sh" || -L "$bundle_root/scripts/bu
 fi
 
 printf '\n[4/4] 이제 덱을 만듭니다. 컴퓨터에 따라 시간이 걸릴 수 있습니다.\n'
-bash "$bundle_root/scripts/build-public.sh" "$pdf_root"
-output_root="$build_root/public-release"
+bash "$bundle_root/scripts/build-public.sh" \
+  "$pdf_root" \
+  "$bundle_root" \
+  "$output_root"
 printf '\n완료했습니다. Anki에 가져올 파일이 있는 폴더:\n%s\n' "$output_root"
 if ! open "$output_root"; then
   echo "Finder를 자동으로 열지 못했습니다. 위 경로를 Finder에서 직접 열어 주세요." >&2

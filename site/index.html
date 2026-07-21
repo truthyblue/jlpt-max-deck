@@ -44,7 +44,7 @@
         "codeRepository": "https://github.com/truthyblue/jlpt-max-deck",
         "license": "https://github.com/truthyblue/jlpt-max-deck/blob/main/LICENSE",
         "programmingLanguage": "Python",
-        "runtimePlatform": ["macOS", "Windows x64"],
+        "runtimePlatform": ["macOS 12+", "Windows x64"],
         "url": "https://truthyblue.github.io/jlpt-max-deck/"
       }
     ]
@@ -164,7 +164,7 @@
           </article>
           <article class="reveal">
             <span>02</span>
-            <div><h3>자연스러운 일본어 음성</h3><p>AivisSpeech 1.2.0의 <span lang="ja">まい</span>(마이) 모델로 만든 합성 음성을 모든 5,800개 단어와 6,305개 검토 예문에 담았습니다. 단어와 예문을 눌러 바로 듣고, 음성만 듣는 복습 카드로도 반복합니다.</p></div>
+            <div><h3>자연스러운 일본어 음성</h3><p>AivisSpeech 1.2.0의 <span lang="ja">まい</span>(마이) 모델로 만든 합성 음성을 모든 5,800개 단어와 6,305개 검토 예문에 담았습니다. 어휘 답면의 <strong>재생</strong> 메뉴는 처음에는 단어만 자동으로 읽습니다. 원하면 첫 예문이나 모든 예문까지 차례로 들을 수 있고, 선택은 기기마다 따로 저장됩니다. 재생 중 단어나 예문을 직접 누르면 자동으로 이어질 나머지 음성은 취소되고, 누른 음성부터 들려줍니다.</p></div>
           </article>
           <article class="reveal">
             <span>03</span>
@@ -177,6 +177,10 @@
           <article class="reveal">
             <span>05</span>
             <div><h3>단어 속 한자까지 함께</h3><p>단어를 이루는 한자를 글자별로 풀어 한국어 학습 뜻과 읽기, 부수·획수를 확인합니다. 별도 한자 덱은 『일본어 상용한자 무작정 따라하기』(일상무따) 1·2권 구성을 따라 2,337개 노트로 만들었고, 연결되는 선별 어휘를 읽기·뜻·음성과 함께 이어서 익힙니다.</p></div>
+          </article>
+          <article class="reveal">
+            <span>06</span>
+            <div><h3>카드에서 안내 페이지로 바로</h3><p>어휘·음성·실전 문제·참조표·한자 카드의 모든 답면(카드를 뒤집은 답 화면) 아래에는 <strong>덱 안내 · 업데이트 ↗</strong> 링크가 있습니다. 사용법이나 새 소식이 궁금할 때 이 사이트를 바로 열 수 있습니다.</p></div>
           </article>
         </div>
       </div>
@@ -214,7 +218,7 @@
             <p>구어뿐 아니라 존경어·겸양어·정중어, 격식·문어·친근어·속어·방언, 의학·스포츠·컴퓨터 같은 전문 분야까지 표시합니다. 특정 뜻에만 해당하면 ‘일부 뜻’도 함께 구분합니다.</p>
           </figcaption>
           <a class="mini-card-crop" href="assets/card-heiki-register.webp" target="_blank" rel="noopener noreferrer" aria-label="平気だ 문체·사용역 카드 이미지를 원본 크기로 보기 (새 탭)">
-            <img src="assets/card-heiki-register.webp" width="640" height="652" loading="lazy" decoding="async" alt="平気だ는 태연하다, 아무렇지 않다 또는 괜찮다는 뜻이며, 일부 뜻에만 해당하는 구어 정보를 표시하는 고정 카드 샘플">
+            <img src="assets/card-heiki-register.webp" width="640" height="652" loading="lazy" decoding="async" alt="平気だ의 뜻과 일부 뜻에만 해당하는 구어 정보, 오른쪽 위 재생 단어 메뉴와 아래쪽 덱 안내·업데이트 링크를 보여주는 고정 어휘 답면 카드 샘플">
             <span class="support-focus support-focus-register" aria-hidden="true"></span>
             <span class="support-zoom-hint" aria-hidden="true">크게 보기 ↗</span>
           </a>
@@ -517,7 +521,7 @@
     <section class="section start-section" id="start">
       <div class="start-copy reveal">
         <h2>준비됐다면 바로<br>덱을 만드세요.</h2>
-        <p>PDF 17개를 한 폴더에 모은 뒤, 운영체제에 맞는 명령을 터미널이나 PowerShell에서 실행하세요. 처음이라면 시작 가이드부터 확인하세요.</p>
+        <p>PDF 17개를 한 폴더에 모은 뒤, 운영체제에 맞는 명령을 터미널이나 PowerShell에서 실행하세요. 시작 스크립트와 JLPT MAX 릴리스 파일은 <strong>v1.0.0</strong>이라는 고정 버전을 사용합니다. 처음이라면 시작 가이드부터 확인하세요.</p>
         <div class="start-guide-links">
           <a class="text-link" id="beginner-guide-link" href="getting-started.html">덱 만들기부터 Anki 가져오기까지 <span aria-hidden="true">→</span></a>
           <a class="text-link" id="anki-install-guide-link" href="install-anki.html">Anki 설치부터 시작하기 <span aria-hidden="true">→</span></a>
@@ -534,26 +538,26 @@
             <header>
               <span>macOS · 터미널</span>
               <div class="command-actions">
-                <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/scripts/bootstrap-public.sh">무엇이 실행되는지 보기 <span aria-hidden="true">↗</span></a>
+                <a href="https://github.com/truthyblue/jlpt-max-deck/blob/v1.0.0/scripts/bootstrap-public.sh">무엇이 실행되는지 보기 <span aria-hidden="true">↗</span></a>
                 <button type="button" class="copy-command" data-copy-command="macos-build-command" aria-controls="macos-build-command" aria-label="macOS 명령 복사">복사</button>
               </div>
             </header>
             <p class="command-help"><strong>터미널 여는 법:</strong> <kbd>⌘ Command</kbd> + <kbd>Space</kbd>를 누르고 ‘터미널’을 검색해 여세요. 복사한 명령을 붙여 넣고 Enter를 누르면 됩니다.</p>
-            <pre class="command-line" tabindex="0"><code id="macos-build-command">(set -o pipefail; curl -fsSL 'https://github.com/truthyblue/jlpt-max-deck/raw/refs/heads/main/scripts/bootstrap-public.sh' | bash)</code></pre>
+            <pre class="command-line" tabindex="0"><code id="macos-build-command">(set -o pipefail; curl -fsSL 'https://github.com/truthyblue/jlpt-max-deck/raw/refs/tags/v1.0.0/scripts/bootstrap-public.sh' | bash)</code></pre>
           </article>
           <article class="command-card platform-panel" id="windows-build-panel" role="tabpanel" aria-labelledby="windows-build-tab" data-platform-panel="windows">
             <header>
               <span>Windows x64 · PowerShell</span>
               <div class="command-actions">
-                <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/scripts/bootstrap-public.ps1">무엇이 실행되는지 보기 <span aria-hidden="true">↗</span></a>
+                <a href="https://github.com/truthyblue/jlpt-max-deck/blob/v1.0.0/scripts/bootstrap-public.ps1">무엇이 실행되는지 보기 <span aria-hidden="true">↗</span></a>
                 <button type="button" class="copy-command" data-copy-command="windows-build-command" aria-controls="windows-build-command" aria-label="Windows 명령 복사">복사</button>
               </div>
             </header>
             <p class="command-help"><strong>PowerShell 여는 법:</strong> 시작 메뉴를 열고 ‘PowerShell’을 검색해 여세요. 복사한 명령을 붙여 넣고 Enter를 누르면 됩니다.</p>
-            <pre class="command-line" tabindex="0"><code id="windows-build-command">&amp; ([scriptblock]::Create((irm 'https://github.com/truthyblue/jlpt-max-deck/raw/refs/heads/main/scripts/bootstrap-public.ps1')))</code></pre>
+            <pre class="command-line" tabindex="0"><code id="windows-build-command">&amp; ([scriptblock]::Create((irm 'https://github.com/truthyblue/jlpt-max-deck/raw/refs/tags/v1.0.0/scripts/bootstrap-public.ps1')))</code></pre>
           </article>
         </div>
-        <p class="command-safety"><strong>복사되는 것은 한 줄뿐입니다.</strong> 이 명령은 공개된 시작 스크립트를 내려받아 바로 실행합니다. PDF 확인, 필요한 프로그램과 릴리스 다운로드, 파일 검증과 덱 빌드는 시작 스크립트 안에서 처리합니다. 실행 전에 내용을 확인하려면 위의 ‘무엇이 실행되는지 보기’를 누르세요.</p>
+        <p class="command-safety"><strong>복사되는 것은 한 줄뿐입니다.</strong> 이 명령은 v1.0.0 고정 버전의 시작 스크립트와 JLPT MAX 릴리스 파일 네 개를 받습니다. <code>uv</code>가 없으면 uv의 공식 설치 스크립트도 받아 설치하고, Python 패키지는 <code>uv.lock</code>에 적힌 버전으로 맞춥니다. PDF 확인, 파일 검증과 덱 빌드는 시작 스크립트 안에서 처리합니다. 실행 전에 내용을 확인하려면 위의 ‘무엇이 실행되는지 보기’를 누르세요.</p>
         <p class="sr-only" role="status" aria-live="polite" data-copy-status></p>
       </div>
       <div class="build-handoff reveal" aria-labelledby="build-handoff-title">

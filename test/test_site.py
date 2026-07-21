@@ -18,6 +18,20 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE_ROOT = ROOT / "site"
 REPOSITORY_URL = "https://github.com/truthyblue/jlpt-max-deck"
 SITE_URL = "https://truthyblue.github.io/jlpt-max-deck"
+RELEASE_TAG = "v1.0.0"
+RELEASE_DOWNLOAD_URL = f"{REPOSITORY_URL}/releases/download/{RELEASE_TAG}"
+SHELL_BOOTSTRAP_VIEW_URL = (
+    f"{REPOSITORY_URL}/blob/{RELEASE_TAG}/scripts/bootstrap-public.sh"
+)
+POWERSHELL_BOOTSTRAP_VIEW_URL = (
+    f"{REPOSITORY_URL}/blob/{RELEASE_TAG}/scripts/bootstrap-public.ps1"
+)
+SHELL_BOOTSTRAP_RAW_URL = (
+    f"{REPOSITORY_URL}/raw/refs/tags/{RELEASE_TAG}/scripts/bootstrap-public.sh"
+)
+POWERSHELL_BOOTSTRAP_RAW_URL = (
+    f"{REPOSITORY_URL}/raw/refs/tags/{RELEASE_TAG}/scripts/bootstrap-public.ps1"
+)
 INDEXABLE_PAGE_URLS = {
     "index.html": f"{SITE_URL}/",
     "getting-started.html": f"{SITE_URL}/getting-started.html",
@@ -1125,6 +1139,23 @@ class SiteContractTest(unittest.TestCase):
             self.assertEqual(attrs.get("target"), "_blank")
             self.assertIn("원본 크기", attrs.get("aria-label", ""))
 
+        heiki_image = next(
+            attrs
+            for tag, attrs in self.parser.elements
+            if tag == "img"
+            and attrs.get("src") == "assets/card-heiki-register.webp"
+        )
+        self.assertEqual(
+            (int(heiki_image["width"]), int(heiki_image["height"])),
+            (640, 652),
+        )
+        self.assertEqual(
+            _webp_dimensions(SITE_ROOT / "assets" / "card-heiki-register.webp"),
+            (640, 652),
+        )
+        self.assertIn("오른쪽 위 재생 단어 메뉴", heiki_image.get("alt", ""))
+        self.assertIn("아래쪽 덱 안내·업데이트 링크", heiki_image.get("alt", ""))
+
         grid = _css_declarations(css, ".support-card-grid")
         self.assertEqual(grid.get("grid-template-columns"), "1fr")
 
@@ -1265,10 +1296,7 @@ class SiteContractTest(unittest.TestCase):
         macos_command = commands["macos"]
         self.assertIn("set -o pipefail", macos_command)
         self.assertIn("curl -fsSL", macos_command)
-        self.assertIn(
-            f"{REPOSITORY_URL}/raw/refs/heads/main/scripts/bootstrap-public.sh",
-            macos_command,
-        )
+        self.assertIn(SHELL_BOOTSTRAP_RAW_URL, macos_command)
         self.assertIn("| bash", macos_command)
         self.assertNotIn("bash -s --", macos_command)
         self.assertNotIn("mktemp", macos_command)
@@ -1277,10 +1305,7 @@ class SiteContractTest(unittest.TestCase):
         windows_command = commands["windows"]
         self.assertIn("[scriptblock]::Create", windows_command)
         self.assertIn("(irm ", windows_command)
-        self.assertIn(
-            f"{REPOSITORY_URL}/raw/refs/heads/main/scripts/bootstrap-public.ps1",
-            windows_command,
-        )
+        self.assertIn(POWERSHELL_BOOTSTRAP_RAW_URL, windows_command)
         self.assertNotIn("-RepositoryUrl", windows_command)
         self.assertNotIn("GetTempPath", windows_command)
         self.assertNotIn("iex", windows_command.lower())
@@ -1300,27 +1325,49 @@ class SiteContractTest(unittest.TestCase):
             ROOT / "scripts" / "bootstrap-public.ps1"
         ).read_text(encoding="utf-8")
         for snippet in (
-            f'release_url="{REPOSITORY_URL}/releases/latest/download"',
+            f'release_tag="{RELEASE_TAG}"',
+            f'release_url="{REPOSITORY_URL}/releases/download/$release_tag"',
+            'output_root="$HOME/JLPT-MAX-public-release-$release_tag"',
             'if [[ $# -ne 0 ]]',
             "JLPT-MAX-public-bundle.zip.sha256",
+            "public-distribution-manifest.json",
             '[[ "$pdf_count" -ne 17 ]]',
             '"$actual_hash" != "$pin_hash"',
-            'bash "$bundle_root/scripts/build-public.sh" "$pdf_root"',
+            'bash "$bundle_root/scripts/build-public.sh"',
+            '"$output_root"',
+            "trap cleanup EXIT",
+            'rm -rf -- "$work_root"',
             "[1/4] 먼저 PDF 17개가 든 폴더를 확인합니다.",
         ):
             self.assertIn(snippet, shell_bootstrap)
         for snippet in (
-            f'$ReleaseUrl = "{REPOSITORY_URL}/releases/latest/download"',
+            f'$ReleaseTag = "{RELEASE_TAG}"',
+            f'$ReleaseUrl = "{REPOSITORY_URL}/releases/download/$ReleaseTag"',
+            '$OutputRoot = Join-Path $env:USERPROFILE "JLPT-MAX-public-release-$ReleaseTag"',
             "param()",
             "JLPT-MAX-public-bundle.zip.sha256",
+            "public-distribution-manifest.json",
             "Get-FileHash $ZipPath -Algorithm SHA256",
             "if ($PdfCount -ne 17)",
-            "-File $BuildScript -PdfRoot $PdfRoot",
+            "-File $BuildScript",
+            "-OutputRoot $OutputRoot",
+            "} finally {",
+            "Remove-Item -LiteralPath $WorkRoot -Recurse -Force",
             "[1/4] 먼저 PDF 17개가 든 폴더를 확인합니다.",
         ):
             self.assertIn(snippet, powershell_bootstrap)
         self.assertNotIn("repository_url", shell_bootstrap)
         self.assertNotIn("RepositoryUrl", powershell_bootstrap)
+        self.assertNotIn("releases/latest/download", shell_bootstrap)
+        self.assertNotIn("releases/latest/download", powershell_bootstrap)
+        self.assertIn(
+            RELEASE_DOWNLOAD_URL,
+            shell_bootstrap.replace("$release_tag", RELEASE_TAG),
+        )
+        self.assertIn(
+            RELEASE_DOWNLOAD_URL,
+            powershell_bootstrap.replace("$ReleaseTag", RELEASE_TAG),
+        )
 
         platform_script = (SITE_ROOT / "assets" / "platform.js").read_text(
             encoding="utf-8"
@@ -1432,8 +1479,8 @@ class SiteContractTest(unittest.TestCase):
             REPOSITORY_URL,
             f"{REPOSITORY_URL}/blob/main/docs/build.md",
             f"{REPOSITORY_URL}/blob/main/docs/build.md",
-            f"{REPOSITORY_URL}/blob/main/scripts/bootstrap-public.sh",
-            f"{REPOSITORY_URL}/blob/main/scripts/bootstrap-public.ps1",
+            SHELL_BOOTSTRAP_VIEW_URL,
+            POWERSHELL_BOOTSTRAP_VIEW_URL,
             f"{REPOSITORY_URL}/blob/main/docs/privacy-and-licensing.md",
             f"{REPOSITORY_URL}/blob/main/NOTICE",
         ]
@@ -1449,14 +1496,9 @@ class SiteContractTest(unittest.TestCase):
             if tag == "a" and attrs.get("href", "").startswith(REPOSITORY_URL)
         ]
         self.assertEqual(linked, expected_links)
-        self.assertIn(
-            f"{REPOSITORY_URL}/raw/refs/heads/main/scripts/bootstrap-public.sh",
-            rendered,
-        )
-        self.assertIn(
-            f"{REPOSITORY_URL}/raw/refs/heads/main/scripts/bootstrap-public.ps1",
-            rendered,
-        )
+        self.assertIn(SHELL_BOOTSTRAP_RAW_URL, rendered)
+        self.assertIn(POWERSHELL_BOOTSTRAP_RAW_URL, rendered)
+        self.assertNotIn("raw/refs/heads/main/scripts/bootstrap-public", rendered)
         for removed_hook in (
             "OWNER/REPOSITORY",
             "data-repository-path",
@@ -1575,11 +1617,19 @@ class SiteContractTest(unittest.TestCase):
             "자연스러운 일본어 음성",
             'AivisSpeech 1.2.0의 <span lang="ja">まい</span>(마이) 모델',
             "모든 5,800개 단어와 6,305개 검토 예문",
-            "음성만 듣는 복습 카드",
+            "어휘 답면의 <strong>재생</strong> 메뉴",
+            "처음에는 단어만 자동으로",
+            "첫 예문이나 모든 예문",
+            "선택은 기기마다 따로 저장",
+            "나머지 음성은 취소되고",
             "단어 속 한자까지 함께",
             "한국어 학습 뜻과 읽기, 부수·획수",
             "별도 한자 덱은 『일본어 상용한자 무작정 따라하기』(일상무따) 1·2권 구성",
             "일상무따 1·2권 구성의 한자 정보",
+            "카드에서 안내 페이지로 바로",
+            "모든 답면(카드를 뒤집은 답 화면) 아래에는 <strong>덱 안내 · 업데이트 ↗</strong> 링크",
+            "uv의 공식 설치 스크립트도 받아 설치",
+            "Python 패키지는 <code>uv.lock</code>에 적힌 버전",
         )
         for snippet in expected_snippets:
             self.assertIn(snippet, self.html)
@@ -2091,6 +2141,7 @@ class BeginnerGuideContractTest(unittest.TestCase):
             "완성 APKG는 약 840MB",
             "8GB 이상의 여유 저장 공간을 권장합니다.",
             "빌드 컴퓨터의 여유 저장 공간 8GB 이상 권장",
+            "macOS 12 이상 또는 Windows x64",
             "로그인과 구매 도서 인증이 필요할 수 있습니다.",
             "iPhone·iPad용 공식 AnkiMobile은 유료",
             f'href="{REPOSITORY_URL}/blob/main/docs/troubleshooting.md"',
@@ -2253,13 +2304,13 @@ class BeginnerGuideContractTest(unittest.TestCase):
     def test_build_result_guide_matches_output_and_device_contracts(self) -> None:
         html = (SITE_ROOT / "getting-started.html").read_text(encoding="utf-8")
         for snippet in (
-            "public-release/",
+            "JLPT-MAX-public-release-v1.0.0/",
             "JLPT-MAX덱-1.0.0.apkg",
             "public-build-report.json",
             "public-materialization-report.json",
             "source-proof.json",
             "Anki에는 APKG만 가져옵니다.",
-            "macOS 또는 Windows x64",
+            "macOS 12 이상 또는 Windows x64",
             "iPhone · iPad",
             "Android",
             "AnkiMobile",
@@ -2271,6 +2322,15 @@ class BeginnerGuideContractTest(unittest.TestCase):
             "다운로드(Download)",
             "첫 미디어 동기화",
             "로그인만 하고 끝내지 말고 동기화 버튼도 눌러 주세요.",
+            "$HOME/JLPT-MAX-public-release-v1.0.0",
+            "%USERPROFILE%\\JLPT-MAX-public-release-v1.0.0",
+            "성공하거나 중간에 실패해도 자동으로 지웁니다.",
+            "기본값은 단어만 자동 재생",
+            "<strong>첫 예문</strong> 또는 <strong>모든 예문</strong>",
+            "컴퓨터나 휴대폰마다 따로 저장",
+            "나머지 음성은 취소되고",
+            "답면 아래의 ‘덱 안내 · 업데이트 ↗’ 링크",
+            "모든 답면(카드를 뒤집은 답 화면)에서 이 사이트를 바로 열 수 있습니다.",
         ):
             self.assertIn(snippet, html)
         self.assertIn("공유 가능한 파일·공개 링크·일반 클라우드", html)
@@ -2420,8 +2480,15 @@ class BeginnerGuideContractTest(unittest.TestCase):
             'id="guide-windows-build-command"',
             "접속한 기기의 가져오기 방법이 자동으로 열립니다.",
             "공부할 기기에 APKG를 직접 넣습니다.",
+            SHELL_BOOTSTRAP_VIEW_URL,
+            POWERSHELL_BOOTSTRAP_VIEW_URL,
+            SHELL_BOOTSTRAP_RAW_URL,
+            POWERSHELL_BOOTSTRAP_RAW_URL,
+            "v1.0.0이라는 고정 버전의",
         ):
             self.assertIn(snippet, html)
+        self.assertNotIn("blob/main/scripts/bootstrap-public", html)
+        self.assertNotIn("raw/refs/heads/main/scripts/bootstrap-public", html)
         self.assertNotIn("data-repository-command", html)
         self.assertEqual(html.count('<pre class="command-line" tabindex="0">'), 2)
         self.assertNotIn('<details class="command-details">', html)
@@ -2519,7 +2586,7 @@ class BeginnerGuideContractTest(unittest.TestCase):
         self.assertIn("https://docs.ankiweb.net/deck-options", html)
         self.assertIn("https://docs.ankimobile.net/study-tools.html", html)
         self.assertIn(
-            "https://docs.ankidroid.org/manual.html#other-deck-actions",
+            "https://docs.ankidroid.org/manual.html#_other_deck_actions",
             html,
         )
         self.assertIn("https://docs.ankimobile.net/preferences.html#taps", html)
@@ -2584,8 +2651,15 @@ class BeginnerGuideContractTest(unittest.TestCase):
             "Google Play에서 받기",
             "Anki 공식 지원 기기",
             "2026-07-21 기준",
+            "공식·호환 Anki 앱",
+            "오픈소스 앱 AnkiDroid",
         ):
             self.assertIn(snippet, html)
+        for metadata_scope_error in (
+            'content="Windows, macOS, iPhone, iPad, Android에서 공식 Anki 앱',
+            '"description": "Windows, macOS, iPhone, iPad, Android에서 사용할 공식 Anki 앱',
+        ):
+            self.assertNotIn(metadata_scope_error, html)
         self.assertNotIn("Ankitects Pty Ltd", html)
         self.assertNotIn("공식 모바일 앱", html)
         self.assertNotIn("이제 APKG를 가져오면 됩니다.", html)
@@ -2718,13 +2792,10 @@ class BeginnerGuideContractTest(unittest.TestCase):
             rendered_guide = (output / "getting-started.html").read_text(
                 encoding="utf-8"
             )
-            self.assertIn(
-                f"{REPOSITORY_URL}/raw/refs/heads/main/scripts/bootstrap-public.sh",
-                rendered_guide,
-            )
-            self.assertIn(
-                f"{REPOSITORY_URL}/raw/refs/heads/main/scripts/bootstrap-public.ps1",
-                rendered_guide,
+            self.assertIn(SHELL_BOOTSTRAP_RAW_URL, rendered_guide)
+            self.assertIn(POWERSHELL_BOOTSTRAP_RAW_URL, rendered_guide)
+            self.assertNotIn(
+                "raw/refs/heads/main/scripts/bootstrap-public", rendered_guide
             )
             self.assertNotIn("-RepositoryUrl", rendered_guide)
             self.assertNotIn("data-repository", rendered_guide)
