@@ -12,6 +12,10 @@ jobs:
     name: ${{ matrix.label }} portable contracts
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
+    env:
+      GIT_CONFIG_COUNT: "1"
+      GIT_CONFIG_KEY_0: core.autocrlf
+      GIT_CONFIG_VALUE_0: "false"
     strategy:
       fail-fast: false
       matrix:
@@ -22,10 +26,6 @@ jobs:
             os: windows-2022
 
     steps:
-      - name: Preserve release source line endings
-        if: runner.os == 'Windows'
-        run: git config --global core.autocrlf false
-
       - name: Check out public source
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
