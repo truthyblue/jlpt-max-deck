@@ -33,6 +33,7 @@ from anki.import_export_pb2 import ImportAnkiPackageRequest
 from anki.models import NotetypeDict, NotetypeId
 
 from public_vocabulary_rendering import (
+    AUDIO_AUTOPLAY_SETTINGS as BASE_AUDIO_AUTOPLAY_SETTINGS,
     AUDIO_INTERACTION,
     AUDIO_FRONT as BASE_AUDIO_FRONT,
     BACK as BASE_VOCABULARY_BACK,
@@ -137,6 +138,55 @@ CODE_PATHS = (
 )
 
 PRODUCT_NAME = "JLPT MAX덱"
+PROJECT_PAGE_URL = "https://truthyblue.github.io/jlpt-max-deck/"
+ROOT_DECK_DESCRIPTION = (
+    '<div style="text-align: center; line-height: 1.6;">'
+    f"<strong>{PRODUCT_NAME}</strong><br>"
+    "사용법 · 업데이트 · 오류 제보는 "
+    f'<a href="{PROJECT_PAGE_URL}">프로젝트 페이지</a>에서 확인하세요.'
+    "</div>"
+)
+PROJECT_FOOTER_HTML = f"""
+  <footer class="deck-project-footer">
+    <a class="deck-project-link" href="{PROJECT_PAGE_URL}"
+       aria-label="JLPT MAX덱 안내 및 업데이트 페이지 열기">
+      덱 안내 · 업데이트 <span aria-hidden="true">↗</span>
+    </a>
+  </footer>"""
+PROJECT_FOOTER_CSS = """
+.deck-project-footer {
+  margin-top: 16px;
+  text-align: center;
+}
+.deck-project-link {
+  color: var(--ink-soft);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  line-height: 1.4;
+  opacity: .68;
+  text-decoration: none;
+}
+.deck-project-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  opacity: 1;
+}
+.deck-project-link:active { opacity: 1; }
+"""
+
+
+def _with_project_footer(markup: str) -> str:
+    closing_tag = "\n</main>"
+    if markup.count(closing_tag) != 1:
+        raise ValueError("card back must contain exactly one closing main tag")
+    return markup.replace(
+        closing_tag,
+        PROJECT_FOOTER_HTML + closing_tag,
+        1,
+    )
+
+
 PACKAGE_NAME = package_name(PRODUCT_VERSION)
 STAGE_ID = "09e-apkg"
 STAGE_MANIFEST = f"manifests/{STAGE_ID}.json"
@@ -477,8 +527,13 @@ VOCABULARY_BACK = VOCABULARY_BACK.replace(
     "{{WordAudioFile}}",
     1,
 )
+VOCABULARY_BACK = _with_project_footer(VOCABULARY_BACK)
 AUDIO_BACK = VOCABULARY_BACK.replace(
     ' data-audio-autoplay="word"',
+    "",
+    1,
+).replace(
+    BASE_AUDIO_AUTOPLAY_SETTINGS,
     "",
     1,
 ).replace(
@@ -501,7 +556,11 @@ HIRAGANA_FORM_FRONT = (
     + "{{/HiraganaWord}}"
 )
 
-VOCABULARY_CSS = BASE_VOCABULARY_CSS + STUDY_FEATURE_CSS + """
+VOCABULARY_CSS = (
+    BASE_VOCABULARY_CSS
+    + STUDY_FEATURE_CSS
+    + PROJECT_FOOTER_CSS
+    + """
 .metadata-row {
   display: flex;
   align-items: center;
@@ -590,6 +649,7 @@ VOCABULARY_CSS = BASE_VOCABULARY_CSS + STUDY_FEATURE_CSS + """
   .conjugation-row { gap: 8px; }
 }
 """
+)
 
 PRACTICE_QUESTION_FRONT = """
 <main class="card-shell question-card">
@@ -600,7 +660,7 @@ PRACTICE_QUESTION_FRONT = """
   {{#ChoicesHTML}}<section class="question-choices">{{ChoicesHTML}}</section>{{/ChoicesHTML}}
 </main>
 """
-PRACTICE_QUESTION_BACK = """
+PRACTICE_QUESTION_BACK = _with_project_footer("""
 <main class="card-shell question-card question-answer-card">
   <header class="card-header"><span class="level-pill">{{JLPT}}</span></header>
   <div class="question-kicker">{{QuestionLabel}}</div>
@@ -621,7 +681,7 @@ PRACTICE_QUESTION_BACK = """
   </section>
   <footer class="reference-source">{{Source}} · p.{{SourcePage}}</footer>
 </main>
-""" + AUDIO_INTERACTION
+""") + AUDIO_INTERACTION
 REFERENCE_TABLE_FRONT = """
 <main class="card-shell reference-card reference-front">
   <header class="card-header"><span class="level-pill">{{JLPT}}</span></header>
@@ -640,7 +700,7 @@ KANJI_FRONT = """
   <section class="kanji-hero">{{GlyphHTML}}</section>
 </main>
 """
-KANJI_BACK = """
+KANJI_BACK = _with_project_footer("""
 <main class="card-shell kanji-card kanji-answer-card">
   <header class="card-header kanji-card-header">
     <span class="level-pill kanji-volume">{{Volume}}</span>
@@ -652,8 +712,8 @@ KANJI_BACK = """
   {{#KanjiReference}}{{KanjiReference}}{{/KanjiReference}}
   {{#LinkedVocabulary}}{{LinkedVocabulary}}{{/LinkedVocabulary}}
 </main>
-""" + AUDIO_INTERACTION
-REFERENCE_TABLE_BACK = """
+""") + AUDIO_INTERACTION
+REFERENCE_TABLE_BACK = _with_project_footer("""
 <main class="card-shell reference-card table-card table-kind-{{TableKind}}">
   <header class="card-header"><span class="level-pill">{{JLPT}}</span></header>
   <div class="reference-kicker">참조표</div>
@@ -662,9 +722,9 @@ REFERENCE_TABLE_BACK = """
   <section class="reference-groups">{{TableHTML}}</section>
   <footer class="reference-source">{{Source}} · p.{{SourcePage}}</footer>
 </main>
-""" + AUDIO_INTERACTION
+""") + AUDIO_INTERACTION
 
-REFERENCE_CSS = BASE_VOCABULARY_CSS + """
+REFERENCE_CSS = BASE_VOCABULARY_CSS + PROJECT_FOOTER_CSS + """
 .question-card {
   --question-font-ko: "Noto Sans KR", "Noto Sans CJK KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   min-height: 45vh;
@@ -949,9 +1009,14 @@ REFERENCE_CSS = BASE_VOCABULARY_CSS + """
 }
 """
 
-KANJI_CSS = BASE_VOCABULARY_CSS + KANJI_CARD_CSS + """
+KANJI_CSS = (
+    BASE_VOCABULARY_CSS
+    + KANJI_CARD_CSS
+    + PROJECT_FOOTER_CSS
+    + """
 .kanji-answer-card #answer { margin: 16px 0 12px; border: 0; border-top: 1px solid var(--line); }
 """
+)
 
 
 @dataclass(frozen=True)
@@ -3260,6 +3325,7 @@ def create_decks(
         deck["id"] = DECK_IDS[key]
         deck["name"] = str(item["name"])
         deck["conf"] = config_ids[_deck_config_policy(key)]
+        deck["desc"] = ROOT_DECK_DESCRIPTION if key == "root" else ""
         deck["collapsed"] = bool(item["collapsed"])
         deck["browserCollapsed"] = bool(item["browser_collapsed"])
         collection.decks.update(deck)

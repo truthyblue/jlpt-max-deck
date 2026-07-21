@@ -320,6 +320,64 @@ class DefaultOutputRootTest(unittest.TestCase):
 
 
 class PublicRuntimeClosureTest(unittest.TestCase):
+    def test_project_page_is_linked_from_root_and_every_card_answer(self) -> None:
+        self.assertIn(
+            apkg_builder.PROJECT_PAGE_URL,
+            apkg_builder.ROOT_DECK_DESCRIPTION,
+        )
+        for spec in apkg_builder.NOTETYPE_SPECS.values():
+            self.assertIn(".deck-project-link", spec.css, spec.kind)
+            for template, front, back in spec.templates:
+                with self.subTest(kind=spec.kind, template=template):
+                    self.assertNotIn(apkg_builder.PROJECT_PAGE_URL, front)
+                    self.assertEqual(back.count(apkg_builder.PROJECT_PAGE_URL), 1)
+                    self.assertEqual(back.count('class="deck-project-link"'), 1)
+                    self.assertIn("덱 안내 · 업데이트", back)
+
+    def test_vocabulary_autoplay_controls_stay_on_answer_cards(self) -> None:
+        vocabulary_templates = {
+            name: (question, answer)
+            for name, question, answer in apkg_builder.NOTETYPE_SPECS[
+                apkg_builder.VOCABULARY_KIND
+            ].templates
+        }
+        vocabulary_question, vocabulary_answer = vocabulary_templates[
+            apkg_builder.VOCABULARY_TEMPLATE
+        ]
+        audio_question, audio_answer = vocabulary_templates[
+            apkg_builder.AUDIO_TEMPLATE
+        ]
+        hiragana_question, hiragana_answer = vocabulary_templates[
+            apkg_builder.HIRAGANA_FORM_TEMPLATE
+        ]
+        settings_tag = '<details class="audio-autoplay-settings"'
+        autoplay_tag = (
+            '<section class="lexeme-block lexeme-answer audio-scope" '
+            'data-audio-autoplay="word">'
+        )
+
+        self.assertNotIn(settings_tag, vocabulary_question)
+        self.assertEqual(vocabulary_answer.count(settings_tag), 1)
+        self.assertEqual(vocabulary_answer.count(autoplay_tag), 1)
+        self.assertEqual(hiragana_answer, vocabulary_answer)
+        self.assertNotIn(settings_tag, hiragana_question)
+        self.assertNotIn(settings_tag, audio_question)
+        self.assertNotIn(settings_tag, audio_answer)
+        self.assertNotIn(autoplay_tag, audio_answer)
+
+        for marker in (
+            "resetDirectAudio(audio);",
+            "event.stopPropagation();",
+            'error.name === "NotAllowedError"',
+            "jlpt-max-deck.audio-autoplay-mode.v1",
+            "jlpt-max-deck.audio-autoplay-scope.v1",
+            '".example-panel audio.click-audio-player"',
+            "window.__jlptMaxAudioQueueToken === queueToken",
+            "watchCardRemoval(interactionCard);",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, apkg_builder.AUDIO_INTERACTION)
+
     def test_lexical_explanation_does_not_repeat_answer_summary(self) -> None:
         fixture = _lexical_kanji_reading_fixture()
         values = apkg_builder._practice_question_field_values(fixture)

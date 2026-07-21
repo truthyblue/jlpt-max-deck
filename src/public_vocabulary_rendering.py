@@ -11,10 +11,52 @@ SOURCE_DISPLAY_NAMES = {
     "hackers": "해커스",
     "dongyang": "동양북스",
 }
+AUDIO_AUTOPLAY_SETTINGS = """
+    <details class="audio-autoplay-settings" data-audio-autoplay-settings>
+      <summary>
+        <span>재생</span>
+        <span class="audio-autoplay-state" data-audio-autoplay-state>단어</span>
+      </summary>
+      <div class="audio-autoplay-popover">
+        <label class="audio-autoplay-switch">
+          <span>예문 자동재생</span>
+          <span class="audio-autoplay-control">
+            <input type="checkbox" role="switch" data-audio-autoplay-enabled>
+            <span class="audio-autoplay-track" aria-hidden="true"></span>
+          </span>
+        </label>
+        <fieldset class="audio-autoplay-scope" data-audio-autoplay-scope disabled>
+          <legend class="audio-slot">예문 자동재생 범위</legend>
+          <div class="audio-autoplay-options">
+            <label class="audio-autoplay-option">
+              <input type="radio" name="jlpt-max-audio-autoplay-scope"
+                     value="first" data-audio-autoplay-choice checked>
+              <span class="audio-autoplay-label">첫 예문</span>
+            </label>
+            <label class="audio-autoplay-option">
+              <input type="radio" name="jlpt-max-audio-autoplay-scope"
+                     value="all" data-audio-autoplay-choice>
+              <span class="audio-autoplay-label">모든 예문</span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+    </details>"""
 AUDIO_INTERACTION = """
 <script>
 (function () {
+  var AUDIO_AUTOPLAY_STORAGE_KEY = "jlpt-max-deck.audio-autoplay-mode.v1";
+  var AUDIO_AUTOPLAY_SCOPE_STORAGE_KEY = "jlpt-max-deck.audio-autoplay-scope.v1";
+
+  function removeQueueEnded(audio) {
+    var cleanup = audio && audio.__jlptMaxQueueCleanup;
+    if (typeof cleanup === "function") {
+      cleanup();
+    }
+  }
+
   function resetDirectAudio(audio) {
+    removeQueueEnded(audio);
     try {
       audio.pause();
     } catch (_error) {}
@@ -29,7 +71,36 @@ AUDIO_INTERACTION = """
     return attempt;
   }
 
+  function nextQueueToken() {
+    var token = (window.__jlptMaxAudioQueueToken || 0) + 1;
+    window.__jlptMaxAudioQueueToken = token;
+    return token;
+  }
+
+  function clearQueueEnded() {
+    var cleanup = window.__jlptMaxQueueCleanup;
+    if (typeof cleanup === "function") {
+      cleanup();
+    }
+    window.__jlptMaxQueueCleanup = null;
+  }
+
+  function cancelAudioQueue(stopActive) {
+    var token = nextQueueToken();
+    clearQueueEnded();
+    if (stopActive) {
+      var active = window.__jlptMaxClickAudio;
+      if (active) {
+        nextAudioAttempt();
+        resetDirectAudio(active);
+        window.__jlptMaxClickAudio = null;
+      }
+    }
+    return token;
+  }
+
   function recordPlayFailure(audio, error, automatic) {
+    cancelAudioQueue(false);
     resetDirectAudio(audio);
     if (window.__jlptMaxClickAudio === audio) {
       window.__jlptMaxClickAudio = null;
@@ -45,7 +116,7 @@ AUDIO_INTERACTION = """
     }
   }
 
-  function playDirectAudio(audio, automatic) {
+  function startDirectAudio(audio, automatic, onEnded) {
     var attempt = nextAudioAttempt();
     var previous = window.__jlptMaxClickAudio;
     if (previous && previous !== audio) {
@@ -55,6 +126,30 @@ AUDIO_INTERACTION = """
     audio.removeAttribute("data-audio-error");
     audio.removeAttribute("data-autoplay-blocked");
     window.__jlptMaxClickAudio = audio;
+    if (typeof onEnded === "function") {
+      var cleanup = function () {
+        audio.removeEventListener("ended", handleEnded);
+        if (audio.__jlptMaxQueueCleanup === cleanup) {
+          audio.__jlptMaxQueueCleanup = null;
+        }
+        if (window.__jlptMaxQueueCleanup === cleanup) {
+          window.__jlptMaxQueueCleanup = null;
+        }
+      };
+      var handleEnded = function () {
+        cleanup();
+        if (
+          window.__jlptMaxClickAudio === audio &&
+          window.__jlptMaxAudioAttempt === attempt
+        ) {
+          window.__jlptMaxClickAudio = null;
+          onEnded();
+        }
+      };
+      audio.__jlptMaxQueueCleanup = cleanup;
+      window.__jlptMaxQueueCleanup = cleanup;
+      audio.addEventListener("ended", handleEnded);
+    }
     var started;
     try {
       started = audio.play();
@@ -74,12 +169,209 @@ AUDIO_INTERACTION = """
     }
   }
 
+  function playDirectAudio(audio, automatic) {
+    cancelAudioQueue(true);
+    startDirectAudio(audio, automatic, null);
+  }
+
+  function validAutoplayMode(mode) {
+    return mode === "word" || mode === "first" || mode === "all";
+  }
+
+  function validAutoplayScope(scope) {
+    return scope === "first" || scope === "all";
+  }
+
+  function readAutoplayScope() {
+    try {
+      var stored = window.localStorage.getItem(AUDIO_AUTOPLAY_SCOPE_STORAGE_KEY);
+      if (validAutoplayScope(stored)) {
+        window.__jlptMaxAutoplayScope = stored;
+        return stored;
+      }
+    } catch (_error) {}
+    var fallback = window.__jlptMaxAutoplayScope;
+    return validAutoplayScope(fallback) ? fallback : "first";
+  }
+
+  function writeAutoplayScope(scope) {
+    var saved = validAutoplayScope(scope) ? scope : "first";
+    window.__jlptMaxAutoplayScope = saved;
+    try {
+      window.localStorage.setItem(AUDIO_AUTOPLAY_SCOPE_STORAGE_KEY, saved);
+    } catch (_error) {}
+    return saved;
+  }
+
+  function readAutoplayMode() {
+    try {
+      var stored = window.localStorage.getItem(AUDIO_AUTOPLAY_STORAGE_KEY);
+      if (validAutoplayMode(stored)) {
+        window.__jlptMaxAutoplayMode = stored;
+        if (validAutoplayScope(stored)) {
+          window.__jlptMaxAutoplayScope = stored;
+        }
+        return stored;
+      }
+    } catch (_error) {}
+    var fallback = window.__jlptMaxAutoplayMode;
+    return validAutoplayMode(fallback) ? fallback : "word";
+  }
+
+  function writeAutoplayMode(mode) {
+    var saved = validAutoplayMode(mode) ? mode : "word";
+    window.__jlptMaxAutoplayMode = saved;
+    if (validAutoplayScope(saved)) {
+      writeAutoplayScope(saved);
+    }
+    try {
+      window.localStorage.setItem(AUDIO_AUTOPLAY_STORAGE_KEY, saved);
+    } catch (_error) {}
+    return saved;
+  }
+
+  function selectedAutoplayScope(choices) {
+    for (var index = 0; index < choices.length; index += 1) {
+      if (choices[index].checked && choices[index].value === "all") {
+        return "all";
+      }
+    }
+    return "first";
+  }
+
+  function renderAutoplaySettings(settings, mode) {
+    var enabled = settings.querySelector("[data-audio-autoplay-enabled]");
+    var scope = settings.querySelector("[data-audio-autoplay-scope]");
+    var state = settings.querySelector("[data-audio-autoplay-state]");
+    var choices = settings.querySelectorAll("[data-audio-autoplay-choice]");
+    var activeScope = mode === "word" ? readAutoplayScope() : mode;
+    enabled.checked = mode !== "word";
+    scope.disabled = mode === "word";
+    for (var index = 0; index < choices.length; index += 1) {
+      choices[index].checked = choices[index].value === activeScope;
+    }
+    state.textContent = mode === "all" ? "전체" : mode === "first" ? "1개" : "단어";
+  }
+
+  function bindAutoplaySettings(mode) {
+    var settings = document.querySelector("[data-audio-autoplay-settings]");
+    if (!settings) {
+      return mode;
+    }
+    renderAutoplaySettings(settings, mode);
+    if (settings.getAttribute("data-audio-settings-bound") === "true") {
+      return mode;
+    }
+    settings.setAttribute("data-audio-settings-bound", "true");
+    settings.addEventListener("click", function (event) {
+      event.stopPropagation();
+    });
+    settings.addEventListener("keydown", function (event) {
+      event.stopPropagation();
+    });
+    var enabled = settings.querySelector("[data-audio-autoplay-enabled]");
+    var choices = settings.querySelectorAll("[data-audio-autoplay-choice]");
+    enabled.addEventListener("change", function () {
+      var nextMode = this.checked ? selectedAutoplayScope(choices) : "word";
+      nextMode = writeAutoplayMode(nextMode);
+      renderAutoplaySettings(settings, nextMode);
+      cancelAudioQueue(false);
+    });
+    for (var index = 0; index < choices.length; index += 1) {
+      choices[index].addEventListener("change", function () {
+        if (!this.checked || !enabled.checked) {
+          return;
+        }
+        var nextMode = writeAutoplayMode(this.value);
+        renderAutoplaySettings(settings, nextMode);
+        cancelAudioQueue(false);
+      });
+    }
+    return mode;
+  }
+
+  function autoplayPlayers(autoplayScope, mode) {
+    var players = [];
+    var wordAudio = autoplayScope.querySelector("audio.click-audio-player");
+    if (wordAudio) {
+      players.push(wordAudio);
+    }
+    if (mode === "word") {
+      return players;
+    }
+    var card = autoplayScope.closest(".card-back");
+    var examples = card && card.querySelectorAll(
+      ".example-panel audio.click-audio-player"
+    );
+    if (!examples) {
+      return players;
+    }
+    var exampleCount = mode === "first" ? Math.min(examples.length, 1) : examples.length;
+    for (var index = 0; index < exampleCount; index += 1) {
+      players.push(examples[index]);
+    }
+    return players;
+  }
+
+  function playQueueItem(players, index, queueToken, card) {
+    if (
+      index >= players.length ||
+      window.__jlptMaxAudioQueueToken !== queueToken ||
+      !document.documentElement.contains(card)
+    ) {
+      return;
+    }
+    startDirectAudio(players[index], true, function () {
+      if (
+        window.__jlptMaxAudioQueueToken === queueToken &&
+        document.documentElement.contains(card)
+      ) {
+        playQueueItem(players, index + 1, queueToken, card);
+      }
+    });
+  }
+
+  function startAutoplayQueue(autoplayScope, mode) {
+    var card = autoplayScope.closest(".card-back");
+    var players = autoplayPlayers(autoplayScope, mode);
+    if (!card || players.length === 0) {
+      return;
+    }
+    for (var index = 0; index < players.length; index += 1) {
+      players[index].setAttribute("preload", "auto");
+      if (typeof players[index].load === "function") {
+        players[index].load();
+      }
+    }
+    var queueToken = cancelAudioQueue(true);
+    playQueueItem(players, 0, queueToken, card);
+  }
+
+  function watchCardRemoval(card) {
+    var previousObserver = window.__jlptMaxAudioObserver;
+    if (previousObserver && typeof previousObserver.disconnect === "function") {
+      previousObserver.disconnect();
+    }
+    if (!card || typeof window.MutationObserver !== "function") {
+      return;
+    }
+    var observer = new MutationObserver(function () {
+      if (!document.documentElement.contains(card)) {
+        cancelAudioQueue(true);
+        observer.disconnect();
+        if (window.__jlptMaxAudioObserver === observer) {
+          window.__jlptMaxAudioObserver = null;
+        }
+      }
+    });
+    observer.observe(document.documentElement, {childList: true, subtree: true});
+    window.__jlptMaxAudioObserver = observer;
+  }
+
   window.__jlptMaxPlayAudio = playDirectAudio;
   var staleAudio = window.__jlptMaxClickAudio;
   if (staleAudio && !document.documentElement.contains(staleAudio)) {
-    nextAudioAttempt();
-    resetDirectAudio(staleAudio);
-    window.__jlptMaxClickAudio = null;
+    cancelAudioQueue(true);
   }
   var triggers = document.querySelectorAll(".audio-trigger");
   for (var index = 0; index < triggers.length; index += 1) {
@@ -100,12 +392,7 @@ AUDIO_INTERACTION = """
         ".replay-button, .replaybutton, a[href^='playsound:']"
       );
       if (replay) {
-        var activeDirect = window.__jlptMaxClickAudio;
-        if (activeDirect) {
-          nextAudioAttempt();
-          resetDirectAudio(activeDirect);
-          window.__jlptMaxClickAudio = null;
-        }
+        cancelAudioQueue(true);
         replay.click();
       }
     });
@@ -119,34 +406,17 @@ AUDIO_INTERACTION = """
   }
 
   var autoplayScope = document.querySelector('[data-audio-autoplay="word"]');
+  var autoplayMode = bindAutoplaySettings(readAutoplayMode());
+  var interactionCard = autoplayScope
+    ? autoplayScope.closest(".card-back")
+    : document.querySelector(".card-back");
+  watchCardRemoval(interactionCard);
   if (
     autoplayScope &&
     autoplayScope.getAttribute("data-audio-autoplay-started") !== "true"
   ) {
     autoplayScope.setAttribute("data-audio-autoplay-started", "true");
-    var autoplayAudio = autoplayScope.querySelector("audio.click-audio-player");
-    if (autoplayAudio) {
-      autoplayAudio.setAttribute("preload", "auto");
-      if (typeof autoplayAudio.load === "function") {
-        autoplayAudio.load();
-      }
-    }
-    var autoplayCard = autoplayScope.closest(".card-back");
-    var preloadPlayers = autoplayCard && autoplayCard.querySelectorAll(
-      ".example-panel audio.click-audio-player"
-    );
-    if (preloadPlayers) {
-      for (var preloadIndex = 0; preloadIndex < preloadPlayers.length; preloadIndex += 1) {
-        var preloadPlayer = preloadPlayers[preloadIndex];
-        preloadPlayer.setAttribute("preload", "auto");
-        if (typeof preloadPlayer.load === "function") {
-          preloadPlayer.load();
-        }
-      }
-    }
-    if (autoplayAudio) {
-      playDirectAudio(autoplayAudio, true);
-    }
+    startAutoplayQueue(autoplayScope, autoplayMode);
   }
 })();
 </script>
@@ -179,7 +449,7 @@ AUDIO_FRONT = """
 BACK = """
 <main class="card-shell card-back">
   <header class="card-header">
-    <span class="level-pill">{{JLPT}}</span>
+    <span class="level-pill">{{JLPT}}</span>""" + AUDIO_AUTOPLAY_SETTINGS + """
   </header>
 
   <section class="lexeme-block lexeme-answer audio-scope">
@@ -285,7 +555,14 @@ CSS = """
 
 *, *::before, *::after { box-sizing: inherit; }
 .card-shell { max-width: 640px; margin: 0 auto; padding: 16px 14px 28px; }
-.card-header { min-height: 24px; }
+.card-header {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 24px;
+}
 .level-pill {
   display: inline-flex;
   align-items: center;
@@ -297,6 +574,153 @@ CSS = """
   font-size: 11px;
   font-weight: 750;
   letter-spacing: .06em;
+}
+.audio-autoplay-settings {
+  position: relative;
+  z-index: 4;
+  margin-left: auto;
+}
+.audio-autoplay-settings > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 26px;
+  padding: 3px 7px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface-muted);
+  color: var(--ink);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 750;
+  line-height: 1.2;
+  list-style: none;
+}
+.audio-autoplay-settings > summary::-webkit-details-marker { display: none; }
+.audio-autoplay-settings > summary::after {
+  content: "▾";
+  color: var(--ink-soft);
+}
+.audio-autoplay-settings[open] > summary::after { content: "▴"; }
+.audio-autoplay-settings > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.audio-autoplay-state { color: var(--ink-soft); font-weight: 650; }
+.audio-autoplay-popover {
+  box-sizing: border-box;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 4;
+  width: min(160px, calc(100vw - 20px));
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+}
+.audio-autoplay-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-height: 25px;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+.audio-autoplay-control {
+  position: relative;
+  display: inline-flex;
+}
+.audio-autoplay-control input,
+.audio-autoplay-option input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.audio-autoplay-track {
+  position: relative;
+  display: inline-block;
+  width: 27px;
+  height: 15px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-muted);
+}
+.audio-autoplay-track::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--ink-soft);
+  transition: transform 140ms ease, background 140ms ease;
+}
+.audio-autoplay-control input:checked + .audio-autoplay-track {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.audio-autoplay-control input:checked + .audio-autoplay-track::after {
+  background: var(--accent);
+  transform: translateX(12px);
+}
+.audio-autoplay-control input:focus-visible + .audio-autoplay-track {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.audio-autoplay-scope {
+  min-width: 0;
+  margin: 4px 0 0;
+  padding: 0;
+  border: 0;
+}
+.audio-autoplay-scope:disabled { opacity: 0.45; }
+.audio-autoplay-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface-muted);
+}
+.audio-autoplay-option {
+  position: relative;
+  min-width: 0;
+  cursor: pointer;
+}
+.audio-autoplay-label {
+  display: grid;
+  place-items: center;
+  min-height: 23px;
+  padding: 2px 3px;
+  border-radius: 4px;
+  color: var(--ink-soft);
+  font-size: 10px;
+  font-weight: 750;
+  text-align: center;
+  white-space: nowrap;
+}
+.audio-autoplay-option input:checked + .audio-autoplay-label {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+.audio-autoplay-option input:focus-visible + .audio-autoplay-label {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
 }
 
 .lexeme-block { padding: 18px 6px 14px; text-align: center; }
