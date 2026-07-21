@@ -1058,6 +1058,22 @@ class SiteContractTest(unittest.TestCase):
         guide_css = (SITE_ROOT / "assets" / "guide.css").read_text(
             encoding="utf-8"
         )
+        scope_note = _css_declarations(guide_css, ".guide-scope-note")
+        self.assertEqual(scope_note.get("word-break"), "keep-all")
+        for selector, occurrence in (
+            (".guide-checklist li", 0),
+            (".guide-numbered li", 0),
+            (".guide-callout", 1),
+            (".guide-os-card li", 0),
+            (".guide-next", 0),
+        ):
+            self.assertEqual(
+                _css_declarations(guide_css, selector, occurrence).get(
+                    "word-break"
+                ),
+                "keep-all",
+                selector,
+            )
         scope_link = _css_declarations(guide_css, ".guide-scope-note a")
         self.assertEqual(scope_link.get("color"), "var(--lime)")
         self.assertEqual(scope_link.get("text-decoration"), "underline")
@@ -2556,6 +2572,9 @@ class BeginnerGuideContractTest(unittest.TestCase):
             "Get started",
             "설정 → Profiles",
             "AnkiWeb",
+            "Anki가 준비됐습니다.",
+            "완성 APKG를 가져올 여유 공간이 있음",
+            "덱을 만든 뒤 가져오기 설정을 확인하세요.",
             "macOS용 Anki 받기",
             "Windows용 Anki 받기",
             "iPhone·iPad (유료)",
@@ -2569,6 +2588,7 @@ class BeginnerGuideContractTest(unittest.TestCase):
             self.assertIn(snippet, html)
         self.assertNotIn("Ankitects Pty Ltd", html)
         self.assertNotIn("공식 모바일 앱", html)
+        self.assertNotIn("이제 APKG를 가져오면 됩니다.", html)
         self.assertIn("AnkiApp, Anki Pro", html)
         self.assertIn('href="getting-started.html#import-options"', html)
         self.assertIn('href="getting-started.html#settings"', html)

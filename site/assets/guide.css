@@ -89,6 +89,7 @@
   color: rgba(255, 255, 255, .55);
   font-size: 16px;
   line-height: 1.65;
+  word-break: keep-all;
 }
 
 .guide-scope-note a {
@@ -269,6 +270,7 @@
   border: 1px solid var(--line);
   border-radius: 16px;
   line-height: 1.45;
+  word-break: keep-all;
 }
 
 .guide-checklist li::before {
@@ -296,6 +298,7 @@
   min-height: 70px;
   padding: 0 0 28px 62px;
   counter-increment: guide-step;
+  word-break: keep-all;
 }
 
 .guide-numbered li + li {
@@ -475,6 +478,7 @@
   background: #e6efdf;
   border-left: 5px solid #5a9270;
   border-radius: 0 16px 16px 0;
+  word-break: keep-all;
 }
 
 .guide-callout.warning {
@@ -692,6 +696,10 @@
   margin-top: 12px;
 }
 
+.guide-os-card li {
+  word-break: keep-all;
+}
+
 .guide-os-card .official-link {
   display: inline-flex;
   margin-top: 22px;
@@ -768,6 +776,7 @@
   color: var(--white);
   background: var(--night);
   border-radius: 24px;
+  word-break: keep-all;
 }
 
 .guide-next h2 {
