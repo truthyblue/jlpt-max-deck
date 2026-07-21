@@ -1,21 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ $# -ne 1 ]]; then
-  echo "usage: $0 https://github.com/OWNER/REPOSITORY" >&2
-  exit 2
-fi
-
-repository_url="${1%/}"
-if [[ ! "$repository_url" =~ ^https://github\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]]; then
-  echo "올바른 GitHub 저장소 주소가 아닙니다: $repository_url" >&2
-  exit 2
-fi
-repository_path="${repository_url#https://github.com/}"
-repository_owner="${repository_path%%/*}"
-repository_name="${repository_path#*/}"
-if [[ "$repository_owner" == "." || "$repository_owner" == ".." || "$repository_name" == "." || "$repository_name" == ".." ]]; then
-  echo "올바른 GitHub 저장소 주소가 아닙니다: $repository_url" >&2
+if [[ $# -ne 0 ]]; then
+  echo "usage: $0" >&2
   exit 2
 fi
 
@@ -51,7 +38,7 @@ if ! command -v uv >/dev/null 2>&1; then
   exit 1
 fi
 
-release_url="$repository_url/releases/latest/download"
+release_url="https://github.com/truthyblue/jlpt-max-deck/releases/latest/download"
 work_root="$(mktemp -d "$HOME/JLPT-MAX-public-build-$(date +%Y%m%d-%H%M%S).XXXXXX")"
 download_root="$work_root/download"
 mkdir -p "$download_root"

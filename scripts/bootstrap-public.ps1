@@ -1,23 +1,8 @@
 [CmdletBinding()]
-param(
-    [Parameter(Mandatory = $true)]
-    [string]$RepositoryUrl
-)
+param()
 
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
-$RepositoryUrl = $RepositoryUrl.TrimEnd("/")
-if ($RepositoryUrl -notmatch '^https://github\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$') {
-    throw "올바른 GitHub 저장소 주소가 아닙니다: $RepositoryUrl"
-}
-$RepositoryPath = $RepositoryUrl.Substring("https://github.com/".Length)
-$RepositoryParts = $RepositoryPath.Split("/")
-if (
-    $RepositoryParts[0] -in @(".", "..") -or
-    $RepositoryParts[1] -in @(".", "..")
-) {
-    throw "올바른 GitHub 저장소 주소가 아닙니다: $RepositoryUrl"
-}
 
 Write-Host "`n[1/4] 먼저 PDF 17개가 든 폴더를 확인합니다."
 Add-Type -AssemblyName System.Windows.Forms
@@ -51,7 +36,7 @@ if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
     throw "uv 설치 후 PowerShell을 다시 열고 같은 명령을 실행해 주세요."
 }
 
-$ReleaseUrl = "$RepositoryUrl/releases/latest/download"
+$ReleaseUrl = "https://github.com/truthyblue/jlpt-max-deck/releases/latest/download"
 $Suffix = [guid]::NewGuid().ToString("N").Substring(0, 6)
 $DirectoryName = "JLPT-MAX-public-build-{0}-{1}" -f `
     (Get-Date -Format "yyyyMMdd-HHmmss"), $Suffix

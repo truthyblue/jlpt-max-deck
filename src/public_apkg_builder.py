@@ -185,8 +185,8 @@ AUDIO_TEMPLATE = "음성"
 PRACTICE_QUESTION_TEMPLATE = "어휘문제"
 REFERENCE_TABLE_TEMPLATE = "참조표"
 KANJI_TEMPLATE = "한자"
-LEVEL_FORM_TEMPLATE = "어휘(상위급수)"
-LEVEL_FORM_POLICY_VERSION = "learner-level-form-card-v1"
+HIRAGANA_FORM_TEMPLATE = "어휘(히라가나)"
+HIRAGANA_FORM_POLICY_VERSION = "learner-hiragana-form-card-v1"
 
 VOCABULARY_FIELDS = (
     "EntryID",
@@ -221,9 +221,9 @@ VOCABULARY_FIELDS = (
     "UsageDetails",
     "WordFormationDetails",
     "RelatedWords",
-    "VariantJLPT",
-    "VariantWord",
-    "VariantContext",
+    "WordJLPT",
+    "HiraganaWord",
+    "HiraganaContext",
 )
 PRACTICE_QUESTION_FIELDS = (
     "QuestionID",
@@ -318,16 +318,16 @@ TEMPLATE_IDS = {
     VOCABULARY_TEMPLATE: _stable_id("template:vocabulary"),
     AUDIO_TEMPLATE: _stable_id("template:audio"),
     # Preserve the former ord=2 template identity and its card schedules.
-    LEVEL_FORM_TEMPLATE: _stable_id("template:orthography"),
+    HIRAGANA_FORM_TEMPLATE: _stable_id("template:orthography"),
     PRACTICE_QUESTION_TEMPLATE: _stable_id("template:practice_question"),
     REFERENCE_TABLE_TEMPLATE: _stable_id("template:reference_table"),
     KANJI_TEMPLATE: _stable_id("template:kanji"),
 }
 _VOCABULARY_FIELD_STABLE_LABELS = {
     "VocabularyContext": "FrontHint",
-    "VariantJLPT": "OrthographyJLPT",
-    "VariantWord": "OrthographyPrompt",
-    "VariantContext": "OrthographyAnswerHTML",
+    "WordJLPT": "OrthographyJLPT",
+    "HiraganaWord": "OrthographyPrompt",
+    "HiraganaContext": "OrthographyAnswerHTML",
 }
 
 FIELD_IDS = {
@@ -420,7 +420,15 @@ VOCABULARY_FEATURE_METADATA = """    <div class="metadata-row">
       {{StudyPriority}}
       {{#UsageRegister}}<span class="usage-registers">{{UsageRegister}}</span>{{/UsageRegister}}
     </div>"""
+WORD_LEVEL_FIELD = (
+    "{{#WordJLPT}}{{WordJLPT}}{{/WordJLPT}}"
+    "{{^WordJLPT}}{{JLPT}}{{/WordJLPT}}"
+)
 VOCABULARY_FRONT = BASE_VOCABULARY_FRONT.replace(
+    "{{JLPT}}",
+    WORD_LEVEL_FIELD,
+    1,
+).replace(
     '<div class="word" lang="ja">{{Word}}</div>',
     '<div class="word" lang="ja">{{Word}}</div>'
     '{{#VocabularyContext}}'
@@ -444,6 +452,10 @@ CONJUGATION_SECTION = """
   {{#ConjugationDetails}}{{ConjugationDetails}}{{/ConjugationDetails}}
 """
 VOCABULARY_BACK = BASE_VOCABULARY_BACK.replace(
+    "{{JLPT}}",
+    WORD_LEVEL_FIELD,
+    1,
+).replace(
     '    <div class="metadata-pill">{{PartOfSpeech}}</div>',
     VOCABULARY_FEATURE_METADATA,
     1,
@@ -469,15 +481,24 @@ AUDIO_BACK = VOCABULARY_BACK.replace(
     ' data-audio-autoplay="word"',
     "",
     1,
+).replace(
+    WORD_LEVEL_FIELD,
+    "{{JLPT}}",
+    1,
 )
-LEVEL_FORM_FRONT = (
-    "{{#VariantWord}}"
-    + VOCABULARY_FRONT.replace("{{JLPT}}", "{{VariantJLPT}}", 1).replace(
-        "{{Word}}", "{{VariantWord}}", 1
-    ).replace(
-        "VocabularyContext", "VariantContext"
+HIRAGANA_FORM_FRONT = (
+    "{{#HiraganaWord}}"
+    + BASE_VOCABULARY_FRONT.replace(
+        '<div class="word" lang="ja">{{Word}}</div>',
+        '<div class="word" lang="ja">{{HiraganaWord}}</div>'
+        "{{#HiraganaContext}}"
+        '<div class="vocabulary-context" lang="ja">'
+        "{{HiraganaContext}}"
+        "</div>"
+        "{{/HiraganaContext}}",
+        1,
     )
-    + "{{/VariantWord}}"
+    + "{{/HiraganaWord}}"
 )
 
 VOCABULARY_CSS = BASE_VOCABULARY_CSS + STUDY_FEATURE_CSS + """
@@ -952,7 +973,7 @@ NOTETYPE_SPECS = {
         templates=(
             (VOCABULARY_TEMPLATE, VOCABULARY_FRONT, VOCABULARY_BACK),
             (AUDIO_TEMPLATE, AUDIO_FRONT, AUDIO_BACK),
-            (LEVEL_FORM_TEMPLATE, LEVEL_FORM_FRONT, VOCABULARY_BACK),
+            (HIRAGANA_FORM_TEMPLATE, HIRAGANA_FORM_FRONT, VOCABULARY_BACK),
         ),
         css=VOCABULARY_CSS,
     ),
@@ -1269,7 +1290,7 @@ def _validate_deck_layout(layout: Mapping[str, Any]) -> None:
             "templates": [
                 VOCABULARY_TEMPLATE,
                 AUDIO_TEMPLATE,
-                LEVEL_FORM_TEMPLATE,
+                HIRAGANA_FORM_TEMPLATE,
             ],
         },
         KANJI_KIND: {
@@ -1331,7 +1352,7 @@ def _reconcile_closed_input_counts(
     summary: Mapping[str, Any],
     media_summary: Mapping[str, Any],
     vocabulary_note_count: int,
-    level_form_card_count: int,
+    hiragana_form_card_count: int,
     practice_note_count: int,
     table_note_count: int,
     kanji_note_count: int,
@@ -1343,9 +1364,9 @@ def _reconcile_closed_input_counts(
     inventory_kind_counts: Mapping[str, int],
 ) -> None:
     """Reconcile variable release sizes across closed content and media artifacts."""
-    level_form_card_count = _closed_count(
-        level_form_card_count,
-        "level-form card count",
+    hiragana_form_card_count = _closed_count(
+        hiragana_form_card_count,
+        "hiragana-form card count",
     )
     job_counts = _normalized_kind_counts(media_job_counts, "media job counts")
     inventory_counts = _normalized_kind_counts(
@@ -1380,10 +1401,10 @@ def _reconcile_closed_input_counts(
         "notes_without_examples": notes_without_examples,
         "practice_question_note_count": practice_note_count,
         "reference_table_note_count": table_note_count,
-        "level_form_card_count": level_form_card_count,
+        "hiragana_form_card_count": hiragana_form_card_count,
         "total_card_count": (
             vocabulary_note_count * 2
-            + level_form_card_count
+            + hiragana_form_card_count
             + practice_note_count
             + table_note_count
             + kanji_note_count
@@ -1474,19 +1495,19 @@ def _reconcile_deck_layout_counts(
         "kanji:upper": 0,
         "kanji:lower": 0,
     }
-    level_form_card_count = 0
+    hiragana_form_card_count = 0
     for record in vocabulary_notes:
         word = str(record.get("word", ""))
         if not word or record.get("vocabulary_front") != word:
             raise DeckBuildError(
                 f"vocabulary front changed: {record.get('note_id')}"
             )
-        level_form_fields = _level_form_field_values(record)
-        routes = _vocabulary_card_routes(record, level_form_fields)
+        hiragana_form_fields = _hiragana_form_field_values(record)
+        routes = _vocabulary_card_routes(record, hiragana_form_fields)
         for key in routes.values():
             expected[key] += 1
-        if LEVEL_FORM_TEMPLATE in routes:
-            level_form_card_count += 1
+        if HIRAGANA_FORM_TEMPLATE in routes:
+            hiragana_form_card_count += 1
 
     for record in practice_notes:
         level = str(record.get("jlpt_level", ""))
@@ -1549,7 +1570,7 @@ def _reconcile_deck_layout_counts(
         raise DeckBuildError(
             "deck layout card counts do not reconcile with content summary"
         )
-    return level_form_card_count
+    return hiragana_form_card_count
 
 
 def _apply_package_audio_policy(
@@ -1726,7 +1747,7 @@ def load_closed_inputs(content_root: Path, media_root: Path) -> ClosedDeckInputs
     inventory_kind_counts = Counter(
         str(item.get("kind", "")) for item in inventory
     )
-    level_form_card_count = _reconcile_deck_layout_counts(
+    hiragana_form_card_count = _reconcile_deck_layout_counts(
         layout=layout,
         summary=summary,
         vocabulary_notes=vocabulary_notes,
@@ -1738,7 +1759,7 @@ def load_closed_inputs(content_root: Path, media_root: Path) -> ClosedDeckInputs
         summary=summary,
         media_summary=media_summary,
         vocabulary_note_count=len(vocabulary_notes),
-        level_form_card_count=level_form_card_count,
+        hiragana_form_card_count=hiragana_form_card_count,
         practice_note_count=len(practice_notes),
         table_note_count=len(table_notes),
         kanji_note_count=len(kanji_notes),
@@ -1828,8 +1849,8 @@ def load_closed_inputs(content_root: Path, media_root: Path) -> ClosedDeckInputs
             VOCABULARY_TEMPLATE,
             AUDIO_TEMPLATE,
             *(
-                [LEVEL_FORM_TEMPLATE]
-                if isinstance(note.get("level_form_card"), Mapping)
+                [HIRAGANA_FORM_TEMPLATE]
+                if isinstance(note.get("hiragana_form_card"), Mapping)
                 else []
             ),
         ]
@@ -2021,83 +2042,84 @@ def _front_context_html(
     )
 
 
-def _level_form_field_values(record: Mapping[str, Any]) -> dict[str, str]:
-    payload = record.get("level_form_card")
+def _hiragana_form_field_values(record: Mapping[str, Any]) -> dict[str, str]:
+    payload = record.get("hiragana_form_card")
     empty = {
-        "VariantJLPT": "",
-        "VariantWord": "",
-        "VariantContext": "",
+        "WordJLPT": "",
+        "HiraganaWord": "",
+        "HiraganaContext": "",
     }
     if payload is None:
         return empty
 
     note_id = str(record.get("note_id", ""))
     expected_payload_fields = {
-        "alternate_forms",
+        "alternate_word_forms",
         "front_context",
         "front_word",
         "policy_version",
         "reading",
         "source_record_ids",
-        "target_jlpt_level",
+        "word_jlpt_level",
+        "word_source_record_ids",
     }
     if not isinstance(payload, Mapping) or set(payload) != expected_payload_fields:
-        raise DeckBuildError(f"level-form card payload changed: {note_id}")
+        raise DeckBuildError(f"hiragana-form card payload changed: {note_id}")
 
     source_level = str(record.get("jlpt_level", ""))
-    target_level = payload.get("target_jlpt_level")
+    word_level = payload.get("word_jlpt_level")
+    word = record.get("word")
     front_word = payload.get("front_word")
     front_context = payload.get("front_context")
     reading = payload.get("reading")
     source_record_ids = payload.get("source_record_ids")
-    alternate_forms = payload.get("alternate_forms")
+    word_source_record_ids = payload.get("word_source_record_ids")
+    alternate_word_forms = payload.get("alternate_word_forms")
     forms = record.get("forms")
     form_records = forms if isinstance(forms, list) else []
-    matching_forms = [
-        form
-        for form in form_records
-        if isinstance(form, Mapping)
-        and form.get("surface") == front_word
-        and _reading_equivalence_key(str(form.get("reading", "")))
-        == _reading_equivalence_key(str(reading))
-    ]
-    matching_form = matching_forms[0] if len(matching_forms) == 1 else None
-    matching_source_ids = (
-        {
+
+    def matching_support(surface: object) -> tuple[set[str], set[str]]:
+        matching_forms = [
+            form
+            for form in form_records
+            if isinstance(form, Mapping)
+            and form.get("surface") == surface
+            and _reading_equivalence_key(str(form.get("reading", "")))
+            == _reading_equivalence_key(str(reading))
+        ]
+        source_ids = {
             str(value)
-            for value in matching_form.get("source_record_ids", [])
+            for form in matching_forms
+            for value in form.get("source_record_ids", [])
             if isinstance(value, str) and value
         }
-        if isinstance(matching_form, Mapping)
-        else set()
-    )
-    matching_source_levels = (
-        matching_form.get("source_levels")
-        if isinstance(matching_form, Mapping)
-        else None
-    )
-    matching_levels = (
-        {
+        levels = {
             str(level)
-            for levels in matching_source_levels.values()
-            if isinstance(levels, list)
-            for level in levels
+            for form in matching_forms
+            for source_levels in [form.get("source_levels")]
+            if isinstance(source_levels, Mapping)
+            for values in source_levels.values()
+            if isinstance(values, list)
+            for level in values
             if str(level) in LEVELS
         }
-        if isinstance(matching_source_levels, Mapping)
-        else set()
-    )
+        return source_ids, levels
+
+    front_source_ids, front_levels = matching_support(front_word)
+    selected_word_source_ids, selected_word_levels = matching_support(word)
     if (
-        payload.get("policy_version") != LEVEL_FORM_POLICY_VERSION
+        payload.get("policy_version") != HIRAGANA_FORM_POLICY_VERSION
         or source_level not in LEVELS
-        or not isinstance(target_level, str)
-        or target_level not in LEVELS
-        or LEVELS.index(target_level) <= LEVELS.index(source_level)
+        or not isinstance(word_level, str)
+        or word_level not in LEVELS
+        or LEVELS.index(word_level) <= LEVELS.index(source_level)
+        or not isinstance(word, str)
+        or not word
+        or _KANJI_CHARACTER_RE.search(word) is None
         or not isinstance(front_word, str)
         or not front_word
-        or not _is_kana_only(str(record.get("word", "")))
-        or front_word == record.get("word")
-        or _KANJI_CHARACTER_RE.search(front_word) is None
+        or not _is_kana_only(front_word.strip("～"))
+        or front_word == word
         or not isinstance(reading, str)
         or not reading
         or reading != record.get("reading")
@@ -2108,39 +2130,41 @@ def _level_form_field_values(record: Mapping[str, Any]) -> dict[str, str]:
             for value in source_record_ids
         )
         or len(source_record_ids) != len(set(source_record_ids))
-        or matching_form is None
-        or not set(source_record_ids).issubset(matching_source_ids)
-        or target_level not in matching_levels
-        or not isinstance(alternate_forms, list)
+        or not set(source_record_ids).issubset(front_source_ids)
+        or source_level not in front_levels
+        or not isinstance(word_source_record_ids, list)
+        or not word_source_record_ids
+        or any(
+            not isinstance(value, str) or not value
+            for value in word_source_record_ids
+        )
+        or len(word_source_record_ids) != len(set(word_source_record_ids))
+        or not set(word_source_record_ids).issubset(selected_word_source_ids)
+        or word_level not in selected_word_levels
+        or not isinstance(alternate_word_forms, list)
         or any(
             not isinstance(value, str)
             or not value
-            or value == front_word
+            or value == word
             or _KANJI_CHARACTER_RE.search(value) is None
-            for value in alternate_forms
+            for value in alternate_word_forms
         )
-        or len(alternate_forms) != len(set(alternate_forms))
+        or len(alternate_word_forms) != len(set(alternate_word_forms))
         or any(
-            not any(
-                isinstance(form, Mapping)
-                and form.get("surface") == alternate
-                and _reading_equivalence_key(str(form.get("reading", "")))
-                == _reading_equivalence_key(str(reading))
-                for form in form_records
-            )
-            for alternate in alternate_forms
+            word_level not in matching_support(alternate)[1]
+            for alternate in alternate_word_forms
         )
     ):
-        raise DeckBuildError(f"invalid level-form card payload: {note_id}")
+        raise DeckBuildError(f"invalid hiragana-form card payload: {note_id}")
 
     return {
-        "VariantJLPT": html.escape(target_level),
-        "VariantWord": html.escape(front_word),
-        "VariantContext": _front_context_html(
+        "WordJLPT": html.escape(word_level),
+        "HiraganaWord": html.escape(front_word),
+        "HiraganaContext": _front_context_html(
             front_context,
             target=front_word,
             note_id=note_id,
-            label="variant",
+            label="hiragana",
         ),
     }
 
@@ -2155,11 +2179,11 @@ def _vocabulary_card_routes(
             f"vocabulary JLPT level changed: {record.get('note_id')}"
         )
     routes = {
-        VOCABULARY_TEMPLATE: f"vocabulary:{level}",
+        VOCABULARY_TEMPLATE: f"vocabulary:{fields['WordJLPT'] or level}",
         AUDIO_TEMPLATE: f"audio:{level}",
     }
-    if fields["VariantWord"]:
-        routes[LEVEL_FORM_TEMPLATE] = f"vocabulary:{fields['VariantJLPT']}"
+    if fields["HiraganaWord"]:
+        routes[HIRAGANA_FORM_TEMPLATE] = f"vocabulary:{level}"
     if record.get("card_templates") != list(routes) or record.get(
         "deck_keys"
     ) != list(routes.values()):
@@ -2217,7 +2241,7 @@ def _vocabulary_field_values(record: Mapping[str, Any]) -> dict[str, str]:
         "CanonicalRecordHash": html.escape(str(record["canonical_record_hash"])),
         "WordAudio": _sound_tag(record["word_audio_filename"]),
         "WordAudioFile": _click_audio_tag(record["word_audio_filename"]),
-        **_level_form_field_values(record),
+        **_hiragana_form_field_values(record),
         **study_fields,
     }
     for index in range(1, 5):
@@ -4082,14 +4106,14 @@ def _rendered_sample_candidates(
         )
     if any(
         note.note_type()["name"] == VOCABULARY_NOTETYPE
-        and bool(note["VariantWord"])
+        and bool(note["HiraganaWord"])
         for note in notes.values()
     ):
         choose(
-            "level-form-vocabulary",
+            "hiragana-form-vocabulary",
             lambda note: note.note_type()["name"] == VOCABULARY_NOTETYPE
-            and bool(note["VariantWord"]),
-            LEVEL_FORM_TEMPLATE,
+            and bool(note["HiraganaWord"]),
+            HIRAGANA_FORM_TEMPLATE,
         )
     choose(
         "vocabulary-one-example",
@@ -4272,7 +4296,7 @@ def write_rendered_samples(
             HTML_AUTOPLAY_WORD_SCOPE_RE.findall(answer)
         )
         expected_answer_autoplay_scope_count = int(
-            template in {VOCABULARY_TEMPLATE, LEVEL_FORM_TEMPLATE}
+            template in {VOCABULARY_TEMPLATE, HIRAGANA_FORM_TEMPLATE}
         )
         if (
             (question_has_audio and click_audio_markup in question)
@@ -4289,7 +4313,7 @@ def write_rendered_samples(
             )
         ):
             raise DeckBuildError("HTML audio autoplay scope contract changed")
-        if template in {VOCABULARY_TEMPLATE, LEVEL_FORM_TEMPLATE} and (
+        if template in {VOCABULARY_TEMPLATE, HIRAGANA_FORM_TEMPLATE} and (
             question_has_audio
             or answer_has_audio
             or answer.count("[anki:play:") != 0
@@ -4305,13 +4329,13 @@ def write_rendered_samples(
             or answer_autoplay_scope_count
         ):
             raise DeckBuildError("audio-card playback contract changed")
-        if template == LEVEL_FORM_TEMPLATE and (
-            note["VariantWord"] not in question
+        if template == HIRAGANA_FORM_TEMPLATE and (
+            note["HiraganaWord"] not in question
             or note["Meaning"] in question
             or "【" in question
             or "】" in question
         ):
-            raise DeckBuildError("level-form vocabulary front changed")
+            raise DeckBuildError("hiragana-form vocabulary front changed")
         if template == PRACTICE_QUESTION_TEMPLATE and (
             question_has_audio
             or click_audio_markup in question

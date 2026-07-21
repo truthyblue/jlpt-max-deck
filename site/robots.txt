@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://OWNER.github.io/REPOSITORY/sitemap.xml
+Sitemap: https://truthyblue.github.io/jlpt-max-deck/sitemap.xml

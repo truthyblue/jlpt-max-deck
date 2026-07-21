@@ -20,10 +20,6 @@
   - `public-release.json`
 - 필요한 PDF 17개의 정확한 판본
 
-현재 릴리스 후보의 17-PDF 종단 빌드는 macOS에서 확인했습니다. Windows x64
-실행 경로와 플랫폼 공통 합성 테스트는 마련되어 있지만, 실제 Windows 17-PDF
-수용 검증은 아직 남아 있습니다.
-
 `uv`는 Python 3.13과 `uv.lock`에 고정된 패키지를 준비합니다. 첫 의존성 설치에는
 네트워크가 필요할 수 있습니다. 의존성 준비가 끝난 뒤 덱 생성 단계에서는 PDF를
 업로드하지 않으며 OCR, LLM, TTS, 출판사 서버 또는 외부 API를 호출하지 않습니다.
@@ -57,7 +53,7 @@
 | --- | --- |
 | ZIP 크기 | `public-release.json`의 `archive_bytes` |
 | ZIP SHA-256 | `public-release.json`의 `archive_sha256` |
-| logical APKG hash | `dcbd421a4455438be350d78cd1b9b58dd6f660071a88ac317302419fa0951b86` |
+| logical APKG hash | `8ba7f72713f2889bf6d842324b596140c4d0f78a77cc97c68f7157bb1c3b97ea` |
 
 ### macOS
 
@@ -179,9 +175,9 @@ Windows PowerShell:
 - `status`가 `passed`
 - `unresolved`가 `0`
 - `expected_logical_apkg_hash`가
-  `dcbd421a4455438be350d78cd1b9b58dd6f660071a88ac317302419fa0951b86`
-- 노트 15,996개, 카드 21,897개
-- 미디어 17,511개: MP3 17,497개와 정적 파일 14개
+  `8ba7f72713f2889bf6d842324b596140c4d0f78a77cc97c68f7157bb1c3b97ea`
+- 노트 15,996개, 카드 21,897개(`어휘(히라가나)` 카드 101개 포함)
+- 미디어 17,489개: MP3 17,475개와 정적 파일 14개
 
 공개 콘텐츠 구성은 다음과 같습니다.
 
@@ -206,7 +202,7 @@ hash입니다. 이 hash는 note ID, Anki GUID, 카드와 덱 구조, source prov
 
 Anki가 처음이라면 [Anki 설치와 기기별 가져오기](anki.md)를 먼저 확인하세요.
 완성 APKG는 Desktop, iPhone/iPad, Android에 각각 직접 가져올 수 있습니다.
-미디어 17,511개가 들어 있으므로 휴대기기에 APKG를 로컬 전송해 직접 가져오면
+미디어 17,489개가 들어 있으므로 휴대기기에 APKG를 로컬 전송해 직접 가져오면
 대용량 음성을 별도로 내려받는 시간을 기다리지 않고 바로 학습할 수 있습니다.
 
 ### Windows·macOS Anki Desktop

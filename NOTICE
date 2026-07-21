@@ -67,26 +67,26 @@ coordinates, structural indices, and hashes.  They are designed not to contain
 publisher Korean text.  This permission does not authorize copying publisher
 material into a redistributed bundle.
 
-This source repository contains seventeen fixed PNG card-screen samples for the
+This source repository contains seventeen fixed WebP card-screen samples for the
 project site:
 
-    site/assets/card-dasu-answer.png
-    site/assets/card-heiki-register.png
-    site/assets/card-hontou-usage.png
-    site/assets/card-itoguchi-formation.png
-    site/assets/card-kanji-ima-answer.png
-    site/assets/practice-context-defined-answer.png
-    site/assets/practice-context-defined.png
-    site/assets/practice-kanji-reading-answer.png
-    site/assets/practice-kanji-reading.png
-    site/assets/practice-orthography-answer.png
-    site/assets/practice-orthography.png
-    site/assets/practice-paraphrase-answer.png
-    site/assets/practice-paraphrase.png
-    site/assets/practice-usage-answer.png
-    site/assets/practice-usage.png
-    site/assets/practice-word-formation-answer.png
-    site/assets/practice-word-formation.png
+    site/assets/card-dasu-answer.webp
+    site/assets/card-heiki-register.webp
+    site/assets/card-hontou-usage.webp
+    site/assets/card-itoguchi-formation.webp
+    site/assets/card-kanji-ima-answer.webp
+    site/assets/practice-context-defined-answer.webp
+    site/assets/practice-context-defined.webp
+    site/assets/practice-kanji-reading-answer.webp
+    site/assets/practice-kanji-reading.webp
+    site/assets/practice-orthography-answer.webp
+    site/assets/practice-orthography.webp
+    site/assets/practice-paraphrase-answer.webp
+    site/assets/practice-paraphrase.webp
+    site/assets/practice-usage-answer.webp
+    site/assets/practice-usage.webp
+    site/assets/practice-word-formation-answer.webp
+    site/assets/practice-word-formation.webp
 
 They are limited feature demonstrations, not a current-field identity contract,
 a publisher-text dataset, or a distributable excerpt of the finished deck.  A

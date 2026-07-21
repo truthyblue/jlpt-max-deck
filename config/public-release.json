@@ -1,10 +1,10 @@
 {
-  "archive_bytes": 850293356,
-  "archive_sha256": "a1074b4d38889c1d8d268f7189f7372cc070babd448160d3a18a067fd32642a5",
-  "bundle_manifest_sha256": "6730e75e78abe2fb4a3cc50913e257cc5ba6dc0ef58cb2a59d370b9fb28aaf7d",
-  "payload_hash": "c5918ccf9d0c58d56d75a3e62651791a161c0ff40dab84b0850a98affe16e788",
+  "archive_bytes": 849799061,
+  "archive_sha256": "a198e34b0262ec4467a752ec3fbc557c9af67c2f2adbcd4b2ed08659bdffab39",
+  "bundle_manifest_sha256": "994e19aa984b55b39e037971f0b424cc3f4938ea552fa1d628ba6c463a00e449",
+  "payload_hash": "f649d7b830717efa06ff72b9d1ff6658f53f3737e32141fd00279eb73407d3b5",
   "policy_version": "public-release-pin-v1",
-  "public_builder_source_hash": "9c4b85c9f3417fbf1df6617b51cf1871fdf85ddef6dde86487199fe49e27b871",
+  "public_builder_source_hash": "a1b0a1267f0efa52d9c58b0bdc6bef0ac83582b6df730cf2670350a4e74fdc94",
   "schema_version": 1,
   "status": "passed",
   "unresolved": 0

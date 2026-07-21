@@ -31,7 +31,7 @@ _KANA_ONLY_RE = re.compile(r"^[\u3040-\u30ffー・･～〜~()（）]+$")
 _LEVELS = ("N5", "N4", "N3", "N2", "N1")
 _LEVEL_RANK = {level: index for index, level in enumerate(_LEVELS)}
 _PRIORITY_TIERS = ("01_essential", "02_standard", "03_extended")
-_LEVEL_FORM_CARD_POLICY_VERSION = "learner-level-form-card-v1"
+_HIRAGANA_FORM_CARD_POLICY_VERSION = "learner-hiragana-form-card-v1"
 _LONG_VOWEL_BY_HIRAGANA = {
     **{character: "あ" for character in "ぁあかがさざただなはばぱまゃやらゎわ"},
     **{character: "い" for character in "ぃいきぎしじちぢにひびぴみりゐ"},
@@ -152,12 +152,12 @@ def _public_display_form(forms: Sequence[Mapping[str, Any]]) -> dict[str, str]:
     }
 
 
-def _public_level_form_card(
+def _public_hiragana_form_projection(
     forms: Sequence[Mapping[str, Any]],
     *,
     display_form: str,
     reading: str,
-) -> dict[str, Any] | None:
+) -> tuple[str, dict[str, Any]] | None:
     if not _is_kana_only(display_form.strip("～")):
         return None
     placement_level = _public_display_form(forms)["placement_level"]
@@ -178,15 +178,15 @@ def _public_level_form_card(
         advanced_levels_by_surface[surface] = first_level
     if not advanced_levels_by_surface:
         return None
-    target_level = _easiest_level(
+    word_level = _easiest_level(
         set(advanced_levels_by_surface.values())
     )
     support: dict[str, dict[str, Any]] = {}
     for form in forms:
         surface = str(form.get("surface", ""))
         if (
-            advanced_levels_by_surface.get(surface) != target_level
-            or target_level not in _form_levels(form)
+            advanced_levels_by_surface.get(surface) != word_level
+            or word_level not in _form_levels(form)
             or _reading_equivalence_key(str(form.get("reading", reading)))
             != _reading_equivalence_key(reading)
         ):
@@ -198,16 +198,16 @@ def _public_level_form_card(
         value["publishers"].update(
             str(publisher)
             for publisher, levels in form.get("source_levels", {}).items()
-            if target_level in levels
+            if word_level in levels
         )
         value["source_record_ids"].update(
             str(source_id)
             for source_id in form.get("source_record_ids", [])
-            if _source_level(str(source_id)) == target_level
+            if _source_level(str(source_id)) == word_level
         )
     if not support:
         raise PublicContentError(
-            f"public level-form card lacks target-level support: {display_form}"
+            f"public hiragana-form card lacks word-level support: {display_form}"
         )
 
     def strength_key(surface: str) -> tuple[int, int, bool, str]:
@@ -219,15 +219,32 @@ def _public_level_form_card(
         )
 
     ranked_surfaces = sorted(support, key=strength_key)
-    front_word = ranked_surfaces[0]
-    return {
-        "alternate_forms": ranked_surfaces[1:],
+    word = ranked_surfaces[0]
+    front_source_record_ids = sorted(
+        {
+            str(source_id)
+            for form in forms
+            if str(form.get("surface", "")) == display_form
+            and placement_level in _form_levels(form)
+            and _reading_equivalence_key(str(form.get("reading", reading)))
+            == _reading_equivalence_key(reading)
+            for source_id in form.get("source_record_ids", [])
+            if _source_level(str(source_id)) == placement_level
+        }
+    )
+    if not front_source_record_ids:
+        raise PublicContentError(
+            f"public hiragana form lacks lower-level support: {display_form}"
+        )
+    return word, {
+        "alternate_word_forms": ranked_surfaces[1:],
         "front_context": "",
-        "front_word": front_word,
-        "policy_version": _LEVEL_FORM_CARD_POLICY_VERSION,
+        "front_word": display_form,
+        "policy_version": _HIRAGANA_FORM_CARD_POLICY_VERSION,
         "reading": reading,
-        "source_record_ids": sorted(support[front_word]["source_record_ids"]),
-        "target_jlpt_level": target_level,
+        "source_record_ids": front_source_record_ids,
+        "word_jlpt_level": word_level,
+        "word_source_record_ids": sorted(support[word]["source_record_ids"]),
     }
 
 
@@ -260,17 +277,23 @@ def _reproject_public_learner_form(
     note.pop("vocabulary_context", None)
     note.pop("simple_orthography", None)
     note.pop("level_form_card", None)
-    level_form_card = _public_level_form_card(
+    note.pop("hiragana_form_card", None)
+    hiragana_projection = _public_hiragana_form_projection(
         forms,
         display_form=note["word"],
         reading=reading,
     )
-    if level_form_card is not None:
-        note["level_form_card"] = level_form_card
-        note["card_templates"].append("어휘(상위급수)")
-        note["deck_keys"].append(
-            f"vocabulary:{level_form_card['target_jlpt_level']}"
-        )
+    if hiragana_projection is not None:
+        word, hiragana_form_card = hiragana_projection
+        note["word"] = word
+        note["vocabulary_front"] = word
+        note["hiragana_form_card"] = hiragana_form_card
+        note["card_templates"].append("어휘(히라가나)")
+        note["deck_keys"] = [
+            f"vocabulary:{hiragana_form_card['word_jlpt_level']}",
+            f"audio:{level}",
+            f"vocabulary:{level}",
+        ]
     note["tags"] = sorted(
         {
             *(
@@ -289,9 +312,9 @@ def _reproject_public_learner_form(
     reading = "・".join(reading_override)
     note["reading_variants"] = list(reading_override)
     note["reading"] = reading
-    level_form_card = note.get("level_form_card")
-    if isinstance(level_form_card, dict):
-        level_form_card["reading"] = reading
+    hiragana_form_card = note.get("hiragana_form_card")
+    if isinstance(hiragana_form_card, dict):
+        hiragana_form_card["reading"] = reading
     return note
 
 
@@ -386,17 +409,23 @@ def _refresh_public_vocabulary_fronts(
         note.pop("front_hint", None)
         note.pop("vocabulary_context", None)
         note["vocabulary_front"] = str(note["word"])
-        level_form_card = note.get("level_form_card")
-        if isinstance(level_form_card, dict):
-            level_form_card["front_context"] = ""
+        hiragana_form_card = note.get("hiragana_form_card")
+        if isinstance(hiragana_form_card, dict):
+            hiragana_form_card["front_context"] = ""
     cards_by_front: dict[
         tuple[str, str, str], list[dict[str, Any]]
     ] = {}
     for note in notes:
         level = str(note["jlpt_level"])
         word = str(note["word"])
+        hiragana_form_card = note.get("hiragana_form_card")
+        word_level = (
+            str(hiragana_form_card["word_jlpt_level"])
+            if isinstance(hiragana_form_card, dict)
+            else level
+        )
         cards_by_front.setdefault(
-            ("visual", level, word), []
+            ("visual", word_level, word), []
         ).append(
             {
                 "card_kind": "vocabulary",
@@ -404,19 +433,18 @@ def _refresh_public_vocabulary_fronts(
                 "note": note,
             }
         )
-        level_form_card = note.get("level_form_card")
-        if isinstance(level_form_card, dict):
+        if isinstance(hiragana_form_card, dict):
             cards_by_front.setdefault(
                 (
                     "visual",
-                    str(level_form_card["target_jlpt_level"]),
-                    str(level_form_card["front_word"]),
+                    level,
+                    str(hiragana_form_card["front_word"]),
                 ),
                 [],
             ).append(
                 {
-                    "card_kind": "level_form",
-                    "context_surface": str(level_form_card["front_word"]),
+                    "card_kind": "hiragana_form",
+                    "context_surface": str(hiragana_form_card["front_word"]),
                     "note": note,
                 }
             )
@@ -460,10 +488,12 @@ def _refresh_public_vocabulary_fronts(
                     )
                 note["vocabulary_context"] = context
             else:
-                level_form_card = note.get("level_form_card")
-                if not isinstance(level_form_card, dict):
-                    raise PublicContentError("public level-form context lost payload")
-                level_form_card["front_context"] = context
+                hiragana_form_card = note.get("hiragana_form_card")
+                if not isinstance(hiragana_form_card, dict):
+                    raise PublicContentError(
+                        "public hiragana-form context lost payload"
+                    )
+                hiragana_form_card["front_context"] = context
 
 
 def _source_korean_suffix(value: str) -> str:

@@ -16,11 +16,12 @@ from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_ROOT = ROOT / "site"
-SITE_URL_PLACEHOLDER = "https://OWNER.github.io/REPOSITORY"
+REPOSITORY_URL = "https://github.com/truthyblue/jlpt-max-deck"
+SITE_URL = "https://truthyblue.github.io/jlpt-max-deck"
 INDEXABLE_PAGE_URLS = {
-    "index.html": f"{SITE_URL_PLACEHOLDER}/",
-    "getting-started.html": f"{SITE_URL_PLACEHOLDER}/getting-started.html",
-    "install-anki.html": f"{SITE_URL_PLACEHOLDER}/install-anki.html",
+    "index.html": f"{SITE_URL}/",
+    "getting-started.html": f"{SITE_URL}/getting-started.html",
+    "install-anki.html": f"{SITE_URL}/install-anki.html",
 }
 SPEC = importlib.util.spec_from_file_location(
     "prepare_pages_site", ROOT / "scripts" / "prepare-pages-site.py"
@@ -895,14 +896,18 @@ class SiteContractTest(unittest.TestCase):
             "getting-started.html": "시작 가이드",
             "install-anki.html": "Anki 설치",
         }
-        nav_links = {
-            attrs.get("href"): attrs.get("aria-label")
-            for tag, attrs in self.parser.elements
-            if tag == "a"
-            and attrs.get("href") in expected_nav_labels
-            and attrs.get("aria-label")
-            == expected_nav_labels.get(attrs.get("href"))
-        }
+        nav_links: dict[str, str] = {}
+        for tag, attrs in self.parser.elements:
+            href = attrs.get("href")
+            label = attrs.get("aria-label")
+            if (
+                tag == "a"
+                and href is not None
+                and label is not None
+                and href in expected_nav_labels
+                and label == expected_nav_labels[href]
+            ):
+                nav_links[href] = label
         self.assertEqual(nav_links, expected_nav_labels)
 
         support_grid_element = next(
@@ -1158,7 +1163,7 @@ class SiteContractTest(unittest.TestCase):
             "199<small>어휘</small>",
             "문체·사용역</dt><dd>104",
             "핵심 용법</dt><dd>74<small>용법 76개</small>",
-            "상위급수 한자 표기</dt><dd>101<small>추가 카드</small>",
+            "어휘(히라가나)</dt><dd>101<small>추가 카드</small>",
             "한자 노트</dt><dd>2,337<small>일상무따 1·2권 구성</small>",
             "7,850개 유형별 실전 카드",
             "한자 읽기 1,758",
@@ -1170,17 +1175,19 @@ class SiteContractTest(unittest.TestCase):
             "N5 수량 표현·날짜·월·요일 읽기 215개",
             "15,996 notes",
             "21,897 cards",
-            "17,511 media",
+            "17,489 media",
         )
         for snippet in expected_snippets:
             self.assertIn(snippet, self.html)
         self.assertNotIn("1,342", self.html)
         self.assertNotIn("1,628", self.html)
         self.assertNotIn("<dd>206<small>어휘", self.html)
+        self.assertNotIn("상위급수 한자 표기", self.html)
+        self.assertNotIn("17,511", self.html)
 
     def test_build_section_commands_are_copy_paste_complete(self) -> None:
-        placeholder = "https://github.com/OWNER/REPOSITORY"
-        self.assertIn(placeholder, self.html)
+        self.assertIn(REPOSITORY_URL, self.html)
+        self.assertNotIn("OWNER/REPOSITORY", self.html)
         for friendly_copy in (
             "컴퓨터가 익숙하지 않아도 괜찮습니다.",
             "터미널 여는 법:",
@@ -1188,15 +1195,31 @@ class SiteContractTest(unittest.TestCase):
             "복사되는 것은 한 줄뿐입니다.",
             "한 줄 시작 명령 복사",
             "Anki에서 바로 가져올 수 있는 .apkg 파일",
-            "지금은 준비 중입니다:",
         ):
             self.assertIn(friendly_copy, self.html)
+        all_site_html = "\n".join(
+            page.read_text(encoding="utf-8")
+            for page in sorted(SITE_ROOT.glob("*.html"))
+        )
+        for prelaunch_caveat in (
+            "지금은 준비 중입니다",
+            "GitHub remote",
+            "Pages를 배포하면 저장소 주소를 자동으로",
+            "현재 릴리스 후보",
+            "Windows 실제 컴퓨터에서의 최종 확인",
+            "Windows 검증 대기",
+            "Windows 미검증",
+            "현재 공개 배포 준비 상태",
+            "사이트가 GitHub Pages와 첫 Release에 연결되기 전",
+        ):
+            self.assertNotIn(prelaunch_caveat, all_site_html)
         self.assertNotIn("macOS용 방법을 보여드리고 있습니다", self.html)
         self.assertNotIn("data-platform-status", self.html)
         self.assertIn('data-copy-command="macos-build-command"', self.html)
         self.assertIn('data-copy-command="windows-build-command"', self.html)
-        self.assertIn('id="macos-build-command" data-repository-command', self.html)
-        self.assertIn('id="windows-build-command" data-repository-command', self.html)
+        self.assertIn('id="macos-build-command"', self.html)
+        self.assertIn('id="windows-build-command"', self.html)
+        self.assertNotIn("data-repository-command", self.html)
         self.assertEqual(self.html.count('<details class="command-details">'), 2)
 
         commands: dict[str, str] = {}
@@ -1214,16 +1237,23 @@ class SiteContractTest(unittest.TestCase):
         macos_command = commands["macos"]
         self.assertIn("set -o pipefail", macos_command)
         self.assertIn("curl -fsSL", macos_command)
-        self.assertIn("scripts/bootstrap-public.sh", macos_command)
-        self.assertIn("| bash -s --", macos_command)
+        self.assertIn(
+            f"{REPOSITORY_URL}/raw/refs/heads/main/scripts/bootstrap-public.sh",
+            macos_command,
+        )
+        self.assertIn("| bash", macos_command)
+        self.assertNotIn("bash -s --", macos_command)
         self.assertNotIn("mktemp", macos_command)
         self.assertLess(len(macos_command), 240)
 
         windows_command = commands["windows"]
         self.assertIn("[scriptblock]::Create", windows_command)
         self.assertIn("(irm ", windows_command)
-        self.assertIn("scripts/bootstrap-public.ps1", windows_command)
-        self.assertIn("-RepositoryUrl", windows_command)
+        self.assertIn(
+            f"{REPOSITORY_URL}/raw/refs/heads/main/scripts/bootstrap-public.ps1",
+            windows_command,
+        )
+        self.assertNotIn("-RepositoryUrl", windows_command)
         self.assertNotIn("GetTempPath", windows_command)
         self.assertNotIn("iex", windows_command.lower())
         self.assertLess(len(windows_command), 240)
@@ -1242,7 +1272,8 @@ class SiteContractTest(unittest.TestCase):
             ROOT / "scripts" / "bootstrap-public.ps1"
         ).read_text(encoding="utf-8")
         for snippet in (
-            'release_url="$repository_url/releases/latest/download"',
+            f'release_url="{REPOSITORY_URL}/releases/latest/download"',
+            'if [[ $# -ne 0 ]]',
             "JLPT-MAX-public-bundle.zip.sha256",
             '[[ "$pdf_count" -ne 17 ]]',
             '"$actual_hash" != "$pin_hash"',
@@ -1251,7 +1282,8 @@ class SiteContractTest(unittest.TestCase):
         ):
             self.assertIn(snippet, shell_bootstrap)
         for snippet in (
-            '$ReleaseUrl = "$RepositoryUrl/releases/latest/download"',
+            f'$ReleaseUrl = "{REPOSITORY_URL}/releases/latest/download"',
+            "param()",
             "JLPT-MAX-public-bundle.zip.sha256",
             "Get-FileHash $ZipPath -Algorithm SHA256",
             "if ($PdfCount -ne 17)",
@@ -1259,6 +1291,8 @@ class SiteContractTest(unittest.TestCase):
             "[1/4] 먼저 PDF 17개가 든 폴더를 확인합니다.",
         ):
             self.assertIn(snippet, powershell_bootstrap)
+        self.assertNotIn("repository_url", shell_bootstrap)
+        self.assertNotIn("RepositoryUrl", powershell_bootstrap)
 
         platform_script = (SITE_ROOT / "assets" / "platform.js").read_text(
             encoding="utf-8"
@@ -1356,41 +1390,46 @@ class SiteContractTest(unittest.TestCase):
             "column",
         )
 
-    def test_pages_artifact_has_absolute_repository_links_without_javascript(
+    def test_pages_artifact_preserves_static_repository_links_without_javascript(
         self,
     ) -> None:
+        expected_links = [
+            REPOSITORY_URL,
+            f"{REPOSITORY_URL}/blob/main/docs/build.md",
+            f"{REPOSITORY_URL}/blob/main/docs/build.md",
+            f"{REPOSITORY_URL}/blob/main/scripts/bootstrap-public.sh",
+            f"{REPOSITORY_URL}/blob/main/scripts/bootstrap-public.ps1",
+            f"{REPOSITORY_URL}/blob/main/docs/privacy-and-licensing.md",
+            f"{REPOSITORY_URL}/blob/main/NOTICE",
+        ]
         with tempfile.TemporaryDirectory() as tmp:
             output = Path(tmp) / "pages-site"
-            PREPARE.prepare_site(SITE_ROOT, output, "example/jlpt-max-deck")
+            PREPARE.prepare_site(SITE_ROOT, output)
             parser = _parse(output / "index.html")
             rendered = (output / "index.html").read_text(encoding="utf-8")
 
         linked = [
-            attrs
+            attrs["href"]
             for tag, attrs in parser.elements
-            if tag == "a" and "data-repository-path" in attrs
+            if tag == "a" and attrs.get("href", "").startswith(REPOSITORY_URL)
         ]
-        self.assertEqual(len(linked), 7)
-        for attrs in linked:
-            expected = "https://github.com/example/jlpt-max-deck"
-            if attrs["data-repository-path"]:
-                expected += f"/{attrs['data-repository-path']}"
-            self.assertEqual(attrs["href"], expected)
-        self.assertNotIn("https://github.com/OWNER/REPOSITORY", rendered)
+        self.assertEqual(linked, expected_links)
         self.assertIn(
-            "https://github.com/example/jlpt-max-deck/raw/refs/heads/main/"
-            "scripts/bootstrap-public.sh",
+            f"{REPOSITORY_URL}/raw/refs/heads/main/scripts/bootstrap-public.sh",
             rendered,
         )
         self.assertIn(
-            "https://github.com/example/jlpt-max-deck/raw/refs/heads/main/"
-            "scripts/bootstrap-public.ps1",
+            f"{REPOSITORY_URL}/raw/refs/heads/main/scripts/bootstrap-public.ps1",
             rendered,
         )
-        self.assertIn(
-            "-RepositoryUrl 'https://github.com/example/jlpt-max-deck'",
-            rendered,
-        )
+        for removed_hook in (
+            "OWNER/REPOSITORY",
+            "data-repository-path",
+            "data-repository-command",
+            "-RepositoryUrl",
+            "document.querySelectorAll('[data-repository-path]')",
+        ):
+            self.assertNotIn(removed_hook, rendered)
         rendered_ctas = {
             attrs["id"]: attrs
             for tag, attrs in parser.elements
@@ -1416,29 +1455,63 @@ class SiteContractTest(unittest.TestCase):
         for attrs in ctas.values():
             self.assertNotIn("data-repository-path", attrs)
 
-    def test_pages_preparation_fails_before_creating_partial_output(self) -> None:
-        for repository in (
-            "invalid repository",
-            "../repo",
-            "owner/..",
-            "./repo",
-            "owner/.",
-            "owner/repo/extra",
-        ):
-            with self.subTest(repository=repository), tempfile.TemporaryDirectory() as tmp:
-                output = Path(tmp) / "pages-site"
-                with self.assertRaises(PREPARE.SitePreparationError):
-                    PREPARE.prepare_site(SITE_ROOT, output, repository)
-                self.assertFalse(output.exists())
+    def test_pages_preparation_rejects_unsafe_source_and_output_before_copy(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            temp_root = Path(tmp)
+            missing_source = temp_root / "missing-source"
+            missing_source_output = temp_root / "missing-source-output"
+            with self.assertRaises(PREPARE.SitePreparationError):
+                PREPARE.prepare_site(missing_source, missing_source_output)
+            self.assertFalse(missing_source_output.exists())
 
-    def test_skip_target_and_repository_rewrite_hooks_are_present(self) -> None:
+            incomplete_source = temp_root / "incomplete-source"
+            incomplete_source.mkdir()
+            (incomplete_source / "index.html").write_text(
+                '<link rel="stylesheet" href="assets/missing.css">',
+                encoding="utf-8",
+            )
+            incomplete_output = temp_root / "incomplete-output"
+            with self.assertRaises(PREPARE.SitePreparationError):
+                PREPARE.prepare_site(incomplete_source, incomplete_output)
+            self.assertFalse(incomplete_output.exists())
+
+            existing_output = temp_root / "existing-output"
+            existing_output.mkdir()
+            sentinel = existing_output / "sentinel.txt"
+            sentinel.write_text("preserve", encoding="utf-8")
+            with self.assertRaises(PREPARE.SitePreparationError):
+                PREPARE.prepare_site(SITE_ROOT, existing_output)
+            self.assertEqual(sentinel.read_text(encoding="utf-8"), "preserve")
+
+            nested_source = temp_root / "nested-source"
+            nested_source.mkdir()
+            (nested_source / "index.html").write_text(
+                "<!doctype html><title>safe source</title>",
+                encoding="utf-8",
+            )
+            nested_output = nested_source / "build" / "site"
+            with self.assertRaises(PREPARE.SitePreparationError):
+                PREPARE.prepare_site(nested_source, nested_output)
+            self.assertFalse(nested_output.exists())
+
+    def test_skip_target_and_repository_links_are_static(self) -> None:
         main = next(
             attrs
             for tag, attrs in self.parser.elements
             if tag == "main" and attrs.get("id") == "main"
         )
         self.assertEqual(main.get("tabindex"), "-1")
-        self.assertIn("document.querySelectorAll('[data-repository-path]')", self.html)
+        for page in sorted(SITE_ROOT.glob("*.html")):
+            html = page.read_text(encoding="utf-8")
+            self.assertIn(REPOSITORY_URL, html, page.name)
+            for removed_hook in (
+                "OWNER/REPOSITORY",
+                "data-repository-path",
+                "data-repository-command",
+                "document.querySelectorAll('[data-repository-path]')",
+                "document.querySelectorAll('[data-repository-command]')",
+            ):
+                self.assertNotIn(removed_hook, html, page.name)
 
     def test_brand_lockups_and_favicon_surface_max(self) -> None:
         self.assertEqual(
@@ -1518,7 +1591,7 @@ class SiteSeoContractTest(unittest.TestCase):
     ) -> None:
         canonical_urls: list[str] = []
         open_graph_urls: list[str] = []
-        expected_image = f"{SITE_URL_PLACEHOLDER}/assets/social-card.jpg"
+        expected_image = f"{SITE_URL}/assets/social-card.jpg"
         expected_types = {
             "index.html": "website",
             "getting-started.html": "article",
@@ -1636,6 +1709,34 @@ class SiteSeoContractTest(unittest.TestCase):
             ],
             [],
         )
+        expected_404_hrefs = {
+            "#main",
+            f"{SITE_URL}/",
+            f"{SITE_URL}/#cards",
+            f"{SITE_URL}/#kanji",
+            f"{SITE_URL}/#practice",
+            f"{SITE_URL}/#reference",
+            f"{SITE_URL}/#start",
+            f"{SITE_URL}/getting-started.html",
+            f"{SITE_URL}/install-anki.html",
+            REPOSITORY_URL,
+        }
+        actual_404_hrefs = {
+            attrs["href"]
+            for tag, attrs in parser.elements
+            if tag == "a" and attrs.get("href")
+        }
+        self.assertEqual(actual_404_hrefs, expected_404_hrefs)
+        for tag, attrs in parser.elements:
+            if tag != "link":
+                continue
+            parsed_asset = urlsplit(attrs.get("href", ""))
+            self.assertEqual(parsed_asset.scheme, "https")
+            self.assertEqual(parsed_asset.netloc, "truthyblue.github.io")
+            self.assertTrue(
+                parsed_asset.path.startswith("/jlpt-max-deck/assets/"),
+                attrs.get("href"),
+            )
         self.assertEqual(
             [
                 attrs
@@ -1652,36 +1753,25 @@ class SiteSeoContractTest(unittest.TestCase):
                 "User-agent: *",
                 "Allow: /",
                 "",
-                f"Sitemap: {SITE_URL_PLACEHOLDER}/sitemap.xml",
+                f"Sitemap: {SITE_URL}/sitemap.xml",
             ],
         )
         sitemap_locations = self._sitemap_locations(SITE_ROOT / "sitemap.xml")
         self.assertEqual(sitemap_locations, list(INDEXABLE_PAGE_URLS.values()))
         self.assertNotIn("404.html", "\n".join(sitemap_locations))
 
-    def test_prepared_artifact_replaces_custom_site_urls_and_fingerprints_assets(
+    def test_prepared_artifact_preserves_static_site_urls_and_fingerprints_assets(
         self,
     ) -> None:
-        custom_site_url = "https://learn.example.test/tools/jlpt-max"
-        expected_urls = {
-            "index.html": f"{custom_site_url}/",
-            "getting-started.html": f"{custom_site_url}/getting-started.html",
-            "install-anki.html": f"{custom_site_url}/install-anki.html",
-        }
         social_asset = SITE_ROOT / "assets" / "social-card.jpg"
         social_version = hashlib.sha256(social_asset.read_bytes()).hexdigest()[:12]
         expected_social_image = (
-            f"{custom_site_url}/assets/social-card.jpg?v={social_version}"
+            f"{SITE_URL}/assets/social-card.jpg?v={social_version}"
         )
 
         with tempfile.TemporaryDirectory() as tmp:
             output = Path(tmp) / "pages-site"
-            PREPARE.prepare_site(
-                SITE_ROOT,
-                output,
-                "example/jlpt-max-deck",
-                custom_site_url,
-            )
+            PREPARE.prepare_site(SITE_ROOT, output)
 
             for path in [
                 *sorted(output.glob("*.html")),
@@ -1693,7 +1783,7 @@ class SiteSeoContractTest(unittest.TestCase):
                 self.assertNotIn("OWNER.github.io", rendered, path.name)
 
             fingerprinted_references = 0
-            for page_name, expected_url in expected_urls.items():
+            for page_name, expected_url in INDEXABLE_PAGE_URLS.items():
                 page = output / page_name
                 parser = _parse(page)
                 self.assertEqual(self._canonical(parser), expected_url)
@@ -1725,10 +1815,22 @@ class SiteSeoContractTest(unittest.TestCase):
                         reference = attrs.get(attribute, "")
                         parsed = urlsplit(reference)
                         if parsed.scheme or parsed.netloc:
+                            if (
+                                parsed.scheme != "https"
+                                or parsed.netloc != "truthyblue.github.io"
+                                or not parsed.path.startswith(
+                                    "/jlpt-max-deck/assets/"
+                                )
+                            ):
+                                continue
+                            relative_asset_path = parsed.path.removeprefix(
+                                "/jlpt-max-deck/"
+                            )
+                        else:
+                            relative_asset_path = parsed.path
+                        if not relative_asset_path.startswith("assets/"):
                             continue
-                        if not parsed.path.startswith("assets/"):
-                            continue
-                        source_asset = SITE_ROOT / parsed.path
+                        source_asset = SITE_ROOT / relative_asset_path
                         self.assertTrue(source_asset.is_file(), reference)
                         expected_version = hashlib.sha256(
                             source_asset.read_bytes()
@@ -1747,12 +1849,12 @@ class SiteSeoContractTest(unittest.TestCase):
                     "User-agent: *",
                     "Allow: /",
                     "",
-                    f"Sitemap: {custom_site_url}/sitemap.xml",
+                    f"Sitemap: {SITE_URL}/sitemap.xml",
                 ],
             )
             self.assertEqual(
                 self._sitemap_locations(output / "sitemap.xml"),
-                list(expected_urls.values()),
+                list(INDEXABLE_PAGE_URLS.values()),
             )
 
 
@@ -1955,7 +2057,7 @@ class BeginnerGuideContractTest(unittest.TestCase):
             "macOS 또는 Windows x64 컴퓨터, 공식 PDF 17개, 인터넷과 저장 공간",
             "로그인과 구매 도서 인증이 필요할 수 있으며",
             "iPhone·iPad용 공식 AnkiMobile은 유료",
-            'data-repository-path="blob/main/docs/troubleshooting.md"',
+            f'href="{REPOSITORY_URL}/blob/main/docs/troubleshooting.md"',
             "문제 해결 안내",
         ):
             self.assertIn(snippet, html)
@@ -2078,8 +2180,8 @@ class BeginnerGuideContractTest(unittest.TestCase):
                 self.assertEqual(len(repo_links), 1)
                 repo_link = repo_links[0]
                 self.assertIn("nav-action", repo_link.get("class", "").split())
-                self.assertEqual(repo_link.get("href"), "../README.md")
-                self.assertIn("data-repository-path", repo_link)
+                self.assertEqual(repo_link.get("href"), REPOSITORY_URL)
+                self.assertNotIn("data-repository-path", repo_link)
                 self.assertEqual(repo_link.get("target"), "_blank")
                 self.assertEqual(repo_link.get("rel"), "noopener noreferrer")
                 self.assertEqual(
@@ -2118,7 +2220,7 @@ class BeginnerGuideContractTest(unittest.TestCase):
             "AnkiMobile",
             "AnkiDroid",
             "JLPT MAX덱",
-            "미디어 17,511개",
+            "미디어 17,489개",
             "AnkiWeb 무료 가입",
             "업로드(Upload)",
             "다운로드(Download)",
@@ -2269,12 +2371,13 @@ class BeginnerGuideContractTest(unittest.TestCase):
         for snippet in (
             'data-copy-command="guide-macos-build-command"',
             'data-copy-command="guide-windows-build-command"',
-            'id="guide-macos-build-command" data-repository-command',
-            'id="guide-windows-build-command" data-repository-command',
+            'id="guide-macos-build-command"',
+            'id="guide-windows-build-command"',
             "접속한 기기의 가져오기 방법이 자동으로 열립니다.",
             "공부할 기기에 APKG를 직접 넣습니다.",
         ):
             self.assertIn(snippet, html)
+        self.assertNotIn("data-repository-command", html)
         self.assertEqual(html.count('<details class="command-details">'), 2)
 
     def test_getting_started_explains_apkg_import_options(self) -> None:
@@ -2537,7 +2640,7 @@ class BeginnerGuideContractTest(unittest.TestCase):
     def test_pages_artifact_preserves_guides_and_closes_local_links(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             output = Path(tmp) / "pages-site"
-            PREPARE.prepare_site(SITE_ROOT, output, "example/jlpt-max-deck")
+            PREPARE.prepare_site(SITE_ROOT, output)
             source_inventory = {
                 path.relative_to(SITE_ROOT).as_posix()
                 for path in SITE_ROOT.rglob("*")
@@ -2557,14 +2660,15 @@ class BeginnerGuideContractTest(unittest.TestCase):
                 encoding="utf-8"
             )
             self.assertIn(
-                "https://github.com/example/jlpt-max-deck/raw/refs/heads/main/"
-                "scripts/bootstrap-public.sh",
+                f"{REPOSITORY_URL}/raw/refs/heads/main/scripts/bootstrap-public.sh",
                 rendered_guide,
             )
             self.assertIn(
-                "-RepositoryUrl 'https://github.com/example/jlpt-max-deck'",
+                f"{REPOSITORY_URL}/raw/refs/heads/main/scripts/bootstrap-public.ps1",
                 rendered_guide,
             )
+            self.assertNotIn("-RepositoryUrl", rendered_guide)
+            self.assertNotIn("data-repository", rendered_guide)
             self._assert_local_contracts(output)
 
 
