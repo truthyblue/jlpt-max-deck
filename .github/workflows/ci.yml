@@ -12,10 +12,6 @@ jobs:
     name: ${{ matrix.label }} portable contracts
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
-    env:
-      GIT_CONFIG_COUNT: "1"
-      GIT_CONFIG_KEY_0: core.autocrlf
-      GIT_CONFIG_VALUE_0: "false"
     strategy:
       fail-fast: false
       matrix:
@@ -34,6 +30,14 @@ jobs:
         with:
           enable-cache: true
           python-version: "3.13"
+
+      - name: Restore canonical metadata line endings
+        if: runner.os == 'Windows'
+        run: >-
+          python -c
+          "from pathlib import Path;
+          path = Path('.gitattributes');
+          path.write_bytes(path.read_bytes().replace(b'\r\n', b'\n'))"
 
       - name: Verify publication boundary
         run: python scripts/verify-public-tree.py
