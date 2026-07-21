@@ -25,8 +25,8 @@
   <link rel="canonical" href="https://truthyblue.github.io/jlpt-max-deck/getting-started.html">
   <title>덱 만들고 Anki에 넣기 — JLPT MAX Deck</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css?v=9f57cf8f447b">
-  <link rel="stylesheet" href="assets/guide.css?v=2f772c05a4fc">
+  <link rel="stylesheet" href="assets/site.css?v=2de7ce3a372f">
+  <link rel="stylesheet" href="assets/guide.css?v=372624d03810">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -171,14 +171,14 @@
           <section class="guide-section" id="build">
             <span class="guide-step-label">2 · 덱 빌드</span>
             <h2>이 페이지에서 바로 빌더를 실행합니다.</h2>
-            <p>Mac이나 Windows에서는 해당 탭이 자동으로 열립니다. 휴대폰에서 보고 있다면 빌드할 컴퓨터에서 이 페이지를 다시 여세요. 노란 버튼을 누르면 시작 스크립트를 안전하게 내려받아 실행하는 명령이 복사됩니다.</p>
+            <p>Mac이나 Windows에서는 해당 탭이 자동으로 열립니다. 휴대폰에서 보고 있다면 빌드할 컴퓨터에서 이 페이지를 다시 여세요. 복사 버튼을 누르면 시작 스크립트를 안전하게 내려받아 실행하는 명령이 복사됩니다.</p>
             <ol class="guide-numbered">
               <li>
                 <strong>PDF 17개를 전용 폴더 하나에 모읍니다.</strong>
                 <p>해커스 10개, 동양북스 5개, 길벗 2개입니다. 다른 PDF가 섞이지 않게 해주세요.</p>
               </li>
               <li>
-                <strong>아래 노란 버튼을 누르고 명령을 붙여 넣습니다.</strong>
+                <strong>아래 복사 버튼을 누르고 명령을 붙여 넣습니다.</strong>
                 <p>Mac은 터미널, Windows는 PowerShell을 연 뒤 붙여 넣고 Enter를 누릅니다.</p>
               </li>
               <li>
@@ -198,28 +198,22 @@
                     <span>macOS · 터미널</span>
                     <div class="command-actions">
                       <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/scripts/bootstrap-public.sh">시작 스크립트 보기 <span aria-hidden="true">↗</span></a>
-                      <button type="button" class="copy-command" data-copy-command="guide-macos-build-command" aria-controls="guide-macos-build-command">한 줄 시작 명령 복사</button>
+                      <button type="button" class="copy-command" data-copy-command="guide-macos-build-command" aria-controls="guide-macos-build-command" aria-label="macOS 명령 복사">복사</button>
                     </div>
                   </header>
                   <p class="command-help"><kbd>⌘ Command</kbd> + <kbd>Space</kbd>를 누르고 ‘터미널’을 검색해 여세요. 복사한 명령을 붙여 넣고 Enter를 누릅니다.</p>
-                  <details class="command-details">
-                    <summary>한 줄 명령 보기</summary>
-                    <pre tabindex="0"><code id="guide-macos-build-command">(set -o pipefail; curl -fsSL 'https://github.com/truthyblue/jlpt-max-deck/raw/refs/heads/main/scripts/bootstrap-public.sh' | bash)</code></pre>
-                  </details>
+                  <pre class="command-line" tabindex="0"><code id="guide-macos-build-command">(set -o pipefail; curl -fsSL 'https://github.com/truthyblue/jlpt-max-deck/raw/refs/heads/main/scripts/bootstrap-public.sh' | bash)</code></pre>
                 </article>
                 <article class="command-card platform-panel" id="guide-windows-build-panel" role="tabpanel" aria-labelledby="guide-windows-build-tab" data-platform-panel="windows">
                   <header>
                     <span>Windows x64 · PowerShell</span>
                     <div class="command-actions">
                       <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/scripts/bootstrap-public.ps1">시작 스크립트 보기 <span aria-hidden="true">↗</span></a>
-                      <button type="button" class="copy-command" data-copy-command="guide-windows-build-command" aria-controls="guide-windows-build-command">한 줄 시작 명령 복사</button>
+                      <button type="button" class="copy-command" data-copy-command="guide-windows-build-command" aria-controls="guide-windows-build-command" aria-label="Windows 명령 복사">복사</button>
                     </div>
                   </header>
                   <p class="command-help">시작 메뉴에서 ‘PowerShell’을 검색해 여세요. 복사한 명령을 붙여 넣고 Enter를 누릅니다.</p>
-                  <details class="command-details">
-                    <summary>한 줄 명령 보기</summary>
-                    <pre tabindex="0"><code id="guide-windows-build-command">&amp; ([scriptblock]::Create((irm 'https://github.com/truthyblue/jlpt-max-deck/raw/refs/heads/main/scripts/bootstrap-public.ps1')))</code></pre>
-                  </details>
+                  <pre class="command-line" tabindex="0"><code id="guide-windows-build-command">&amp; ([scriptblock]::Create((irm 'https://github.com/truthyblue/jlpt-max-deck/raw/refs/heads/main/scripts/bootstrap-public.ps1')))</code></pre>
                 </article>
               </div>
               <p class="command-safety"><strong>복사되는 것은 한 줄뿐입니다.</strong> 이 명령은 공개된 시작 스크립트를 내려받아 바로 실행합니다. PDF 선택부터 파일 검증과 덱 빌드까지는 시작 스크립트 안에서 처리합니다. 실행 전에 내용을 확인하려면 각 카드의 ‘시작 스크립트 보기’를 누르세요.</p>
@@ -592,6 +586,6 @@
     <p class="legal">Builder code AGPL-3.0-or-later · 완성 APKG는 개인 학습용</p>
     <p class="disclaimer">Anki 또는 각 출판사의 공식 제품이나 후원 프로젝트가 아닙니다.</p>
   </footer>
-  <script src="assets/platform.js?v=431a5fb869c6"></script>
+  <script src="assets/platform.js?v=54001ae82d36"></script>
 </body>
 </html>

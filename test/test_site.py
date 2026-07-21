@@ -1189,12 +1189,11 @@ class SiteContractTest(unittest.TestCase):
         self.assertIn(REPOSITORY_URL, self.html)
         self.assertNotIn("OWNER/REPOSITORY", self.html)
         for friendly_copy in (
-            "컴퓨터가 익숙하지 않아도 괜찮습니다.",
+            "준비됐다면 바로",
+            "처음이라면 시작 가이드부터 확인하세요.",
             "터미널 여는 법:",
             "PowerShell 여는 법:",
             "복사되는 것은 한 줄뿐입니다.",
-            "한 줄 시작 명령 복사",
-            "Anki에서 바로 가져올 수 있는 .apkg 파일",
         ):
             self.assertIn(friendly_copy, self.html)
         all_site_html = "\n".join(
@@ -1220,7 +1219,20 @@ class SiteContractTest(unittest.TestCase):
         self.assertIn('id="macos-build-command"', self.html)
         self.assertIn('id="windows-build-command"', self.html)
         self.assertNotIn("data-repository-command", self.html)
-        self.assertEqual(self.html.count('<details class="command-details">'), 2)
+        self.assertEqual(
+            self.html.count('<pre class="command-line" tabindex="0">'), 2
+        )
+        for removed_copy in (
+            "노란 버튼",
+            "한 줄 시작 명령 복사",
+            '<details class="command-details">',
+            "한 줄 명령 보기",
+            'class="steps reveal"',
+            'class="start-prerequisite"',
+        ):
+            self.assertNotIn(removed_copy, self.html)
+        self.assertIn('aria-label="macOS 명령 복사">복사</button>', self.html)
+        self.assertIn('aria-label="Windows 명령 복사">복사</button>', self.html)
 
         commands: dict[str, str] = {}
         for platform in ("macos", "windows"):
@@ -1357,6 +1369,10 @@ class SiteContractTest(unittest.TestCase):
                 for attrs in copy_buttons
             )
         )
+        self.assertEqual(
+            {attrs.get("aria-label") for attrs in copy_buttons},
+            {"macOS 명령 복사", "Windows 명령 복사"},
+        )
 
         css = (SITE_ROOT / "assets" / "site.css").read_text(encoding="utf-8")
         self.assertEqual(_css_declarations(css, ".platform-tabs").get("display"), "none")
@@ -1367,6 +1383,9 @@ class SiteContractTest(unittest.TestCase):
             "inline-flex",
         )
         self.assertEqual(_css_declarations(css, ".copy-command").get("display"), "none")
+        self.assertEqual(
+            _css_declarations(css, ".copy-command").get("min-width"), "72px"
+        )
         self.assertEqual(
             _css_declarations(css, ".copy-ready .copy-command").get("display"),
             "inline-flex",
@@ -2035,7 +2054,6 @@ class BeginnerGuideContractTest(unittest.TestCase):
             '<a href="install-anki.html" aria-label="Anki 설치">',
             'id="beginner-guide-link" href="getting-started.html"',
             'id="anki-install-guide-link" href="install-anki.html"',
-            'href="getting-started.html#import"',
             'href="getting-started.html#result"',
             "Anki가 처음이라면 설치부터",
         ):
@@ -2063,6 +2081,15 @@ class BeginnerGuideContractTest(unittest.TestCase):
             self.assertIn(snippet, html)
         self.assertNotIn("guide-flow-core", html)
         self.assertNotIn('aria-label="핵심 시작 순서"', html)
+
+        install_html = (SITE_ROOT / "install-anki.html").read_text(encoding="utf-8")
+        self.assertEqual(html.count('class="guide-lead"'), 1)
+        self.assertEqual(install_html.count('class="guide-lead"'), 1)
+        guide_css = (SITE_ROOT / "assets" / "guide.css").read_text(encoding="utf-8")
+        self.assertEqual(
+            _css_declarations(guide_css, ".guide-lead").get("min-height"),
+            "3.4em",
+        )
 
     def test_all_pages_share_the_same_primary_navigation_contract(self) -> None:
         expected_full_labels = [
@@ -2378,7 +2405,13 @@ class BeginnerGuideContractTest(unittest.TestCase):
         ):
             self.assertIn(snippet, html)
         self.assertNotIn("data-repository-command", html)
-        self.assertEqual(html.count('<details class="command-details">'), 2)
+        self.assertEqual(html.count('<pre class="command-line" tabindex="0">'), 2)
+        self.assertNotIn('<details class="command-details">', html)
+        self.assertNotIn("한 줄 명령 보기", html)
+        self.assertNotIn("한 줄 시작 명령 복사", html)
+        self.assertNotIn("노란 버튼", html)
+        self.assertIn('aria-label="macOS 명령 복사">복사</button>', html)
+        self.assertIn('aria-label="Windows 명령 복사">복사</button>', html)
 
     def test_getting_started_explains_apkg_import_options(self) -> None:
         html = (SITE_ROOT / "getting-started.html").read_text(encoding="utf-8")

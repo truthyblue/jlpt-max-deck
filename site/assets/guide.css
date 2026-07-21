@@ -71,6 +71,7 @@
 
 .guide-lead {
   max-width: 760px;
+  min-height: 3.4em;
   margin: 30px 0 0;
   color: rgba(255, 255, 255, .72);
   font-size: 22px;
@@ -806,6 +807,10 @@
     font-size: clamp(46px, 10vw, 70px);
   }
 
+  .guide-lead {
+    min-height: 5.1em;
+  }
+
   .guide-flow {
     grid-template-columns: repeat(6, minmax(150px, 1fr));
     overflow-x: auto;
@@ -856,6 +861,7 @@
   }
 
   .guide-lead {
+    min-height: 6.8em;
     margin-top: 24px;
     font-size: 18px;
   }
@@ -961,5 +967,11 @@
 
   .guide-page footer {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 340px) {
+  .guide-eyebrow {
+    min-height: 3.3em;
   }
 }

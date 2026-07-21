@@ -127,7 +127,7 @@
         }, 1800);
       } catch (_error) {
         if (copyStatus) {
-          copyStatus.textContent = '자동 복사가 되지 않았습니다. 명령 보기를 열어 직접 복사해 주세요.';
+          copyStatus.textContent = '자동 복사가 되지 않았습니다. 표시된 명령을 직접 선택해 복사해 주세요.';
         }
       }
     });
