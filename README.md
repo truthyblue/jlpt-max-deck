@@ -9,6 +9,7 @@ JLPT MAX Deck은 한국어권 JLPT 학습자를 위한 개인용 Anki 덱 빌더
 단어 카드 한 장을 외우고 끝나는 대신, 같은 어휘를 문장과 활용형으로 이해하고
 헷갈리는 표현과 구분한 뒤 실제 문제에서 다시 확인할 수 있게 구성했습니다.
 
+[웹 시작 가이드](https://truthyblue.github.io/jlpt-max-deck/) ·
 [덱 구성 보기](#한-단어를-더-깊이-익히는-카드) · [Anki 설치·가져오기](docs/anki.md) ·
 [빌드 시작하기](docs/build.md) ·
 [저작권과 라이선스](docs/privacy-and-licensing.md) · [문제 해결](docs/troubleshooting.md)

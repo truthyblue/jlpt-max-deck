@@ -13,7 +13,7 @@
 
 - macOS 또는 Windows x64
 - `uv`
-- 저장 공간이 충분한 로컬 디스크
+- 빌드 컴퓨터의 여유 저장 공간 8GB 이상 권장 (완성 APKG 약 840MB)
 - 같은 GitHub Release의 빌더 코드와 아래 세 asset
   - `JLPT-MAX-public-bundle.zip`
   - `JLPT-MAX-public-bundle.zip.sha256`

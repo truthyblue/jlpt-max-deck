@@ -26,7 +26,7 @@
   <title>Anki 설치 가이드 — JLPT MAX Deck</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/site.css?v=2de7ce3a372f">
-  <link rel="stylesheet" href="assets/guide.css?v=372624d03810">
+  <link rel="stylesheet" href="assets/guide.css?v=8c27363a3ae1">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -80,7 +80,10 @@
           <a class="button button-primary" href="#install">이 기기에 Anki 설치 <span aria-hidden="true">↓</span></a>
           <a class="button button-quiet" href="getting-started.html">설치 후 덱 만들기 <span aria-hidden="true">→</span></a>
         </div>
-        <p class="guide-scope-note">Anki 앱은 공식 지원 기기에 설치할 수 있지만, 이 프로젝트의 덱 빌드는 macOS 또는 Windows x64 컴퓨터에서 진행합니다. <a href="https://apps.ankiweb.net/" target="_blank" rel="noopener noreferrer" aria-label="Anki 공식 다운로드 지원 범위, 새 탭에서 열림">공식 다운로드 지원 범위</a> · 2026-07-21 확인</p>
+        <p class="guide-scope-note">
+          <span>Anki 앱을 설치할 수 있는 기기와 덱을 만들 수 있는 컴퓨터는 다릅니다. 덱 빌드는 macOS 또는 Windows x64 컴퓨터에서 진행하세요.</span>
+          <span class="guide-scope-meta"><a href="https://apps.ankiweb.net/" target="_blank" rel="noopener noreferrer" aria-label="Anki 공식 지원 기기, 새 탭에서 열림">Anki 공식 지원 기기</a><span aria-hidden="true"> · </span><time datetime="2026-07-21">2026-07-21 기준</time></span>
+        </p>
       </div>
     </section>
 
@@ -111,7 +114,7 @@
               <div class="platform-tabs" role="tablist" aria-label="Anki 설치 기기 선택">
                 <button type="button" class="platform-tab" id="install-macos-tab" role="tab" aria-selected="true" aria-controls="install-macos-panel" data-platform-tab="macos">macOS</button>
                 <button type="button" class="platform-tab" id="install-windows-tab" role="tab" aria-selected="false" aria-controls="install-windows-panel" data-platform-tab="windows" tabindex="-1">Windows</button>
-                <button type="button" class="platform-tab" id="install-ios-tab" role="tab" aria-selected="false" aria-controls="install-ios-panel" data-platform-tab="ios" tabindex="-1">iPhone·iPad</button>
+                <button type="button" class="platform-tab" id="install-ios-tab" role="tab" aria-selected="false" aria-controls="install-ios-panel" data-platform-tab="ios" tabindex="-1">iPhone·iPad (유료)</button>
                 <button type="button" class="platform-tab" id="install-android-tab" role="tab" aria-selected="false" aria-controls="install-android-panel" data-platform-tab="android" tabindex="-1">Android</button>
               </div>
 
@@ -143,15 +146,15 @@
                 </article>
 
                 <article class="guide-os-card platform-panel" id="install-ios-panel" role="tabpanel" aria-labelledby="install-ios-tab" data-platform-panel="ios">
-                  <span class="guide-app-kicker">유료 · 공식 iOS 앱</span>
+                  <span class="guide-app-kicker">유료 앱 · 공식 ANKIMOBILE</span>
                   <h3>iPhone · iPad</h3>
-                  <p><strong>AnkiMobile Flashcards</strong>를 설치합니다. App Store의 제공자는 <strong>Anki Software, LLC</strong>입니다.</p>
+                  <p><strong>iPhone·iPad용 공식 Anki 앱은 무료가 아닙니다.</strong> App Store에서 <strong>AnkiMobile Flashcards</strong>를 구입해 설치합니다. 제공자는 <strong>Anki Software, LLC</strong>입니다.</p>
                   <ol>
                     <li>아래 버튼으로 App Store를 엽니다.</li>
                     <li>앱 이름과 제공자를 확인하고 구입·설치합니다.</li>
                     <li>AnkiMobile을 한 번 실행해 덱 목록이 열리는지 확인합니다.</li>
                   </ol>
-                  <a class="guide-download-link" href="https://apps.apple.com/app/ankimobile-flashcards/id373493387" target="_blank" rel="noopener noreferrer" aria-label="App Store에서 AnkiMobile 받기, 새 탭에서 열림">App Store에서 받기 <span aria-hidden="true">↗</span></a>
+                  <a class="guide-download-link" href="https://apps.apple.com/app/ankimobile-flashcards/id373493387" target="_blank" rel="noopener noreferrer" aria-label="App Store에서 유료 AnkiMobile 보기, 새 탭에서 열림">App Store에서 유료 앱 보기 <span aria-hidden="true">↗</span></a>
                   <a class="guide-help-link" href="https://docs.ankimobile.net/shared-decks.html" target="_blank" rel="noopener noreferrer" aria-label="AnkiMobile 공식 도움말, 새 탭에서 열림">AnkiMobile 도움말</a>
                 </article>
 
@@ -172,7 +175,7 @@
 
             <div class="guide-callout warning">
               <strong>AnkiApp, Anki Pro는 다른 앱입니다.</strong>
-              <p>이 가이드의 대상이 아닙니다. iPhone/iPad는 AnkiMobile, Android는 AnkiDroid인지 확인하세요.</p>
+              <p>이 가이드의 대상이 아닙니다. iPhone/iPad는 <strong>유료 공식 앱인 AnkiMobile</strong>, Android는 AnkiDroid인지 확인하세요.</p>
             </div>
           </section>
 

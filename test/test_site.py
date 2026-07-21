@@ -2072,8 +2072,10 @@ class BeginnerGuideContractTest(unittest.TestCase):
             "Anki가 있으면 PDF 준비부터, 아직 없으면 설치부터 시작하세요.",
             '<a class="button button-primary" href="#materials">Anki 있음 · PDF 준비부터',
             '<a class="button button-quiet" href="install-anki.html">Anki 없음 · 설치부터',
-            "macOS 또는 Windows x64 컴퓨터, 공식 PDF 17개, 인터넷과 저장 공간",
-            "로그인과 구매 도서 인증이 필요할 수 있으며",
+            "완성 APKG는 약 840MB",
+            "8GB 이상의 여유 저장 공간을 권장합니다.",
+            "빌드 컴퓨터의 여유 저장 공간 8GB 이상 권장",
+            "로그인과 구매 도서 인증이 필요할 수 있습니다.",
             "iPhone·iPad용 공식 AnkiMobile은 유료",
             f'href="{REPOSITORY_URL}/blob/main/docs/troubleshooting.md"',
             "문제 해결 안내",
@@ -2556,9 +2558,13 @@ class BeginnerGuideContractTest(unittest.TestCase):
             "AnkiWeb",
             "macOS용 Anki 받기",
             "Windows용 Anki 받기",
-            "App Store에서 받기",
+            "iPhone·iPad (유료)",
+            "iPhone·iPad용 공식 Anki 앱은 무료가 아닙니다.",
+            "App Store에서 유료 앱 보기",
+            "유료 공식 앱인 AnkiMobile",
             "Google Play에서 받기",
-            "2026-07-21 확인",
+            "Anki 공식 지원 기기",
+            "2026-07-21 기준",
         ):
             self.assertIn(snippet, html)
         self.assertNotIn("Ankitects Pty Ltd", html)
