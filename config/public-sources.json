@@ -1,0 +1,182 @@
+{
+  "expected_pdf_count": 17,
+  "expected_total_bytes": 61555395,
+  "expected_total_pages": 785,
+  "pdfs": [
+    {
+      "document_role": "vocabulary",
+      "expected_bytes": 2086376,
+      "expected_page_count": 64,
+      "level": "N1",
+      "pdf_sha256": "7ee122e759be12ccec1382048ca26e4f79a65aac191c973ea5c92c8e9f4834da",
+      "proof_mode": "text_layer",
+      "publisher": "dongyang",
+      "source_id": "dongyang-n1-vocabulary"
+    },
+    {
+      "document_role": "vocabulary",
+      "expected_bytes": 2072114,
+      "expected_page_count": 66,
+      "level": "N2",
+      "pdf_sha256": "d010f264d2c70ba84172b49f6ed2a032dff392c4f63aa735fe0be543da6e0d01",
+      "proof_mode": "text_layer",
+      "publisher": "dongyang",
+      "source_id": "dongyang-n2-vocabulary"
+    },
+    {
+      "document_role": "vocabulary",
+      "expected_bytes": 1425827,
+      "expected_page_count": 54,
+      "level": "N3",
+      "pdf_sha256": "2537973513d23b9d745493afcecd4cc72a36f02fb91e2f32138769ff8c18413d",
+      "proof_mode": "text_layer",
+      "publisher": "dongyang",
+      "source_id": "dongyang-n3-vocabulary"
+    },
+    {
+      "document_role": "vocabulary",
+      "expected_bytes": 1506096,
+      "expected_page_count": 32,
+      "level": "N4",
+      "pdf_sha256": "ef933c6c9e3dcde008b35325f3905e98a8e642ff8db5fc20ff0a16c07c41e8b0",
+      "proof_mode": "text_layer",
+      "publisher": "dongyang",
+      "source_id": "dongyang-n4-vocabulary"
+    },
+    {
+      "document_role": "vocabulary",
+      "expected_bytes": 1600660,
+      "expected_page_count": 30,
+      "level": "N5",
+      "pdf_sha256": "aa821401e03a0211ad871698dfdf455c76dc172c8d78358cec0d61afa9f3dc23",
+      "proof_mode": "text_layer",
+      "publisher": "dongyang",
+      "source_id": "dongyang-n5-vocabulary"
+    },
+    {
+      "document_role": "latest_vocabulary",
+      "expected_bytes": 4904040,
+      "expected_page_count": 16,
+      "level": "N1",
+      "pdf_sha256": "1ad44997a9f9fe4c22eb4b2a9410a424f4fc186703240b63970aecb16b567d72",
+      "proof_mode": "text_layer",
+      "publisher": "hackers",
+      "source_id": "hackers-n1-latest"
+    },
+    {
+      "document_role": "wordbook",
+      "expected_bytes": 2916128,
+      "expected_page_count": 81,
+      "level": "N1",
+      "pdf_sha256": "d2f520cdab1fe7be8b99621c302e84cfeba326aaa37e3dc6537e08ed874c366b",
+      "proof_mode": "text_layer",
+      "publisher": "hackers",
+      "source_id": "hackers-n1-wordbook"
+    },
+    {
+      "document_role": "latest_vocabulary",
+      "expected_bytes": 4614384,
+      "expected_page_count": 16,
+      "level": "N2",
+      "pdf_sha256": "ec124c0e1c439cdab12590daf09d4d32a7afa549eff83482db3c34daf7f9b121",
+      "proof_mode": "text_layer",
+      "publisher": "hackers",
+      "source_id": "hackers-n2-latest"
+    },
+    {
+      "document_role": "wordbook",
+      "expected_bytes": 1963365,
+      "expected_page_count": 79,
+      "level": "N2",
+      "pdf_sha256": "2f3a17be56678fa419b59860117946edd003f19f27b0cec825047ea7061d81c4",
+      "proof_mode": "text_layer",
+      "publisher": "hackers",
+      "source_id": "hackers-n2-wordbook"
+    },
+    {
+      "document_role": "latest_vocabulary",
+      "expected_bytes": 4702425,
+      "expected_page_count": 16,
+      "level": "N3",
+      "pdf_sha256": "c26fc51ce6c159d09e09668697712566b45b1bb186d0e49c7c6690ae31f76145",
+      "proof_mode": "text_layer",
+      "publisher": "hackers",
+      "source_id": "hackers-n3-latest"
+    },
+    {
+      "document_role": "wordbook",
+      "expected_bytes": 2851303,
+      "expected_page_count": 72,
+      "level": "N3",
+      "pdf_sha256": "a3c3508f7a20e640942358ddc83af9bc31d7bd3d10028d678b09b04ccc7acd76",
+      "proof_mode": "text_layer",
+      "publisher": "hackers",
+      "source_id": "hackers-n3-wordbook"
+    },
+    {
+      "document_role": "latest_vocabulary",
+      "expected_bytes": 4236047,
+      "expected_page_count": 14,
+      "level": "N4",
+      "pdf_sha256": "9dc67b85f06bb98586b8ea43a1380e2da49f7df0a2b4839c74e9fcdcfa42fdad",
+      "proof_mode": "text_layer",
+      "publisher": "hackers",
+      "source_id": "hackers-n4-latest"
+    },
+    {
+      "document_role": "wordbook",
+      "expected_bytes": 2192644,
+      "expected_page_count": 70,
+      "level": "N4",
+      "pdf_sha256": "2af27d2b997165079a1ac0c89162ee7df9287ed61daa7284eacde713db36aeca",
+      "proof_mode": "text_layer",
+      "publisher": "hackers",
+      "source_id": "hackers-n4-wordbook"
+    },
+    {
+      "document_role": "latest_vocabulary",
+      "expected_bytes": 4060275,
+      "expected_page_count": 14,
+      "level": "N5",
+      "pdf_sha256": "ce239e5cb098f2ad9e6c302dc05157a42d9b2dfcdadeee98625d0369b82d7c12",
+      "proof_mode": "text_layer",
+      "publisher": "hackers",
+      "source_id": "hackers-n5-latest"
+    },
+    {
+      "document_role": "wordbook",
+      "expected_bytes": 16093531,
+      "expected_page_count": 64,
+      "level": "N5",
+      "pdf_sha256": "fb337d30732f1cd399a5151a71666b43211de90b4fbd9ce59fb2c000deac5111",
+      "proof_mode": "text_layer",
+      "publisher": "hackers",
+      "source_id": "hackers-n5-wordbook"
+    },
+    {
+      "document_role": "kanji_reference",
+      "expected_bytes": 2424798,
+      "expected_page_count": 52,
+      "level": null,
+      "pdf_sha256": "5ccd96a8594c5e869e8f069771cce86b3a72601b591aa861f1264c26fbb0556c",
+      "proof_mode": "text_layer",
+      "publisher": "gilbut",
+      "source_id": "ilsang-muutta-upper"
+    },
+    {
+      "document_role": "kanji_reference",
+      "expected_bytes": 1905382,
+      "expected_page_count": 45,
+      "level": null,
+      "pdf_sha256": "0980a68ea9c6055b9c44559c81ed20a5ecf0d59e42d38a3b426a3ea8bf9cb789",
+      "proof_mode": "text_layer",
+      "publisher": "gilbut",
+      "source_id": "ilsang-muutta-lower"
+    }
+  ],
+  "policy_version": "public-text-source-possession-v2",
+  "schema_version": 1,
+  "source_set_id": "public-user-pdfs-v2",
+  "status": "passed",
+  "unresolved": 0
+}

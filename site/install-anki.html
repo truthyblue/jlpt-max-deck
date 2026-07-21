@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1210">
+  <meta name="robots" content="index,follow">
+  <meta name="description" content="Windows, macOS, iPhone, iPad, Android에서 사용할 Anki 앱을 기기에 맞춰 설치하는 초보자용 가이드입니다.">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:site_name" content="JLPT MAX Deck">
+  <meta property="og:title" content="Anki 설치 가이드 — JLPT MAX Deck">
+  <meta property="og:description" content="Windows, macOS, iPhone, iPad, Android에서 공식 Anki 앱을 구분해 설치하는 초보자용 가이드">
+  <meta property="og:url" content="https://OWNER.github.io/REPOSITORY/install-anki.html">
+  <meta property="og:image" content="https://OWNER.github.io/REPOSITORY/assets/social-card.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JLPT MAX Deck — 단어는 더 깊이, 실전 문제까지">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Anki 설치 가이드 — JLPT MAX Deck">
+  <meta name="twitter:description" content="내 기기에 맞는 공식 Anki 앱을 구분해 설치하고 첫 실행을 확인합니다.">
+  <meta name="twitter:image" content="https://OWNER.github.io/REPOSITORY/assets/social-card.jpg">
+  <meta name="twitter:image:alt" content="JLPT MAX Deck — 단어는 더 깊이, 실전 문제까지">
+  <link rel="canonical" href="https://OWNER.github.io/REPOSITORY/install-anki.html">
+  <title>Anki 설치 가이드 — JLPT MAX Deck</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css?v=9f57cf8f447b">
+  <link rel="stylesheet" href="assets/guide.css?v=2f772c05a4fc">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Anki 설치 가이드",
+    "url": "https://OWNER.github.io/REPOSITORY/install-anki.html",
+    "description": "Windows, macOS, iPhone, iPad, Android에서 사용할 공식 Anki 앱을 구분해 설치하는 초보자용 가이드",
+    "inLanguage": "ko-KR",
+    "isPartOf": {"@id": "https://OWNER.github.io/REPOSITORY/#website"},
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "덱 소개", "item": "https://OWNER.github.io/REPOSITORY/"},
+        {"@type": "ListItem", "position": 2, "name": "Anki 설치", "item": "https://OWNER.github.io/REPOSITORY/install-anki.html"}
+      ]
+    }
+  }
+  </script>
+</head>
+<body class="guide-page install-guide">
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="JLPT MAX Deck 홈">
+      <span class="brand-mark" aria-hidden="true"><span class="brand-mark-jlpt">JLPT</span><strong class="brand-mark-max">MAX</strong></span>
+      <span class="brand-wordmark">JLPT <b>MAX</b> Deck</span>
+    </a>
+    <nav aria-label="주요 메뉴">
+      <div class="nav-group nav-section-links" role="group" aria-label="덱 소개 섹션">
+        <a href="index.html#cards" aria-label="어휘 카드"><span class="nav-label-full">어휘 카드</span><span class="nav-label-compact">어휘</span></a>
+        <a href="index.html#kanji" aria-label="한자 카드"><span class="nav-label-full">한자 카드</span><span class="nav-label-compact">한자</span></a>
+        <a href="index.html#practice" aria-label="실전 문제"><span class="nav-label-full">실전 문제</span><span class="nav-label-compact">문제</span></a>
+        <a href="index.html#reference" aria-label="참조표"><span class="nav-label-full">참조표</span><span class="nav-label-compact">참조</span></a>
+        <a href="index.html#start" aria-label="빌드"><span class="nav-label-full">빌드</span><span class="nav-label-compact">빌드</span></a>
+      </div>
+      <div class="nav-group nav-guide-links" role="group" aria-label="별도 가이드">
+        <a href="getting-started.html" aria-label="시작 가이드"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">가이드</span></a>
+        <a href="install-anki.html" aria-label="Anki 설치" aria-current="page"><span class="nav-label-full">Anki 설치</span><span class="nav-label-compact">설치</span></a>
+      </div>
+    </nav>
+    <a class="nav-action" id="repo-link" href="../README.md" data-repository-path="" target="_blank" rel="noopener noreferrer" aria-label="GitHub 저장소, 새 탭에서 열림"><svg class="nav-action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.87c-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .08 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.86.09-.66.35-1.12.64-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.53a9.3 9.3 0 0 1 2.5.35c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg><span class="nav-action-label">GitHub</span><span class="nav-action-arrow" aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="guide-hero">
+      <div class="guide-hero-inner">
+        <p class="guide-eyebrow">0단계 · ANKI APPS</p>
+        <h1>내 기기에 맞는<br><em>Anki 설치.</em></h1>
+        <p class="guide-lead">접속한 기기를 확인해 필요한 Anki 앱과 공식 설치 링크를 바로 보여줍니다.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#install">이 기기에 Anki 설치 <span aria-hidden="true">↓</span></a>
+          <a class="button button-quiet" href="getting-started.html">설치 후 덱 만들기 <span aria-hidden="true">→</span></a>
+        </div>
+        <p class="guide-scope-note">Anki 앱은 공식 지원 기기에 설치할 수 있지만, 이 프로젝트의 덱 빌드는 macOS 또는 Windows x64 컴퓨터에서 진행합니다. <a href="https://apps.ankiweb.net/" target="_blank" rel="noopener noreferrer" aria-label="Anki 공식 다운로드 지원 범위, 새 탭에서 열림">공식 다운로드 지원 범위</a> · 2026-07-21 확인</p>
+      </div>
+    </section>
+
+    <div class="guide-main">
+      <ol class="guide-flow guide-flow-compact" aria-label="Anki 설치 순서">
+        <li><span>01</span><strong>기기에 맞는 앱 설치</strong></li>
+        <li><span>02</span><strong>첫 실행 확인</strong></li>
+        <li><span>03</span><strong>덱 가져오기</strong></li>
+      </ol>
+
+      <div class="guide-layout">
+        <aside class="guide-toc" aria-label="이 페이지 목차">
+          <strong>이 페이지 순서</strong>
+          <ol>
+            <li><a href="#install">1. 내 기기에 설치</a></li>
+            <li><a href="#first-run">2. 처음 실행</a></li>
+            <li><a href="#check">3. 설치 확인</a></li>
+          </ol>
+        </aside>
+
+        <div class="guide-content">
+          <section class="guide-section" id="install">
+            <span class="guide-step-label">1 · 설치</span>
+            <h2>앱을 고르고 바로 설치합니다.</h2>
+            <p>현재 접속한 기기의 탭이 자동으로 열립니다. 이름이 비슷한 앱이 많으므로 아래 다운로드 버튼을 이용하세요.</p>
+
+            <div class="guide-platform-shell" data-platform-switcher>
+              <div class="platform-tabs" role="tablist" aria-label="Anki 설치 기기 선택">
+                <button type="button" class="platform-tab" id="install-macos-tab" role="tab" aria-selected="true" aria-controls="install-macos-panel" data-platform-tab="macos">macOS</button>
+                <button type="button" class="platform-tab" id="install-windows-tab" role="tab" aria-selected="false" aria-controls="install-windows-panel" data-platform-tab="windows" tabindex="-1">Windows</button>
+                <button type="button" class="platform-tab" id="install-ios-tab" role="tab" aria-selected="false" aria-controls="install-ios-panel" data-platform-tab="ios" tabindex="-1">iPhone·iPad</button>
+                <button type="button" class="platform-tab" id="install-android-tab" role="tab" aria-selected="false" aria-controls="install-android-panel" data-platform-tab="android" tabindex="-1">Android</button>
+              </div>
+
+              <div class="guide-platform-grid">
+                <article class="guide-os-card platform-panel" id="install-macos-panel" role="tabpanel" aria-labelledby="install-macos-tab" data-platform-panel="macos">
+                  <span class="guide-app-kicker">무료 · ANKI DESKTOP</span>
+                  <h3>macOS</h3>
+                  <p>Apple silicon과 Intel 중 내 Mac의 칩에 맞는 설치 파일을 선택합니다.</p>
+                  <ol>
+                    <li><strong>Apple 메뉴 → 이 Mac에 관하여</strong>에서 ‘칩’ 또는 ‘프로세서’를 확인합니다.</li>
+                    <li>Apple M 계열이면 Apple silicon, Intel이라고 표시되면 Intel 설치 파일을 받습니다.</li>
+                    <li>다운로드한 DMG를 열고 Anki를 Applications 폴더로 드래그한 뒤 실행합니다.</li>
+                  </ol>
+                  <a class="guide-download-link" href="https://apps.ankiweb.net/" target="_blank" rel="noopener noreferrer" aria-label="macOS용 Anki 공식 다운로드 페이지, 새 탭에서 열림">macOS용 Anki 받기 <span aria-hidden="true">↗</span></a>
+                  <a class="guide-help-link" href="https://docs.ankiweb.net/platform/mac/installing.html" target="_blank" rel="noopener noreferrer" aria-label="Anki 공식 macOS 설치 도움말, 새 탭에서 열림">설치 도움말</a>
+                </article>
+
+                <article class="guide-os-card platform-panel" id="install-windows-panel" role="tabpanel" aria-labelledby="install-windows-tab" data-platform-panel="windows">
+                  <span class="guide-app-kicker">무료 · ANKI DESKTOP</span>
+                  <h3>Windows 10+ x64 · Windows 11 ARM</h3>
+                  <p>공식 Anki 앱은 두 환경을 지원합니다. 다만 JLPT MAX 덱 빌더의 Windows 실행 범위는 x64 컴퓨터입니다.</p>
+                  <ol>
+                    <li><strong>설정 → 시스템 → 정보</strong>에서 ‘시스템 종류’를 확인합니다.</li>
+                    <li>x64 기반이면 Windows x64, Windows 11 ARM이면 Windows ARM 설치 파일을 받습니다.</li>
+                    <li>다운로드한 MSI를 실행하고 화면 안내에 따라 설치한 뒤 시작 메뉴에서 Anki를 엽니다.</li>
+                  </ol>
+                  <a class="guide-download-link" href="https://apps.ankiweb.net/" target="_blank" rel="noopener noreferrer" aria-label="Windows용 Anki 공식 다운로드 페이지, 새 탭에서 열림">Windows용 Anki 받기 <span aria-hidden="true">↗</span></a>
+                  <a class="guide-help-link" href="https://docs.ankiweb.net/platform/windows/installing.html" target="_blank" rel="noopener noreferrer" aria-label="Anki 공식 Windows 설치 도움말, 새 탭에서 열림">설치 도움말</a>
+                </article>
+
+                <article class="guide-os-card platform-panel" id="install-ios-panel" role="tabpanel" aria-labelledby="install-ios-tab" data-platform-panel="ios">
+                  <span class="guide-app-kicker">유료 · 공식 iOS 앱</span>
+                  <h3>iPhone · iPad</h3>
+                  <p><strong>AnkiMobile Flashcards</strong>를 설치합니다. App Store의 제공자는 <strong>Anki Software, LLC</strong>입니다.</p>
+                  <ol>
+                    <li>아래 버튼으로 App Store를 엽니다.</li>
+                    <li>앱 이름과 제공자를 확인하고 구입·설치합니다.</li>
+                    <li>AnkiMobile을 한 번 실행해 덱 목록이 열리는지 확인합니다.</li>
+                  </ol>
+                  <a class="guide-download-link" href="https://apps.apple.com/app/ankimobile-flashcards/id373493387" target="_blank" rel="noopener noreferrer" aria-label="App Store에서 AnkiMobile 받기, 새 탭에서 열림">App Store에서 받기 <span aria-hidden="true">↗</span></a>
+                  <a class="guide-help-link" href="https://docs.ankimobile.net/shared-decks.html" target="_blank" rel="noopener noreferrer" aria-label="AnkiMobile 공식 도움말, 새 탭에서 열림">AnkiMobile 도움말</a>
+                </article>
+
+                <article class="guide-os-card platform-panel" id="install-android-panel" role="tabpanel" aria-labelledby="install-android-tab" data-platform-panel="android">
+                  <span class="guide-app-kicker">무료 · 오픈소스 Android 앱</span>
+                  <h3>Android</h3>
+                  <p><strong>AnkiDroid Flashcards</strong>를 설치합니다. 개발자는 <strong>AnkiDroid Open Source Team</strong>, 패키지는 <strong>com.ichi2.anki</strong>입니다.</p>
+                  <ol>
+                    <li>아래 버튼으로 Google Play를 엽니다.</li>
+                    <li>개발자와 패키지를 확인하고 설치합니다.</li>
+                    <li>처음 쓰는 경우 <strong>Get started</strong>를 눌러 덱 목록을 엽니다.</li>
+                  </ol>
+                  <a class="guide-download-link" href="https://play.google.com/store/apps/details?id=com.ichi2.anki" target="_blank" rel="noopener noreferrer" aria-label="Google Play에서 AnkiDroid 받기, 새 탭에서 열림">Google Play에서 받기 <span aria-hidden="true">↗</span></a>
+                  <a class="guide-help-link" href="https://docs.ankidroid.org/manual.html#importing" target="_blank" rel="noopener noreferrer" aria-label="AnkiDroid 공식 도움말, 새 탭에서 열림">AnkiDroid 도움말</a>
+                </article>
+              </div>
+            </div>
+
+            <div class="guide-callout warning">
+              <strong>AnkiApp, Anki Pro는 다른 앱입니다.</strong>
+              <p>이 가이드의 대상이 아닙니다. iPhone/iPad는 AnkiMobile, Android는 AnkiDroid인지 확인하세요.</p>
+            </div>
+          </section>
+
+          <section class="guide-section" id="first-run">
+            <span class="guide-step-label">2 · 첫 실행</span>
+            <h2>덱 목록이 열리면 됩니다.</h2>
+            <p>표시 언어와 초기 안내를 확인합니다. 아직 JLPT MAX덱이 보이지 않는 것이 정상입니다.</p>
+            <ol class="guide-numbered">
+              <li>
+                <strong>처음이면 기본 프로필로 시작합니다.</strong>
+                <p>기존 컬렉션과 분리해야 할 때는 Desktop의 ‘파일 → 프로필 전환’ 또는 AnkiMobile의 ‘설정 → Profiles’에서 별도 프로필을 추가할 수 있습니다.</p>
+              </li>
+              <li>
+                <strong>AnkiWeb 계정은 지금 없어도 됩니다.</strong>
+                <p>APKG를 로컬로 가져오고 공부하는 데 계정은 필수가 아닙니다. 여러 기기의 학습 상태를 이어갈 때 무료 계정을 연결합니다.</p>
+              </li>
+              <li>
+                <strong>이미 쓰던 자료가 있으면 먼저 백업합니다.</strong>
+                <p>Desktop과 AnkiMobile은 별도 프로필을 사용할 수 있습니다. AnkiDroid는 가져오기 전에 기존 컬렉션을 백업하세요.</p>
+              </li>
+            </ol>
+          </section>
+
+          <section class="guide-section" id="check">
+            <span class="guide-step-label">3 · 설치 확인</span>
+            <h2>이제 APKG를 가져오면 됩니다.</h2>
+            <ul class="guide-checklist">
+              <li>Anki 앱이 오류 없이 실행됨</li>
+              <li>덱 목록 화면이 표시됨</li>
+              <li>가져오기 또는 공유로 열기 기능을 사용할 수 있음</li>
+              <li>APKG를 저장할 여유 공간이 있음</li>
+            </ul>
+            <div class="guide-callout">
+              <strong>Windows ARM 또는 Linux를 사용하나요?</strong>
+              <p>공식 다운로드 페이지에서 지원되는 Anki 앱을 설치해 APKG를 가져올 수 있습니다. 덱은 macOS 또는 Windows x64 컴퓨터에서 만든 뒤 이 기기로 옮기세요. 이 프로젝트의 전체 빌드 지원 범위와 Anki 앱 자체의 지원 범위는 서로 다릅니다.</p>
+            </div>
+            <div class="guide-callout strong">
+              <strong>가져오기 화면과 덱 설정까지 확인하세요.</strong>
+              <p>먼저 <a href="getting-started.html#import-options">가져오기 옵션 권장값</a>에서 학습 진행 상태, 덱 프리셋과 노트 타입 병합을 맞춥니다. 가져온 뒤에는 <a href="getting-started.html#settings">기기별 덱 옵션과 FSRS 설정 안내</a>에서 새 카드 수, 목표 기억률과 답변 버튼 사용법을 확인하세요.</p>
+            </div>
+          </section>
+
+          <section class="guide-next" aria-labelledby="install-finish-title">
+            <div>
+              <h2 id="install-finish-title">Anki가 열렸다면 덱을 만듭니다.</h2>
+              <p>가이드 안에서 현재 컴퓨터에 맞는 빌드 명령을 복사하고, 완성 APKG를 공부할 기기로 바로 가져올 수 있습니다.</p>
+            </div>
+            <a class="button button-primary" href="getting-started.html#build">덱 만들기·가져오기 <span aria-hidden="true">→</span></a>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="brand footer-brand" role="img" aria-label="JLPT MAX Deck"><span class="brand-mark" aria-hidden="true"><span class="brand-mark-jlpt">JLPT</span><strong class="brand-mark-max">MAX</strong></span><span class="brand-wordmark">JLPT <b>MAX</b> Deck</span></div>
+    <p class="guide-footer-links"><a href="index.html">덱 소개</a><a href="getting-started.html">덱 만들기·가져오기</a></p>
+    <p class="legal">Anki 설치 파일은 위 공식 다운로드 경로에서 받으세요.</p>
+    <p class="disclaimer">이 프로젝트는 Anki의 공식 제품이나 후원 프로젝트가 아닙니다.</p>
+  </footer>
+  <script src="assets/platform.js?v=431a5fb869c6"></script>
+</body>
+</html>

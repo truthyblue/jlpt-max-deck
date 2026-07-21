@@ -1,0 +1,11 @@
+{
+  "archive_bytes": 850293356,
+  "archive_sha256": "a1074b4d38889c1d8d268f7189f7372cc070babd448160d3a18a067fd32642a5",
+  "bundle_manifest_sha256": "6730e75e78abe2fb4a3cc50913e257cc5ba6dc0ef58cb2a59d370b9fb28aaf7d",
+  "payload_hash": "c5918ccf9d0c58d56d75a3e62651791a161c0ff40dab84b0850a98affe16e788",
+  "policy_version": "public-release-pin-v1",
+  "public_builder_source_hash": "9c4b85c9f3417fbf1df6617b51cf1871fdf85ddef6dde86487199fe49e27b871",
+  "schema_version": 1,
+  "status": "passed",
+  "unresolved": 0
+}

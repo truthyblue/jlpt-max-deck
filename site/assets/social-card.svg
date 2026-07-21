@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">JLPT MAX Deck</title>
+  <desc id="description">단어는 더 깊이, 실전 문제까지. 한국어권 JLPT 학습자를 위한 Anki 덱.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c1210"/>
+      <stop offset="1" stop-color="#18241f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(982 84) rotate(139) scale(526 430)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8ee6b1" stop-opacity=".25"/>
+      <stop offset="1" stop-color="#8ee6b1" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g fill="#fffdf7" opacity=".055" font-family="Arial, Helvetica, sans-serif" font-size="172" font-weight="900">
+    <text x="792" y="164">語</text>
+    <text x="972" y="330">解</text>
+    <text x="750" y="520">進</text>
+  </g>
+  <g transform="translate(72 62)">
+    <g transform="rotate(-4 48 48)">
+      <rect width="96" height="96" rx="24" fill="#d8ff62"/>
+      <text x="48" y="30" fill="#101512" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="900" letter-spacing="2" text-anchor="middle">JLPT</text>
+      <text x="48" y="69" fill="#101512" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900" letter-spacing="-2" text-anchor="middle">MAX</text>
+    </g>
+    <text x="122" y="61" fill="#fffdf7" font-family="Arial, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="35" font-weight="800" letter-spacing="1">JLPT MAX <tspan fill="#d8ff62">DECK</tspan></text>
+  </g>
+  <text x="72" y="285" fill="#fffdf7" font-family="Arial, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="70" font-weight="800" letter-spacing="-3">단어는 더 깊이,</text>
+  <text x="72" y="371" fill="#d8ff62" font-family="Arial, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="70" font-weight="800" letter-spacing="-3">실전 문제까지.</text>
+  <text x="75" y="432" fill="#c8d0cb" font-family="Arial, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="28" font-weight="500">한국어권 JLPT 학습자를 위한 공개 Anki 덱 빌더</text>
+  <line x1="72" y1="485" x2="1128" y2="485" stroke="#fffdf7" stroke-opacity=".16"/>
+  <g fill="#fffdf7" font-family="Arial, Apple SD Gothic Neo, Noto Sans KR, sans-serif">
+    <text x="74" y="547" font-size="26" font-weight="800">5,800 <tspan fill="#aab4ae" font-size="20" font-weight="600">선별 어휘</tspan></text>
+    <text x="356" y="547" font-size="26" font-weight="800">7,850 <tspan fill="#aab4ae" font-size="20" font-weight="600">실전 문제</tspan></text>
+    <text x="638" y="547" font-size="26" font-weight="800">21,897 <tspan fill="#aab4ae" font-size="20" font-weight="600">학습 카드</tspan></text>
+  </g>
+  <rect x="72" y="584" width="1056" height="5" rx="2.5" fill="#d8ff62"/>
+</svg>

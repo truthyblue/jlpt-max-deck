@@ -1,0 +1,73 @@
+name: Bug report
+description: Report a reproducible public builder, integrity, or documentation problem.
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Never attach publisher PDFs, generated decks,
+        personal Anki collections, credentials, or private filesystem data.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Public build
+        - Source matching or integrity
+        - Card rendering
+        - macOS wrapper
+        - Windows wrapper
+        - Documentation or project site
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Commit SHA or public bundle SHA-256.
+      placeholder: 64-character digest or commit SHA
+    validations:
+      required: true
+
+  - type: dropdown
+    id: operating-system
+    attributes:
+      label: Operating system
+      options:
+        - macOS
+        - Windows x64
+        - Other or not applicable
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the observed result and the result you expected.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include commands and sanitized output. Do not include book content or local paths.
+      render: shell
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Publication boundary
+      options:
+        - label: I removed copyrighted inputs, generated decks, credentials, and private machine data.
+          required: true
+        - label: This report does not disclose a security vulnerability that should be reported privately.
+          required: true

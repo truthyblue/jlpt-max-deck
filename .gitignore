@@ -1,0 +1,37 @@
+# Python and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local environments
+.venv/
+.jlpt-max-public-venv/
+
+# Local build inputs and outputs never belong in this source repository
+data/
+build/
+tmp/
+tools/
+prompts/
+public-release/
+*.pdf
+*.apkg
+*.wav
+*.mp3
+!site/assets/demo-dasu-word.mp3
+!site/assets/demo-dasu-example.mp3
+!site/assets/demo-dasu-example-2.mp3
+!site/assets/demo-dasu-example-3.mp3
+*.zip
+*.sqlite
+*.sqlite3
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+Thumbs.db

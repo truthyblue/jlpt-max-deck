@@ -1,0 +1,167 @@
+{
+  "documents": [
+    {
+      "expected_page_count": 64,
+      "page_rules": [
+        {"end_page": 29, "layout_id": "dongyang_vocab_two_column", "start_page": 4}
+      ],
+      "pdf_sha256": "7ee122e759be12ccec1382048ca26e4f79a65aac191c973ea5c92c8e9f4834da",
+      "source_id": "dongyang-n1-vocabulary"
+    },
+    {
+      "expected_page_count": 66,
+      "page_rules": [
+        {"end_page": 32, "layout_id": "dongyang_vocab_two_column", "start_page": 4}
+      ],
+      "pdf_sha256": "d010f264d2c70ba84172b49f6ed2a032dff392c4f63aa735fe0be543da6e0d01",
+      "source_id": "dongyang-n2-vocabulary"
+    },
+    {
+      "expected_page_count": 54,
+      "page_rules": [
+        {"end_page": 20, "layout_id": "dongyang_vocab_two_column", "start_page": 4}
+      ],
+      "pdf_sha256": "2537973513d23b9d745493afcecd4cc72a36f02fb91e2f32138769ff8c18413d",
+      "source_id": "dongyang-n3-vocabulary"
+    },
+    {
+      "expected_page_count": 32,
+      "page_rules": [
+        {"end_page": 13, "layout_id": "dongyang_vocab_two_column", "start_page": 4},
+        {"end_page": 23, "layout_id": "dongyang_synonym_reference", "start_page": 14},
+        {"end_page": 25, "layout_id": "dongyang_vocab_two_column", "start_page": 24}
+      ],
+      "pdf_sha256": "ef933c6c9e3dcde008b35325f3905e98a8e642ff8db5fc20ff0a16c07c41e8b0",
+      "source_id": "dongyang-n4-vocabulary"
+    },
+    {
+      "expected_page_count": 30,
+      "page_rules": [
+        {"end_page": 13, "layout_id": "dongyang_vocab_two_column", "start_page": 4},
+        {"end_page": 24, "layout_id": "dongyang_synonym_reference", "start_page": 14}
+      ],
+      "pdf_sha256": "aa821401e03a0211ad871698dfdf455c76dc172c8d78358cec0d61afa9f3dc23",
+      "source_id": "dongyang-n5-vocabulary"
+    },
+    {
+      "expected_page_count": 16,
+      "page_rules": [
+        {"end_page": 9, "layout_id": "hackers_latest_vocabulary", "parity": "odd", "start_page": 1}
+      ],
+      "pdf_sha256": "1ad44997a9f9fe4c22eb4b2a9410a424f4fc186703240b63970aecb16b567d72",
+      "source_id": "hackers-n1-latest"
+    },
+    {
+      "expected_page_count": 81,
+      "page_rules": [
+        {"end_page": 21, "layout_id": "hackers_vocab_two_column", "start_page": 3},
+        {"end_page": 22, "layout_id": "hackers_vocab_to_usage_lexemes", "start_page": 22},
+        {"end_page": 26, "layout_id": "hackers_usage_lexemes", "start_page": 23},
+        {"end_page": 27, "layout_id": "hackers_usage_lexemes_to_phrases", "start_page": 27},
+        {"end_page": 28, "layout_id": "hackers_usage_phrases", "start_page": 28},
+        {"end_page": 29, "layout_id": "hackers_usage_lexemes_to_vocab", "start_page": 29},
+        {"end_page": 46, "layout_id": "hackers_vocab_two_column", "start_page": 30}
+      ],
+      "pdf_sha256": "d2f520cdab1fe7be8b99621c302e84cfeba326aaa37e3dc6537e08ed874c366b",
+      "source_id": "hackers-n1-wordbook"
+    },
+    {
+      "expected_page_count": 16,
+      "page_rules": [
+        {"end_page": 9, "layout_id": "hackers_latest_vocabulary", "parity": "odd", "start_page": 1}
+      ],
+      "pdf_sha256": "ec124c0e1c439cdab12590daf09d4d32a7afa549eff83482db3c34daf7f9b121",
+      "source_id": "hackers-n2-latest"
+    },
+    {
+      "expected_page_count": 79,
+      "page_rules": [
+        {"end_page": 27, "layout_id": "hackers_vocab_two_column", "start_page": 2},
+        {"end_page": 35, "layout_id": "hackers_usage_lexemes", "start_page": 28},
+        {"end_page": 36, "layout_id": "hackers_usage_phrases", "start_page": 36},
+        {"end_page": 43, "layout_id": "hackers_vocab_two_column", "start_page": 37}
+      ],
+      "pdf_sha256": "2f3a17be56678fa419b59860117946edd003f19f27b0cec825047ea7061d81c4",
+      "source_id": "hackers-n2-wordbook"
+    },
+    {
+      "expected_page_count": 16,
+      "page_rules": [
+        {"end_page": 9, "layout_id": "hackers_latest_vocabulary", "parity": "odd", "start_page": 1}
+      ],
+      "pdf_sha256": "c26fc51ce6c159d09e09668697712566b45b1bb186d0e49c7c6690ae31f76145",
+      "source_id": "hackers-n3-latest"
+    },
+    {
+      "expected_page_count": 72,
+      "page_rules": [
+        {"end_page": 22, "layout_id": "hackers_vocab_two_column", "start_page": 3},
+        {"end_page": 27, "layout_id": "hackers_usage_lexemes", "start_page": 23},
+        {"end_page": 28, "layout_id": "hackers_usage_lexemes_to_phrases", "start_page": 28},
+        {"end_page": 42, "layout_id": "hackers_vocab_two_column", "start_page": 29}
+      ],
+      "pdf_sha256": "a3c3508f7a20e640942358ddc83af9bc31d7bd3d10028d678b09b04ccc7acd76",
+      "source_id": "hackers-n3-wordbook"
+    },
+    {
+      "expected_page_count": 14,
+      "page_rules": [
+        {"end_page": 7, "layout_id": "hackers_latest_vocabulary", "parity": "odd", "start_page": 1}
+      ],
+      "pdf_sha256": "9dc67b85f06bb98586b8ea43a1380e2da49f7df0a2b4839c74e9fcdcfa42fdad",
+      "source_id": "hackers-n4-latest"
+    },
+    {
+      "expected_page_count": 70,
+      "page_rules": [
+        {"end_page": 31, "layout_id": "hackers_vocab_two_column", "start_page": 3},
+        {"end_page": 32, "layout_id": "hackers_vocab_to_usage_lexemes", "start_page": 32},
+        {"end_page": 36, "layout_id": "hackers_usage_lexemes", "start_page": 33},
+        {"end_page": 37, "layout_id": "hackers_usage_lexemes_to_phrases", "start_page": 37},
+        {"end_page": 38, "layout_id": "hackers_usage_phrases_to_vocab", "start_page": 38},
+        {"end_page": 52, "layout_id": "hackers_vocab_two_column", "start_page": 39}
+      ],
+      "pdf_sha256": "2af27d2b997165079a1ac0c89162ee7df9287ed61daa7284eacde713db36aeca",
+      "source_id": "hackers-n4-wordbook"
+    },
+    {
+      "expected_page_count": 14,
+      "page_rules": [
+        {"end_page": 7, "layout_id": "hackers_latest_vocabulary", "parity": "odd", "start_page": 1}
+      ],
+      "pdf_sha256": "ce239e5cb098f2ad9e6c302dc05157a42d9b2dfcdadeee98625d0369b82d7c12",
+      "source_id": "hackers-n5-latest"
+    },
+    {
+      "expected_page_count": 64,
+      "page_rules": [
+        {"end_page": 10, "layout_id": "hackers_vocab_two_column", "start_page": 3},
+        {"end_page": 16, "layout_id": "hackers_vocab_example_column", "start_page": 11},
+        {"end_page": 19, "layout_id": "hackers_counter_matrix", "start_page": 17},
+        {"end_page": 20, "layout_id": "hackers_calendar_grid", "start_page": 20},
+        {"end_page": 22, "layout_id": "hackers_usage_lexemes", "start_page": 21},
+        {"end_page": 24, "layout_id": "hackers_usage_phrases", "start_page": 23},
+        {"end_page": 56, "layout_id": "hackers_vocab_two_column", "start_page": 25}
+      ],
+      "pdf_sha256": "fb337d30732f1cd399a5151a71666b43211de90b4fbd9ce59fb2c000deac5111",
+      "source_id": "hackers-n5-wordbook"
+    }
+  ],
+  "layout_families": {
+    "dongyang_synonym_reference": {"content_class": "structured_reference", "creates_canonical_candidates": true, "extraction_method": "text_geometry", "inspection_bbox": [0.05, 0.07, 0.95, 0.95], "transition_group": "synonym_reference"},
+    "dongyang_vocab_two_column": {"content_class": "vocabulary", "creates_canonical_candidates": true, "extraction_method": "text_geometry", "inspection_bbox": [0.05, 0.07, 0.95, 0.95], "transition_group": "vocab"},
+    "hackers_calendar_grid": {"content_class": "structured_reference", "creates_canonical_candidates": false, "extraction_method": "text_geometry", "inspection_bbox": [0.04, 0.08, 0.96, 0.92], "transition_group": "calendar_grid"},
+    "hackers_counter_matrix": {"content_class": "structured_reference", "creates_canonical_candidates": false, "extraction_method": "text_geometry", "inspection_bbox": [0.04, 0.08, 0.96, 0.92], "transition_group": "counter_matrix"},
+    "hackers_latest_vocabulary": {"content_class": "vocabulary", "creates_canonical_candidates": true, "extraction_method": "text_geometry", "inspection_bbox": [0.05, 0.18, 0.96, 0.95], "transition_group": "latest_vocabulary"},
+    "hackers_usage_lexemes": {"content_class": "structured_reference", "creates_canonical_candidates": true, "extraction_method": "text_geometry", "inspection_bbox": [0.05, 0.07, 0.95, 0.94], "transition_group": "usage_lexemes"},
+    "hackers_usage_lexemes_to_phrases": {"content_class": "structured_reference", "creates_canonical_candidates": true, "extraction_method": "text_geometry", "inspection_bbox": [0.05, 0.07, 0.95, 0.94], "transition_group": "usage_lexemes_to_phrases"},
+    "hackers_usage_lexemes_to_vocab": {"content_class": "vocabulary", "creates_canonical_candidates": true, "extraction_method": "text_geometry", "inspection_bbox": [0.05, 0.07, 0.95, 0.94], "transition_group": "usage_lexemes_to_vocab"},
+    "hackers_usage_phrases": {"content_class": "structured_reference", "creates_canonical_candidates": true, "extraction_method": "text_geometry", "inspection_bbox": [0.05, 0.07, 0.95, 0.94], "transition_group": "usage_phrases"},
+    "hackers_usage_phrases_to_vocab": {"content_class": "vocabulary", "creates_canonical_candidates": true, "extraction_method": "text_geometry", "inspection_bbox": [0.05, 0.07, 0.95, 0.94], "transition_group": "usage_phrases_to_vocab"},
+    "hackers_vocab_example_column": {"content_class": "vocabulary", "creates_canonical_candidates": true, "extraction_method": "text_geometry", "inspection_bbox": [0.05, 0.07, 0.5, 0.94], "transition_group": "vocab_example"},
+    "hackers_vocab_to_usage_lexemes": {"content_class": "vocabulary", "creates_canonical_candidates": true, "extraction_method": "text_geometry", "inspection_bbox": [0.05, 0.07, 0.95, 0.94], "transition_group": "vocab_to_usage_lexemes"},
+    "hackers_vocab_two_column": {"content_class": "vocabulary", "creates_canonical_candidates": true, "extraction_method": "text_geometry", "inspection_bbox": [0.05, 0.07, 0.95, 0.94], "transition_group": "vocab"}
+  },
+  "policy_version": "public-hd-text-layouts-v1",
+  "schema_version": 1
+}

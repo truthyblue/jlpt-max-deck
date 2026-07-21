@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1210">
+  <meta name="robots" content="index,follow">
+  <meta name="description" content="PDF 17개 공식 다운로드부터 JLPT MAX 덱 빌드, APKG 가져오기와 AnkiWeb 동기화까지 설명하는 초보자용 가이드입니다.">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:site_name" content="JLPT MAX Deck">
+  <meta property="og:title" content="덱 만들고 Anki에 넣기 — JLPT MAX Deck">
+  <meta property="og:description" content="공식 PDF 준비, 덱 빌드, APKG 가져오기와 첫 학습까지 이어지는 초보자용 가이드">
+  <meta property="og:url" content="https://OWNER.github.io/REPOSITORY/getting-started.html">
+  <meta property="og:image" content="https://OWNER.github.io/REPOSITORY/assets/social-card.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JLPT MAX Deck — 단어는 더 깊이, 실전 문제까지">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="덱 만들고 Anki에 넣기 — JLPT MAX Deck">
+  <meta name="twitter:description" content="공식 PDF 17개 준비부터 덱 빌드, APKG 가져오기와 첫 학습까지">
+  <meta name="twitter:image" content="https://OWNER.github.io/REPOSITORY/assets/social-card.jpg">
+  <meta name="twitter:image:alt" content="JLPT MAX Deck — 단어는 더 깊이, 실전 문제까지">
+  <link rel="canonical" href="https://OWNER.github.io/REPOSITORY/getting-started.html">
+  <title>덱 만들고 Anki에 넣기 — JLPT MAX Deck</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css?v=9f57cf8f447b">
+  <link rel="stylesheet" href="assets/guide.css?v=2f772c05a4fc">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "덱 만들고 Anki에 넣기",
+    "url": "https://OWNER.github.io/REPOSITORY/getting-started.html",
+    "description": "공식 PDF 준비부터 JLPT MAX 덱 빌드, APKG 가져오기와 첫 학습까지 설명하는 초보자용 가이드",
+    "inLanguage": "ko-KR",
+    "isPartOf": {"@id": "https://OWNER.github.io/REPOSITORY/#website"},
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "덱 소개", "item": "https://OWNER.github.io/REPOSITORY/"},
+        {"@type": "ListItem", "position": 2, "name": "시작 가이드", "item": "https://OWNER.github.io/REPOSITORY/getting-started.html"}
+      ]
+    }
+  }
+  </script>
+</head>
+<body class="guide-page">
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="JLPT MAX Deck 홈">
+      <span class="brand-mark" aria-hidden="true"><span class="brand-mark-jlpt">JLPT</span><strong class="brand-mark-max">MAX</strong></span>
+      <span class="brand-wordmark">JLPT <b>MAX</b> Deck</span>
+    </a>
+    <nav aria-label="주요 메뉴">
+      <div class="nav-group nav-section-links" role="group" aria-label="덱 소개 섹션">
+        <a href="index.html#cards" aria-label="어휘 카드"><span class="nav-label-full">어휘 카드</span><span class="nav-label-compact">어휘</span></a>
+        <a href="index.html#kanji" aria-label="한자 카드"><span class="nav-label-full">한자 카드</span><span class="nav-label-compact">한자</span></a>
+        <a href="index.html#practice" aria-label="실전 문제"><span class="nav-label-full">실전 문제</span><span class="nav-label-compact">문제</span></a>
+        <a href="index.html#reference" aria-label="참조표"><span class="nav-label-full">참조표</span><span class="nav-label-compact">참조</span></a>
+        <a href="index.html#start" aria-label="빌드"><span class="nav-label-full">빌드</span><span class="nav-label-compact">빌드</span></a>
+      </div>
+      <div class="nav-group nav-guide-links" role="group" aria-label="별도 가이드">
+        <a href="getting-started.html" aria-label="시작 가이드" aria-current="page"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">가이드</span></a>
+        <a href="install-anki.html" aria-label="Anki 설치"><span class="nav-label-full">Anki 설치</span><span class="nav-label-compact">설치</span></a>
+      </div>
+    </nav>
+    <a class="nav-action" id="repo-link" href="../README.md" data-repository-path="" target="_blank" rel="noopener noreferrer" aria-label="GitHub 저장소, 새 탭에서 열림"><svg class="nav-action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.87c-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .08 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.86.09-.66.35-1.12.64-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.53a9.3 9.3 0 0 1 2.5.35c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg><span class="nav-action-label">GitHub</span><span class="nav-action-arrow" aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="guide-hero">
+      <div class="guide-hero-inner">
+        <p class="guide-eyebrow">처음부터 끝까지 · BEGINNER GUIDE</p>
+        <h1>덱을 만들고,<br><em>Anki에 넣는 법.</em></h1>
+        <p class="guide-lead">Anki가 있으면 PDF 준비부터, 아직 없으면 설치부터 시작하세요. 덱을 만드는 과정과 학습 앱을 준비하는 과정을 먼저 나눠 보여줍니다.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#materials">Anki 있음 · PDF 준비부터 <span aria-hidden="true">↓</span></a>
+          <a class="button button-quiet" href="install-anki.html">Anki 없음 · 설치부터 <span aria-hidden="true">→</span></a>
+        </div>
+        <p class="guide-scope-note">빌드에는 macOS 또는 Windows x64 컴퓨터, 공식 PDF 17개, 인터넷과 저장 공간이 필요합니다. 해커스 자료는 로그인과 구매 도서 인증이 필요할 수 있으며, iPhone·iPad용 공식 AnkiMobile은 유료입니다.</p>
+      </div>
+    </section>
+
+    <div class="guide-main">
+      <div class="guide-layout">
+        <aside class="guide-toc" aria-label="이 페이지 목차">
+          <strong>이 페이지 순서</strong>
+          <ol>
+            <li><a href="#before">0. 시작 전 준비</a></li>
+            <li><a href="#materials">1. PDF 17개 받기</a></li>
+            <li><a href="#build">2. 덱 빌드하기</a></li>
+            <li><a href="#result">3. 만들어지는 파일</a></li>
+            <li><a href="#import">4. Anki에 가져오기</a></li>
+            <li><a href="#settings">5. Anki 기본 설정</a></li>
+            <li><a href="#study">6. 첫 학습 시작</a></li>
+            <li><a href="#next">7. AnkiWeb 동기화</a></li>
+          </ol>
+        </aside>
+
+        <div class="guide-content">
+          <section class="guide-section" id="before">
+            <span class="guide-step-label">0 · 시작 전</span>
+            <h2>세 가지만 준비하면 됩니다.</h2>
+            <p>처음 빌드할 때는 프로그램과 공개 자료를 내려받아야 하므로 인터넷 연결이 필요합니다. PDF는 빌드 과정에서 외부로 전송되지 않고 선택한 컴퓨터 안에서만 사용됩니다.</p>
+            <ul class="guide-checklist">
+              <li>macOS 또는 Windows x64 컴퓨터</li>
+              <li>공부할 기기에 설치한 Anki 앱</li>
+              <li>인터넷 연결과 충분한 저장 공간</li>
+            </ul>
+            <div class="guide-callout">
+              <strong>Anki가 아직 없나요?</strong>
+              <p><a href="install-anki.html">Anki 설치 가이드</a>에서 Windows, macOS, iPhone/iPad, Android 중 사용할 기기를 먼저 준비한 뒤 이 페이지로 돌아오세요.</p>
+            </div>
+          </section>
+
+          <section class="guide-section" id="materials">
+            <span class="guide-step-label">1 · PDF 준비</span>
+            <h2>공식 페이지에서 PDF 17개를 내려받습니다.</h2>
+            <p>출판사 PDF는 공개 릴리스에 포함되지 않으며 빌더도 대신 내려받지 않습니다. 아래 공식 경로에서 지원 판본을 직접 받아 한 폴더에 모아 주세요.</p>
+
+            <div class="source-table guide-source-table" role="table" aria-label="덱 빌드에 필요한 PDF 17개 공식 다운로드 경로" aria-describedby="guide-materials-table-scroll-hint" tabindex="0">
+              <div class="source-row source-head" role="row">
+                <span role="columnheader">출판사</span><span role="columnheader">내려받을 자료와 공식 경로</span><span role="columnheader">파일·쪽</span>
+              </div>
+              <div class="source-row" role="row">
+                <strong role="rowheader">해커스</strong>
+                <span role="cell">N1~N5 최신 어휘 PDF와 단어장 PDF <span class="source-links"><a href="https://japan.hackers.com/?r=japan&amp;m=mp3&amp;c=mp3%2Fmp3_free&amp;p=1&amp;book_cd=863" target="_blank" rel="noopener noreferrer" aria-label="해커스 N1 공식 자료, 새 탭에서 열림">N1</a><a href="https://japan.hackers.com/?r=japan&amp;m=mp3&amp;c=mp3%2Fmp3_free&amp;p=1&amp;book_cd=1356" target="_blank" rel="noopener noreferrer" aria-label="해커스 N2 공식 자료, 새 탭에서 열림">N2</a><a href="https://japan.hackers.com/?r=japan&amp;m=mp3&amp;c=mp3%2Fmp3_free&amp;p=1&amp;book_cd=1337" target="_blank" rel="noopener noreferrer" aria-label="해커스 N3 공식 자료, 새 탭에서 열림">N3</a><a href="https://japan.hackers.com/?r=japan&amp;m=mp3&amp;c=mp3%2Fmp3_free&amp;p=1&amp;book_cd=311" target="_blank" rel="noopener noreferrer" aria-label="해커스 N4 공식 자료, 새 탭에서 열림">N4</a><a href="https://japan.hackers.com/?r=japan&amp;m=mp3&amp;c=mp3%2Fmp3_free&amp;p=1&amp;cate4_cd=&amp;lec_lvl_cd=&amp;book_cd=415" target="_blank" rel="noopener noreferrer" aria-label="해커스 N5 공식 자료, 새 탭에서 열림">N5</a></span></span>
+                <b role="cell"><span>10개</span><small>442쪽</small></b>
+              </div>
+              <div class="source-row" role="row">
+                <strong role="rowheader">동양북스</strong>
+                <span role="cell"><span lang="ko">일단 합격 JLPT 완벽 대비</span> 단어장 N1~N5 <span class="source-links"><a href="https://www.dongyangbooks.com/book/book_view.asp?goods_code=2968&amp;menu_1=jp&amp;menu_2=jp_JLPT" target="_blank" rel="noopener noreferrer" aria-label="동양북스 N1, 새 탭에서 열림">N1</a><a href="https://www.dongyangbooks.com/book/book_view.asp?goods_code=2969&amp;menu_1=jp&amp;menu_2=jp_JLPT" target="_blank" rel="noopener noreferrer" aria-label="동양북스 N2, 새 탭에서 열림">N2</a><a href="https://www.dongyangbooks.com/book/book_view.asp?goods_code=2970&amp;menu_1=jp&amp;menu_2=jp_JLPT" target="_blank" rel="noopener noreferrer" aria-label="동양북스 N3, 새 탭에서 열림">N3</a><a href="https://www.dongyangbooks.com/reference/reference_010100-view.asp?bidx=11&amp;bsno=44978" target="_blank" rel="noopener noreferrer" aria-label="동양북스 N4, 새 탭에서 열림">N4</a><a href="https://www.dongyangbooks.com/reference/reference_010100-view.asp?bidx=11&amp;bsno=44979" target="_blank" rel="noopener noreferrer" aria-label="동양북스 N5, 새 탭에서 열림">N5</a></span></span>
+                <b role="cell"><span>5개</span><small>246쪽</small></b>
+              </div>
+              <div class="source-row" role="row">
+                <strong role="rowheader">길벗</strong>
+                <span role="cell"><span lang="ko">일본어 상용한자 무작정 따라하기</span> 1·2 핵심정리·훈련용 소책자 PDF <span class="source-links"><a href="https://www.gilbut.co.kr/book/view?bookcode=BN003617" target="_blank" rel="noopener noreferrer" aria-label="길벗 1권, 새 탭에서 열림">1권</a><a href="https://www.gilbut.co.kr/book/view?bookcode=BN003669" target="_blank" rel="noopener noreferrer" aria-label="길벗 2권, 새 탭에서 열림">2권</a></span></span>
+                <b role="cell"><span>2개</span><small>97쪽</small></b>
+              </div>
+            </div>
+            <p class="sr-only" id="guide-materials-table-scroll-hint">표가 화면보다 넓으면 표에 초점을 둔 뒤 왼쪽·오른쪽 화살표 키로 이동할 수 있습니다. 표 안의 공식 자료 링크는 Tab 키로 이동합니다.</p>
+            <p class="source-note"><strong>해커스 자료는 로그인 후 N1~N5 각 교재를 보유한 상태에서 구매 도서 인증을 완료해야 내려받을 수 있습니다.</strong> 이 프로젝트는 인증에 필요한 정보를 제공하거나 인증 절차를 대신하지 않습니다. 전체 합계는 17개·지원 판본 기준 785쪽이며, 링크를 누르면 PDF 자체가 아니라 공식 자료실이나 도서 페이지가 열릴 수 있습니다.</p>
+
+            <ol class="guide-numbered">
+              <li>
+                <strong>비어 있는 새 폴더를 하나 만듭니다.</strong>
+                <p>폴더 이름과 위치는 자유롭습니다. 빌더가 재귀적으로 찾으므로 하위 폴더를 그대로 둬도 됩니다.</p>
+              </li>
+              <li>
+                <strong>위 공식 페이지에서 PDF 17개를 모두 받습니다.</strong>
+                <p>해커스 10개, 동양북스 5개, 길벗 2개인지 확인한 뒤 모두 같은 전용 폴더 아래에 넣습니다.</p>
+              </li>
+              <li>
+                <strong>PDF를 다시 저장하거나 합치지 않습니다.</strong>
+                <p>파일명은 바꿔도 되지만 PDF 편집기에서 재저장·병합·최적화하면 검증값이 바뀌어 지원 판본으로 인식되지 않습니다.</p>
+              </li>
+              <li>
+                <strong>다른 PDF가 없는지 마지막으로 확인합니다.</strong>
+                <p>지원하지 않는 PDF가 함께 있으면 잘못된 자료 사용을 막기 위해 빌드가 중단됩니다.</p>
+              </li>
+            </ol>
+            <div class="guide-callout warning">
+              <strong>17개인데도 판본 오류가 나오나요?</strong>
+              <p>출판사가 파일을 새 판본으로 교체했을 수 있습니다. PDF를 수정해 맞추지 말고 <a href="../docs/troubleshooting.md" data-repository-path="blob/main/docs/troubleshooting.md">문제 해결 안내</a>에서 확인할 정보와 다음 릴리스 대응 방법을 보세요.</p>
+            </div>
+          </section>
+
+          <section class="guide-section" id="build">
+            <span class="guide-step-label">2 · 덱 빌드</span>
+            <h2>이 페이지에서 바로 빌더를 실행합니다.</h2>
+            <p>Mac이나 Windows에서는 해당 탭이 자동으로 열립니다. 휴대폰에서 보고 있다면 빌드할 컴퓨터에서 이 페이지를 다시 여세요. 노란 버튼을 누르면 시작 스크립트를 안전하게 내려받아 실행하는 명령이 복사됩니다.</p>
+            <ol class="guide-numbered">
+              <li>
+                <strong>PDF 17개를 전용 폴더 하나에 모읍니다.</strong>
+                <p>해커스 10개, 동양북스 5개, 길벗 2개입니다. 다른 PDF가 섞이지 않게 해주세요.</p>
+              </li>
+              <li>
+                <strong>아래 노란 버튼을 누르고 명령을 붙여 넣습니다.</strong>
+                <p>Mac은 터미널, Windows는 PowerShell을 연 뒤 붙여 넣고 Enter를 누릅니다.</p>
+              </li>
+              <li>
+                <strong>PDF 폴더를 고르고 완료될 때까지 기다립니다.</strong>
+                <p>빌더가 PDF 17개와 릴리스 파일을 확인하고 덱을 만듭니다. 성공하면 <code>public-release</code> 결과 폴더가 자동으로 열립니다.</p>
+              </li>
+            </ol>
+
+            <div class="platform-shell guide-command-shell" id="guide-build-commands" data-platform-switcher>
+              <div class="platform-tabs" role="tablist" aria-label="덱 빌드 운영체제 선택">
+                <button type="button" class="platform-tab" id="guide-macos-build-tab" role="tab" aria-selected="true" aria-controls="guide-macos-build-panel" data-platform-tab="macos">macOS</button>
+                <button type="button" class="platform-tab" id="guide-windows-build-tab" role="tab" aria-selected="false" aria-controls="guide-windows-build-panel" data-platform-tab="windows" tabindex="-1">Windows</button>
+              </div>
+              <div class="platform-grid">
+                <article class="command-card platform-panel" id="guide-macos-build-panel" role="tabpanel" aria-labelledby="guide-macos-build-tab" data-platform-panel="macos">
+                  <header>
+                    <span>macOS · 터미널</span>
+                    <div class="command-actions">
+                      <a href="../scripts/bootstrap-public.sh" data-repository-path="blob/main/scripts/bootstrap-public.sh">시작 스크립트 보기 <span aria-hidden="true">↗</span></a>
+                      <button type="button" class="copy-command" data-copy-command="guide-macos-build-command" aria-controls="guide-macos-build-command">한 줄 시작 명령 복사</button>
+                    </div>
+                  </header>
+                  <p class="command-help"><kbd>⌘ Command</kbd> + <kbd>Space</kbd>를 누르고 ‘터미널’을 검색해 여세요. 복사한 명령을 붙여 넣고 Enter를 누릅니다.</p>
+                  <details class="command-details">
+                    <summary>한 줄 명령 보기</summary>
+                    <pre tabindex="0"><code id="guide-macos-build-command" data-repository-command>(set -o pipefail; curl -fsSL 'https://github.com/OWNER/REPOSITORY/raw/refs/heads/main/scripts/bootstrap-public.sh' | bash -s -- 'https://github.com/OWNER/REPOSITORY')</code></pre>
+                  </details>
+                </article>
+                <article class="command-card platform-panel" id="guide-windows-build-panel" role="tabpanel" aria-labelledby="guide-windows-build-tab" data-platform-panel="windows">
+                  <header>
+                    <span>Windows x64 · PowerShell</span>
+                    <div class="command-actions">
+                      <a href="../scripts/bootstrap-public.ps1" data-repository-path="blob/main/scripts/bootstrap-public.ps1">시작 스크립트 보기 <span aria-hidden="true">↗</span></a>
+                      <button type="button" class="copy-command" data-copy-command="guide-windows-build-command" aria-controls="guide-windows-build-command">한 줄 시작 명령 복사</button>
+                    </div>
+                  </header>
+                  <p class="command-help">시작 메뉴에서 ‘PowerShell’을 검색해 여세요. 복사한 명령을 붙여 넣고 Enter를 누릅니다.</p>
+                  <details class="command-details">
+                    <summary>한 줄 명령 보기</summary>
+                    <pre tabindex="0"><code id="guide-windows-build-command" data-repository-command>&amp; ([scriptblock]::Create((irm 'https://github.com/OWNER/REPOSITORY/raw/refs/heads/main/scripts/bootstrap-public.ps1'))) -RepositoryUrl 'https://github.com/OWNER/REPOSITORY'</code></pre>
+                  </details>
+                </article>
+              </div>
+              <p class="command-safety"><strong>복사되는 것은 한 줄뿐입니다.</strong> 이 명령은 공개된 시작 스크립트를 내려받아 바로 실행합니다. PDF 선택부터 파일 검증과 덱 빌드까지는 시작 스크립트 안에서 처리합니다. 실행 전에 내용을 확인하려면 각 카드의 ‘시작 스크립트 보기’를 누르세요.</p>
+              <p class="sr-only" role="status" aria-live="polite" data-copy-status></p>
+            </div>
+
+            <div class="guide-callout warning">
+              <strong>현재 공개 배포 준비 상태</strong>
+              <p>사이트가 GitHub Pages와 첫 Release에 연결되기 전에는 이 명령이 실제 릴리스 다운로드까지 끝나지 않습니다. 연결이 완료된 뒤에는 같은 흐름으로 사용할 수 있습니다.</p>
+            </div>
+          </section>
+
+          <section class="guide-section" id="result">
+            <span class="guide-step-label">3 · 빌드 결과</span>
+            <h2>Anki에 넣는 파일은 하나뿐입니다.</h2>
+            <p>결과 폴더에는 덱과 여러 검증 리포트가 함께 생깁니다. 파일이 많아 보여도 Anki에서 선택할 것은 <code>JLPT-MAX덱-1.0.0.apkg</code> 하나입니다.</p>
+            <pre class="guide-tree" aria-label="빌드 결과 폴더의 주요 파일"><code>public-release/
+├── JLPT-MAX덱-1.0.0.apkg
+├── public-build-report.json
+├── public-materialization-report.json
+├── source-proof.json
+└── 그 밖의 검증 manifest와 report</code></pre>
+            <div class="guide-output">
+              <article class="primary">
+                <code>JLPT-MAX덱-1.0.0.apkg</code>
+                <p><strong>Anki에 가져올 완성 덱입니다.</strong> 압축을 풀지 말고 파일 그대로 선택합니다.</p>
+              </article>
+              <article>
+                <code>public-build-report.json</code>
+                <p>빌드가 모든 검증을 통과했는지 기록한 요약 리포트입니다. 정상 결과는 <code>status: passed</code>, <code>unresolved: 0</code>입니다.</p>
+              </article>
+              <article>
+                <code>public-materialization-report.json</code>
+                <p>PDF에서 필요한 자료가 릴리스 계약에 맞게 복원됐는지 확인한 기술 리포트입니다. Anki에 넣지 않습니다.</p>
+              </article>
+              <article>
+                <code>source-proof.json</code>
+                <p>사용한 PDF와 source 위치의 로컬 증명입니다. PDF 관련 정보가 들어 있으므로 외부에 올리거나 문제 제보에 첨부하지 않습니다.</p>
+              </article>
+            </div>
+            <div class="guide-callout strong">
+              <strong>기억할 것: Anki에는 APKG만 가져옵니다.</strong>
+              <p>APKG 파일과 <code>source-proof.json</code>은 개인 학습용으로만 보관하고 공유 가능한 파일·공개 링크·일반 클라우드에 올리거나 판매, 미러링, 다른 사람에게 전달하지 마세요. 아래의 같은 사용자 개인 기기 간 비공개 AnkiWeb 동기화는 별도 흐름입니다.</p>
+            </div>
+          </section>
+
+          <section class="guide-section" id="import">
+            <span class="guide-step-label">4 · Anki 가져오기</span>
+            <h2>공부할 기기에 APKG를 직접 넣습니다.</h2>
+            <p>접속한 기기의 가져오기 방법이 자동으로 열립니다. 완성된 APKG를 공부할 기기에 로컬로 복사하면 미디어까지 함께 설치되어 바로 시작할 수 있습니다.</p>
+            <div class="guide-platform-shell" data-platform-switcher>
+              <div class="platform-tabs" role="tablist" aria-label="APKG를 가져올 기기 선택">
+                <button type="button" class="platform-tab" id="import-macos-tab" role="tab" aria-selected="true" aria-controls="import-macos-panel" data-platform-tab="macos">macOS</button>
+                <button type="button" class="platform-tab" id="import-windows-tab" role="tab" aria-selected="false" aria-controls="import-windows-panel" data-platform-tab="windows" tabindex="-1">Windows</button>
+                <button type="button" class="platform-tab" id="import-ios-tab" role="tab" aria-selected="false" aria-controls="import-ios-panel" data-platform-tab="ios" tabindex="-1">iPhone·iPad</button>
+                <button type="button" class="platform-tab" id="import-android-tab" role="tab" aria-selected="false" aria-controls="import-android-panel" data-platform-tab="android" tabindex="-1">Android</button>
+              </div>
+              <div class="guide-platform-grid">
+                <article class="guide-os-card platform-panel" id="import-macos-panel" role="tabpanel" aria-labelledby="import-macos-tab" data-platform-panel="macos">
+                  <span class="guide-app-kicker">ANKI DESKTOP</span>
+                  <h3>macOS에서 가져오기</h3>
+                  <ol>
+                    <li>Anki Desktop을 실행합니다.</li>
+                    <li><strong>파일(File) → 가져오기(Import)</strong>를 누릅니다.</li>
+                    <li><code>JLPT-MAX덱-1.0.0.apkg</code>를 선택합니다. 파일을 더블클릭해도 됩니다.</li>
+                    <li>가져오기 창에서 아래의 <strong>권장 설정 5개</strong>를 확인하고 <strong>가져오기(Import)</strong>를 누릅니다.</li>
+                    <li>가져오기가 끝나면 JLPT MAX덱과 음성을 확인합니다.</li>
+                  </ol>
+                  <a class="guide-download-link" href="https://docs.ankiweb.net/importing/packaged-decks.html" target="_blank" rel="noopener noreferrer" aria-label="Anki Desktop 공식 APKG 가져오기 도움말, 새 탭에서 열림">Desktop 가져오기 도움말 <span aria-hidden="true">↗</span></a>
+                </article>
+
+                <article class="guide-os-card platform-panel" id="import-windows-panel" role="tabpanel" aria-labelledby="import-windows-tab" data-platform-panel="windows">
+                  <span class="guide-app-kicker">ANKI DESKTOP</span>
+                  <h3>Windows에서 가져오기</h3>
+                  <ol>
+                    <li>Anki Desktop을 실행합니다.</li>
+                    <li><strong>파일(File) → 가져오기(Import)</strong>를 누릅니다.</li>
+                    <li><code>JLPT-MAX덱-1.0.0.apkg</code>를 선택합니다. 파일을 더블클릭해도 됩니다.</li>
+                    <li>가져오기 창에서 아래의 <strong>권장 설정 5개</strong>를 확인하고 <strong>가져오기(Import)</strong>를 누릅니다.</li>
+                    <li>가져오기가 끝나면 JLPT MAX덱과 음성을 확인합니다.</li>
+                  </ol>
+                  <a class="guide-download-link" href="https://docs.ankiweb.net/importing/packaged-decks.html" target="_blank" rel="noopener noreferrer" aria-label="Anki Desktop 공식 APKG 가져오기 도움말, 새 탭에서 열림">Desktop 가져오기 도움말 <span aria-hidden="true">↗</span></a>
+                </article>
+
+                <article class="guide-os-card platform-panel" id="import-ios-panel" role="tabpanel" aria-labelledby="import-ios-tab" data-platform-panel="ios">
+                  <span class="guide-app-kicker">ANKIMOBILE</span>
+                  <h3>iPhone · iPad에서 가져오기</h3>
+                  <ol>
+                    <li>Mac에서는 AirDrop으로 APKG를 보냅니다. Windows에서는 Apple 기기 앱의 <strong>파일 → AnkiMobile</strong>에 추가합니다.</li>
+                    <li>AirDrop으로 받았다면 파일의 <strong>공유 → AnkiMobile</strong>을 누릅니다.</li>
+                    <li>USB로 넣었다면 AnkiMobile의 <strong>Add/Export → Import from iTunes</strong>를 누릅니다.</li>
+                    <li>가져오기 옵션이 표시되면 아래의 권장 설정을 선택합니다. 옵션 없이 바로 시작되면 그대로 진행합니다.</li>
+                    <li>가져오기가 끝날 때까지 앱을 닫지 않습니다.</li>
+                  </ol>
+                  <a class="guide-download-link" href="https://docs.ankimobile.net/shared-decks.html" target="_blank" rel="noopener noreferrer" aria-label="AnkiMobile 공식 APKG 가져오기 도움말, 새 탭에서 열림">iPhone/iPad 가져오기 도움말 <span aria-hidden="true">↗</span></a>
+                </article>
+
+                <article class="guide-os-card platform-panel" id="import-android-panel" role="tabpanel" aria-labelledby="import-android-tab" data-platform-panel="android">
+                  <span class="guide-app-kicker">ANKIDROID</span>
+                  <h3>Android에서 가져오기</h3>
+                  <ol>
+                    <li>USB 또는 기기 간 로컬 전송으로 APKG를 다운로드 폴더에 복사합니다.</li>
+                    <li>파일 앱에서 APKG를 눌러 AnkiDroid로 엽니다.</li>
+                    <li>열리지 않으면 덱 목록의 <strong>⋮ → 가져오기 → 덱 패키지(.apkg)</strong>에서 파일을 고릅니다.</li>
+                    <li>아래의 권장 설정을 확인한 뒤 <strong>추가 또는 가져오기</strong>를 누릅니다.</li>
+                    <li>가져오기가 끝날 때까지 앱을 닫지 않습니다.</li>
+                  </ol>
+                  <a class="guide-download-link" href="https://docs.ankidroid.org/manual.html#importing" target="_blank" rel="noopener noreferrer" aria-label="AnkiDroid 공식 APKG 가져오기 도움말, 새 탭에서 열림">Android 가져오기 도움말 <span aria-hidden="true">↗</span></a>
+                </article>
+              </div>
+            </div>
+
+            <section class="guide-import-options" id="import-options" aria-labelledby="import-options-title">
+              <div class="guide-import-options-heading">
+                <span>가져오기 창 설정</span>
+                <h3 id="import-options-title">다섯 항목을 이대로 맞춥니다.</h3>
+                <p><strong>덮어쓰기(Updates)</strong>가 접혀 있으면 펼쳐서 마지막 세 항목까지 확인하세요. Anki가 이전 선택을 기억할 수 있으므로 기본값처럼 보여도 한 번씩 확인하는 편이 안전합니다.</p>
+              </div>
+              <div class="guide-import-option-list" role="table" aria-label="JLPT MAX덱 권장 가져오기 설정">
+                <div class="guide-import-option guide-import-option-head" role="row">
+                  <span role="columnheader">가져오기 항목</span><span role="columnheader">선택</span><span role="columnheader">이유</span>
+                </div>
+                <div class="guide-import-option" role="row">
+                  <strong role="rowheader">학습 진행 상태 가져오기<small>Import any learning progress · 복습 포함</small></strong>
+                  <span class="guide-option-state is-off" role="cell">끄기</span>
+                  <p role="cell">패키지에 들어 있는 학습 일정은 가져오지 않고 모든 카드를 새 카드로 시작합니다. 다시 가져와도 내가 공부한 진도는 유지됩니다.</p>
+                </div>
+                <div class="guide-import-option" role="row">
+                  <strong role="rowheader">덱 사전 설정 가져오기<small>Import any deck presets</small></strong>
+                  <span class="guide-option-state is-on" role="cell">켜기</span>
+                  <p role="cell">JLPT MAX덱에 맞춘 새 카드 수, 카드 순서와 음성 설정을 함께 적용합니다. 끄면 Anki의 Default 프리셋이 대신 적용됩니다.</p>
+                </div>
+                <div class="guide-import-option" role="row">
+                  <strong role="rowheader">노트 타입 병합<small>Merge note types</small></strong>
+                  <span class="guide-option-state is-on" role="cell">켜기</span>
+                  <p role="cell">같은 JLPT MAX덱을 다시 가져올 때 달라진 필드와 카드 템플릿 구조를 하나로 합칩니다. 서로 다른 덱을 한 덱으로 합치는 기능은 아닙니다.</p>
+                </div>
+                <div class="guide-import-option" role="row">
+                  <strong role="rowheader">노트 업데이트<small>Update notes</small></strong>
+                  <span class="guide-option-state is-newer" role="cell">If newer</span>
+                  <p role="cell">가져오는 노트가 더 최신일 때만 내용을 업데이트합니다. <strong>Always</strong>나 <strong>Never</strong>로 바꾸지 않습니다.</p>
+                </div>
+                <div class="guide-import-option" role="row">
+                  <strong role="rowheader">노트 유형 업데이트<small>Update note types</small></strong>
+                  <span class="guide-option-state is-newer" role="cell">If newer</span>
+                  <p role="cell">카드 앞·뒷면과 스타일도 더 최신인 경우에만 갱신합니다. 한국어 화면에서도 <strong>If newer</strong>가 영어로 보일 수 있습니다.</p>
+                </div>
+              </div>
+              <div class="guide-callout warning">
+                <strong>기존 JLPT MAX덱의 필드나 카드 모양을 직접 수정했다면 먼저 백업하세요.</strong>
+                <p><strong>노트 타입 병합</strong>은 필드·템플릿 구조 충돌을 해결하며 전체 업로드 또는 다운로드 동기화를 요구할 수 있습니다. 처음 가져오는 경우에는 합칠 기존 노트 타입이 없어 그대로 새로 추가됩니다.</p>
+              </div>
+              <p class="guide-import-mobile-note">iPhone·iPad에서 세부 옵션이 나타나지 않으면 별도로 선택할 것이 없으므로 그대로 가져오면 됩니다. Android에서 옵션이 보이면 위와 같은 값으로 맞추세요.</p>
+            </section>
+
+            <div class="guide-callout strong">
+              <strong>각 기기에 직접 넣는 이유</strong>
+              <p>APKG 안의 미디어 17,511개를 로컬에서 한 번에 풀 수 있어, 모든 음성을 별도로 내려받는 시간을 기다리지 않고 학습을 시작할 수 있습니다. 기기마다 같은 APKG 파일을 사용하세요.</p>
+            </div>
+            <div class="guide-callout">
+              <strong>기존 Anki 자료가 있는 경우</strong>
+              <p>일반적인 APKG 가져오기는 기존 컬렉션을 지우지 않습니다. 다만 같은 덱의 다른 variant를 이미 사용 중이라면 노트와 템플릿이 섞일 수 있습니다. Desktop 또는 AnkiMobile은 별도 프로필에서 먼저 확인하고, AnkiDroid는 기존 컬렉션을 백업한 뒤 진행하세요.</p>
+            </div>
+          </section>
+
+          <section class="guide-section" id="settings">
+            <span class="guide-step-label">5 · 기본 설정</span>
+            <h2>처음에는 이 설정만 확인합니다.</h2>
+            <p>JLPT MAX덱에는 새 카드 수와 목표 기억률을 포함한 시작용 프리셋이 들어 있습니다. APKG를 가져온 뒤 아래 경로에서 덱 옵션을 열고, 사용하는 모든 Anki 앱을 최신 버전으로 맞춘 다음 FSRS만 켜 주세요.</p>
+
+            <div class="guide-platform-shell" data-platform-switcher>
+              <div class="platform-tabs" role="tablist" aria-label="Anki 설정 기기 선택">
+                <button type="button" class="platform-tab" id="settings-macos-tab" role="tab" aria-selected="true" aria-controls="settings-macos-panel" data-platform-tab="macos">macOS</button>
+                <button type="button" class="platform-tab" id="settings-windows-tab" role="tab" aria-selected="false" aria-controls="settings-windows-panel" data-platform-tab="windows" tabindex="-1">Windows</button>
+                <button type="button" class="platform-tab" id="settings-ios-tab" role="tab" aria-selected="false" aria-controls="settings-ios-panel" data-platform-tab="ios" tabindex="-1">iPhone·iPad</button>
+                <button type="button" class="platform-tab" id="settings-android-tab" role="tab" aria-selected="false" aria-controls="settings-android-panel" data-platform-tab="android" tabindex="-1">Android</button>
+              </div>
+              <div class="guide-platform-grid">
+                <article class="guide-os-card platform-panel" id="settings-macos-panel" role="tabpanel" aria-labelledby="settings-macos-tab" data-platform-panel="macos">
+                  <span class="guide-app-kicker">ANKI DESKTOP</span>
+                  <h3>macOS에서 덱 옵션 열기</h3>
+                  <ol>
+                    <li>덱 목록에서 <strong>JLPT MAX덱</strong>을 찾습니다.</li>
+                    <li>덱 오른쪽의 <strong>톱니바퀴 → 옵션(Options)</strong>을 누릅니다.</li>
+                    <li>화면 아래쪽의 <strong>FSRS</strong> 영역으로 이동합니다.</li>
+                  </ol>
+                  <a class="guide-help-link" href="https://docs.ankiweb.net/deck-options" target="_blank" rel="noopener noreferrer" aria-label="Anki Desktop 공식 덱 옵션 안내, 새 탭에서 열림">공식 덱 옵션 안내</a>
+                </article>
+
+                <article class="guide-os-card platform-panel" id="settings-windows-panel" role="tabpanel" aria-labelledby="settings-windows-tab" data-platform-panel="windows">
+                  <span class="guide-app-kicker">ANKI DESKTOP</span>
+                  <h3>Windows에서 덱 옵션 열기</h3>
+                  <ol>
+                    <li>덱 목록에서 <strong>JLPT MAX덱</strong>을 찾습니다.</li>
+                    <li>덱 오른쪽의 <strong>톱니바퀴 → 옵션(Options)</strong>을 누릅니다.</li>
+                    <li>화면 아래쪽의 <strong>FSRS</strong> 영역으로 이동합니다.</li>
+                  </ol>
+                  <a class="guide-help-link" href="https://docs.ankiweb.net/deck-options" target="_blank" rel="noopener noreferrer" aria-label="Anki Desktop 공식 덱 옵션 안내, 새 탭에서 열림">공식 덱 옵션 안내</a>
+                </article>
+
+                <article class="guide-os-card platform-panel" id="settings-ios-panel" role="tabpanel" aria-labelledby="settings-ios-tab" data-platform-panel="ios">
+                  <span class="guide-app-kicker">ANKIMOBILE</span>
+                  <h3>iPhone · iPad에서 덱 옵션 열기</h3>
+                  <ol>
+                    <li><strong>JLPT MAX덱</strong>을 눌러 학습 화면을 엽니다.</li>
+                    <li>오른쪽 아래의 <strong>톱니바퀴 → Study Options</strong>를 누릅니다.</li>
+                    <li><strong>FSRS</strong> 영역으로 이동합니다.</li>
+                  </ol>
+                  <a class="guide-help-link" href="https://docs.ankimobile.net/study-tools.html" target="_blank" rel="noopener noreferrer" aria-label="AnkiMobile 공식 학습 옵션 안내, 새 탭에서 열림">공식 학습 옵션 안내</a>
+                </article>
+
+                <article class="guide-os-card platform-panel" id="settings-android-panel" role="tabpanel" aria-labelledby="settings-android-tab" data-platform-panel="android">
+                  <span class="guide-app-kicker">ANKIDROID</span>
+                  <h3>Android에서 덱 옵션 열기</h3>
+                  <ol>
+                    <li>덱 목록에서 <strong>JLPT MAX덱</strong>을 길게 누릅니다.</li>
+                    <li><strong>Deck options</strong>를 누릅니다.</li>
+                    <li><strong>FSRS</strong> 영역으로 이동합니다.</li>
+                  </ol>
+                  <a class="guide-help-link" href="https://docs.ankidroid.org/manual.html#other-deck-actions" target="_blank" rel="noopener noreferrer" aria-label="AnkiDroid 공식 덱 옵션 안내, 새 탭에서 열림">공식 덱 옵션 안내</a>
+                </article>
+              </div>
+            </div>
+
+            <ol class="guide-numbered">
+              <li>
+                <strong>새 카드 수는 하루 10~20개로 시작합니다.</strong>
+                <p>가져온 프리셋은 하루 20개로 시작합니다. 매일 복습할 카드가 빠르게 늘어나므로 부담되면 지금 공부하는 덱의 <strong>New Cards/Day</strong>를 10개 이하로 낮추세요.</p>
+              </li>
+              <li>
+                <strong>FSRS를 켜고 목표 기억률은 90%로 둡니다.</strong>
+                <p><strong>Desired Retention 0.90</strong>은 기억률과 복습량의 균형이 좋은 기본값입니다. 값을 높일수록 복습이 빠르게 늘어나므로 처음부터 올리지 않아도 됩니다.</p>
+              </li>
+              <li>
+                <strong>기존 카드 즉시 재예약은 끈 상태로 둡니다.</strong>
+                <p><strong>Reschedule Cards on Change</strong>를 켜면 기존 카드의 예정일이 한꺼번에 바뀌어 복습량이 급증할 수 있습니다. 끈 상태에서도 다음 복습부터 FSRS가 적용됩니다.</p>
+              </li>
+              <li>
+                <strong>처음에도 Optimize를 눌러 확인할 수 있습니다.</strong>
+                <p>최신 Anki에서는 리뷰 수와 관계없이 <strong>Optimize</strong>를 사용할 수 있습니다. 기록이 적으면 현재 파라미터가 이미 최적이라는 안내가 나올 수 있으며, 이후에는 자주 누를 필요 없이 한 달에 한 번 정도 재최적화하면 충분합니다.</p>
+              </li>
+              <li>
+                <strong>나머지 옵션은 기본값을 유지합니다.</strong>
+                <p>학습·재학습 단계나 최대 복습 수를 임의로 바꾸기보다 먼저 몇 주간 사용해 보고, 새 카드 수로 하루 분량만 조절하세요.</p>
+              </li>
+            </ol>
+            <div class="guide-answer-mode" id="two-button-mode">
+              <span class="guide-app-kicker">간단한 시작 · AGAIN / GOOD</span>
+              <h3>처음에는 Again과 Good만 사용해도 충분합니다.</h3>
+              <p><strong>틀렸거나 기억나지 않으면 Again</strong>, <strong>기억해 냈으면 Good</strong>을 누르세요. FSRS는 두 등급만으로도 정상 동작합니다.</p>
+              <p>네 버튼을 사용한다면 <strong>Hard는 맞혔지만 오래 망설였을 때</strong>, <strong>Easy는 거의 생각하지 않고 바로 맞혔을 때</strong> 선택하세요. 레벨이 낮거나 이미 아는 단어라는 이유만으로 Easy를 누르지는 마세요. <strong>기억나지 않았다면 Hard가 아니라 Again</strong>을 눌러야 합니다. 잊은 카드에 Hard를 누르면 FSRS가 기억한 것으로 판단해 다음 간격이 지나치게 길어질 수 있습니다.</p>
+              <a class="guide-answer-source" href="https://docs.ankiweb.net/studying.html#answer-buttons" target="_blank" rel="noopener noreferrer" aria-label="Anki 공식 답변 버튼 안내, 새 탭에서 열림">Anki 공식 답변 버튼 안내&nbsp;↗</a>
+              <a class="guide-answer-source" href="https://faqs.ankiweb.net/frequently-asked-questions-about-fsrs.html" target="_blank" rel="noopener noreferrer" aria-label="Anki 공식 FSRS 두 버튼 FAQ, 새 탭에서 열림">FSRS 두 버튼 FAQ&nbsp;↗</a>
+              <div class="guide-platform-shell" data-platform-switcher>
+                <div class="platform-tabs" role="tablist" aria-label="답변 버튼 기기 선택">
+                  <button type="button" class="platform-tab" id="answers-macos-tab" role="tab" aria-selected="true" aria-controls="answers-macos-panel" data-platform-tab="macos">macOS</button>
+                  <button type="button" class="platform-tab" id="answers-windows-tab" role="tab" aria-selected="false" aria-controls="answers-windows-panel" data-platform-tab="windows" tabindex="-1">Windows</button>
+                  <button type="button" class="platform-tab" id="answers-ios-tab" role="tab" aria-selected="false" aria-controls="answers-ios-panel" data-platform-tab="ios" tabindex="-1">iPhone·iPad</button>
+                  <button type="button" class="platform-tab" id="answers-android-tab" role="tab" aria-selected="false" aria-controls="answers-android-panel" data-platform-tab="android" tabindex="-1">Android</button>
+                </div>
+                <div class="guide-platform-grid">
+                  <article class="guide-os-card platform-panel" id="answers-macos-panel" role="tabpanel" aria-labelledby="answers-macos-tab" data-platform-panel="macos">
+                    <span class="guide-app-kicker">키보드로 빠르게 답하기</span>
+                    <h3>macOS에서 답변 버튼 사용</h3>
+                    <p>질문 화면에서는 <strong>Space·Enter</strong>로 답을 보고, 답 화면에서는 같은 키로 Good을 선택할 수 있습니다. 답을 본 뒤에는 <strong>1 Again · 2 Hard · 3 Good · 4 Easy</strong> 단축키도 사용할 수 있습니다.</p>
+                    <p class="guide-option-note">대부분은 Space·Enter로 진행하고, 기억나지 않았을 때 1을 누르면 마우스 없이 빠르게 학습할 수 있습니다.</p>
+                    <a class="guide-help-link" href="https://docs.ankiweb.net/studying.html#answer-buttons" target="_blank" rel="noopener noreferrer" aria-label="Anki macOS 공식 답변 버튼 안내, 새 탭에서 열림">공식 답변 버튼 안내</a>
+                  </article>
+                  <article class="guide-os-card platform-panel" id="answers-windows-panel" role="tabpanel" aria-labelledby="answers-windows-tab" data-platform-panel="windows">
+                    <span class="guide-app-kicker">키보드로 빠르게 답하기</span>
+                    <h3>Windows에서 답변 버튼 사용</h3>
+                    <p>질문 화면에서는 <strong>Space·Enter</strong>로 답을 보고, 답 화면에서는 같은 키로 Good을 선택할 수 있습니다. 답을 본 뒤에는 <strong>1 Again · 2 Hard · 3 Good · 4 Easy</strong> 단축키도 사용할 수 있습니다.</p>
+                    <p class="guide-option-note">대부분은 Space·Enter로 진행하고, 기억나지 않았을 때 1을 누르면 마우스 없이 빠르게 학습할 수 있습니다.</p>
+                    <a class="guide-help-link" href="https://docs.ankiweb.net/studying.html#answer-buttons" target="_blank" rel="noopener noreferrer" aria-label="Anki Windows 공식 답변 버튼 안내, 새 탭에서 열림">공식 답변 버튼 안내</a>
+                  </article>
+                  <article class="guide-os-card platform-panel" id="answers-ios-panel" role="tabpanel" aria-labelledby="answers-ios-tab" data-platform-panel="ios">
+                    <span class="guide-app-kicker">탭으로 빠르게 답하기</span>
+                    <h3>iPhone · iPad에서 답변 버튼 사용</h3>
+                    <p>질문 화면에서는 카드를 누르면 답이 열립니다. 답 화면의 기본 탭 동작은 <strong>왼쪽이 Again, 오른쪽이 Good</strong>이며, Hard와 Easy는 화면 아래의 답변 버튼을 직접 누르면 됩니다.</p>
+                    <p class="guide-option-note">탭과 스와이프 동작은 설정에서 바꿀 수 있지만, 처음에는 기본 동작과 화면의 답변 버튼을 그대로 사용하는 편이 안전합니다.</p>
+                    <a class="guide-help-link" href="https://docs.ankimobile.net/preferences.html#taps" target="_blank" rel="noopener noreferrer" aria-label="AnkiMobile 공식 탭 설정 안내, 새 탭에서 열림">공식 탭 설정 안내</a>
+                  </article>
+                  <article class="guide-os-card platform-panel" id="answers-android-panel" role="tabpanel" aria-labelledby="answers-android-tab" data-platform-panel="android">
+                    <span class="guide-app-kicker">버튼과 제스처로 빠르게 답하기</span>
+                    <h3>Android · AnkiDroid에서 답변 버튼 사용</h3>
+                    <p>카드 아래의 답 보기를 누른 뒤 <strong>Again · Hard · Good · Easy</strong> 버튼을 직접 선택하세요. 익숙해지면 설정에서 탭과 스와이프 동작에 각 답변 버튼을 연결할 수도 있습니다.</p>
+                    <p class="guide-option-note">평가 기준에 익숙해질 때까지는 답변 버튼을 화면에 표시한 채 직접 누르는 편이 안전합니다.</p>
+                    <a class="guide-help-link" href="https://docs.ankidroid.org/manual.html#gestures" target="_blank" rel="noopener noreferrer" aria-label="AnkiDroid 공식 제스처 설정 안내, 새 탭에서 열림">공식 제스처 설정 안내</a>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="guide-callout warning">
+              <strong>FSRS를 켜기 전에 모든 기기의 앱을 업데이트하세요.</strong>
+              <p>오래된 Anki 앱이 섞여 있으면 일정이 올바르게 계산되지 않을 수 있습니다. Desktop, AnkiMobile, AnkiDroid를 최신 버전으로 맞춘 뒤 같은 AnkiWeb 계정으로 동기화하세요.</p>
+            </div>
+          </section>
+
+          <section class="guide-section" id="study">
+            <span class="guide-step-label">6 · 첫 학습</span>
+            <h2>덱 목록에서 ‘JLPT MAX덱’을 찾습니다.</h2>
+            <p>가져오기가 끝나면 Desktop, AnkiMobile, AnkiDroid의 덱 목록에 <strong>JLPT MAX덱</strong>이 나타납니다. 이름 옆 펼침 버튼으로 목적별 하위 덱을 볼 수 있습니다.</p>
+            <div class="guide-deck-list" aria-label="JLPT MAX덱의 주요 하위 덱">
+              <span>어휘</span>
+              <span>음성</span>
+              <span>일상무따</span>
+              <span>종합 실전</span>
+              <span>참조표</span>
+            </div>
+            <ol class="guide-numbered">
+              <li>
+                <strong>‘JLPT MAX덱’ 또는 원하는 하위 덱을 누릅니다.</strong>
+                <p>처음이라면 어휘의 N5처럼 현재 급수에 맞는 작은 범위부터 시작해도 됩니다.</p>
+              </li>
+              <li>
+                <strong>‘지금 공부하기(Study Now)’를 누릅니다.</strong>
+                <p>카드 앞면을 보고 답을 떠올린 뒤 답을 확인하고 난이도를 선택합니다.</p>
+              </li>
+              <li>
+                <strong>단어와 예문 음성이 재생되는지 확인합니다.</strong>
+                <p>소리가 나지 않으면 Anki와 운영체제의 음량, 출력 장치, 음소거 상태를 먼저 확인하세요.</p>
+              </li>
+            </ol>
+          </section>
+
+          <section class="guide-section" id="next">
+            <span class="guide-step-label">7 · AnkiWeb</span>
+            <h2>로그인하면 학습 상태를 이어갈 수 있습니다.</h2>
+            <p>무료 AnkiWeb 계정을 만들고 각 기기에서 같은 계정으로 로그인한 뒤 동기화를 실행하면 카드, 복습 기록과 현재 학습 상태가 기기 사이에서 맞춰집니다. 이미지와 음성도 함께 동기화됩니다.</p>
+            <p><a class="button button-primary guide-inline-cta" href="https://ankiweb.net/account/signup" target="_blank" rel="noopener noreferrer" aria-label="AnkiWeb 무료 계정 만들기, 새 탭에서 열림">AnkiWeb 무료 가입 <span aria-hidden="true">↗</span></a></p>
+            <ol class="guide-numbered">
+              <li>
+                <strong>당장 공부할 기기마다 같은 APKG를 먼저 가져옵니다.</strong>
+                <p>Mac이나 Windows에서 빌드했더라도 그 컴퓨터에 먼저 넣을 필요는 없습니다. 지금 공부할 iPhone, iPad 또는 Android로 APKG를 옮겨 가져오세요. 여러 기기를 바로 쓸 예정이라면 각 기기에 직접 가져오면 미디어 다운로드를 기다리지 않고 시작할 수 있습니다.</p>
+              </li>
+              <li>
+                <strong>그 기기에서 AnkiWeb에 로그인하고 동기화합니다.</strong>
+                <p>AnkiWeb이 비어 있는 첫 동기화라면 이 기기의 컬렉션을 기준으로 <strong>업로드(Upload)</strong>를 선택합니다. 로그인만 하고 끝내지 말고 동기화 버튼도 눌러 주세요.</p>
+              </li>
+              <li>
+                <strong>첫 미디어 동기화에는 시간이 걸릴 수 있습니다.</strong>
+                <p>이 덱에는 미디어 17,511개가 있습니다. APKG를 직접 가져온 기기에는 음성이 이미 있으므로 미디어 동기화 완료를 기다리지 않고 공부할 수 있습니다. 동기화를 중단했다면 나중에 다시 실행해 이어갈 수 있습니다. <a href="https://faqs.ankiweb.net/media-files-may-take-time-to-sync.html" target="_blank" rel="noopener noreferrer" aria-label="Anki 미디어 동기화 안내, 새 탭에서 열림">미디어 동기화 상태 보는 법</a></p>
+              </li>
+              <li>
+                <strong>다른 기기에서는 같은 계정으로 로그인해 다운로드합니다.</strong>
+                <p>처음 동기화 선택이 나오면 <strong>다운로드(Download)</strong>를 선택합니다. 이후에는 공부 전후로 동기화하면 복습 기록과 학습 상태를 이어갈 수 있습니다.</p>
+              </li>
+            </ol>
+            <div class="guide-callout warning">
+              <strong>이미 AnkiWeb에 자료가 있다면 먼저 백업하세요.</strong>
+              <p>첫 업로드·다운로드는 한쪽 컬렉션을 기준으로 맞추는 과정입니다. 여러 기기에서 따로 공부한 뒤 임의로 선택하면 변경이 덮어써질 수 있으므로 <a href="https://docs.ankiweb.net/syncing.html" target="_blank" rel="noopener noreferrer" aria-label="Anki 공식 동기화 안내, 새 탭에서 열림">공식 동기화 안내</a>를 먼저 확인하세요.</p>
+            </div>
+            <div class="guide-callout">
+              <strong>개인 동기화와 덱 공유는 다릅니다.</strong>
+              <p>같은 사용자의 개인 기기 사이에서 비공개 AnkiWeb 동기화를 사용하는 것은 허용된 개인 학습 흐름입니다. APKG 파일이나 계정 접근 권한을 다른 사람에게 전달하거나 공개 링크·일반 클라우드에 올리는 것은 허용되지 않습니다.</p>
+            </div>
+          </section>
+
+          <section class="guide-next" aria-labelledby="guide-finish-title">
+            <div>
+              <h2 id="guide-finish-title">이제 학습을 시작하세요.</h2>
+              <p>PDF 검증, 빌드, 가져오기 또는 음성에서 막히면 증상별 확인 순서와 제보에 필요한 정보를 먼저 확인할 수 있습니다.</p>
+            </div>
+            <a class="button button-primary" href="../docs/troubleshooting.md" data-repository-path="blob/main/docs/troubleshooting.md">문제 해결 안내 <span aria-hidden="true">↗</span></a>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="brand footer-brand" role="img" aria-label="JLPT MAX Deck"><span class="brand-mark" aria-hidden="true"><span class="brand-mark-jlpt">JLPT</span><strong class="brand-mark-max">MAX</strong></span><span class="brand-wordmark">JLPT <b>MAX</b> Deck</span></div>
+    <p class="guide-footer-links"><a href="index.html">덱 소개</a><a href="install-anki.html">Anki 설치</a></p>
+    <p class="legal">Builder code AGPL-3.0-or-later · 완성 APKG는 개인 학습용</p>
+    <p class="disclaimer">Anki 또는 각 출판사의 공식 제품이나 후원 프로젝트가 아닙니다.</p>
+  </footer>
+  <script src="assets/platform.js?v=431a5fb869c6"></script>
+</body>
+</html>

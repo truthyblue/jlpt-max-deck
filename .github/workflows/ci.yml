@@ -1,0 +1,83 @@
+name: Public source CI
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  portable-contracts:
+    name: ${{ matrix.label }} portable contracts
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: macOS
+            os: macos-14
+          - label: Windows x64
+            os: windows-2022
+
+    steps:
+      - name: Check out public source
+        uses: actions/checkout@v6
+
+      - name: Install uv and Python 3.13
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+        with:
+          enable-cache: true
+          python-version: "3.13"
+
+      - name: Verify publication boundary
+        run: python scripts/verify-public-tree.py
+
+      - name: Install locked dependencies
+        run: uv sync --locked --python 3.13
+
+      - name: Run public synthetic tests
+        run: uv run --locked python test/run_tests.py fast --verbose
+
+      - name: Prove public import closure
+        run: >-
+          uv run --locked python -c
+          "import sys; sys.path.insert(0, 'src');
+          import build_public_deck, public_build_contract, public_content,
+          public_kanji, public_materialization, public_source_proof,
+          public_text_geometry, public_text_layouts"
+
+      - name: Check shell wrapper syntax
+        if: runner.os == 'macOS'
+        run: bash -n scripts/bootstrap-public.sh scripts/build-public.sh
+
+      - name: Check PowerShell wrapper syntax
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $Tokens = $null
+          $Errors = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile(
+            (Resolve-Path .\scripts\bootstrap-public.ps1),
+            [ref]$Tokens,
+            [ref]$Errors
+          )
+          if ($Errors.Count -ne 0) {
+            $Errors | ForEach-Object { Write-Error $_ }
+            exit 1
+          }
+          $Tokens = $null
+          $Errors = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile(
+            (Resolve-Path .\scripts\build-public.ps1),
+            [ref]$Tokens,
+            [ref]$Errors
+          )
+          if ($Errors.Count -ne 0) {
+            $Errors | ForEach-Object { Write-Error $_ }
+            exit 1
+          }
+
+      # Publisher PDFs and the release bundle are intentionally absent from CI.
+      # Release acceptance separately rebuilds the 17-PDF deck on both systems.

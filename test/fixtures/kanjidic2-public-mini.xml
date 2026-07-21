@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kanjidic2>
+  <header>
+    <file_version>4</file_version>
+    <database_version>fixture-1</database_version>
+    <date_of_creation>2026-07-20</date_of_creation>
+  </header>
+  <character>
+    <literal>休</literal>
+    <radical>
+      <rad_value rad_type="classical">9</rad_value>
+    </radical>
+    <misc>
+      <stroke_count>6</stroke_count>
+    </misc>
+    <reading_meaning>
+      <rmgroup>
+        <reading r_type="ja_on">キュウ</reading>
+        <reading r_type="ja_kun">やす.む</reading>
+        <reading r_type="korean_h">휴</reading>
+        <meaning>rest</meaning>
+      </rmgroup>
+    </reading_meaning>
+  </character>
+  <character>
+    <literal>些</literal>
+    <radical>
+      <rad_value rad_type="classical">7</rad_value>
+    </radical>
+    <misc>
+      <stroke_count>8</stroke_count>
+    </misc>
+    <reading_meaning>
+      <rmgroup>
+        <reading>サ</reading>
+        <reading r_type="ja_on">シャ</reading>
+        <reading r_type="ja_kun">いささか</reading>
+        <reading r_type="korean_h">사</reading>
+        <reading r_type="korean_r">sa</reading>
+        <meaning>a little bit</meaning>
+        <meaning m_lang="fr">un peu</meaning>
+      </rmgroup>
+    </reading_meaning>
+  </character>
+</kanjidic2>

@@ -1,0 +1,174 @@
+JLPT MAX Deck Public Distribution Notice
+Copyright (C) 2026 JLPT MAX Deck contributors
+
+This notice separates the software license from data, audio, and user-supplied
+publisher material.  Inclusion in one source archive or release bundle does not
+change the license of an independently licensed component.
+
+1. Builder software
+
+The public-builder software source is free software licensed under the GNU
+Affero General Public License, version 3 or (at your option) any later version
+(SPDX: AGPL-3.0-or-later).  The full license is in LICENSE.
+
+This software license applies to the builder code.  It does not claim or grant
+rights in publisher PDFs, text extracted from those PDFs, independent open-data
+files, generated deck content, generated audio, or a user's locally built APKG
+merely because those items are processed by or aggregated with the software.
+
+Distributed Python packages and other tools retain their upstream licenses and
+copyright notices.  Consult uv.lock and the corresponding upstream packages for
+the exact dependency set of a release.
+
+2. EDRDG KANJIDIC2 open data
+
+The public bundle includes an unmodified, hash-pinned KANJIDIC2 snapshot and
+the corresponding EDRDG licence text at:
+
+    open-data/kanjidic2.xml.gz
+    open-data/EDRDG-LICENSE.html
+
+KANJIDIC2 is produced by the Electronic Dictionary Research and Development
+Group (EDRDG).  It is distributed under the EDRDG licence, currently Creative
+Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
+
+Project pages:
+    https://www.edrdg.org/wiki/index.php/KANJIDIC_Project
+    https://www.edrdg.org/edrdg/licence.html
+    https://creativecommons.org/licenses/by-sa/4.0/
+
+The bundle manifest records the exact snapshot SHA-256, database version, and
+creation date.  Builder-derived structural records identify KANJIDIC2 as their
+source.  This project's personal-use terms do not reduce rights granted directly
+by EDRDG under CC BY-SA 4.0.
+
+EDRDG also requires software using its dictionary files to provide a regular
+update procedure.  Snapshot pinning is used for reproducible builds, not to
+freeze an obsolete dictionary indefinitely.  Maintainers check the upstream
+KANJIDIC2 and licence at least monthly and publish a refreshed compatible public
+release when either file changes.  End users update by installing the newest
+public-builder release and its matching bundle.
+
+3. Project recipes and generated content
+
+The public bundle may contain project-authored reconstruction recipes, manifests,
+templates, generated Japanese examples, Korean translations, and generated
+practice questions.  These files are separate content/data, not builder software,
+and are not licensed under AGPL merely because they are in the same bundle.
+
+Permission is granted to download and verify an official public bundle and to
+use these files with the matching public builder to create a local APKG for
+personal study.  Except for portions carrying their own open licence, this
+notice does not grant permission to republish or repackage those content/data
+files, to offer a derived deck download, or to redistribute the resulting APKG.
+
+The reconstruction recipes contain source identifiers, page/section/row
+coordinates, structural indices, and hashes.  They are designed not to contain
+publisher Korean text.  This permission does not authorize copying publisher
+material into a redistributed bundle.
+
+This source repository contains seventeen fixed PNG card-screen samples for the
+project site:
+
+    site/assets/card-dasu-answer.png
+    site/assets/card-heiki-register.png
+    site/assets/card-hontou-usage.png
+    site/assets/card-itoguchi-formation.png
+    site/assets/card-kanji-ima-answer.png
+    site/assets/practice-context-defined-answer.png
+    site/assets/practice-context-defined.png
+    site/assets/practice-kanji-reading-answer.png
+    site/assets/practice-kanji-reading.png
+    site/assets/practice-orthography-answer.png
+    site/assets/practice-orthography.png
+    site/assets/practice-paraphrase-answer.png
+    site/assets/practice-paraphrase.png
+    site/assets/practice-usage-answer.png
+    site/assets/practice-usage.png
+    site/assets/practice-word-formation-answer.png
+    site/assets/practice-word-formation.png
+
+They are limited feature demonstrations, not a current-field identity contract,
+a publisher-text dataset, or a distributable excerpt of the finished deck.  A
+current build may differ in individual meanings, example counts, or study
+priority.  Their inclusion does not grant permission to extract, repackage, or
+redistribute bundle content or a finished APKG.
+
+4. Generated audio
+
+The public bundle may contain hash-pinned MP3 files generated locally with:
+
+    AivisSpeech 1.2.0
+    voice model: まい
+    model UUID: e9339137-2ae3-4d41-9394-fb757a7e61e6
+    model version: 1.0.0
+    model SHA-256: eca53a500a70746f649572ec186d3b98665606b13e8e8e648f9b10fa8c0000c4
+    model licence: Aivis Common Model License (ACML) 1.0
+
+Model and licence pages:
+    https://hub.aivis-project.com/aivm-models/e9339137-2ae3-4d41-9394-fb757a7e61e6
+    https://github.com/Aivis-Project/ACML/blob/master/ACML-1.0.md
+
+This source repository contains exactly four fixed listening demos generated with
+that same AivisSpeech 1.2.0 / まい / ACML 1.0 setup:
+
+    site/assets/demo-dasu-word.mp3
+    site/assets/demo-dasu-example.mp3
+    site/assets/demo-dasu-example-2.mp3
+    site/assets/demo-dasu-example-3.mp3
+
+They demonstrate the pronunciation of `出す` and all three example-sentence
+readings on the project site.  They are fixed listening samples only, not a
+distributable sample of the bundle's audio collection, and they are unofficial
+synthesized audio, not the speaker's or model creator's official content.  Their inclusion
+does not grant permission to extract, republish, repackage, or otherwise
+redistribute the bundle MP3 collection or an APKG containing it.
+
+The AivisSpeech application and engine are open-source software distributed
+upstream under LGPL-3.0.  The engine and voice-model binaries are not included
+in the public bundle and are not required for an end-user build.  The release
+audio-provenance manifest identifies the engine, model, synthesis fingerprint,
+and encoding contract used for the bundled output.
+
+Generated MP3 files are separate output assets and are not licensed under AGPL
+merely because the builder references them.  Permission is granted to use the
+official bundled MP3 files in a local, personal-study APKG made by the matching
+builder.  This notice does not grant permission to extract, republish, sell, or
+otherwise redistribute the MP3 collection or an APKG containing it.  Any rights
+or restrictions that apply independently under the engine or voice-model terms
+remain in effect.
+
+5. User-supplied publisher PDFs and local extraction
+
+No publisher PDF is included in the source repository or public release bundle.
+Each user must lawfully obtain the exact supported editions from Dongyang Books,
+Hackers, and Gilbut and supply them locally.  The builder does not bypass login,
+purchase verification, access control, or DRM, and does not upload PDFs or
+extracted text.
+
+All copyright, database, trademark, and other rights in those publications
+remain with their respective owners.  Neither the AGPL license nor this notice
+grants permission to copy or redistribute the PDFs, extracted publisher text,
+source-proof output, or publisher-derived fields in a locally generated APKG.
+
+6. Final APKG distribution boundary
+
+Official GitHub Releases contain builder source and the public bundle, not a
+finished APKG.  A user-built APKG is intended for local personal study only.
+Do not upload, mirror, sell, share, or otherwise redistribute it.  Contributors
+should distribute builder source changes under AGPL-3.0-or-later instead of
+distributing a built deck.
+
+For this project, private AnkiWeb synchronization by the same user solely to
+keep that user's personal devices aligned is treated as part of personal study,
+not as deck distribution.  This does not authorize uploading the APKG as a
+shareable file, sharing account access, publishing a link, or making the deck
+or its derived content available to another person.  Users remain responsible
+for the AnkiWeb terms and for any independently applicable source terms.
+
+7. No endorsement or warranty
+
+Publisher names and product names identify required source editions only.  They
+do not imply sponsorship or endorsement.  The software warranty disclaimer and
+limitation of liability are stated in LICENSE.  Data and content are provided
+without any additional warranty to the extent permitted by applicable law.
