@@ -36,8 +36,11 @@ jobs:
         run: >-
           python -c
           "from pathlib import Path;
-          path = Path('.gitattributes');
-          path.write_bytes(path.read_bytes().replace(b'\r\n', b'\n'))"
+          paths = [Path('.gitattributes'),
+          *Path('site/assets').glob('*.css'),
+          *Path('site/assets').glob('*.js')];
+          [path.write_bytes(path.read_bytes().replace(b'\r\n', b'\n'))
+          for path in paths]"
 
       - name: Verify publication boundary
         run: python scripts/verify-public-tree.py
