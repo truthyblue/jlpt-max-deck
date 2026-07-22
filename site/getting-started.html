@@ -26,7 +26,7 @@
   <title>덱 만들고 Anki에 넣기 — JLPT MAX Deck</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/site.css?v=2de7ce3a372f">
-  <link rel="stylesheet" href="assets/guide.css?v=dbeda343484b">
+  <link rel="stylesheet" href="assets/guide.css?v=7f7e42489b9f">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -77,8 +77,8 @@
         <h1>덱을 만들고,<br><em>Anki에 넣는 법.</em></h1>
         <p class="guide-lead">Anki가 있으면 PDF 준비부터, 아직 없으면 설치부터 시작하세요. 덱을 만드는 과정과 학습 앱을 준비하는 과정을 먼저 나눠 보여줍니다.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#materials">Anki 있음 · PDF 준비부터 <span aria-hidden="true">↓</span></a>
-          <a class="button button-quiet" href="install-anki.html">Anki 없음 · 설치부터 <span aria-hidden="true">→</span></a>
+          <a class="button button-primary" id="anki-ready-materials-cta" href="#materials">Anki 있음 · PDF 준비부터 <span aria-hidden="true">↓</span></a>
+          <a class="button button-quiet" id="anki-missing-install-cta" href="install-anki.html">Anki 없음 · 설치부터 <span aria-hidden="true">→</span></a>
         </div>
         <p class="guide-scope-note">빌드에는 macOS 12 이상 또는 Windows x64 컴퓨터, 공식 PDF 17개와 인터넷이 필요합니다. 완성 APKG는 약 840MB이며, 임시 파일을 위해 <strong>8GB 이상의 여유 저장 공간을 권장합니다.</strong> 해커스 자료는 로그인과 구매 도서 인증이 필요할 수 있습니다. <strong>iPhone·iPad용 공식 AnkiMobile은 유료 앱입니다.</strong></p>
       </div>
@@ -197,7 +197,7 @@
                   <header>
                     <span>macOS · 터미널</span>
                     <div class="command-actions">
-                      <a href="https://github.com/truthyblue/jlpt-max-deck/blob/v1.0.0/scripts/bootstrap-public.sh">시작 스크립트 보기 <span aria-hidden="true">↗</span></a>
+                      <a href="https://github.com/truthyblue/jlpt-max-deck/blob/v1.0.0/scripts/bootstrap-public.sh" target="_blank" rel="noopener noreferrer" aria-label="macOS 시작 스크립트 보기, 새 탭에서 열림">시작 스크립트 보기 <span aria-hidden="true">↗</span></a>
                       <button type="button" class="copy-command" data-copy-command="guide-macos-build-command" aria-controls="guide-macos-build-command" aria-label="macOS 명령 복사">복사</button>
                     </div>
                   </header>
@@ -208,7 +208,7 @@
                   <header>
                     <span>Windows x64 · PowerShell</span>
                     <div class="command-actions">
-                      <a href="https://github.com/truthyblue/jlpt-max-deck/blob/v1.0.0/scripts/bootstrap-public.ps1">시작 스크립트 보기 <span aria-hidden="true">↗</span></a>
+                      <a href="https://github.com/truthyblue/jlpt-max-deck/blob/v1.0.0/scripts/bootstrap-public.ps1" target="_blank" rel="noopener noreferrer" aria-label="Windows 시작 스크립트 보기, 새 탭에서 열림">시작 스크립트 보기 <span aria-hidden="true">↗</span></a>
                       <button type="button" class="copy-command" data-copy-command="guide-windows-build-command" aria-controls="guide-windows-build-command" aria-label="Windows 명령 복사">복사</button>
                     </div>
                   </header>
@@ -265,7 +265,7 @@
             <span class="guide-step-label">4 · Anki 가져오기</span>
             <h2>공부할 기기에 APKG를 직접 넣습니다.</h2>
             <p>접속한 기기의 가져오기 방법이 자동으로 열립니다. 완성된 APKG를 공부할 기기에 로컬로 복사하면 미디어까지 함께 설치되어 바로 시작할 수 있습니다.</p>
-            <div class="guide-platform-shell" data-platform-switcher>
+            <div class="guide-platform-shell" data-platform-switcher data-platform-sync="study-device">
               <div class="platform-tabs" role="tablist" aria-label="APKG를 가져올 기기 선택">
                 <button type="button" class="platform-tab" id="import-macos-tab" role="tab" aria-selected="true" aria-controls="import-macos-panel" data-platform-tab="macos">macOS</button>
                 <button type="button" class="platform-tab" id="import-windows-tab" role="tab" aria-selected="false" aria-controls="import-windows-panel" data-platform-tab="windows" tabindex="-1">Windows</button>
@@ -385,7 +385,7 @@
             <h2>처음에는 이 설정만 확인합니다.</h2>
             <p>JLPT MAX덱에는 새 카드 수와 목표 기억률을 포함한 시작용 프리셋이 들어 있습니다. APKG를 가져온 뒤 아래 경로에서 덱 옵션을 열고, 사용하는 모든 Anki 앱을 최신 버전으로 맞춘 다음 FSRS만 켜 주세요.</p>
 
-            <div class="guide-platform-shell" data-platform-switcher>
+            <div class="guide-platform-shell" data-platform-switcher data-platform-sync="study-device">
               <div class="platform-tabs" role="tablist" aria-label="Anki 설정 기기 선택">
                 <button type="button" class="platform-tab" id="settings-macos-tab" role="tab" aria-selected="true" aria-controls="settings-macos-panel" data-platform-tab="macos">macOS</button>
                 <button type="button" class="platform-tab" id="settings-windows-tab" role="tab" aria-selected="false" aria-controls="settings-windows-panel" data-platform-tab="windows" tabindex="-1">Windows</button>
@@ -468,7 +468,7 @@
               <p>네 버튼을 사용한다면 <strong>Hard는 맞혔지만 오래 망설였을 때</strong>, <strong>Easy는 거의 생각하지 않고 바로 맞혔을 때</strong> 선택하세요. 레벨이 낮거나 이미 아는 단어라는 이유만으로 Easy를 누르지는 마세요. <strong>기억나지 않았다면 Hard가 아니라 Again</strong>을 눌러야 합니다. 잊은 카드에 Hard를 누르면 FSRS가 기억한 것으로 판단해 다음 간격이 지나치게 길어질 수 있습니다.</p>
               <a class="guide-answer-source" href="https://docs.ankiweb.net/studying.html#answer-buttons" target="_blank" rel="noopener noreferrer" aria-label="Anki 공식 답변 버튼 안내, 새 탭에서 열림">Anki 공식 답변 버튼 안내&nbsp;↗</a>
               <a class="guide-answer-source" href="https://faqs.ankiweb.net/frequently-asked-questions-about-fsrs.html" target="_blank" rel="noopener noreferrer" aria-label="Anki 공식 FSRS 두 버튼 FAQ, 새 탭에서 열림">FSRS 두 버튼 FAQ&nbsp;↗</a>
-              <div class="guide-platform-shell" data-platform-switcher>
+              <div class="guide-platform-shell" data-platform-switcher data-platform-sync="study-device">
                 <div class="platform-tabs" role="tablist" aria-label="답변 버튼 기기 선택">
                   <button type="button" class="platform-tab" id="answers-macos-tab" role="tab" aria-selected="true" aria-controls="answers-macos-panel" data-platform-tab="macos">macOS</button>
                   <button type="button" class="platform-tab" id="answers-windows-tab" role="tab" aria-selected="false" aria-controls="answers-windows-panel" data-platform-tab="windows" tabindex="-1">Windows</button>
@@ -586,7 +586,7 @@
               <h2 id="guide-finish-title">이제 학습을 시작하세요.</h2>
               <p>PDF 검증, 빌드, 가져오기 또는 음성에서 막히면 증상별 확인 순서와 제보에 필요한 정보를 먼저 확인할 수 있습니다.</p>
             </div>
-            <a class="button button-primary" href="https://github.com/truthyblue/jlpt-max-deck/blob/main/docs/troubleshooting.md">문제 해결 안내 <span aria-hidden="true">↗</span></a>
+            <a class="button button-primary" href="https://github.com/truthyblue/jlpt-max-deck/blob/main/docs/troubleshooting.md" target="_blank" rel="noopener noreferrer" aria-label="문제 해결 안내, 새 탭에서 열림">문제 해결 안내 <span aria-hidden="true">↗</span></a>
           </section>
         </div>
       </div>
@@ -599,6 +599,6 @@
     <p class="legal">Builder code AGPL-3.0-or-later · 완성 APKG는 개인 학습용</p>
     <p class="disclaimer">Anki 또는 각 출판사의 공식 제품이나 후원 프로젝트가 아닙니다.</p>
   </footer>
-  <script src="assets/platform.js?v=54001ae82d36"></script>
+  <script src="assets/platform.js?v=f85deb73c82e"></script>
 </body>
 </html>

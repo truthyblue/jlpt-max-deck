@@ -792,6 +792,19 @@
   color: rgba(255, 255, 255, .65);
 }
 
+.guide-next-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.guide-next-actions .button {
+  min-height: 56px;
+  padding-inline: 20px;
+  font-size: 17px;
+}
+
 .guide-page footer {
   grid-template-columns: auto 1fr;
 }
@@ -862,6 +875,10 @@
 
   .guide-next {
     grid-template-columns: 1fr;
+  }
+
+  .guide-next-actions {
+    justify-content: flex-start;
   }
 }
 

@@ -2132,12 +2132,48 @@ class BeginnerGuideContractTest(unittest.TestCase):
         self.assertNotIn("macOS용 방법을 보여드리고 있습니다", index)
         self.assertNotIn("data-platform-status", index)
 
+    def test_primary_user_journey_destinations_survive_pages_preparation(
+        self,
+    ) -> None:
+        expected_journeys = {
+            "index.html": {
+                "release-cta": "getting-started.html",
+                "anki-install-guide-link": "install-anki.html",
+                "build-handoff-install-link": "install-anki.html",
+                "build-handoff-result-link": "getting-started.html#result",
+            },
+            "getting-started.html": {
+                "anki-ready-materials-cta": "#materials",
+                "anki-missing-install-cta": "install-anki.html",
+            },
+            "install-anki.html": {
+                "install-hero-next-cta": "getting-started.html#materials",
+                "install-finish-build-cta": "getting-started.html#materials",
+                "install-finish-import-cta": "getting-started.html#import",
+            },
+        }
+
+        def assert_journeys(site_root: Path) -> None:
+            for page_name, expected_links in expected_journeys.items():
+                links_by_id = {
+                    attrs["id"]: attrs.get("href")
+                    for tag, attrs in _parse(site_root / page_name).elements
+                    if tag == "a" and attrs.get("id") in expected_links
+                }
+                self.assertEqual(links_by_id, expected_links, page_name)
+
+        assert_journeys(SITE_ROOT)
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "pages-site"
+            PREPARE.prepare_site(SITE_ROOT, output)
+            assert_journeys(output)
+
     def test_getting_started_branches_without_duplicate_progress_bar(self) -> None:
         html = (SITE_ROOT / "getting-started.html").read_text(encoding="utf-8")
         for snippet in (
             "Anki가 있으면 PDF 준비부터, 아직 없으면 설치부터 시작하세요.",
-            '<a class="button button-primary" href="#materials">Anki 있음 · PDF 준비부터',
-            '<a class="button button-quiet" href="install-anki.html">Anki 없음 · 설치부터',
+            'id="anki-ready-materials-cta" href="#materials">Anki 있음 · PDF 준비부터',
+            'id="anki-missing-install-cta" href="install-anki.html">Anki 없음 · 설치부터',
             "완성 APKG는 약 840MB",
             "8GB 이상의 여유 저장 공간을 권장합니다.",
             "빌드 컴퓨터의 여유 저장 공간 8GB 이상 권장",
@@ -2653,6 +2689,11 @@ class BeginnerGuideContractTest(unittest.TestCase):
             "2026-07-21 기준",
             "공식·호환 Anki 앱",
             "오픈소스 앱 AnkiDroid",
+            "이제 현재 상태에 맞춰 이어갑니다.",
+            "덱을 아직 만들지 않았다면 PDF 17개 준비부터",
+            'id="install-hero-next-cta" href="getting-started.html#materials"',
+            'id="install-finish-build-cta" href="getting-started.html#materials"',
+            'id="install-finish-import-cta" href="getting-started.html#import"',
         ):
             self.assertIn(snippet, html)
         for metadata_scope_error in (
@@ -2663,6 +2704,14 @@ class BeginnerGuideContractTest(unittest.TestCase):
         self.assertNotIn("Ankitects Pty Ltd", html)
         self.assertNotIn("공식 모바일 앱", html)
         self.assertNotIn("이제 APKG를 가져오면 됩니다.", html)
+        self.assertNotIn(
+            '<li><span>03</span><strong>덱 가져오기</strong></li>',
+            html,
+        )
+        self.assertIn(
+            '<li><span>03</span><strong>설치 확인</strong></li>',
+            html,
+        )
         self.assertIn("AnkiApp, Anki Pro", html)
         self.assertIn('href="getting-started.html#import-options"', html)
         self.assertIn('href="getting-started.html#settings"', html)
@@ -2754,8 +2803,44 @@ class BeginnerGuideContractTest(unittest.TestCase):
             "window.isSecureContext",
             "document.execCommand('copy')",
             "focusedElement.focus({ preventScroll: true })",
+            "switcher.dataset.platformSync",
+            "new CustomEvent('platform-sync-change'",
+            "event.detail?.group !== syncGroup",
         ):
             self.assertIn(snippet, script)
+
+    def test_study_device_selection_is_shared_across_followup_sections(self) -> None:
+        switchers = [
+            attrs
+            for tag, attrs in _parse(SITE_ROOT / "getting-started.html").elements
+            if tag == "div" and "data-platform-switcher" in attrs
+        ]
+        synchronized = [
+            attrs.get("data-platform-sync")
+            for attrs in switchers
+            if attrs.get("data-platform-sync")
+        ]
+        self.assertEqual(synchronized, ["study-device"] * 3)
+
+    def test_links_marked_as_new_tabs_preserve_the_current_journey(self) -> None:
+        for name in ("index.html", *self.GUIDE_NAMES):
+            html = (SITE_ROOT / name).read_text(encoding="utf-8")
+            for raw_attributes, body in re.findall(
+                r"<a\b([^>]*)>(.*?)</a>", html, flags=re.DOTALL
+            ):
+                if "↗" not in html_lib.unescape(body):
+                    continue
+                parser = _SiteParser()
+                parser.feed(f"<a{raw_attributes}></a>")
+                attrs = parser.elements[0][1]
+                self.assertEqual(attrs.get("target"), "_blank", f"{name}: {body}")
+                self.assertTrue(
+                    {"noopener", "noreferrer"}.issubset(
+                        set(attrs.get("rel", "").split())
+                    ),
+                    f"{name}: {attrs.get('href')}",
+                )
+                self.assertIn("새 탭", attrs.get("aria-label", ""), name)
 
     def test_guide_external_links_have_new_tab_contracts(self) -> None:
         for name in self.GUIDE_NAMES:

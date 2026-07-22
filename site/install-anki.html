@@ -26,7 +26,7 @@
   <title>Anki 설치 가이드 — JLPT MAX Deck</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/site.css?v=2de7ce3a372f">
-  <link rel="stylesheet" href="assets/guide.css?v=dbeda343484b">
+  <link rel="stylesheet" href="assets/guide.css?v=7f7e42489b9f">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -78,7 +78,7 @@
         <p class="guide-lead">접속한 기기를 확인해 알맞은 Anki 앱과 설치 링크를 바로 보여줍니다. Android에서는 Anki와 함께 쓸 수 있는 오픈소스 앱 AnkiDroid를 사용합니다.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#install">이 기기에 Anki 설치 <span aria-hidden="true">↓</span></a>
-          <a class="button button-quiet" href="getting-started.html">설치 후 덱 만들기 <span aria-hidden="true">→</span></a>
+          <a class="button button-quiet" id="install-hero-next-cta" href="getting-started.html#materials">설치 후 PDF 준비하기 <span aria-hidden="true">→</span></a>
         </div>
         <p class="guide-scope-note">
           <span>Anki 앱을 설치할 수 있는 기기와 덱을 만들 수 있는 컴퓨터는 다릅니다. 덱 빌드는 macOS 12 이상 또는 Windows x64 컴퓨터에서 진행하세요.</span>
@@ -91,7 +91,7 @@
       <ol class="guide-flow guide-flow-compact" aria-label="Anki 설치 순서">
         <li><span>01</span><strong>기기에 맞는 앱 설치</strong></li>
         <li><span>02</span><strong>첫 실행 확인</strong></li>
-        <li><span>03</span><strong>덱 가져오기</strong></li>
+        <li><span>03</span><strong>설치 확인</strong></li>
       </ol>
 
       <div class="guide-layout">
@@ -220,10 +220,13 @@
 
           <section class="guide-next" aria-labelledby="install-finish-title">
             <div>
-              <h2 id="install-finish-title">Anki가 열렸다면 덱을 만듭니다.</h2>
-              <p>가이드 안에서 현재 컴퓨터에 맞는 빌드 명령을 복사하고, 완성 APKG를 공부할 기기로 바로 가져올 수 있습니다.</p>
+              <h2 id="install-finish-title">이제 현재 상태에 맞춰 이어갑니다.</h2>
+              <p>덱을 아직 만들지 않았다면 PDF 17개 준비부터, 이미 APKG를 만들었다면 Anki 가져오기부터 진행하세요.</p>
             </div>
-            <a class="button button-primary" href="getting-started.html#build">덱 만들기·가져오기 <span aria-hidden="true">→</span></a>
+            <div class="guide-next-actions">
+              <a class="button button-primary" id="install-finish-build-cta" href="getting-started.html#materials">PDF 준비부터 <span aria-hidden="true">→</span></a>
+              <a class="button button-quiet" id="install-finish-import-cta" href="getting-started.html#import">이미 APKG 있음 · 가져오기 <span aria-hidden="true">→</span></a>
+            </div>
           </section>
         </div>
       </div>
@@ -232,10 +235,10 @@
 
   <footer>
     <div class="brand footer-brand" role="img" aria-label="JLPT MAX Deck"><span class="brand-mark" aria-hidden="true"><span class="brand-mark-jlpt">JLPT</span><strong class="brand-mark-max">MAX</strong></span><span class="brand-wordmark">JLPT <b>MAX</b> Deck</span></div>
-    <p class="guide-footer-links"><a href="index.html">덱 소개</a><a href="getting-started.html">덱 만들기·가져오기</a></p>
+    <p class="guide-footer-links"><a href="index.html">덱 소개</a><a href="getting-started.html#materials">PDF 준비·덱 만들기</a></p>
     <p class="legal">Anki 설치 파일은 위 공식 다운로드 경로에서 받으세요.</p>
     <p class="disclaimer">이 프로젝트는 Anki의 공식 제품이나 후원 프로젝트가 아닙니다.</p>
   </footer>
-  <script src="assets/platform.js?v=54001ae82d36"></script>
+  <script src="assets/platform.js?v=f85deb73c82e"></script>
 </body>
 </html>

@@ -53,8 +53,25 @@
       }
     };
 
+    const syncGroup = switcher.dataset.platformSync;
+    const selectSynchronizedPlatform = (platform, { focus = false } = {}) => {
+      selectPlatform(platform, { focus });
+      if (!syncGroup) return;
+      document.dispatchEvent(new CustomEvent('platform-sync-change', {
+        detail: { group: syncGroup, platform, source: switcher },
+      }));
+    };
+
+    document.addEventListener('platform-sync-change', (event) => {
+      if (event.detail?.source === switcher) return;
+      if (!syncGroup || event.detail?.group !== syncGroup) return;
+      selectPlatform(event.detail.platform);
+    });
+
     tabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => selectPlatform(tab.dataset.platformTab));
+      tab.addEventListener('click', () => {
+        selectSynchronizedPlatform(tab.dataset.platformTab);
+      });
       tab.addEventListener('keydown', (event) => {
         let nextIndex = null;
         if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
@@ -63,7 +80,10 @@
         if (event.key === 'End') nextIndex = tabs.length - 1;
         if (nextIndex === null) return;
         event.preventDefault();
-        selectPlatform(tabs[nextIndex].dataset.platformTab, { focus: true });
+        selectSynchronizedPlatform(
+          tabs[nextIndex].dataset.platformTab,
+          { focus: true },
+        );
       });
     });
 
