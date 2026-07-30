@@ -98,6 +98,12 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
 
     def test_readme_leads_with_direct_basic_deck_download(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn(
+            '<img src="site/assets/brand-lockup.svg" '
+            'alt="JLPT MAX Deck" width="560">',
+            readme,
+        )
+        self.assertTrue((ROOT / "site" / "assets" / "brand-lockup.svg").is_file())
         self.assertIn("JLPT-MAX-Deck-1.0.1.apkg", readme)
         self.assertNotIn("JLPT-MAX-core", readme)
         self.assertIn(

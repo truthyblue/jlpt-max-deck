@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://truthyblue.github.io/jlpt-max-deck/">
+    <img src="site/assets/brand-lockup.svg" alt="JLPT MAX Deck" width="560">
+  </a>
+</p>
+
 # JLPT MAX Deck
 
 > 한국어권 JLPT 학습용 Anki 덱. 어휘·음성·실전 문제·참조표가 담긴 기본 덱으로
