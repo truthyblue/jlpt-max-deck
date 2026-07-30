@@ -90,6 +90,17 @@ class PublicSiteTests(unittest.TestCase):
                     'class="nav-group nav-guide-links"',
                     html,
                 )
+                self.assertIn('aria-label="도움·업데이트"', html)
+                self.assertIn(
+                    '<span class="nav-label-full">도움·업데이트</span>',
+                    html,
+                )
+                if name == "support.html":
+                    self.assertIn(
+                        'href="support.html" aria-current="page" '
+                        'aria-label="도움·업데이트"',
+                        html,
+                    )
                 self.assertIn('id="repo-link"', html)
                 self.assertIn(
                     '<span class="nav-action-label">GitHub에서 Star</span>',
@@ -197,10 +208,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("13,903", html)
         self.assertIn("20,065", html)
         self.assertIn("17,899", html)
-        self.assertIn(
-            "<code>종합 실전</code>만 삭제한 뒤 1.0.1을 가져오세요.",
-            html,
-        )
+        self.assertNotIn("<strong>1.0.0 사용자:</strong>", html)
         self.assertIn('id="cards"', html)
         self.assertIn('id="kanji"', html)
         self.assertIn('id="practice"', html)

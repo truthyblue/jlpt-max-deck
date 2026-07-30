@@ -1230,7 +1230,7 @@ a {
   .site-header nav {
     bottom: 0;
     display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     gap: 0;
     width: 100%;
     padding: 4px 0;
@@ -1251,7 +1251,7 @@ a {
 
   .site-header .nav-guide-links {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-left: 0;
     padding: 2px 4px;
   }
