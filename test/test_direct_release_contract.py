@@ -22,13 +22,13 @@ from direct_release_contract import (  # noqa: E402
 
 class DirectReleaseContractTest(unittest.TestCase):
     def test_release_names_separate_core_and_optional_kanji(self) -> None:
-        names = release_filenames("1.0.0")
-        self.assertEqual(names["core_apkg"], "JLPT-MAX-Deck-1.0.0.apkg")
+        names = release_filenames("1.0.1")
+        self.assertEqual(names["core_apkg"], "JLPT-MAX-Deck-1.0.1.apkg")
         self.assertEqual(
-            names["kanji_builder"], "JLPT-MAX-kanji-builder-1.0.0.zip"
+            names["kanji_builder"], "JLPT-MAX-kanji-builder-1.0.1.zip"
         )
         self.assertEqual(
-            names["kanji_addon"], "JLPT-MAX-kanji-addon-1.0.0.apkg"
+            names["kanji_addon"], "JLPT-MAX-kanji-addon-1.0.1.apkg"
         )
         self.assertNotIn("autoplay_addon", names)
 
@@ -57,9 +57,9 @@ class DirectReleaseContractTest(unittest.TestCase):
             "kanji_note_count": EXPECTED_KANJI_NOTES,
             "notes": records,
             "policy_version": POLICY_VERSION,
-            "product_version": "1.0.0",
+            "product_version": "1.0.1",
             "schema_version": SCHEMA_VERSION,
-            "skeleton_apkg": "JLPT-MAX-kanji-skeleton-1.0.0.apkg",
+            "skeleton_apkg": "JLPT-MAX-kanji-skeleton-1.0.1.apkg",
             "skeleton_apkg_sha256": "0" * 64,
             "vector_glyph_count": EXPECTED_KANJI_VECTOR_GLYPHS,
         }

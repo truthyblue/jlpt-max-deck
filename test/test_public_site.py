@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import re
 import tempfile
 import unittest
@@ -186,16 +187,20 @@ class PublicSiteTests(unittest.TestCase):
 
     def test_home_explains_direct_core_and_optional_kanji(self) -> None:
         html = (SITE / "index.html").read_text(encoding="utf-8")
-        self.assertIn("JLPT-MAX-Deck-1.0.0.apkg", html)
+        self.assertIn("JLPT-MAX-Deck-1.0.1.apkg", html)
         self.assertNotIn("JLPT-MAX-core", html)
-        self.assertNotIn("JLPT-MAX-kanji-builder-1.0.0.zip", html)
+        self.assertNotIn("JLPT-MAX-kanji-builder-1.0.1.zip", html)
         self.assertNotIn('id="kanji-builder-download-link"', html)
         self.assertNotIn('id="materials-doc-link"', html)
         self.assertIn('id="kanji-guide-link"', html)
         self.assertIn("한자 확장 적용 방법", html)
         self.assertIn("13,903", html)
         self.assertIn("20,065", html)
-        self.assertIn("17,950", html)
+        self.assertIn("17,899", html)
+        self.assertIn(
+            "<code>종합 실전</code>만 삭제한 뒤 1.0.1을 가져오세요.",
+            html,
+        )
         self.assertIn('id="cards"', html)
         self.assertIn('id="kanji"', html)
         self.assertIn('id="practice"', html)
@@ -399,7 +404,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn("내가 선택한 구성", html)
         self.assertLess(html.index('id="verify"'), html.index('id="kanji"'))
         self.assertLess(html.index('id="sync"'), html.index('id="kanji"'))
-        self.assertIn("약 0.86GB", html)
+        self.assertIn("약 0.85GB", html)
         self.assertNotIn("QUICK START", html)
 
     def test_install_page_links_only_to_official_anki_apps(self) -> None:
@@ -450,10 +455,14 @@ class PublicSiteTests(unittest.TestCase):
 
     def test_support_page_publishes_safe_diagnostic_boundary(self) -> None:
         html = (SITE / "support.html").read_text(encoding="utf-8")
-        self.assertIn(
-            "1ed2faac1cdaf7633cd2096956e8ba24f944024026ac2cd4d94be3e99224ae43",
-            html,
+        release = json.loads(
+            (ROOT / "config" / "public-release.json").read_text(
+                encoding="utf-8"
+            )
         )
+        version = release["product_version"]
+        core = release["artifacts"][f"JLPT-MAX-Deck-{version}.apkg"]
+        self.assertIn(core["sha256"], html)
         self.assertIn("issues/new?template=bug.yml", html)
         self.assertIn("출판사 PDF", html)
         self.assertIn("개인 Anki 컬렉션", html)

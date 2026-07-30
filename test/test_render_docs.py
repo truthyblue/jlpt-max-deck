@@ -28,8 +28,8 @@ class DocumentationRenderTest(unittest.TestCase):
         PurePosixPath("docs/privacy-and-licensing.md.j2"): PurePosixPath(
             "docs/privacy-and-licensing.md"
         ),
-        PurePosixPath("docs/releases/v1.0.0.md.j2"): PurePosixPath(
-            "docs/releases/v1.0.0.md"
+        PurePosixPath("docs/releases/v1.0.1.md.j2"): PurePosixPath(
+            "docs/releases/v1.0.1.md"
         ),
         PurePosixPath("docs/troubleshooting.md.j2"): PurePosixPath(
             "docs/troubleshooting.md"

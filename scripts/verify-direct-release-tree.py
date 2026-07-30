@@ -20,8 +20,8 @@ from direct_release_contract import (  # noqa: E402
 
 PIN = ROOT / "config" / "public-release.json"
 EXPECTED_ARTIFACTS = {
-    "JLPT-MAX-Deck-1.0.0.apkg",
-    "JLPT-MAX-kanji-builder-1.0.0.zip",
+    "JLPT-MAX-Deck-1.0.1.apkg",
+    "JLPT-MAX-kanji-builder-1.0.1.zip",
     "SHA256SUMS",
 }
 ALLOWED_MP3_FILES = {
@@ -70,7 +70,7 @@ def _verify_pin() -> None:
     if (
         pin.get("schema_version") != 2
         or pin.get("policy_version") != "direct-core-plus-kanji-addon-v1"
-        or pin.get("product_version") != "1.0.0"
+        or pin.get("product_version") != "1.0.1"
         or pin.get("status") != "passed"
         or pin.get("unresolved") != 0
         or pin.get("payload_hash") != _payload_hash(payload)
@@ -92,7 +92,7 @@ def _verify_pin() -> None:
     if (
         core.get("notes") != 13_903
         or core.get("cards") != 20_065
-        or core.get("media_files") != 17_950
+        or core.get("media_files") != 17_899
         or kanji.get("expected_pdf_count") != 2
         or kanji.get("expected_kanji_notes") != 2_337
         or kanji.get("expected_vector_glyphs") != 14

@@ -98,7 +98,7 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
 
     def test_readme_leads_with_direct_basic_deck_download(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        self.assertIn("JLPT-MAX-Deck-1.0.0.apkg", readme)
+        self.assertIn("JLPT-MAX-Deck-1.0.1.apkg", readme)
         self.assertNotIn("JLPT-MAX-core", readme)
         self.assertIn(
             "기본 덱은 완성된 APKG 파일입니다",

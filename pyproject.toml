@@ -1,6 +1,6 @@
 [project]
 name = "jlpt-max-deck"
-version = "1.0.0"
+version = "1.0.1"
 description = "Distribute JLPT MAX Deck and build its optional kanji addon"
 requires-python = ">=3.13,<3.14"
 dependencies = [

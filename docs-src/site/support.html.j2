@@ -93,11 +93,13 @@
 
         <section class="v2-guide-section" id="update">
           <span class="v2-step-label">업데이트</span>
-          <h2>학습 기록을 지키고 새 버전을 넣습니다.</h2>
+          <h2>1.0.0에서는 실전 덱만 지우고 새 버전을 넣습니다.</h2>
+          <div class="v2-callout warning"><strong>최상위 덱 전체를 삭제하지 마세요.</strong><p>1.0.0에서 1.0.1로 올릴 때는 <code>JLPT MAX덱::종합 실전</code>만 삭제합니다. 이 덱의 학습 기록은 초기화되지만 어휘·음성·일상무따·참조표의 카드 ID와 일정은 유지됩니다.</p></div>
           <ol class="v2-step-list">
             <li><div><strong>AnkiWeb 동기화 또는 컬렉션 백업을 완료합니다.</strong><p>여러 기기를 쓰면 모든 기기의 동기화를 먼저 끝내세요.</p></div></li>
+            <li><div><strong><code>JLPT MAX덱::종합 실전</code>만 삭제합니다.</strong><p>그 아래 급수·문제 유형 하위 덱도 함께 삭제되는지 확인합니다.</p></div></li>
             <li><div><strong>새 기본 덱 APKG를 가져옵니다.</strong><p>학습 진행 상태 가져오기는 끄고, 기존 노트 업데이트와 노트 유형 병합은 켭니다.</p></div></li>
-            <li><div><strong>한자 확장을 쓰는 사람은 같은 버전 안내를 확인합니다.</strong><p>새 버전에서 빌더가 갱신됐다면 한자 확장 APKG도 다시 만든 뒤 기본 덱 다음에 가져옵니다.</p></div></li>
+            <li><div><strong>이번 교정에서는 한자 확장을 다시 만들 필요가 없습니다.</strong><p>기존 <code>일상무따</code> 학습 기록과 APKG를 그대로 유지할 수 있습니다.</p></div></li>
             <li><div><strong>노트·카드 수와 학습 일정을 확인합니다.</strong><p>새 카드가 중복 생성되거나 기존 복습 일정이 초기화되지 않았는지 표본으로 확인합니다.</p></div></li>
           </ol>
         </section>

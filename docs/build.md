@@ -13,7 +13,7 @@
 
 필요한 것은 다음과 같습니다.
 
-- 같은 v1.0.0의 [JLPT-MAX-kanji-builder-1.0.0.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.0/JLPT-MAX-kanji-builder-1.0.0.zip)
+- 같은 v1.0.1의 [JLPT-MAX-kanji-builder-1.0.1.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.1/JLPT-MAX-kanji-builder-1.0.1.zip)
 - 길벗 《일본어 상용한자 무작정 따라하기》 1·2권의 지원 소책자 PDF 2개
   - [1권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003617)
   - [2권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003669)
@@ -51,7 +51,7 @@ Windows PowerShell:
 
 성공하면 다음 두 파일이 생깁니다.
 
-- `build/kanji-addon/JLPT-MAX-kanji-addon-1.0.0.apkg`
+- `build/kanji-addon/JLPT-MAX-kanji-addon-1.0.1.apkg`
 - `build/kanji-addon/kanji-addon-build-report.json`
 
 리포트의 `status`가 `passed`, `unresolved`가 `0`인지 확인하세요. 빌더는 한자
@@ -60,11 +60,11 @@ Windows PowerShell:
 
 ## 4. Anki에 추가
 
-1. `JLPT-MAX-Deck-1.0.0.apkg`를 먼저 가져옵니다.
-2. 생성된 `JLPT-MAX-kanji-addon-1.0.0.apkg`를 같은 컬렉션에 가져옵니다.
+1. `JLPT-MAX-Deck-1.0.1.apkg`를 먼저 가져옵니다.
+2. 생성된 `JLPT-MAX-kanji-addon-1.0.1.apkg`를 같은 컬렉션에 가져옵니다.
 3. `JLPT MAX덱::일상무따::상권`과 `JLPT MAX덱::일상무따::하권`을 확인합니다.
 4. 합산 수량이 노트 16,240개, 카드
-   22,402개, 미디어 17,964개인지 확인합니다.
+   22,402개, 미디어 17,913개인지 확인합니다.
 
 오류가 나면 기존 출력 폴더를 비우거나 덮어쓰지 말고 [문제 해결](troubleshooting.md)의
 오류 문구별 안내를 확인하세요.
