@@ -451,7 +451,7 @@ class PublicSiteTests(unittest.TestCase):
     def test_support_page_publishes_safe_diagnostic_boundary(self) -> None:
         html = (SITE / "support.html").read_text(encoding="utf-8")
         self.assertIn(
-            "fd3cf72d6dddaa0bffa667d442aff52d4cbf923ef773a0902c23ed51df62604c",
+            "1ed2faac1cdaf7633cd2096956e8ba24f944024026ac2cd4d94be3e99224ae43",
             html,
         )
         self.assertIn("issues/new?template=bug.yml", html)
