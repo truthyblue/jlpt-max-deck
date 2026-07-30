@@ -186,25 +186,8 @@ main:focus {
   align-items: center;
 }
 
-.site-header .nav-guide-links {
-  position: relative;
+.site-header .nav-primary-links {
   gap: 2px;
-  margin-left: 10px;
-  padding: 3px;
-  background: rgba(255, 255, 255, .07);
-  border: 1px solid rgba(255, 255, 255, .14);
-  border-radius: 999px;
-}
-
-.site-header .nav-guide-links::before {
-  position: absolute;
-  top: 50%;
-  left: -11px;
-  width: 1px;
-  height: 24px;
-  background: rgba(255, 255, 255, .18);
-  content: "";
-  transform: translateY(-50%);
 }
 
 .site-header nav a,
@@ -225,13 +208,13 @@ main:focus {
   color: var(--lime);
 }
 
-.site-header .nav-guide-links a {
+.site-header .nav-primary-links a {
   padding: 0 11px;
   border-radius: 999px;
 }
 
-.site-header .nav-guide-links a:hover,
-.site-header .nav-guide-links a[aria-current="page"] {
+.site-header .nav-primary-links a:hover,
+.site-header .nav-primary-links a[aria-current="page"] {
   background: rgba(255, 255, 255, .08);
 }
 
@@ -3125,7 +3108,7 @@ footer .disclaimer {
     gap: 16px;
   }
 
-  .site-header .nav-guide-links {
+  .site-header .nav-primary-links {
     gap: 0;
   }
 
@@ -3257,9 +3240,9 @@ footer .disclaimer {
     gap: 14px;
   }
 
-  .site-header .nav-guide-links {
+  .site-header .nav-primary-links {
     gap: 0;
-    padding: 2px 4px;
+    padding: 2px 0;
   }
 
   .site-header nav::-webkit-scrollbar {
@@ -3528,9 +3511,7 @@ footer .disclaimer {
 
   .site-header nav {
     bottom: 0;
-    display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    gap: 0;
+    display: block;
     width: 100%;
     padding: 4px 0;
     overflow: visible;
@@ -3546,26 +3527,10 @@ footer .disclaimer {
     width: 100%;
   }
 
-  .site-header .nav-section-links {
+  .site-header .nav-primary-links {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .site-header .nav-guide-links {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-left: 0;
-    padding: 2px 4px;
-  }
-
-  .site-header .nav-guide-links::before {
-    display: none;
-  }
-
-  .site-header .nav-section-links a:nth-child(3),
-  .site-header .nav-section-links a:nth-child(4),
-  .site-header .nav-guide-links a:nth-child(2) {
-    display: none;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 2px 0;
   }
 
   .site-header nav a {
@@ -3576,7 +3541,7 @@ footer .disclaimer {
     border-radius: 0;
   }
 
-  .site-header .nav-guide-links a {
+  .site-header .nav-primary-links a {
     padding: 0 8px;
     border-radius: 999px;
   }

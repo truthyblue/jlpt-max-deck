@@ -83,22 +83,20 @@ class PublicSiteTests(unittest.TestCase):
             with self.subTest(page=name):
                 self.assertIn('class="site-header"', html)
                 self.assertIn(
-                    'class="nav-group nav-section-links"',
+                    'class="nav-group nav-primary-links"',
                     html,
                 )
+                self.assertNotIn('class="nav-group nav-section-links"', html)
+                self.assertNotIn('class="nav-group nav-guide-links"', html)
+                self.assertIn('aria-label="지원"', html)
                 self.assertIn(
-                    'class="nav-group nav-guide-links"',
-                    html,
-                )
-                self.assertIn('aria-label="도움·업데이트"', html)
-                self.assertIn(
-                    '<span class="nav-label-full">도움·업데이트</span>',
+                    '<span class="nav-label-full">지원</span>',
                     html,
                 )
                 if name == "support.html":
                     self.assertIn(
                         'href="support.html" aria-current="page" '
-                        'aria-label="도움·업데이트"',
+                        'aria-label="지원"',
                         html,
                     )
                 self.assertIn('id="repo-link"', html)
@@ -283,7 +281,8 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn("STRUCTURED INPUT", html)
         self.assertNotIn("DETERMINISTIC RELEASE", html)
         self.assertNotIn("논리 APKG 해시", html)
-        self.assertIn('href="#curation" aria-label="덱 제작 과정"', html)
+        self.assertNotIn('href="#curation" aria-label="덱 제작 과정"', html)
+        self.assertIn('href="#start" aria-label="받기"', html)
         self.assertEqual(4, html.count('class="pipeline-step reveal"'))
         self.assertLess(html.index('id="meaning-focus"'), html.index('id="cards"'))
         self.assertLess(html.index('id="cards"'), html.index('id="practice"'))
@@ -471,9 +470,42 @@ class PublicSiteTests(unittest.TestCase):
         version = release["product_version"]
         core = release["artifacts"][f"JLPT-MAX-Deck-{version}.apkg"]
         self.assertIn(core["sha256"], html)
+        self.assertIn(
+            '기본 덱 다시 받기 <svg class="button-download-icon"',
+            html,
+        )
+        self.assertIn('class="brand v2-footer-brand"', html)
+        self.assertNotIn("v2-brand-badge", html)
         self.assertIn("issues/new?template=bug.yml", html)
         self.assertIn("출판사 PDF", html)
         self.assertIn("개인 Anki 컬렉션", html)
+        self.assertIn('id="history"', html)
+        self.assertIn('class="v2-release-history"', html)
+        self.assertIn("v1.0.1 GitHub Release", html)
+        self.assertIn("v1.0.0 GitHub Release", html)
+        self.assertIn("현재 · 교정판", html)
+        self.assertIn("최초 공개", html)
+        self.assertIn("종합 실전 학습 기록만 초기화됩니다.", html)
+        self.assertIn("미사용 미디어를 삭제해 저장 공간을 확보합니다.", html)
+        self.assertIn("도구 → 미디어 검사", html)
+        self.assertIn("휴지통을 비워야 실제 여유 공간이 생깁니다.", html)
+        self.assertIn("<h2>한자 확장 빌드가 안돼요.</h2>", html)
+        self.assertIn("한자 확장 빌드 가이드", html)
+        for build_error in (
+            "Python 또는 <code>uv</code> 오류가 나요.",
+            "<code>PDF hash</code> 또는 <code>page count</code> 오류가 나요.",
+            "<code>alignment</code> 오류가 나요.",
+            "<code>output root must be absent or empty</code> 오류가 나요.",
+        ):
+            self.assertIn(build_error, html)
+        self.assertNotIn("한자 확장 문제는 PDF와 빌더 버전을 맞춥니다.", html)
+        self.assertIn("<h2>자주 묻는 질문</h2>", html)
+        self.assertIn("<h2>오류를 제보하고 싶어요.</h2>", html)
+        self.assertIn("<h2>Anki 가져오기가 멈춰요.</h2>", html)
+        self.assertIn("<h2>새 버전으로 업데이트하고 싶어요.</h2>", html)
+        self.assertNotIn('id="update"', html)
+        self.assertNotIn("짧게 답합니다.", html)
+        self.assertNotIn("민감한 원본 없이 재현 정보를 보냅니다.", html)
 
     def test_social_card_matches_current_direct_release(self) -> None:
         source = (SITE / "assets" / "social-card.svg").read_text(encoding="utf-8")

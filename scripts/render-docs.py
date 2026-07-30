@@ -8,6 +8,7 @@ import argparse
 import difflib
 import hashlib
 import json
+import re
 import sys
 from collections.abc import Iterator, Mapping
 from pathlib import Path, PurePosixPath
@@ -19,6 +20,7 @@ from jinja2 import Environment, FileSystemLoader, StrictUndefined
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_ROOT = PurePosixPath("docs-src")
 PRODUCT_DATA = PurePosixPath("docs-src/data/product.json")
+RELEASE_HISTORY = PurePosixPath("docs-src/data/release-history.json")
 RELEASE_PIN = PurePosixPath("config/public-release.json")
 
 # Publication is intentionally explicit. Adding a template never creates a public
@@ -76,7 +78,68 @@ def _sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def load_context(root: Path = ROOT) -> dict[str, Mapping[str, Any]]:
+def _load_release_history(
+    root: Path,
+    *,
+    current_version: str,
+) -> tuple[dict[str, Any], ...]:
+    raw_releases = _read_json_object(root, RELEASE_HISTORY).get("releases")
+    if not isinstance(raw_releases, list) or not raw_releases:
+        raise DocumentationRenderError(
+            f"{RELEASE_HISTORY} must contain a non-empty releases list"
+        )
+    expected_keys = {
+        "changes",
+        "current",
+        "date",
+        "label",
+        "migration",
+        "summary",
+        "version",
+    }
+    releases: list[dict[str, Any]] = []
+    for index, raw in enumerate(raw_releases):
+        if (
+            not isinstance(raw, dict)
+            or set(raw) != expected_keys
+            or not isinstance(raw.get("changes"), list)
+            or not raw["changes"]
+            or not all(
+                isinstance(change, str) and change.strip()
+                for change in raw["changes"]
+            )
+            or not isinstance(raw.get("current"), bool)
+            or not isinstance(raw.get("date"), str)
+            or re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", raw["date"])
+            is None
+            or not isinstance(raw.get("label"), str)
+            or not raw["label"].strip()
+            or not isinstance(raw.get("migration"), str)
+            or not raw["migration"].strip()
+            or not isinstance(raw.get("summary"), str)
+            or not raw["summary"].strip()
+            or not isinstance(raw.get("version"), str)
+            or re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", raw["version"])
+            is None
+        ):
+            raise DocumentationRenderError(
+                f"{RELEASE_HISTORY} release record is invalid: index={index}"
+            )
+        releases.append(dict(raw))
+    versions = [str(release["version"]) for release in releases]
+    if (
+        len(versions) != len(set(versions))
+        or versions[0] != current_version
+        or releases[0]["current"] is not True
+        or sum(bool(release["current"]) for release in releases) != 1
+    ):
+        raise DocumentationRenderError(
+            f"{RELEASE_HISTORY} current release does not match {RELEASE_PIN}"
+        )
+    return tuple(releases)
+
+
+def load_context(root: Path = ROOT) -> dict[str, Any]:
     product = _read_json_object(root, PRODUCT_DATA)
     release_pin = _read_json_object(root, RELEASE_PIN)
     pin_artifacts = release_pin.get("artifacts")
@@ -107,6 +170,10 @@ def load_context(root: Path = ROOT) -> dict[str, Mapping[str, Any]]:
             "checksums": release_artifact("SHA256SUMS"),
         },
     }
+    release_history = _load_release_history(
+        root,
+        current_version=version,
+    )
     return {
         "asset_versions": {
             "showcase_css": _sha256_file(
@@ -116,6 +183,7 @@ def load_context(root: Path = ROOT) -> dict[str, Mapping[str, Any]]:
         },
         "product": product,
         "release": release,
+        "release_history": release_history,
         "release_pin": release_pin,
     }
 

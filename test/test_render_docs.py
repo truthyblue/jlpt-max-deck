@@ -59,6 +59,16 @@ class DocumentationRenderTest(unittest.TestCase):
             environment.from_string("{{ missing_value }}").render()
 
         context = RENDER.load_context(ROOT)
+        release_history = context["release_history"]
+        self.assertEqual(
+            release_history[0]["version"],
+            context["release"]["version"],
+        )
+        self.assertTrue(release_history[0]["current"])
+        self.assertEqual(
+            1,
+            sum(bool(item["current"]) for item in release_history),
+        )
         asset_versions = context["asset_versions"]
         self.assertEqual(
             asset_versions["showcase_css"],
