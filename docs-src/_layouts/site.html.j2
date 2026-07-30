@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="ko">
+<head>
+{% block head %}{% endblock %}  <link rel="stylesheet" href="{% if absolute_links %}{{ product.site_url }}/{% endif %}assets/site.css?v={{ asset_versions.site_css }}">
+</head>
+<body{% block body_attributes %}{% endblock %}>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+{% include "_components/nav.html.j2" %}
+{% block main %}{% endblock %}
+{% include "_components/footer.html.j2" -%}
+  <script src="{% if absolute_links %}{{ product.site_url }}/{% endif %}assets/site.js" defer></script>
+{% block scripts %}{% endblock %}</body>
+</html>

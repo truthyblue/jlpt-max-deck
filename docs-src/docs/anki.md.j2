@@ -1,0 +1,66 @@
+# 기본 덱 가져오기와 업데이트
+
+[README](../README.md) · [선택형 한자 확장](build.md) · [문제 해결](troubleshooting.md)
+
+## 처음 설치
+
+1. 공부할 기기에 맞는 [Anki 앱](https://truthyblue.github.io/jlpt-max-deck/install-anki.html)을 설치합니다.
+2. [{{ release.artifacts.core.filename }}]({{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.core.filename }})를 받습니다.
+3. Anki Desktop에서는 **파일 → 가져오기**, 모바일에서는 다운로드한 APKG의
+   **열기** 또는 **공유**를 사용합니다.
+4. 약 {{ product.requirements.approximate_apkg_size_gb }}GB의 미디어 처리가 끝날 때까지
+   앱을 종료하지 않습니다.
+5. 최상위 덱 `{{ product.deck_name }}`과 아래 수량을 확인합니다.
+
+| 처음 가져온 구성 | 노트 | 카드 | 미디어 |
+| --- | ---: | ---: | ---: |
+| 기본 덱 | {{ product.deck.core_notes | number }} | {{ product.deck.core_cards | number }} | {{ product.deck.core_media | number }} |
+| 기본 덱 + 한자 확장 | {{ product.deck.total_notes | number }} | {{ product.deck.total_cards | number }} | {{ product.deck.total_media | number }} |
+
+기본 덱에는 `어휘`, `음성`, `종합 실전`, `참조표` 하위 덱이 있습니다.
+`일상무따`가 없는 것은 정상이며, [선택형 한자 확장](build.md)을 만들었을 때만
+추가됩니다.
+
+AnkiWeb 웹사이트는 APKG를 직접 가져오지 못합니다. 한 기기에서만 학습한다면
+AnkiWeb 계정이나 동기화 없이도 시작할 수 있습니다.
+
+## 첫 학습 설정
+
+- FSRS: 켜기
+- Desired Retention: {{ product.study_defaults.desired_retention }}
+- Reschedule Cards on Change: 끄기
+- 목표 급수 어휘 새 카드: 하루 {{ product.study_defaults.suggested_new_cards_min }}~{{ product.study_defaults.new_cards_per_day }}장부터
+- 독립 음성 카드: 처음에는 하루 {{ product.study_defaults.audio_new_cards_per_day }}장
+- 실전 문제: 해당 급수 어휘가 어느 정도 쌓인 뒤 병행
+
+어휘 답면 오른쪽 위의 `재생` 메뉴에서 자동재생 범위를 `단어만`, `첫 예문`,
+`모든 예문` 중에서 고를 수 있습니다. 이 선택은 기기마다 따로 저장됩니다.
+
+## 새 버전으로 업데이트
+
+업데이트 옵션을 자세히 확인할 수 있는 Anki Desktop 사용을 권합니다. 메뉴 이름은
+Anki 버전과 표시 언어에 따라 조금 다를 수 있습니다.
+
+1. 모든 기기의 동기화를 끝내거나 컬렉션 백업을 만듭니다.
+2. 새 Release의 기본 덱 APKG를 받습니다.
+3. 가져오기에서 **학습 진행 상태 가져오기**는 끕니다. 기존 복습 일정과 기록을
+   덮어쓰지 않기 위한 설정입니다.
+4. **덱 프리셋 가져오기**는 켜고, 기존 노트와 노트 유형은 **새 버전일 때
+   업데이트**하도록 둡니다.
+5. 노트 유형 병합이 표시되면 켭니다. 필드·카드 템플릿을 직접 바꾼 사용자는
+   먼저 별도 프로필에서 결과를 확인하세요.
+6. 한자 확장을 사용한다면 같은 버전의 빌더와 Release 안내를 확인합니다. 빌더가
+   갱신된 Release에서는 한자 확장 APKG도 다시 만듭니다.
+7. 가져오기 뒤 노트·카드 수와 기존 복습 일정 표본을 확인합니다.
+
+APKG 재가져오기는 기존 노트를 갱신하고 새 노트를 추가하지만, 새 Release에서
+없어진 카드를 사용자 컬렉션에서 자동으로 삭제하지는 않습니다. 삭제나 이전이
+있는 버전은 해당 [릴리스 노트](releases/{{ release.tag }}.md)의 추가 절차를
+따르세요. 자세한 일반 동작은 [Anki 공식 packaged decks 안내](https://docs.ankiweb.net/importing/packaged-decks.html)를 참고할 수 있습니다.
+
+## 여러 기기에서 이어서 학습
+
+기본 덱을 가져온 기기에서 AnkiWeb에 먼저 업로드하고, 다른 기기에서는 그
+컬렉션을 내려받습니다. 기존 AnkiWeb 컬렉션이 있다면 어느 쪽이 최신인지 확인한
+뒤 동기화 방향을 선택하세요. 첫 미디어 동기화는 파일이 많으므로 안정적인
+네트워크에서 진행합니다.

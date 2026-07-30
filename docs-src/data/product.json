@@ -1,0 +1,62 @@
+{
+  "name": "JLPT MAX Deck",
+  "deck_name": "JLPT MAX덱",
+  "repository_url": "https://github.com/truthyblue/jlpt-max-deck",
+  "site_url": "https://truthyblue.github.io/jlpt-max-deck",
+  "deck": {
+    "vocabulary_notes": 6018,
+    "practice_notes": 7876,
+    "kanji_notes": 2337,
+    "reference_notes": 9,
+    "total_notes": 16240,
+    "total_cards": 22402,
+    "total_media": 17964,
+    "static_media": 14,
+    "core_notes": 13903,
+    "core_cards": 20065,
+    "core_media": 17950,
+    "example_count": 6517,
+    "coverage": {
+      "vocabulary_with_examples": 6018,
+      "conjugation_notes": 3019,
+      "related_word_notes": 1213,
+      "related_word_links": 1507,
+      "word_formation_notes": 25,
+      "usage_register_notes": 88,
+      "usage_register_items": 93,
+      "usage_detail_notes": 92,
+      "usage_detail_items": 94,
+      "auxiliary_form_cards": 105
+    },
+    "study_priority": {
+      "essential_notes": 2006,
+      "standard_notes": 1124,
+      "extended_notes": 2888
+    },
+    "practice": {
+      "kanji_reading": 1748,
+      "orthography": 1090,
+      "word_formation": 247,
+      "context_defined": 1638,
+      "paraphrase": 855,
+      "usage": 2083,
+      "numeric_reading": 215
+    }
+  },
+  "requirements": {
+    "python": "3.13",
+    "macos_minimum": "12",
+    "windows_architecture": "x64",
+    "approximate_apkg_size_mb": 856,
+    "approximate_apkg_size_gb": "0.86"
+  },
+  "study_defaults": {
+    "desired_retention": "0.90",
+    "desired_retention_percent": 90,
+    "new_cards_per_day": 20,
+    "audio_new_cards_per_day": 0,
+    "suggested_new_cards_min": 10,
+    "suggested_audio_new_cards_min": 5,
+    "suggested_audio_new_cards_max": 10
+  }
+}

@@ -1,0 +1,76 @@
+# 선택형 일상무따 한자 확장 만들기
+
+이 가이드는 `JLPT MAX덱::일상무따` 한자
+2,337개를 별도 선택 확장으로 추가하는 과정을
+설명합니다.
+
+[README](../README.md) · [Anki 가이드](anki.md) · [문제 해결](troubleshooting.md)
+
+## 먼저 확인할 것
+
+한자 확장은 완성 APKG로 배포하지 않습니다. 길벗 자료의 한글 뜻과 일부 인쇄
+자형을 사용자의 컴퓨터에서 채워 개인용 APKG를 만듭니다.
+
+필요한 것은 다음과 같습니다.
+
+- 같은 v1.0.0의 [JLPT-MAX-kanji-builder-1.0.0.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.0/JLPT-MAX-kanji-builder-1.0.0.zip)
+- 길벗 《일본어 상용한자 무작정 따라하기》 1·2권의 지원 소책자 PDF 2개
+  - [1권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003617)
+  - [2권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003669)
+- Python 3.13과 [`uv`](https://docs.astral.sh/uv/)
+- Release에서 검증한 macOS 12+ 또는 Windows x64 컴퓨터
+
+공식 자료 페이지에서 제공 방식과 이용 조건을 확인하고 정상적으로 받은 원본을
+사용하세요. 빌더는 상·하권의 SHA-256, 페이지 수와 표 구조를 함께 확인합니다.
+PDF를 다시 저장·병합·최적화하거나 상·하권 순서를 바꾸면 지원 판본으로 인식하지
+못할 수 있습니다.
+
+## 1. ZIP 풀기
+
+빌더 ZIP을 빈 폴더에 풉니다. 이전 버전 폴더 위에 덮어쓰지 마세요. 빌더 폴더와
+PDF 폴더는 어디에 있어도 되지만, 명령에는 각 PDF의 실제 경로를 넣어야 합니다.
+
+## 2. 실행
+
+macOS 터미널:
+
+```bash
+./scripts/build-kanji-addon.sh "/경로/상권.pdf" "/경로/하권.pdf"
+```
+
+Windows PowerShell:
+
+```powershell
+.\scripts\build-kanji-addon.ps1 -UpperPdf "C:\경로\상권.pdf" -LowerPdf "C:\경로\하권.pdf"
+```
+
+`uv`는 필요한 프로그램을 내려받기 위해 패키지 저장소에 접속합니다. 한자
+자료와 PDF 내용은 외부 서비스로 보내지 않습니다.
+
+## 3. 결과 확인
+
+성공하면 다음 두 파일이 생깁니다.
+
+- `build/kanji-addon/JLPT-MAX-kanji-addon-1.0.0.apkg`
+- `build/kanji-addon/kanji-addon-build-report.json`
+
+리포트의 `status`가 `passed`, `unresolved`가 `0`인지 확인하세요. 빌더는 한자
+2,337개와 이미지로 복원하는 자형
+14개를 모두 검증한 뒤에만 APKG를 냅니다.
+
+## 4. Anki에 추가
+
+1. `JLPT-MAX-Deck-1.0.0.apkg`를 먼저 가져옵니다.
+2. 생성된 `JLPT-MAX-kanji-addon-1.0.0.apkg`를 같은 컬렉션에 가져옵니다.
+3. `JLPT MAX덱::일상무따::상권`과 `JLPT MAX덱::일상무따::하권`을 확인합니다.
+4. 합산 수량이 노트 16,240개, 카드
+   22,402개, 미디어 17,964개인지 확인합니다.
+
+오류가 나면 기존 출력 폴더를 비우거나 덮어쓰지 말고 [문제 해결](troubleshooting.md)의
+오류 문구별 안내를 확인하세요.
+
+## 개인정보와 저작권 경계
+
+PDF, 페이지 이미지와 추출 문자열은 사용자 컴퓨터 안에서만 처리되며 원본 PDF는
+결과 APKG에 포함되지 않습니다. 생성한 한자 확장 APKG는 개인 학습용으로만
+보관하세요. issue에는 PDF, 책 본문, 생성 APKG 또는 개인 경로를 첨부하지 마세요.

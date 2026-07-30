@@ -1,0 +1,20 @@
+  <header class="site-header">
+    <a class="brand" href="{% if absolute_links %}{{ product.site_url }}/{% else %}index.html{% endif %}" aria-label="JLPT MAX Deck 홈">
+      <span class="brand-mark" aria-hidden="true"><span class="brand-mark-jlpt">JLPT</span><strong class="brand-mark-max">MAX</strong></span>
+      <span class="brand-wordmark">JLPT <b>MAX</b> Deck</span>
+    </a>
+    <nav aria-label="주요 메뉴">
+      <div class="nav-group nav-section-links" role="group" aria-label="덱 소개 섹션">
+        <a href="{% if absolute_links %}{{ product.site_url }}/#cards{% elif current_page == "index" %}#cards{% else %}index.html#cards{% endif %}" aria-label="어휘 카드"><span class="nav-label-full">어휘 카드</span><span class="nav-label-compact">어휘</span></a>
+        <a href="{% if absolute_links %}{{ product.site_url }}/#practice{% elif current_page == "index" %}#practice{% else %}index.html#practice{% endif %}" aria-label="실전 문제"><span class="nav-label-full">실전 문제</span><span class="nav-label-compact">문제</span></a>
+        <a href="{% if absolute_links %}{{ product.site_url }}/#reference{% elif current_page == "index" %}#reference{% else %}index.html#reference{% endif %}" aria-label="참조표"><span class="nav-label-full">참조표</span><span class="nav-label-compact">참조</span></a>
+        <a href="{% if absolute_links %}{{ product.site_url }}/#curation{% elif current_page == "index" %}#curation{% else %}index.html#curation{% endif %}" aria-label="덱 제작 과정"><span class="nav-label-full">제작 과정</span><span class="nav-label-compact">제작</span></a>
+        <a href="{% if absolute_links %}{{ product.site_url }}/#start{% elif current_page == "getting-started" %}#deck{% elif current_page == "index" %}#start{% else %}index.html#start{% endif %}" aria-label="받기"><span class="nav-label-full">덱 받기</span><span class="nav-label-compact">받기</span></a>
+      </div>
+      <div class="nav-group nav-guide-links" role="group" aria-label="별도 가이드">
+        <a href="{% if absolute_links %}{{ product.site_url }}/getting-started.html{% else %}getting-started.html{% endif %}"{% if current_page == "getting-started" %} aria-current="page"{% endif %} aria-label="시작 가이드"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">가이드</span></a>
+        <a href="{% if absolute_links %}{{ product.site_url }}/install-anki.html{% else %}install-anki.html{% endif %}"{% if current_page == "install-anki" %} aria-current="page"{% endif %} aria-label="Anki 설치"><span class="nav-label-full">Anki 설치</span><span class="nav-label-compact">설치</span></a>
+      </div>
+    </nav>
+    <a class="nav-action" id="repo-link" href="{{ product.repository_url }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub에서 Star, 새 탭에서 열림"><svg class="nav-action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.87c-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .08 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.86.09-.66.35-1.12.64-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.53a9.3 9.3 0 0 1 2.5.35c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg><span class="nav-action-label">GitHub에서 Star</span><span class="nav-action-arrow" aria-hidden="true">↗</span></a>
+  </header>

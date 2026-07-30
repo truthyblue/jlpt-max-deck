@@ -1,0 +1,79 @@
+name: 오류 제보
+description: 기본 덱 다운로드·가져오기, 선택형 한자 확장, 카드 또는 문서 문제를 제보합니다.
+title: "[오류] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        제보해 주셔서 감사합니다. 출판사 PDF, APKG, 개인 Anki 컬렉션,
+        계정 정보와 개인 경로가 드러나는 자료는 첨부하지 마세요.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: 발생 위치
+      options:
+        - 기본 덱 APKG 다운로드 또는 가져오기
+        - 선택형 한자 덱 빌드
+        - 길벗 PDF 판본 확인
+        - 카드 표시 또는 음성
+        - macOS 한자 빌드 스크립트
+        - Windows 한자 빌드 스크립트
+        - Anki 가져오기 또는 업데이트
+        - 문서 또는 프로젝트 사이트
+        - 기타
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: 사용한 버전
+      description: "릴리스 이름(예: v1.0.0)을 적으세요. 알고 있다면 commit SHA나 asset SHA-256도 함께 적어 주세요."
+      placeholder: v1.0.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: operating-system
+    attributes:
+      label: 운영체제 또는 학습 기기
+      options:
+        - macOS
+        - Windows x64
+        - Windows ARM (가져오기·학습)
+        - Linux (가져오기·학습)
+        - iPhone 또는 iPad
+        - Android
+        - 기타 또는 해당 없음
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 어떤 문제가 있었나요?
+      description: 실제로 나타난 결과와 기대한 결과를 함께 적어 주세요.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 최소 재현 절차
+      description: 실행한 명령과 개인 정보를 지운 출력을 적으세요. 책 내용이나 실제 로컬 경로는 포함하지 마세요.
+      render: shell
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: 공개 자료 확인
+      options:
+        - label: 저작권 자료, 완성 덱, 계정 정보와 개인 컴퓨터 정보를 제거했습니다.
+          required: true
+        - label: 비공개로 제보해야 할 보안 취약점이 아님을 확인했습니다.
+          required: true

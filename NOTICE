@@ -1,0 +1,146 @@
+JLPT MAX Deck Public Distribution Notice
+Copyright (C) 2026 JLPT MAX Deck contributors
+
+This notice separates the software license from deck data, generated audio,
+open-data-derived fields, and user-supplied publisher material. Inclusion in
+one source repository, release, or APKG does not change the license of an
+independently licensed component.
+
+1. Distribution structure
+
+The official v1.0.0 release contains:
+
+  * a finished JLPT MAX Deck APKG with vocabulary, audio, practice, and reference decks;
+  * an optional local kanji builder;
+  * SHA-256 checksums; and
+  * a hash-bound public release manifest.
+
+The JLPT MAX Deck APKG does not require a publisher PDF. The optional kanji deck is not
+included in the JLPT MAX Deck APKG. It is built locally from the user's two supported
+Gilbut PDFs.
+
+2. Software
+
+The source code in this repository is free software licensed under the GNU
+Affero General Public License, version 3 or (at your option) any later version
+(SPDX: AGPL-3.0-or-later). The full license is in LICENSE.
+
+This software license applies to the code. It does not claim or grant rights
+in publisher PDFs, extracted publisher text, independently licensed open data,
+generated deck content, generated audio, or a user's locally built APKG merely
+because those items are processed by or aggregated with the software.
+
+Distributed Python packages and other tools retain their upstream licenses and
+copyright notices. Consult uv.lock and the corresponding upstream projects for
+the exact dependency set.
+
+3. EDRDG JMdict and KANJIDIC2
+
+This product uses fields derived from JMdict and KANJIDIC2. These dictionary
+files are the property of the Electronic Dictionary Research and Development
+Group (EDRDG) and are used in conformance with the Group's licence. Copyright
+over the covered files is held by James William Breen and EDRDG as stated in
+that licence. Separately copyrighted translations and contributor fields
+retain the rights and conditions identified by EDRDG.
+
+JMdict and KANJIDIC2 are distributed under the EDRDG licence, currently
+Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
+
+Project and licence pages:
+    https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project
+    https://www.edrdg.org/wiki/index.php/KANJIDIC_Project
+    https://www.edrdg.org/edrdg/licence.html
+    https://creativecommons.org/licenses/by-sa/4.0/
+
+JMdict-derived portions include selected entry and sense identifiers,
+part-of-speech and usage information, study-priority inputs, and
+learner-facing labels derived from that evidence. KANJIDIC2-derived portions
+include selected readings, radicals, stroke counts, and related structural
+information.
+
+The EDRDG licence and CC BY-SA 4.0 apply to those derived portions and their
+adaptations to the extent required by that licence. They do not automatically
+license unrelated project-authored examples, translations, questions, audio,
+or independently protected publisher material. Rights granted directly by
+EDRDG remain unaffected by the additional conditions described below.
+
+4. Project-authored and generated content
+
+The JLPT MAX Deck APKG contains project-authored or generated examples, Korean
+translations, practice questions, reviewed learner-facing fields, templates,
+and related deck content. Those items are separate content or data, not
+software licensed under AGPL merely because they are distributed with the
+software.
+
+Permission is granted to download and use official release assets for personal
+study. Except for portions carrying their own open licence, this notice does
+not grant permission to mirror, sell, repackage, modify, or otherwise
+redistribute the JLPT MAX Deck APKG or its data collection.
+
+This repository includes limited card-screen WebP samples for the project site.
+They are feature demonstrations, not a distributable excerpt of the finished
+deck. Their inclusion does not grant permission to extract or repackage deck
+content.
+
+5. Generated audio
+
+The official JLPT MAX Deck APKG contains MP3 files generated locally with:
+
+    AivisSpeech 1.2.0
+    voice model: まい
+    model UUID: e9339137-2ae3-4d41-9394-fb757a7e61e6
+    model version: 1.0.0
+    model SHA-256: eca53a500a70746f649572ec186d3b98665606b13e8e8e648f9b10fa8c0000c4
+    model licence: Aivis Common Model License (ACML) 1.0
+
+Model and licence pages:
+    https://hub.aivis-project.com/aivm-models/e9339137-2ae3-4d41-9394-fb757a7e61e6
+    https://github.com/Aivis-Project/ACML/blob/master/ACML-1.0.md
+
+The four MP3 files under site/assets are fixed listening demonstrations made
+with the same setup. They are not the speaker's or model creator's official
+content and are not a distributable sample of the APKG audio collection.
+
+The AivisSpeech application and engine are distributed upstream under
+LGPL-3.0. The engine and model binaries are not included in this repository or
+required to use the released APKG. Generated MP3 files are separate output
+assets and are not licensed under AGPL merely because the software references
+them. This notice does not grant permission to extract, republish, sell, or
+otherwise redistribute the APKG audio collection.
+
+6. User-supplied publisher PDFs
+
+No publisher PDF, page image, or extracted publisher text is included in this
+repository or the official release. The optional kanji builder requires only
+the two supported Gilbut booklets. Each user must lawfully obtain those PDFs
+and supply them locally.
+
+The builder does not bypass login, purchase verification, access control, or
+DRM. It does not upload PDFs, page images, or extracted text. All copyright,
+database, trademark, and other rights in those publications remain with their
+respective owners.
+
+Neither the AGPL license nor this notice grants permission to copy or
+redistribute the PDFs, extracted publisher text, or publisher-derived fields
+in a locally generated kanji APKG.
+
+7. Final APKG boundary
+
+The kanji APKG produced locally from the user's Gilbut PDFs is intended for
+that user's personal study only. Do not upload, mirror, sell, share, or
+otherwise redistribute it. Contributors should distribute builder source
+changes under AGPL-3.0-or-later instead of distributing a locally built kanji
+deck.
+
+For this project, private AnkiWeb synchronization by the same user solely to
+keep that user's personal devices aligned is treated as part of personal
+study, not as deck distribution. This does not authorize sharing an APKG,
+account access, or a public download link. Users remain responsible for the
+AnkiWeb terms and for any independently applicable source terms.
+
+8. No endorsement or warranty
+
+Publisher names and product names identify source editions only. They do not
+imply sponsorship or endorsement. The software warranty disclaimer and
+limitation of liability are stated in LICENSE. Data and content are provided
+without any additional warranty to the extent permitted by applicable law.

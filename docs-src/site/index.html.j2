@@ -1,0 +1,808 @@
+{% set absolute_links = false -%}
+{% set current_page = "index" -%}
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1210">
+  <meta name="robots" content="index,follow">
+  <meta name="description" content="{{ product.deck.vocabulary_notes | number }}개 선별 어휘와 {{ product.deck.practice_notes | number }}개 실전 문제를 담은 JLPT Anki 덱. GPT‑5.6 Sol로 작성하고 이중 검토한 콘텐츠를 수록했습니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:site_name" content="JLPT MAX Deck">
+  <meta property="og:title" content="JLPT MAX Deck — 단어는 더 깊이, 실전 문제까지">
+  <meta property="og:description" content="실제 카드와 GPT‑5.6 Sol 작성·이중 검토 과정을 확인하고 기본 덱을 받아보세요.">
+  <meta property="og:url" content="{{ product.site_url }}">
+  <meta property="og:image" content="{{ product.site_url }}/assets/social-card.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JLPT MAX Deck — 단어는 더 깊이, 실전 문제까지">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JLPT MAX Deck — 단어는 더 깊이, 실전 문제까지">
+  <meta name="twitter:description" content="{{ product.deck.vocabulary_notes | number }}개 어휘와 {{ product.deck.practice_notes | number }}개 실전 문제를 담은 JLPT MAX 기본 덱">
+  <meta name="twitter:image" content="{{ product.site_url }}/assets/social-card.jpg">
+  <meta name="twitter:image:alt" content="JLPT MAX Deck — 단어는 더 깊이, 실전 문제까지">
+  <link rel="canonical" href="{{ product.site_url }}">
+  <title>JLPT MAX Deck — 단어는 더 깊이, 실전 문제까지</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/showcase.css?v={{ asset_versions.showcase_css }}">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "{{ product.site_url }}#website",
+        "url": "{{ product.site_url }}",
+        "name": "JLPT MAX Deck",
+        "description": "한국어권 JLPT 학습자를 위한 공개 Anki 덱",
+        "inLanguage": "ko-KR"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "JLPT MAX Deck",
+        "softwareVersion": "{{ release.version }}",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Anki",
+        "downloadUrl": "{{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.core.filename }}",
+        "url": "{{ product.site_url }}"
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+{% include "_components/nav.html.j2" %}
+
+  <main id="main" tabindex="-1">
+    <section class="hero" id="top">
+      <div class="hero-noise" aria-hidden="true"></div>
+      <div class="hero-glyphs" aria-hidden="true">語&nbsp;習&nbsp;解&nbsp;進</div>
+      <div class="hero-copy reveal">
+        <h1>단어는 더 깊이,<br><em>실전 문제까지.</em></h1>
+        <p class="hero-lead">
+          JLPT 단어를 뜻만 외우지 않도록 예문·음성·활용·관련어와 실전 문제까지 연결한
+          한국어권 학습자용 Anki 덱입니다. 기본 덱은 바로 받을 수 있습니다.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" id="release-cta" href="{{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.core.filename }}"><span>기본 덱 다운로드</span><svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a>
+          <a class="button button-quiet" id="hero-beginner-guide-link" href="getting-started.html">시작 가이드 보기 <span class="button-arrow-icon" aria-hidden="true">→</span></a>
+        </div>
+        <p class="microcopy">N5–N1 · 기본 덱 노트 {{ product.deck.core_notes | number }}개 · 카드 {{ product.deck.core_cards | number }}개<br><a class="hero-install-link" href="install-anki.html">Anki가 없다면 설치 안내 보기 <span aria-hidden="true">→</span></a></p>
+      </div>
+
+      <figure class="hero-card-sample reveal">
+        <div class="sample-topline">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span>카드 화면 샘플</span>
+          <strong><span lang="ja">出す</span> · N5</strong>
+        </div>
+        <div class="hero-card-window">
+          <img src="assets/card-dasu-answer.webp" width="640" height="1377" decoding="async" fetchpriority="high" data-showcase-state="kanji-expanded" alt="오른쪽 위 재생 메뉴와 出す의 읽기, 한국어 뜻, 예문, 활용, 관련어, 버튼 아래에 펼쳐진 出 한자 정보(나올 출·시작할 출, 부수·5획, 음독·훈독)를 보여주는 실제 JLPT MAX 어휘 카드 샘플">
+        </div>
+      </figure>
+    </section>
+
+    <section class="signal-bar" aria-label="덱 핵심 수치">
+      <div><strong>{{ product.deck.vocabulary_notes | number }}</strong><span>선별 어휘</span></div>
+      <div><strong>{{ product.deck.example_count | number }}</strong><span>검토된 예문</span></div>
+      <div><strong>{{ product.deck.practice_notes | number }}</strong><span>실전 문제</span></div>
+      <div><strong>{{ product.deck.core_cards | number }}</strong><span>기본 덱 카드</span></div>
+    </section>
+
+    <section class="section meaning-focus" id="meaning-focus" aria-labelledby="meaning-focus-title">
+      <div class="meaning-focus-layout">
+        <div class="meaning-focus-copy reveal">
+          <span>학습할 뜻</span>
+          <h2 id="meaning-focus-title">외울 뜻이<br>선명하도록.</h2>
+          <p>사전의 설명을 많이 보여주기보다, 카드에서 실제로 구분해 외울 의미 단위를 먼저 정리했습니다. 무엇을 외워야 하는지 바로 보이고, 예문도 그 뜻을 이해하는 데 필요한 만큼만 연결했습니다.</p>
+        </div>
+        <ol class="meaning-focus-list">
+          <li class="reveal">
+            <b>01</b>
+            <div class="meaning-focus-sample meaning-focus-merge"><span>엄마, 어머니</span><i>→</i><span>엄마</span></div>
+            <h3>겹치는 표현은 하나로</h3>
+            <p>같은 뜻을 가리키는 한국어 표현은 대표 표현 하나로 정리했습니다.</p>
+          </li>
+          <li class="reveal">
+            <b>02</b>
+            <div class="meaning-focus-sample meaning-focus-senses"><span>꺼내다</span><i>/</i><span>제출하다</span><i>/</i><span>편지를 보내다</span></div>
+            <h3>다의어는 뜻별로 분리</h3>
+            <p>구분해서 외워야 하는 뜻은 서로 나눠, 중요한 다의어가 다른 표현에 묻히지 않게 했습니다.</p>
+          </li>
+          <li class="reveal">
+            <b>03</b>
+            <div class="meaning-focus-sample meaning-focus-pairs">
+              <div><span>뜻 1</span><i>→</i><span>예문 1</span></div>
+              <div><span>뜻 2</span><i>→</i><span>예문 2</span></div>
+            </div>
+            <h3>각 뜻에 대표 예문 하나</h3>
+            <p>각 뜻에는 그 의미가 분명하게 드러나는 대표 예문 하나를 생성해 연결했습니다.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section card-showcase" id="cards">
+      <div class="section-heading reveal">
+        <h2>한 단어를<br>더 깊이 익히는 카드.</h2>
+        <p>단어의 읽기와 뜻만 보여주는 카드에 예문과 활용, 관련어와 한자 정보까지 더했습니다.</p>
+      </div>
+
+      <div class="anatomy-layout">
+        <div class="main-card-column">
+          <figure class="anki-frame main-card-render reveal">
+            <div class="card-audio-guide" id="card-audio-guide">
+              <span class="guide-pulse" aria-hidden="true"></span>
+              <span><strong>단어와 예문 1·2·3을 눌러보세요</strong><small>실제 카드처럼 각각의 음성이 재생됩니다</small></span>
+              <b aria-hidden="true">↓</b>
+            </div>
+            <div class="interactive-card-image">
+              <img src="assets/card-dasu-answer.webp" width="640" height="1377" loading="lazy" decoding="async" data-showcase-state="kanji-expanded" alt="오른쪽 위 재생 메뉴와 出す의 한국어 뜻, 예문, 활용, 관련어, 버튼 아래에 펼쳐진 出 한자 정보(나올 출·시작할 출, 부수·5획, 음독·훈독)를 보여주는 실제 어휘 답안 카드 샘플">
+              <span class="card-feature-callout autoplay-feature-callout">
+                <span class="card-feature-label"><strong>자동재생 설정</strong></span>
+              </span>
+              <span class="card-feature-callout conjugation-feature-callout">
+                <span class="card-feature-label"><strong>활용</strong><small>ます·ない·て·た형을 한눈에</small></span>
+              </span>
+              <span class="card-feature-callout related-feature-callout">
+                <span class="card-feature-label"><strong>헷갈리는 단어</strong><small>비슷한 표현을 뜻과 함께 비교</small></span>
+              </span>
+              <span class="card-feature-callout kanji-feature-callout">
+                <span class="card-feature-label"><strong>한자 정보</strong><small>뜻·읽기·부수·획수까지</small></span>
+              </span>
+              <button class="card-audio-hotspot word-audio-hotspot" type="button" data-audio="dasu-word-audio" data-audio-name="단어 出す" data-idle-state="단어 듣기" data-playing-state="재생 중" data-ended-state="다시 듣기" data-play-label="단어 出す 음성 재생" data-pause-label="단어 出す 음성 일시정지" aria-controls="dasu-word-audio" aria-describedby="card-audio-guide" aria-label="단어 出す 음성 재생" aria-pressed="false">
+                <span class="hotspot-badge"><span class="audio-play" aria-hidden="true">▶</span><span class="audio-state">단어 듣기</span></span>
+              </button>
+              <button class="card-audio-hotspot example-audio-hotspot example-1-audio-hotspot" type="button" data-audio="dasu-example-1-audio" data-audio-name="첫 번째 예문" data-idle-state="예문 1 듣기" data-playing-state="재생 중" data-ended-state="다시 듣기" data-play-label="첫 번째 예문 かばんから財布を出す。 음성 재생" data-pause-label="첫 번째 예문 かばんから財布を出す。 음성 일시정지" aria-controls="dasu-example-1-audio" aria-describedby="card-audio-guide" aria-label="첫 번째 예문 かばんから財布を出す。 음성 재생" aria-pressed="false">
+                <span class="hotspot-badge"><span class="audio-play" aria-hidden="true">▶</span><span class="audio-state">예문 1 듣기</span></span>
+              </button>
+              <button class="card-audio-hotspot example-audio-hotspot example-2-audio-hotspot" type="button" data-audio="dasu-example-2-audio" data-audio-name="두 번째 예문" data-idle-state="예문 2 듣기" data-playing-state="재생 중" data-ended-state="다시 듣기" data-play-label="두 번째 예문 先生にレポートを出す。 음성 재생" data-pause-label="두 번째 예문 先生にレポートを出す。 음성 일시정지" aria-controls="dasu-example-2-audio" aria-describedby="card-audio-guide" aria-label="두 번째 예문 先生にレポートを出す。 음성 재생" aria-pressed="false">
+                <span class="hotspot-badge"><span class="audio-play" aria-hidden="true">▶</span><span class="audio-state">예문 2 듣기</span></span>
+              </button>
+              <button class="card-audio-hotspot example-audio-hotspot example-3-audio-hotspot" type="button" data-audio="dasu-example-3-audio" data-audio-name="세 번째 예문" data-idle-state="예문 3 듣기" data-playing-state="재생 중" data-ended-state="다시 듣기" data-play-label="세 번째 예문 駅へ行く前に、この手紙を出す予定だ。 음성 재생" data-pause-label="세 번째 예문 駅へ行く前に、この手紙を出す予定だ。 음성 일시정지" aria-controls="dasu-example-3-audio" aria-describedby="card-audio-guide" aria-label="세 번째 예문 駅へ行く前に、この手紙を出す予定だ。 음성 재생" aria-pressed="false">
+                <span class="hotspot-badge"><span class="audio-play" aria-hidden="true">▶</span><span class="audio-state">예문 3 듣기</span></span>
+              </button>
+            </div>
+            <audio id="dasu-word-audio" src="assets/demo-dasu-word.mp3" preload="none"></audio>
+            <audio id="dasu-example-1-audio" src="assets/demo-dasu-example.mp3" preload="none"></audio>
+            <audio id="dasu-example-2-audio" src="assets/demo-dasu-example-2.mp3" preload="none"></audio>
+            <audio id="dasu-example-3-audio" src="assets/demo-dasu-example-3.mp3" preload="none"></audio>
+            <p class="sr-only" id="audio-demo-status" aria-live="polite"></p>
+            <figcaption><span>대표 카드 · <span lang="ja">出す</span> · 기능 설명용 샘플<small>비공식 합성 음성 · AivisSpeech 1.2.0 · <span lang="ja">まい</span> · ACML 1.0</small></span><a class="main-card-zoom" href="assets/card-dasu-answer.webp" target="_blank" rel="noopener noreferrer" aria-label="대표 어휘 카드 이미지를 원본 크기로 보기 (새 탭)">크게 보기 ↗</a></figcaption>
+          </figure>
+        </div>
+        <div class="feature-callouts">
+          <article class="reveal">
+            <span>01</span>
+            <div><h3>음성과 자동재생</h3><p>단어와 예문마다 음성을 넣고, 오른쪽 위 <strong>재생</strong> 메뉴에서 단어만·첫 예문까지·모든 예문까지 중 자동재생 범위를 선택합니다.</p></div>
+          </article>
+          <article class="reveal">
+            <span>02</span>
+            <div><h3>뜻마다 대표 예문</h3><p><span lang="ja">出す</span>의 <strong>꺼내다 / 제출하다 / 편지를 보내다</strong>처럼 구분해서 외울 뜻마다 검토한 대표 예문과 한국어 번역을 연결했습니다.</p></div>
+          </article>
+          <article class="reveal">
+            <span>03</span>
+            <div><h3>한눈에 보는 활용</h3><p><span lang="ja">出します · 出さない · 出して · 出した</span>를 같은 카드에서 확인합니다.</p></div>
+          </article>
+          <article class="reveal">
+            <span>04</span>
+            <div><h3>관련어와 헷갈리는 단어</h3><p><span lang="ja">飛び出す</span>(뛰쳐나가다) · <span lang="ja">送る</span>(보내다)처럼 함께 구분할 어휘를 뜻과 함께 보여줍니다.</p></div>
+          </article>
+          <article class="reveal">
+            <span>05</span>
+            <div><h3>한자 정보를 바로</h3><p>단어를 이루는 한자의 뜻·읽기·부수·획수를 펼쳐서 확인합니다.</p></div>
+          </article>
+          <article class="reveal">
+            <span>06</span>
+            <div><h3>덱 안내와 업데이트</h3><p>카드 아래의 <strong>덱 안내 · 업데이트 ↗</strong> 링크에서 사용법과 새 소식을 확인합니다.</p></div>
+          </article>
+        </div>
+      </div>
+
+      <p class="public-sample-note reveal">아래 이미지는 실제 기본 덱 카드에서 가져온 샘플입니다.</p>
+
+      <div class="support-card-grid" role="region" aria-label="다른 카드 기능 샘플 3개" tabindex="0">
+        <figure class="mini-card-sample support-usage-sample reveal">
+          <figcaption>
+            <span class="support-feature-name">핵심 용법</span>
+            <h3><span lang="ja">本当</span><small><span lang="ja">ほんとう</span> · 정말이다</small></h3>
+            <p>핵심 표현을 비슷한 말과 함께 비교해, 뜻만으로 놓치기 쉬운 쓰임 차이를 구분합니다.</p>
+          </figcaption>
+          <a class="mini-card-crop" href="assets/card-hontou-usage.webp" target="_blank" rel="noopener noreferrer" aria-label="本当 핵심 용법 카드 이미지를 원본 크기로 보기 (새 탭)">
+            <img src="assets/card-hontou-usage.webp" width="640" height="811" loading="lazy" decoding="async" alt="本当은 정말이다라는 뜻이며, 핵심 용법 패널에서 本当だと思う와 信じている의 뜻을 비교하는 현재 어휘 카드 샘플">
+            <span class="support-focus support-focus-usage" aria-hidden="true"></span>
+            <span class="support-zoom-hint" aria-hidden="true">크게 보기 ↗</span>
+          </a>
+        </figure>
+        <figure class="mini-card-sample support-formation-sample reveal">
+          <figcaption>
+            <span class="support-feature-name">단어 구성</span>
+            <h3><span lang="ja">半日</span><small><span lang="ja">はんにち</span> · 반나절</small></h3>
+            <p>단어를 구성 요소로 나눠, 각 요소가 전체 뜻으로 이어지는 방식을 익힙니다.</p>
+          </figcaption>
+          <a class="mini-card-crop" href="assets/card-hannichi-formation.webp" target="_blank" rel="noopener noreferrer" aria-label="半日 단어 구성 카드 이미지를 원본 크기로 보기 (새 탭)">
+            <img src="assets/card-hannichi-formation.webp" width="640" height="683" loading="lazy" decoding="async" alt="半日は 반나절이라는 뜻이며, 접두 요소 半은 반, 어근 日은 날 또는 날짜라는 뜻으로 나누어 보여주는 현재 어휘 카드 샘플">
+            <span class="support-focus support-focus-formation" aria-hidden="true"></span>
+            <span class="support-zoom-hint" aria-hidden="true">크게 보기 ↗</span>
+          </a>
+        </figure>
+        <figure class="mini-card-sample support-register-sample reveal">
+          <figcaption>
+            <span class="support-feature-name">말투·사용 상황</span>
+            <h3><span lang="ja">平気</span><small><span lang="ja">へいき</span> · 태연하다 / 괜찮다</small></h3>
+            <p>구어뿐 아니라 존경어·겸양어·정중어, 격식·문어·친근어·속어·방언, 의학·스포츠·컴퓨터 같은 전문 분야까지 표시합니다. 이 카드의 <strong>구어(일부 뜻)</strong>는 두 뜻 중 <strong>‘괜찮다’에만</strong> 해당합니다.</p>
+          </figcaption>
+          <a class="mini-card-crop" href="assets/card-heiki-register.webp" target="_blank" rel="noopener noreferrer" aria-label="平気 말투·사용 상황 카드 이미지를 원본 크기로 보기 (새 탭)">
+            <img src="assets/card-heiki-register.webp" width="640" height="680" loading="lazy" decoding="async" alt="平気의 태연하다와 괜찮다 뜻, 괜찮다에만 해당하는 구어(일부 뜻) 배지, 오른쪽 위 재생 단어 메뉴를 보여주는 현재 어휘 답면 카드 샘플">
+            <span class="support-focus support-focus-register" aria-hidden="true"></span>
+            <span class="support-zoom-hint" aria-hidden="true">크게 보기 ↗</span>
+          </a>
+        </figure>
+      </div>
+
+      <div class="coverage-block reveal">
+        <div class="coverage-heading">
+          <h3>카드에 더해지는<br>학습 정보.</h3>
+          <p>단어 음성과 예문부터 활용, 관련·혼동 어휘, 단어 구성, 말투·사용 상황과 핵심 용법까지 기본 덱의 수록 현황입니다. 대표 한자 표기보다 낮은 급수의 가나·부분 한자 표기 {{ product.deck.coverage.auxiliary_form_cards | number }}개는 별도 보조 카드로 복습합니다.</p>
+        </div>
+        <dl class="coverage-grid">
+          <div><dt>단어 음성</dt><dd>{{ product.deck.vocabulary_notes | number }}<small>전체 어휘</small></dd></div>
+          <div><dt>예문이 있는 어휘</dt><dd>{{ product.deck.coverage.vocabulary_with_examples | number }}<small>예문 {{ product.deck.example_count | number }}개</small></dd></div>
+          <div><dt>기본 활용형</dt><dd>{{ product.deck.coverage.conjugation_notes | number }}<small>어휘</small></dd></div>
+          <div><dt>관련·혼동 어휘</dt><dd>{{ product.deck.coverage.related_word_notes | number }}<small>표시 연결 {{ product.deck.coverage.related_word_links | number }}개</small></dd></div>
+          <div><dt>단어 구성</dt><dd>{{ product.deck.coverage.word_formation_notes | number }}<small>어휘</small></dd></div>
+          <div><dt>말투·사용 상황</dt><dd>{{ product.deck.coverage.usage_register_notes | number }}<small>표시 {{ product.deck.coverage.usage_register_items | number }}개</small></dd></div>
+          <div><dt>핵심 용법</dt><dd>{{ product.deck.coverage.usage_detail_notes | number }}<small>용법 {{ product.deck.coverage.usage_detail_items | number }}개</small></dd></div>
+          <div><dt>저급수 표기 카드</dt><dd>{{ product.deck.coverage.auxiliary_form_cards | number }}<small>가나·부분 한자</small></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="section practice-section" id="practice">
+      <div class="section-heading reveal">
+        <h2>단어를 익혔다면,<br>이제 문제로.</h2>
+        <p>JLPT 어휘 문제는 한자 읽기·표기·단어 형성·문맥 규정·바꿔쓰기(유의 표현)·용법으로 나뉩니다. 각 단어에 맞는 문제와 해설을 새로 작성하고, 별도 판정과 규칙 검증을 거쳤습니다. 문제가 발견된 항목은 다시 작성하거나 교체해 재검증했습니다.</p>
+      </div>
+      <div class="practice-carousel-heading reveal">
+        <div><span>6가지 유형</span><h3>공식 어휘 문제 유형을<br>하나씩 미리 보세요.</h3></div>
+        <div class="carousel-controls" aria-label="실전 문제 캐러셀 이동">
+          <span class="sr-only" id="practice-carousel-status" role="status" aria-live="polite" aria-atomic="true">현재 1 / 6 · 한자 읽기</span>
+          <button class="carousel-control" type="button" data-carousel-prev aria-controls="practice-carousel" aria-label="이전 실전 문제 유형" disabled><span aria-hidden="true">←</span></button>
+          <button class="carousel-control" type="button" data-carousel-next aria-controls="practice-carousel" aria-label="다음 실전 문제 유형"><span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+      <div class="practice-carousel reveal" id="practice-carousel" data-carousel role="group" aria-roledescription="캐러셀" aria-label="JLPT 공식 어휘 문제 6유형 샘플" aria-describedby="practice-carousel-hint" tabindex="0">
+        <article class="practice-slide" data-question-type="kanji_reading" role="group" aria-roledescription="슬라이드" aria-label="1 / 6 · 한자 읽기" aria-current="true">
+          <div class="practice-card-inner" id="practice-kanji-reading-card">
+            <section class="practice-card-face practice-card-front" aria-hidden="false">
+              <header><span>01 / 06</span><div><h4>한자 읽기</h4><p>밑줄 친 한자의 올바른 읽기를 고릅니다.</p></div><strong>{{ product.deck.practice.kanji_reading | number }}</strong></header>
+              <figure><img src="assets/practice-kanji-reading.webp" width="640" height="540" loading="lazy" decoding="async" alt="시각적 카드 예시. 같은 내용은 이어지는 구조화된 텍스트로 제공됩니다." aria-hidden="true"><div class="practice-transcript sr-only"><p lang="ja">会議の資料は受付で参加者に配布します。</p><p>밑줄 친 <span lang="ja">配布</span>의 올바른 읽기를 고르세요.</p><ol lang="ja"><li>はいふ</li><li>はいぶ</li><li>はいぷ</li><li>はっぷ</li></ol></div><div class="practice-flip-prompt" aria-hidden="true"><strong>카드 뒤집기</strong><small>정답·해설 보기</small></div><figcaption><span>N2 샘플 · <span lang="ja">配布</span></span><span class="practice-flip-state">문제</span></figcaption></figure>
+            </section>
+            <section class="practice-card-face practice-card-back" aria-hidden="true" hidden>
+              <header><span>01 / 06</span><div><h4>한자 읽기</h4><p>밑줄 친 한자의 올바른 읽기를 고릅니다.</p></div><strong>{{ product.deck.practice.kanji_reading | number }}</strong></header>
+              <figure><img src="assets/practice-kanji-reading-answer.webp" width="640" height="781" loading="lazy" decoding="async" alt="시각적 카드 예시. 같은 내용은 이어지는 구조화된 텍스트로 제공됩니다." aria-hidden="true"><div class="practice-transcript sr-only"><p><strong>정답 1번: <span lang="ja"><ruby>配布<rt>はいふ</rt></ruby></span></strong> — 배포, 배부</p><p><span lang="ja">会議の資料は受付で参加者に配布します。</span> 회의 자료는 접수처에서 참가자들에게 나누어 줍니다.</p><p>문장에서 <span lang="ja">配布</span>는 회의 자료를 참석자들에게 나누어 준다는 뜻이며, 올바른 읽기는 <span lang="ja">はいふ</span>입니다.</p><ol><li><span lang="ja">はいふ</span>는 <span lang="ja">配布</span>의 올바른 읽기입니다.</li><li><span lang="ja">はいぶ</span>는 둘째 한자 <span lang="ja">布</span>를 <span lang="ja">ぶ</span>로 잘못 유성음화한 읽기입니다.</li><li><span lang="ja">はいぷ</span>는 마지막 음절 <span lang="ja">ふ</span>를 반탁음 <span lang="ja">ぷ</span>로 잘못 읽은 형태입니다.</li><li><span lang="ja">はっぷ</span>는 첫째 한자 <span lang="ja">配</span>의 <span lang="ja">はい</span>를 촉음이 든 <span lang="ja">はっ</span>으로 잘못 읽은 형태입니다.</li></ol></div><div class="practice-flip-prompt practice-flip-prompt-back" aria-hidden="true"><strong>다시 뒤집기</strong><small>문제로 돌아가기</small></div><figcaption><span>N2 샘플 · <span lang="ja">配布</span></span><span class="practice-flip-state">정답·해설</span><a class="practice-answer-link" href="assets/practice-kanji-reading-answer.webp" target="_blank" rel="noopener noreferrer" aria-label="한자 읽기 답안 이미지를 원본 크기로 보기 (새 탭)" hidden>답안 크게 보기 ↗</a></figcaption></figure>
+            </section>
+          </div>
+          <button class="practice-flip-card" type="button" data-flip-card data-show-answer-label="한자 읽기 정답과 해설 보기" data-show-question-label="한자 읽기 문제로 돌아가기" aria-label="한자 읽기 정답과 해설 보기" aria-expanded="false" aria-describedby="practice-kanji-reading-state" aria-controls="practice-kanji-reading-card"></button>
+          <span class="sr-only practice-flip-announcement" id="practice-kanji-reading-state" aria-live="polite">문제 면</span>
+        </article>
+        <article class="practice-slide" data-question-type="orthography" role="group" aria-roledescription="슬라이드" aria-label="2 / 6 · 표기">
+          <div class="practice-card-inner" id="practice-orthography-card">
+            <section class="practice-card-face practice-card-front" aria-hidden="false">
+              <header><span>02 / 06</span><div><h4>표기</h4><p>밑줄 친 말을 올바른 한자로 고릅니다.</p></div><strong>{{ product.deck.practice.orthography | number }}</strong></header>
+              <figure><img src="assets/practice-orthography.webp" width="640" height="540" loading="lazy" decoding="async" alt="시각적 카드 예시. 같은 내용은 이어지는 구조화된 텍스트로 제공됩니다." aria-hidden="true"><div class="practice-transcript sr-only"><p lang="ja">旅行先から友だちにはがきを送りました。</p><p>밑줄 친 히라가나 <span lang="ja">はがき</span>의 올바른 표기를 고르세요.</p><ol lang="ja"><li>羽書</li><li>葉描</li><li>歯書</li><li>葉書</li></ol></div><div class="practice-flip-prompt" aria-hidden="true"><strong>카드 뒤집기</strong><small>정답·해설 보기</small></div><figcaption><span>N5 샘플 · <span lang="ja">はがき</span></span><span class="practice-flip-state">문제</span></figcaption></figure>
+            </section>
+            <section class="practice-card-face practice-card-back" aria-hidden="true" hidden>
+              <header><span>02 / 06</span><div><h4>표기</h4><p>밑줄 친 말을 올바른 한자로 고릅니다.</p></div><strong>{{ product.deck.practice.orthography | number }}</strong></header>
+              <figure><img src="assets/practice-orthography-answer.webp" width="640" height="804" loading="lazy" decoding="async" alt="시각적 카드 예시. 같은 내용은 이어지는 구조화된 텍스트로 제공됩니다." aria-hidden="true"><div class="practice-transcript sr-only"><p><strong>정답 4번: <span lang="ja"><ruby>葉書<rt>はがき</rt></ruby></span></strong> — 엽서</p><p><span lang="ja">旅行先から友だちに葉書を送りました。</span> 여행지에서 친구에게 엽서를 보냈습니다.</p><p>문장에서 <span lang="ja">はがき</span>는 여행지에서 친구에게 짧은 소식을 적어 보내는 엽서를 뜻합니다. 이 의미에는 잎을 나타내는 <span lang="ja">葉</span>와 쓰다를 나타내는 <span lang="ja">書</span>를 결합한 표기 <span lang="ja">葉書</span>가 알맞습니다.</p><ol><li><span lang="ja">羽書</span>는 첫 글자를 <span lang="ja">葉</span>가 아닌 <span lang="ja">羽</span>로 바꾼 비표준 조합으로, 엽서를 나타내는 표기가 아닙니다.</li><li><span lang="ja">葉描</span>는 둘째 글자를 <span lang="ja">書</span>가 아닌 <span lang="ja">描</span>로 바꾼 비표준 조합으로, 편지를 써서 보내는 문맥에 맞지 않습니다.</li><li><span lang="ja">歯書</span>는 첫 글자를 같은 발음의 한자 <span lang="ja">歯</span>로 혼동한 비표준 조합으로, 엽서를 뜻하지 않습니다.</li><li><span lang="ja">葉書</span>는 읽기 <span lang="ja">はがき</span>에 대응하며, 짧은 소식을 적어 보내는 엽서를 뜻하는 올바른 표기입니다.</li></ol></div><div class="practice-flip-prompt practice-flip-prompt-back" aria-hidden="true"><strong>다시 뒤집기</strong><small>문제로 돌아가기</small></div><figcaption><span>N5 샘플 · <span lang="ja">はがき</span></span><span class="practice-flip-state">정답·해설</span><a class="practice-answer-link" href="assets/practice-orthography-answer.webp" target="_blank" rel="noopener noreferrer" aria-label="표기 답안 이미지를 원본 크기로 보기 (새 탭)" hidden>답안 크게 보기 ↗</a></figcaption></figure>
+            </section>
+          </div>
+          <button class="practice-flip-card" type="button" data-flip-card data-show-answer-label="표기 정답과 해설 보기" data-show-question-label="표기 문제로 돌아가기" aria-label="표기 정답과 해설 보기" aria-expanded="false" aria-describedby="practice-orthography-state" aria-controls="practice-orthography-card"></button>
+          <span class="sr-only practice-flip-announcement" id="practice-orthography-state" aria-live="polite">문제 면</span>
+        </article>
+        <article class="practice-slide" data-question-type="word_formation" role="group" aria-roledescription="슬라이드" aria-label="3 / 6 · 단어 형성">
+          <div class="practice-card-inner" id="practice-word-formation-card">
+            <section class="practice-card-face practice-card-front" aria-hidden="false">
+              <header><span>03 / 06</span><div><h4>단어 형성</h4><p>앞뒤 요소를 결합해 알맞은 단어를 만듭니다.</p></div><strong>{{ product.deck.practice.word_formation | number }}</strong></header>
+              <figure><img src="assets/practice-word-formation.webp" width="640" height="540" loading="lazy" decoding="async" alt="시각적 카드 예시. 같은 내용은 이어지는 구조화된 텍스트로 제공됩니다." aria-hidden="true"><div class="practice-transcript sr-only"><p lang="ja">この資料は、古い時代から新しい時代へ年代（　）に並べてある。</p><p><span lang="ja">年代</span> 뒤 빈칸에 들어갈 가장 알맞은 말을 고르세요.</p><ol lang="ja"><li>順</li><li>史</li><li>記</li><li>層</li></ol></div><div class="practice-flip-prompt" aria-hidden="true"><strong>카드 뒤집기</strong><small>정답·해설 보기</small></div><figcaption><span>N2 샘플 · 빈칸 채우기</span><span class="practice-flip-state">문제</span></figcaption></figure>
+            </section>
+            <section class="practice-card-face practice-card-back" aria-hidden="true" hidden>
+              <header><span>03 / 06</span><div><h4>단어 형성</h4><p>앞뒤 요소를 결합해 알맞은 단어를 만듭니다.</p></div><strong>{{ product.deck.practice.word_formation | number }}</strong></header>
+              <figure><img src="assets/practice-word-formation-answer.webp" width="640" height="868" loading="lazy" decoding="async" alt="시각적 카드 예시. 같은 내용은 이어지는 구조화된 텍스트로 제공됩니다." aria-hidden="true"><div class="practice-transcript sr-only"><p><strong>정답 1번: <span lang="ja"><ruby>年代順<rt>ねんだいじゅん</rt></ruby></span></strong> — 연대순</p><p><span lang="ja">この資料は、古い時代から新しい時代へ年代順に並べてある。</span> 이 자료는 오래된 시대부터 새로운 시대로 연대순으로 배열되어 있다.</p><p><span lang="ja">順</span>을 넣어 완성한 <span lang="ja">年代順</span>은 연대순이라는 뜻이며, 자료가 오래된 시대부터 새로운 시대로 배열되었다는 구체적인 상황에 알맞습니다.</p><ol><li><span lang="ja">順</span>을 넣으면 <span lang="ja">年代順</span>이 되며, 오래된 시대부터 새로운 시대로 정한 차례를 뜻해 문맥에 맞습니다.</li><li><span lang="ja">史</span>를 넣으면 <span lang="ja">年代史</span>가 되어 여러 시대에 관한 역사를 뜻하므로, 자료를 배열한 순서를 나타내지 않습니다.</li><li><span lang="ja">記</span>를 넣으면 <span lang="ja">年代記</span>가 되어 시대의 사건을 기록한 연대기를 뜻하므로, 항목의 배열 방식을 나타내지 않습니다.</li><li><span lang="ja">層</span>을 넣으면 <span lang="ja">年代層</span>이 되지만 일반적으로 쓰이는 단어가 아니며, 오래된 것부터 차례로 배열했다는 뜻도 나타내지 않습니다.</li></ol></div><div class="practice-flip-prompt practice-flip-prompt-back" aria-hidden="true"><strong>다시 뒤집기</strong><small>문제로 돌아가기</small></div><figcaption><span>N2 샘플 · <span lang="ja">年代順</span></span><span class="practice-flip-state">정답·해설</span><a class="practice-answer-link" href="assets/practice-word-formation-answer.webp" target="_blank" rel="noopener noreferrer" aria-label="단어 형성 답안 이미지를 원본 크기로 보기 (새 탭)" hidden>답안 크게 보기 ↗</a></figcaption></figure>
+            </section>
+          </div>
+          <button class="practice-flip-card" type="button" data-flip-card data-show-answer-label="단어 형성 정답과 해설 보기" data-show-question-label="단어 형성 문제로 돌아가기" aria-label="단어 형성 정답과 해설 보기" aria-expanded="false" aria-describedby="practice-word-formation-state" aria-controls="practice-word-formation-card"></button>
+          <span class="sr-only practice-flip-announcement" id="practice-word-formation-state" aria-live="polite">문제 면</span>
+        </article>
+        <article class="practice-slide" data-question-type="context_defined" role="group" aria-roledescription="슬라이드" aria-label="4 / 6 · 문맥 규정">
+          <div class="practice-card-inner" id="practice-context-defined-card">
+            <section class="practice-card-face practice-card-front" aria-hidden="false">
+              <header><span>04 / 06</span><div><h4>문맥 규정</h4><p>문장 흐름에 가장 자연스러운 단어를 고릅니다.</p></div><strong>{{ product.deck.practice.context_defined | number }}</strong></header>
+              <figure><img src="assets/practice-context-defined.webp" width="640" height="540" loading="lazy" decoding="async" alt="시각적 카드 예시. 같은 내용은 이어지는 구조화된 텍스트로 제공됩니다." aria-hidden="true"><div class="practice-transcript sr-only"><p lang="ja">昨日、保護者が教室の後ろから子どもたちの授業を（　）した。</p><p>빈칸에 들어갈 가장 알맞은 표현을 고르세요.</p><ol><li><span lang="ja">欠席</span> — 결석</li><li><span lang="ja">参観</span> — 참관</li><li><span lang="ja">貯金</span> — 저축</li><li><span lang="ja">発明</span> — 발명</li></ol></div><div class="practice-flip-prompt" aria-hidden="true"><strong>카드 뒤집기</strong><small>정답·해설 보기</small></div><figcaption><span>N2 샘플 · 문장 빈칸</span><span class="practice-flip-state">문제</span></figcaption></figure>
+            </section>
+            <section class="practice-card-face practice-card-back" aria-hidden="true" hidden>
+              <header><span>04 / 06</span><div><h4>문맥 규정</h4><p>문장 흐름에 가장 자연스러운 단어를 고릅니다.</p></div><strong>{{ product.deck.practice.context_defined | number }}</strong></header>
+              <figure><img src="assets/practice-context-defined-answer.webp" width="640" height="952" loading="lazy" decoding="async" alt="시각적 카드 예시. 같은 내용은 이어지는 구조화된 텍스트로 제공됩니다." aria-hidden="true"><div class="practice-transcript sr-only"><p><strong>정답 2번: <span lang="ja"><ruby>参観<rt>さんかん</rt></ruby></span></strong> — 참관</p><p><span lang="ja">昨日、保護者が教室の後ろから子どもたちの授業を参観した。</span> 어제 학부모가 교실 뒤쪽에서 아이들의 수업을 참관했다.</p><p>교실 뒤에서 학부모가 수업을 지켜보았으므로 참관을 뜻하는 <span lang="ja">参観</span>이 알맞습니다.</p><ol><li><span lang="ja"><ruby>欠席<rt>けっせき</rt></ruby></span>, 결석: 수업에 참석하지 않는 것이므로 교실 뒤에서 지켜본 상황과 맞지 않습니다.</li><li><span lang="ja"><ruby>参観<rt>さんかん</rt></ruby></span>, 참관: 교실에서 수업 모습을 지켜보는 상황에 알맞습니다.</li><li><span lang="ja"><ruby>貯金<rt>ちょきん</rt></ruby></span>, 저축: 돈을 모으는 행위이므로 수업과 어울리지 않습니다.</li><li><span lang="ja"><ruby>発明<rt>はつめい</rt></ruby></span>, 발명: 새로운 물건이나 방법을 만드는 행위이므로 문맥에 맞지 않습니다.</li></ol></div><div class="practice-flip-prompt practice-flip-prompt-back" aria-hidden="true"><strong>다시 뒤집기</strong><small>문제로 돌아가기</small></div><figcaption><span>N2 샘플 · <span lang="ja">参観</span></span><span class="practice-flip-state">정답·해설</span><a class="practice-answer-link" href="assets/practice-context-defined-answer.webp" target="_blank" rel="noopener noreferrer" aria-label="문맥 규정 답안 이미지를 원본 크기로 보기 (새 탭)" hidden>답안 크게 보기 ↗</a></figcaption></figure>
+            </section>
+          </div>
+          <button class="practice-flip-card" type="button" data-flip-card data-show-answer-label="문맥 규정 정답과 해설 보기" data-show-question-label="문맥 규정 문제로 돌아가기" aria-label="문맥 규정 정답과 해설 보기" aria-expanded="false" aria-describedby="practice-context-defined-state" aria-controls="practice-context-defined-card"></button>
+          <span class="sr-only practice-flip-announcement" id="practice-context-defined-state" aria-live="polite">문제 면</span>
+        </article>
+        <article class="practice-slide" data-question-type="paraphrase" role="group" aria-roledescription="슬라이드" aria-label="5 / 6 · 바꿔쓰기">
+          <div class="practice-card-inner" id="practice-paraphrase-card">
+            <section class="practice-card-face practice-card-front" aria-hidden="false">
+              <header><span>05 / 06</span><div><h4>바꿔쓰기</h4><p>밑줄 친 표현과 가장 가까운 뜻을 고릅니다.</p></div><strong>{{ product.deck.practice.paraphrase | number }}</strong></header>
+              <figure><img src="assets/practice-paraphrase.webp" width="640" height="540" loading="lazy" decoding="async" alt="시각적 카드 예시. 같은 내용은 이어지는 구조화된 텍스트로 제공됩니다." aria-hidden="true"><div class="practice-transcript sr-only"><p lang="ja">経験のない私にとって、この仕事を一人で終えるのは厳しい。</p><p>밑줄 친 표현 <span lang="ja">厳しい</span>와 바꿔 쓸 수 있는 표현을 고르세요.</p><ol><li><span lang="ja">簡単だ</span> — 간단하다</li><li><span lang="ja">大変だ</span> — 힘들다</li><li><span lang="ja">安全だ</span> — 안전하다</li><li><span lang="ja">静かだ</span> — 조용하다</li></ol></div><div class="practice-flip-prompt" aria-hidden="true"><strong>카드 뒤집기</strong><small>정답·해설 보기</small></div><figcaption><span>N4 샘플 · <span lang="ja">厳しい</span></span><span class="practice-flip-state">문제</span></figcaption></figure>
+            </section>
+            <section class="practice-card-face practice-card-back" aria-hidden="true" hidden>
+              <header><span>05 / 06</span><div><h4>바꿔쓰기</h4><p>밑줄 친 표현과 가장 가까운 뜻을 고릅니다.</p></div><strong>{{ product.deck.practice.paraphrase | number }}</strong></header>
+              <figure><img src="assets/practice-paraphrase-answer.webp" width="640" height="947" loading="lazy" decoding="async" alt="시각적 카드 예시. 같은 내용은 이어지는 구조화된 텍스트로 제공됩니다." aria-hidden="true"><div class="practice-transcript sr-only"><p><strong>정답 2번: <span lang="ja"><ruby>大変だ<rt>たいへんだ</rt></ruby></span> — 힘들다</strong></p><p><span lang="ja">経験のない私にとって、この仕事を一人で終えるのは大変だ。</span> 경험이 없는 나에게 이 일을 혼자 끝내는 것은 힘들다.</p><p>이 문맥의 <span lang="ja">厳しい</span>는 경험이 없는 사람이 혼자 끝내기에는 힘들다는 뜻이므로 <span lang="ja">大変だ</span>로 바꾸어도 의도가 유지됩니다.</p><ol><li><span lang="ja"><ruby>簡単だ<rt>かんたんだ</rt></ruby></span>, 간단하다: 어렵지 않다는 반대 의미가 됩니다.</li><li><span lang="ja"><ruby>大変だ<rt>たいへんだ</rt></ruby></span>, 힘들다: 많은 노력과 고생이 필요하다는 의미로 문장의 뜻을 유지합니다.</li><li><span lang="ja"><ruby>安全だ<rt>あんぜんだ</rt></ruby></span>, 안전하다: 위험이 없다는 뜻으로 일의 어려움을 나타내지 않습니다.</li><li><span lang="ja"><ruby>静かだ<rt>しずかだ</rt></ruby></span>, 조용하다: 소리가 없다는 뜻으로 일의 난이도와 관계가 없습니다.</li></ol></div><div class="practice-flip-prompt practice-flip-prompt-back" aria-hidden="true"><strong>다시 뒤집기</strong><small>문제로 돌아가기</small></div><figcaption><span>N4 샘플 · <span lang="ja">厳しい</span></span><span class="practice-flip-state">정답·해설</span><a class="practice-answer-link" href="assets/practice-paraphrase-answer.webp" target="_blank" rel="noopener noreferrer" aria-label="바꿔쓰기 답안 이미지를 원본 크기로 보기 (새 탭)" hidden>답안 크게 보기 ↗</a></figcaption></figure>
+            </section>
+          </div>
+          <button class="practice-flip-card" type="button" data-flip-card data-show-answer-label="바꿔쓰기 정답과 해설 보기" data-show-question-label="바꿔쓰기 문제로 돌아가기" aria-label="바꿔쓰기 정답과 해설 보기" aria-expanded="false" aria-describedby="practice-paraphrase-state" aria-controls="practice-paraphrase-card"></button>
+          <span class="sr-only practice-flip-announcement" id="practice-paraphrase-state" aria-live="polite">문제 면</span>
+        </article>
+        <article class="practice-slide" data-question-type="usage" role="group" aria-roledescription="슬라이드" aria-label="6 / 6 · 용법">
+          <div class="practice-card-inner" id="practice-usage-card">
+            <section class="practice-card-face practice-card-front" aria-hidden="false">
+              <header><span>06 / 06</span><div><h4>용법</h4><p>제시된 단어의 쓰임이 올바른 문장을 고릅니다.</p></div><strong>{{ product.deck.practice.usage | number }}</strong></header>
+              <figure><img src="assets/practice-usage.webp" width="640" height="540" loading="lazy" decoding="async" alt="시각적 카드 예시. 같은 내용은 이어지는 구조화된 텍스트로 제공됩니다." aria-hidden="true"><div class="practice-transcript sr-only"><p>밑줄 친 표현 <span lang="ja">風物詩</span>의 쓰임이 가장 올바른 문장을 고르세요.</p><ol><li><span lang="ja">夜空を彩る花火は、日本の夏の風物詩だ。</span></li><li><span lang="ja">俳句の会で、自作の風物詩を一編読みました。</span></li><li><span lang="ja">この小説は、その作家を代表する風物詩です。</span></li><li><span lang="ja">旅行の思い出を風物詩に書きました。</span></li></ol></div><div class="practice-flip-prompt" aria-hidden="true"><strong>카드 뒤집기</strong><small>정답·해설 보기</small></div><figcaption><span>N1 샘플 · <span lang="ja">風物詩</span></span><span class="practice-flip-state">문제</span></figcaption></figure>
+            </section>
+            <section class="practice-card-face practice-card-back" aria-hidden="true" hidden>
+              <header><span>06 / 06</span><div><h4>용법</h4><p>제시된 단어의 쓰임이 올바른 문장을 고릅니다.</p></div><strong>{{ product.deck.practice.usage | number }}</strong></header>
+              <figure><img src="assets/practice-usage-answer.webp" width="640" height="910" loading="lazy" decoding="async" alt="시각적 카드 예시. 같은 내용은 이어지는 구조화된 텍스트로 제공됩니다." aria-hidden="true"><div class="practice-transcript sr-only"><p><strong>정답 1번: <span lang="ja">夜空を彩る花火は、日本の夏の風物詩だ。</span></strong> 밤하늘을 수놓는 불꽃놀이는 일본 여름의 풍물시이다.</p><p><span lang="ja"><ruby>風物詩<rt>ふうぶつし</rt></ruby></span>는 특정 계절이나 지역의 정취를 대표하는 사물·행사·풍경을 뜻하므로 여름의 불꽃놀이에 쓰는 것이 적절합니다.</p><ol><li><span lang="ja">夜空を彩る花火は、日本の夏の風物詩だ。</span> 밤하늘을 수놓는 불꽃놀이는 일본 여름의 풍물시이다. <span lang="ja">風物詩</span>는 계절의 정취를 대표하는 사물이나 풍경이므로 올바릅니다.</li><li><span lang="ja">俳句の会で、自作の風物詩を一編読みました。</span> 하이쿠 모임에서 자작한 계절 풍경 한 편을 읽었습니다. 자작시 한 편을 뜻하는 <span lang="ja">俳句</span>라고 해야 하며 <span lang="ja">風物詩</span>라고 하지 않습니다.</li><li><span lang="ja">この小説は、その作家を代表する風物詩です。</span> 이 소설은 그 작가를 대표하는 계절 풍경입니다. 작가를 대표하는 소설은 <span lang="ja">代表作</span>이며 <span lang="ja">風物詩</span>가 아닙니다.</li><li><span lang="ja">旅行の思い出を風物詩に書きました。</span> 여행의 추억을 계절 풍경에 썼습니다. 여행의 추억을 기록하는 대상은 일기나 글이지 <span lang="ja">風物詩</span>가 아닙니다.</li></ol></div><div class="practice-flip-prompt practice-flip-prompt-back" aria-hidden="true"><strong>다시 뒤집기</strong><small>문제로 돌아가기</small></div><figcaption><span>N1 샘플 · <span lang="ja">風物詩</span></span><span class="practice-flip-state">정답·해설</span><a class="practice-answer-link" href="assets/practice-usage-answer.webp" target="_blank" rel="noopener noreferrer" aria-label="용법 답안 이미지를 원본 크기로 보기 (새 탭)" hidden>답안 크게 보기 ↗</a></figcaption></figure>
+            </section>
+          </div>
+          <button class="practice-flip-card" type="button" data-flip-card data-show-answer-label="용법 정답과 해설 보기" data-show-question-label="용법 문제로 돌아가기" aria-label="용법 정답과 해설 보기" aria-expanded="false" aria-describedby="practice-usage-state" aria-controls="practice-usage-card"></button>
+          <span class="sr-only practice-flip-announcement" id="practice-usage-state" aria-live="polite">문제 면</span>
+        </article>
+      </div>
+      <p class="carousel-hint reveal" id="practice-carousel-hint"><span aria-hidden="true">↔</span> 좌우로 스크롤하거나 이동 버튼으로 유형을 바꿉니다. 키보드에서는 캐러셀에 초점을 둔 뒤 왼쪽·오른쪽 화살표 키를 누르고, 각 카드의 버튼으로 문제와 답안면을 바꿀 수 있습니다.</p>
+      <div class="practice-summary reveal">
+        <strong>{{ product.deck.practice_notes | number }}</strong>
+        <div>
+          <h3>{{ product.deck.practice_notes | number }}개 유형별 실전 카드</h3>
+          <p>문제를 먼저 풀고, 카드를 뒤집어 정답·후리가나·번역과 음성을 확인합니다. JLPT 6개 공식 어휘 유형에는 선택지별 해설도 제공합니다.</p>
+          <div class="question-types" aria-label="JLPT 공식 어휘 문제 유형별 카드 수"><span>한자 읽기 {{ product.deck.practice.kanji_reading | number }}</span><span>표기 {{ product.deck.practice.orthography | number }}</span><span>단어 형성 {{ product.deck.practice.word_formation | number }}</span><span>문맥 규정 {{ product.deck.practice.context_defined | number }}</span><span>바꿔쓰기 {{ product.deck.practice.paraphrase | number }}</span><span>용법 {{ product.deck.practice.usage | number }}</span></div>
+          <p class="supplemental-practice">여기에 N5 수량 표현·날짜·월·요일 읽기 {{ product.deck.practice.numeric_reading | number }}개를 더했습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reference-section" id="reference">
+      <div class="section-heading reveal">
+        <h2>외우기 전에,<br>한 번에 펼쳐보는 표.</h2>
+        <p>수량 표현과 달력처럼 묶어서 볼수록 규칙과 예외가 잘 보이는 항목은 {{ product.deck.reference_notes }}개의 참조표 카드로 따로 정리했습니다.</p>
+      </div>
+      <div class="reference-showcase">
+        <figure class="reference-card-sample reveal">
+          <div class="reference-preview-card" aria-label="날짜와 달력 읽기 참조표의 일부 항목 미리보기">
+            <div class="reference-preview-top"><span>N5</span><small>참조표 미리보기</small></div>
+            <h3>날짜·달력 읽기</h3>
+            <p>규칙에서 벗어나는 읽기까지 한눈에 비교합니다.</p>
+            <div class="reference-preview-groups">
+              <section>
+                <h4>월</h4>
+                <dl><div><dt lang="ja">1月</dt><dd lang="ja">いちがつ</dd></div><div><dt lang="ja">4月</dt><dd lang="ja">しがつ</dd></div><div><dt lang="ja">9月</dt><dd lang="ja">くがつ</dd></div></dl>
+              </section>
+              <section>
+                <h4>요일</h4>
+                <dl><div><dt lang="ja">日曜日</dt><dd lang="ja">にちようび</dd></div><div><dt lang="ja">水曜日</dt><dd lang="ja">すいようび</dd></div><div><dt lang="ja">土曜日</dt><dd lang="ja">どようび</dd></div></dl>
+              </section>
+              <section>
+                <h4>날짜</h4>
+                <dl><div><dt lang="ja">1日</dt><dd lang="ja">ついたち</dd></div><div><dt lang="ja">2日</dt><dd lang="ja">ふつか</dd></div><div><dt lang="ja">20日</dt><dd lang="ja">はつか</dd></div></dl>
+              </section>
+            </div>
+          </div>
+          <figcaption>일부 항목으로 구성한 사이트 미리보기 · 실제 덱 카드에는 50개 항목</figcaption>
+        </figure>
+        <div class="reference-details reveal">
+          <div class="reference-total"><strong>{{ product.deck.reference_notes }}</strong><span>덱 안의 참조표 카드</span></div>
+          <article><span>01</span><div><h3>날짜·달력 읽기</h3><p>월 12개, 요일 7개, 날짜 31개를 한 화면에 모았습니다. 항목을 누르면 읽기도 들을 수 있습니다.</p></div></article>
+          <article><span>02–09</span><div><h3>수량 표현 8파트</h3><p>자주 쓰는 단위를 나눠 예외적인 소리 변화까지 빠르게 비교합니다.</p><div class="reference-unit-list" aria-label="수량 표현 참조표에 포함된 단위"><span>個·つ</span><span>冊·台</span><span>杯·本</span><span>枚·人</span><span>匹·階</span><span>回·歳</span><span>年·時</span><span>分</span></div></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="quality-summary" aria-labelledby="quality-summary-title">
+      <div class="quality-summary-copy reveal">
+        <span>LLM 사용 공개 · GPT‑5.6 SOL</span>
+        <h2 id="quality-summary-title">GPT‑5.6 Sol로 작성하고<br>이중 검토했습니다.</h2>
+        <p>학습자용 뜻과 예문·번역, 실전 문제·해설 작성에 GPT‑5.6 Sol을 사용했습니다. 생성 결과를 그대로 넣지 않고, 작성과 분리된 LLM 판정과 로컬 규칙 검사를 거쳤습니다.</p>
+      </div>
+      <div class="quality-summary-facts reveal">
+        <div><b>작성</b><strong>GPT‑5.6 Sol</strong><small>뜻·예문·문제·해설</small></div>
+        <div><b>1차 검토</b><strong>LLM 판정</strong><small>의미 일치·자연스러움</small></div>
+        <div><b>2차 검토</b><strong>규칙 검사</strong><small>누락·중복·형식</small></div>
+      </div>
+    </section>
+
+    <section class="section curation-section" id="curation">
+      <div class="section-heading reveal">
+        <h2>한 단어가<br>카드에 들어가기까지.</h2>
+        <p><span lang="ja">出す</span> 하나가 실제 카드에 들어가는 과정을 순서대로 정리했습니다.</p>
+      </div>
+      <div class="pipeline-steps" aria-label="出す가 카드가 되는 네 단계">
+        <article class="pipeline-step reveal">
+          <div class="pipeline-step-index"><strong>01</strong><span>근거 준비</span></div>
+          <div class="pipeline-step-copy">
+            <h3>표기·읽기·뜻 근거를 준비합니다</h3>
+            <p>선별한 단어의 표기·읽기·급수와 사전의 뜻·품사를 항목별로 정리합니다. 필요한 근거만 묶어 다른 단어나 뜻이 섞일 여지를 줄였습니다.</p>
+          </div>
+          <div class="pipeline-proof pipeline-input-proof">
+            <span class="pipeline-proof-label">입력 근거</span>
+            <dl>
+              <div><dt>표기 · 읽기</dt><dd lang="ja">出す · だす</dd></div>
+              <div><dt>학습 급수</dt><dd>N5</dd></div>
+              <div><dt>검토 근거</dt><dd>사전 뜻 후보 · 품사 · 선택/제외 기준</dd></div>
+            </dl>
+          </div>
+        </article>
+        <article class="pipeline-step reveal">
+          <div class="pipeline-step-index"><strong>02</strong><span>작성</span></div>
+          <div class="pipeline-step-copy">
+            <h3>GPT‑5.6 Sol이 뜻·예문·문제를 작성합니다</h3>
+            <p>학습자가 구분할 한국어 뜻을 먼저 정리하고, 각 뜻에 맞는 예문·번역·문제·해설을 만듭니다. 결과는 정해진 형식으로 받아 다음 검사를 자동화했습니다.</p>
+          </div>
+          <div class="pipeline-proof pipeline-output-proof">
+            <span class="pipeline-proof-label">작성 결과 · 出す</span>
+            <ul>
+              <li><strong>꺼내다</strong><span lang="ja">かばんから財布を出す。</span></li>
+              <li><strong>제출하다</strong><span lang="ja">先生にレポートを出す。</span></li>
+              <li><strong>편지를 보내다</strong><span lang="ja">この手紙を出す予定だ。</span></li>
+            </ul>
+          </div>
+        </article>
+        <article class="pipeline-step reveal">
+          <div class="pipeline-step-index"><strong>03</strong><span>검토</span></div>
+          <div class="pipeline-step-copy">
+            <h3>작성 결과를 별도로 검증합니다</h3>
+            <p>자동 검사로 형식·표기·뜻 연결을 확인하고, 작성 단계와 분리된 판정으로 자연스러움과 의미 일치를 다시 봅니다. 문제가 발견되면 원인을 반영해 다시 작성하거나 교체한 뒤 같은 검증을 다시 거칩니다.</p>
+          </div>
+          <div class="pipeline-proof">
+            <span class="pipeline-proof-label">품질 검증</span>
+            <ol class="pipeline-gates">
+              <li><b>01</b><span>형식 · 필수 항목</span><i>자동 검사</i></li>
+              <li><b>02</b><span>뜻 · 예문 · 번역 연결</span><i>자동 검사</i></li>
+              <li><b>03</b><span>작성과 분리된 품질 판정</span><i>별도 검토</i></li>
+              <li><b>04</b><span>재작성·교체 후 재검증</span><i>검증 완료</i></li>
+            </ol>
+          </div>
+        </article>
+        <article class="pipeline-step reveal">
+          <div class="pipeline-step-index"><strong>04</strong><span>최종 확정</span></div>
+          <div class="pipeline-step-copy">
+            <h3>검증을 마친 최종본으로 덱을 만듭니다</h3>
+            <p>재검증을 마친 결과를 확정한 뒤 그 내용으로 콘텐츠·음성·카드와 APKG를 만듭니다. 마지막으로 수량과 파일, 실제 카드 화면까지 다시 확인합니다.</p>
+          </div>
+          <div class="pipeline-proof pipeline-release-proof">
+            <span class="pipeline-proof-label">덱 생성</span>
+            <div><span>확정 데이터</span><b aria-hidden="true">→</b><span>콘텐츠·음성</span><b aria-hidden="true">→</b><span>APKG</span></div>
+          </div>
+        </article>
+      </div>
+      <div class="priority-panel reveal">
+        <div class="priority-copy">
+          <span class="priority-eyebrow">학습 순서</span>
+          <h3>처음에는<br>필수 단어부터</h3>
+          <p>처음부터 {{ product.deck.vocabulary_notes | number }}개를 모두 외울 필요는 없습니다. 각 급수의 단어를 필수·표준·확장으로 나눠, 필수부터 시작하고 익숙해지면 표준과 확장 어휘로 넓혀갈 수 있습니다. 같은 단계 안에서는 공개 일본어 사전인 JMdict의 우선순위 정보를 참고해 자주 쓰이는 단어부터 새 카드가 나오도록 정렬했습니다.</p>
+          <div class="priority-sequence" aria-label="새 카드가 나오는 순서">
+            <span>새 카드 순서</span>
+            <strong>필수 → 표준 → 확장</strong>
+          </div>
+        </div>
+        <div class="priority-chart">
+          <div class="priority-total"><span>선별 어휘</span><strong>{{ product.deck.vocabulary_notes | number }}</strong></div>
+          <div class="priority-bar" aria-hidden="true"><i class="essential" style="--share:{{ (product.deck.study_priority.essential_notes / product.deck.vocabulary_notes * 100) | round(2) }}%"></i><i class="standard" style="--share:{{ (product.deck.study_priority.standard_notes / product.deck.vocabulary_notes * 100) | round(2) }}%"></i><i class="extended" style="--share:{{ (product.deck.study_priority.extended_notes / product.deck.vocabulary_notes * 100) | round(2) }}%"></i></div>
+          <dl>
+            <div><dt><i class="legend-essential"></i>필수</dt><dd>{{ product.deck.study_priority.essential_notes | number }}</dd></div>
+            <div><dt><i class="legend-standard"></i>표준</dt><dd>{{ product.deck.study_priority.standard_notes | number }}</dd></div>
+            <div><dt><i class="legend-extended"></i>확장</dt><dd>{{ product.deck.study_priority.extended_notes | number }}</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section kanji-section" id="kanji">
+      <div class="section-heading reveal">
+        <h2>필요하면 한자까지<br>이어서 학습할 수 있습니다.</h2>
+        <p>기본 덱의 어휘·문제·참조표와 별도로 추가하는 선택 확장입니다. 길벗 공식 자료 페이지에서 정상적으로 받은 지원 PDF 2개로 개인용 APKG를 만들며, 완성된 덱은 Anki가 있는 학습 기기로 가져갈 수 있습니다.</p>
+      </div>
+      <div class="kanji-showcase">
+        <figure class="anki-frame kanji-card-sample reveal">
+          <div class="anki-frame-bar"><i></i><span>일상무따 · 상권</span><b>한자</b></div>
+          <a class="kanji-card-window" href="assets/card-kanji-ima-answer.webp" target="_blank" rel="noopener noreferrer" aria-label="今 한자 카드 이미지를 원본 크기로 보기 (새 탭)">
+            <img src="assets/card-kanji-ima-answer.webp" width="640" height="744" loading="lazy" decoding="async" alt="今의 한국어 뜻 지금 금, 음독과 훈독, 부수와 획수, 今月·今度·今週 연결 어휘를 보여주는 실제 한자 답안 카드 샘플">
+            <span class="sample-zoom-hint" aria-hidden="true">크게 보기 ↗</span>
+          </a>
+          <figcaption>실제 한자 답안면 · <span lang="ja">今</span> · 연결 어휘 3개</figcaption>
+        </figure>
+        <div class="kanji-details reveal">
+          <div class="kanji-total"><strong>{{ product.deck.kanji_notes | number }}</strong><span>일상무따 한자 확장 노트</span></div>
+          <ol class="kanji-feature-list">
+            <li><span>01</span><div><h3>한국어 뜻과 일본어 읽기</h3><p><span lang="ja">今</span>을 ‘지금 금’으로 익히고 음독 <span lang="ja">コン·キン</span>, 훈독 <span lang="ja">いま</span>를 함께 봅니다.</p></div></li>
+            <li><span>02</span><div><h3>부수와 획수까지 한 번에</h3><p>글자 형태를 익힐 때 필요한 부수와 획수를 답안면에 함께 정리했습니다.</p></div></li>
+            <li><span>03</span><div><h3>아는 한자를 실제 단어로 연결</h3><p><span lang="ja">今月 · 今度 · 今週</span>처럼 기본 덱의 선별 어휘를 읽기·뜻·급수와 함께 이어서 복습하고, 단어를 눌러 음성도 들을 수 있습니다.</p></div></li>
+          </ol>
+          <div class="kanji-actions">
+            <a class="button button-primary kanji-guide-cta" id="kanji-guide-link" href="getting-started.html#kanji"><span>한자 확장 적용 방법</span><span class="button-arrow-icon" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section deck-map-section" id="start">
+      <div class="section-heading reveal">
+        <h2>기본 덱으로<br>바로 시작하세요.</h2>
+        <p>기본 덱에는 어휘·음성·실전 문제·참조표가 모두 들어 있습니다. 일상무따 한자 {{ product.deck.kanji_notes | number }}개는 필요할 때만 별도 선택 확장으로 추가합니다.</p>
+      </div>
+      <div class="content-grid basic-content-grid">
+        <article class="content-card accent-lime reveal"><span class="card-index">01</span><p class="jp-label" lang="ja">語彙</p><strong>{{ product.deck.vocabulary_notes | number }}</strong><h3>선별 어휘</h3><p>예문과 학습 정보를 필요에 따라 붙인 어휘 노트.</p></article>
+        <article class="content-card accent-coral reveal"><span class="card-index">02</span><p class="jp-label" lang="ja">実戦</p><strong>{{ product.deck.practice_notes | number }}</strong><h3>실전 문제</h3><p>답을 먼저 떠올리고, 유형에 따라 해설로 확인하는 문제 카드.</p></article>
+        <article class="content-card accent-cream reveal"><span class="card-index">03</span><p class="jp-label" lang="ja">参照</p><strong>{{ product.deck.reference_notes }}</strong><h3>참조표</h3><p>필요할 때 덱 안에서 바로 여는 핵심 표.</p></article>
+      </div>
+      <div class="media-ribbon reveal"><span>{{ product.deck.core_notes | number }} 기본 노트</span><div class="ribbon-track" aria-hidden="true"><i></i><i></i></div><span>{{ product.deck.core_cards | number }} 기본 카드</span><span>{{ product.deck.core_media | number }} 기본 미디어</span></div>
+      <div class="optional-addon-row reveal">
+        <span>별도 선택 확장</span>
+        <strong>{{ product.deck.kanji_notes | number }}개 일상무따 한자</strong>
+        <p>공식 자료 PDF 2개로 내 컴퓨터에서 개인용 덱을 만듭니다.</p>
+        <a href="getting-started.html#kanji">한자 확장 적용 방법 <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="start-actions reveal">
+        <a class="button button-primary" id="deck-download-link" href="{{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.core.filename }}"><span>기본 덱 다운로드</span><svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a>
+        <a class="button button-secondary" id="beginner-guide-link" href="getting-started.html">시작 가이드 보기 <span class="button-arrow-icon" aria-hidden="true">→</span></a>
+        <a class="text-link" id="anki-install-guide-link" href="install-anki.html">Anki 설치 <span aria-hidden="true">→</span></a>
+        <a class="text-link" id="privacy-doc-link" href="{{ product.repository_url }}/blob/main/docs/privacy-and-licensing.md">저작권·라이선스 <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="section faq-section">
+      <div class="section-heading compact reveal">
+        <h2>자주 묻는 질문</h2>
+      </div>
+      <div class="faq-list reveal">
+        <details>
+          <summary>일상무따 한자 확장은 왜 따로 만드나요?<span aria-hidden="true">+</span></summary>
+          <p>한자 확장의 한국어 뜻과 일부 자형은 길벗 PDF에서 복원하는 저작권 있는 출판사 내용입니다. 이를 공개 기본 덱에 포함해 재배포하지 않기 위해, 필요한 사용자가 공식 PDF 2개로 자기 컴퓨터에서만 개인용 APKG를 만들도록 분리했습니다. PDF와 생성 APKG는 외부로 전송되지 않습니다.</p>
+        </details>
+        <details>
+          <summary>한자 확장에는 어떤 PDF가 필요한가요?<span aria-hidden="true">+</span></summary>
+          <p>길벗 『일본어 상용한자 무작정 따라하기』 1·2권의 지원 소책자 PDF 2개만 필요합니다. 공식 자료 페이지의 제공 방식과 이용 조건을 확인하고 정상적으로 받은 원본을 사용하세요. 빌더가 SHA-256·페이지 수·표 구조로 지원 판본인지 확인하므로 PDF를 다시 저장·병합·최적화하지 마세요.</p>
+        </details>
+        <details>
+          <summary>APKG를 다른 사람에게 공유해도 되나요?<span aria-hidden="true">+</span></summary>
+          <p>공식 기본 덱 APKG는 파일을 다시 올리는 대신 이 사이트나 공식 배포 링크를 공유해 주세요. PDF로 직접 만든 한자 확장 APKG는 개인 학습용이며 업로드·판매·미러링하거나 다른 사람에게 전달하는 범위는 포함되지 않습니다. 정확한 조건은 NOTICE를 확인하세요.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div aria-hidden="true" class="closing-kanji">学</div>
+      <div class="closing-copy reveal">
+        <h2>단어를 더 깊이 익히고,<br>실전 문제로 확인하세요.</h2>
+        <div class="closing-actions">
+          <a class="button button-primary" id="closing-release-cta" href="{{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.core.filename }}"><span>기본 덱 다운로드</span><svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a>
+          <a class="button button-star" id="github-star-link" href="{{ product.repository_url }}" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">★</span><span>GitHub에서 Star</span><span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="brand footer-brand" role="img" aria-label="JLPT MAX Deck"><span class="brand-mark" aria-hidden="true"><span class="brand-mark-jlpt">JLPT</span><strong class="brand-mark-max">MAX</strong></span><span class="brand-wordmark">JLPT <b>MAX</b> Deck</span></div>
+    <p>선별 어휘를 깊이 익히고 실전 문제로 확인하는 한국어권 JLPT Anki 덱.</p>
+    <p class="legal">Code AGPL-3.0-or-later · JMdict·KANJIDIC2 EDRDG / CC BY-SA 4.0 · 기타 자료는 NOTICE 적용</p>
+    <p class="disclaimer">Anki, JLPT 시험 운영기관, 출판사 또는 EDRDG의 공식 제품이나 후원 프로젝트가 아닙니다.</p>
+  </footer>
+
+  <script>
+    (() => {
+      document.documentElement.classList.add('motion-ready');
+      const audioButtons = Array.from(document.querySelectorAll('[data-audio]'));
+      const audioStatus = document.getElementById('audio-demo-status');
+      const setAudioButtonState = (button, isPlaying, hasEnded = false) => {
+        button.classList.toggle('is-playing', isPlaying);
+        button.setAttribute('aria-pressed', String(isPlaying));
+        button.setAttribute('aria-label', isPlaying ? button.dataset.pauseLabel : button.dataset.playLabel);
+        const icon = button.querySelector('.audio-play');
+        const state = button.querySelector('.audio-state');
+        if (icon) icon.textContent = isPlaying ? 'Ⅱ' : '▶';
+        if (state) state.textContent = isPlaying
+          ? button.dataset.playingState
+          : (hasEnded ? button.dataset.endedState : button.dataset.idleState);
+      };
+      let boundAudioButtons = 0;
+      audioButtons.forEach((button) => {
+        const audio = document.getElementById(button.dataset.audio);
+        if (!(audio instanceof HTMLAudioElement)) return;
+        boundAudioButtons += 1;
+        button.addEventListener('click', async () => {
+          const shouldPlay = audio.paused;
+          audioButtons.forEach((otherButton) => {
+            const otherAudio = document.getElementById(otherButton.dataset.audio);
+            if (otherAudio instanceof HTMLAudioElement && otherAudio !== audio) {
+              otherAudio.pause();
+              otherAudio.currentTime = 0;
+            }
+            if (otherButton !== button) setAudioButtonState(otherButton, false);
+          });
+          if (!shouldPlay) {
+            audio.pause();
+            setAudioButtonState(button, false);
+            if (audioStatus) audioStatus.textContent = `${button.dataset.audioName} 음성을 일시정지했습니다.`;
+            return;
+          }
+          try {
+            audio.currentTime = 0;
+            await audio.play();
+            setAudioButtonState(button, true);
+            if (audioStatus) audioStatus.textContent = `${button.dataset.audioName} 음성을 재생합니다.`;
+          } catch (_error) {
+            setAudioButtonState(button, false);
+            if (audioStatus) audioStatus.textContent = `${button.dataset.audioName} 음성을 재생하지 못했습니다.`;
+          }
+        });
+        audio.addEventListener('ended', () => {
+          setAudioButtonState(button, false, true);
+          if (audioStatus) audioStatus.textContent = `${button.dataset.audioName} 음성 재생이 끝났습니다.`;
+        });
+      });
+      if (boundAudioButtons === audioButtons.length && boundAudioButtons > 0) {
+        document.documentElement.classList.add('audio-demo-ready');
+      }
+
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const focusCarouselSlide = (slide) => {
+        const carousel = slide.closest('[data-carousel]');
+        if (!(carousel instanceof HTMLElement)) return;
+        const carouselRect = carousel.getBoundingClientRect();
+        const slideRect = slide.getBoundingClientRect();
+        const scrollPadding = parseFloat(getComputedStyle(carousel).scrollPaddingLeft) || 0;
+        const visibleLeft = carouselRect.left + scrollPadding;
+        const visibleRight = carouselRect.right - scrollPadding;
+        if (slideRect.left >= visibleLeft - 2 && slideRect.right <= visibleRight + 2) return;
+        const maxScroll = Math.max(0, carousel.scrollWidth - carousel.clientWidth);
+        const target = carousel.scrollLeft + slideRect.left - visibleLeft;
+        carousel.scrollTo({
+          left: Math.max(0, Math.min(target, maxScroll)),
+          behavior: reducedMotion.matches ? 'auto' : 'smooth',
+        });
+      };
+
+      document.querySelectorAll('[data-flip-card]').forEach((button) => {
+        const slide = button.closest('.practice-slide');
+        const inner = slide?.querySelector('.practice-card-inner');
+        const front = slide?.querySelector('.practice-card-front');
+        const back = slide?.querySelector('.practice-card-back');
+        const state = slide?.querySelector('.practice-flip-announcement');
+        const answerLink = slide?.querySelector('.practice-answer-link');
+        if (!(button instanceof HTMLButtonElement) || !slide || !inner || !front || !back || !state || !(answerLink instanceof HTMLAnchorElement)) return;
+
+        const syncFlipHeight = (face) => {
+          const height = face.offsetHeight;
+          if (height > 0) slide.style.setProperty('--practice-card-height', `${height}px`);
+        };
+        const syncActiveFlipHeight = () => {
+          const showAnswer = button.getAttribute('aria-expanded') === 'true';
+          syncFlipHeight(showAnswer ? back : front);
+        };
+
+        syncFlipHeight(front);
+        back.hidden = false;
+        slide.classList.add('is-flip-ready');
+        window.requestAnimationFrame(syncActiveFlipHeight);
+        if ('ResizeObserver' in window) {
+          const resizeObserver = new ResizeObserver(syncActiveFlipHeight);
+          resizeObserver.observe(front);
+          resizeObserver.observe(back);
+        } else {
+          window.addEventListener('resize', syncActiveFlipHeight);
+        }
+
+        button.addEventListener('click', () => {
+          if (document.activeElement !== button) focusCarouselSlide(slide);
+          const showAnswer = button.getAttribute('aria-expanded') !== 'true';
+          button.setAttribute('aria-expanded', String(showAnswer));
+          button.setAttribute('aria-label', showAnswer ? button.dataset.showQuestionLabel : button.dataset.showAnswerLabel);
+          front.setAttribute('aria-hidden', String(showAnswer));
+          back.setAttribute('aria-hidden', String(!showAnswer));
+          answerLink.hidden = !showAnswer;
+          syncFlipHeight(showAnswer ? back : front);
+          state.textContent = showAnswer ? '정답·해설 면' : '문제 면';
+          slide.classList.toggle('is-flipped', showAnswer);
+        });
+      });
+
+      document.querySelectorAll('[data-carousel]').forEach((carousel) => {
+        const previous = document.querySelector(`[data-carousel-prev][aria-controls="${carousel.id}"]`);
+        const next = document.querySelector(`[data-carousel-next][aria-controls="${carousel.id}"]`);
+        const status = document.getElementById(`${carousel.id}-status`);
+        const slides = Array.from(carousel.querySelectorAll('.practice-slide'));
+        if (!(previous instanceof HTMLButtonElement) || !(next instanceof HTMLButtonElement) || slides.length === 0) return;
+
+        let currentSlideIndex = 0;
+        let updateFrame = 0;
+
+        const updateControls = () => {
+          const maxScroll = Math.max(0, carousel.scrollWidth - carousel.clientWidth);
+          previous.disabled = carousel.scrollLeft <= 2;
+          next.disabled = carousel.scrollLeft >= maxScroll - 2;
+        };
+        const updateCurrentSlide = () => {
+          const carouselRect = carousel.getBoundingClientRect();
+          const scrollPadding = parseFloat(getComputedStyle(carousel).scrollPaddingLeft) || 0;
+          const targetLeft = carouselRect.left + scrollPadding;
+          let nearestIndex = 0;
+          let nearestDistance = Number.POSITIVE_INFINITY;
+          slides.forEach((slide, index) => {
+            const distance = Math.abs(slide.getBoundingClientRect().left - targetLeft);
+            if (distance < nearestDistance) {
+              nearestDistance = distance;
+              nearestIndex = index;
+            }
+          });
+          if (nearestIndex === currentSlideIndex) return;
+          currentSlideIndex = nearestIndex;
+          slides.forEach((slide, index) => {
+            if (index === currentSlideIndex) slide.setAttribute('aria-current', 'true');
+            else slide.removeAttribute('aria-current');
+          });
+          if (status) status.textContent = `현재 ${slides[currentSlideIndex].getAttribute('aria-label')}`;
+        };
+        const scheduleUpdate = () => {
+          if (updateFrame) window.cancelAnimationFrame(updateFrame);
+          updateFrame = window.requestAnimationFrame(() => {
+            updateFrame = 0;
+            updateControls();
+            updateCurrentSlide();
+          });
+        };
+        const move = (direction) => {
+          const firstSlide = slides[0];
+          const gap = parseFloat(getComputedStyle(carousel).columnGap) || 0;
+          carousel.scrollBy({
+            left: direction * (firstSlide.getBoundingClientRect().width + gap),
+            behavior: reducedMotion.matches ? 'auto' : 'smooth',
+          });
+        };
+
+        previous.addEventListener('click', () => move(-1));
+        next.addEventListener('click', () => move(1));
+        carousel.addEventListener('keydown', (event) => {
+          if (event.target !== carousel || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+          event.preventDefault();
+          move(event.key === 'ArrowLeft' ? -1 : 1);
+        });
+        carousel.addEventListener('focusin', (event) => {
+          const slide = event.target instanceof Element ? event.target.closest('.practice-slide') : null;
+          if (slide) focusCarouselSlide(slide);
+        });
+        carousel.addEventListener('scroll', scheduleUpdate, { passive: true });
+        window.addEventListener('resize', scheduleUpdate);
+        updateControls();
+        updateCurrentSlide();
+      });
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+      } else {
+        document.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-visible'));
+      }
+    })();
+  </script>
+</body>
+</html>

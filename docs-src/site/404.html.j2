@@ -1,0 +1,18 @@
+{% extends "_layouts/site.html.j2" %}
+{% set absolute_links = true %}
+{% set current_page = "404" %}
+{% block head %}  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08120e">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="요청한 JLPT MAX Deck 페이지를 찾을 수 없습니다.">
+  <link rel="icon" href="{{ product.site_url }}/assets/favicon.svg" type="image/svg+xml">
+  <title>페이지를 찾을 수 없습니다 — JLPT MAX Deck</title>
+{% endblock %}
+{% block body_attributes %} class="v2-site"{% endblock %}
+{% block main %}  <main id="main" tabindex="-1">
+    <section class="v2-not-found">
+      <div><strong aria-hidden="true">404</strong><h1>이 카드는 덱에 없습니다.</h1><p>주소가 바뀌었거나 삭제된 페이지입니다. 홈으로 돌아가 기본 덱과 최신 시작 가이드를 확인하세요.</p><div class="v2-hero-actions"><a class="v2-button" href="{{ product.site_url }}/">홈으로 돌아가기 <span aria-hidden="true">→</span></a><a class="v2-button v2-button-ghost" href="{{ product.site_url }}/support.html">도움말 보기</a></div></div>
+    </section>
+  </main>
+{% endblock %}

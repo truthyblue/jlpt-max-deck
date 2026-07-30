@@ -1,0 +1,68 @@
+{% extends "_layouts/site.html.j2" %}
+{% set absolute_links = false %}
+{% set current_page = "install-anki" %}
+{% block head %}  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08120e">
+  <meta name="robots" content="index,follow">
+  <meta name="description" content="JLPT MAX Deck을 사용할 Anki 앱을 macOS, Windows, iPhone, iPad, Android, Linux에서 설치하는 안내입니다.">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Anki 설치 — JLPT MAX Deck">
+  <meta property="og:description" content="내 기기에 맞는 Anki 앱을 설치하고 JLPT MAX 기본 덱을 가져오세요.">
+  <meta property="og:url" content="{{ product.site_url }}/install-anki.html">
+  <meta property="og:image" content="{{ product.site_url }}/assets/social-card.jpg">
+  <link rel="canonical" href="{{ product.site_url }}/install-anki.html">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <title>Anki 설치 — JLPT MAX Deck</title>
+{% endblock %}
+{% block body_attributes %} class="v2-site"{% endblock %}
+{% block main %}  <main class="v2-main" id="main" tabindex="-1">
+    <section class="v2-page-hero">
+      <div class="v2-shell">
+        <p class="v2-kicker"><span></span>Anki 설치</p>
+        <h1>내 기기에 맞는<br><em>Anki를 설치하세요.</em></h1>
+        <p class="v2-hero-lead">데스크톱은 Anki, iPhone·iPad는 공식 AnkiMobile, Android는 무료 오픈소스 AnkiDroid를 사용합니다.</p>
+      </div>
+    </section>
+
+    <div class="v2-shell v2-guide-layout">
+      <aside class="v2-guide-toc" aria-label="Anki 설치 목차">
+        <strong>설치 순서</strong>
+        <ol><li><a href="#apps">앱 선택</a></li><li><a href="#first-run">첫 실행</a></li></ol>
+      </aside>
+      <div class="v2-guide-content">
+        <section class="v2-guide-section" id="apps">
+          <span class="v2-step-label">기기 선택</span>
+          <h2>공부할 기기의 Anki를 설치합니다.</h2>
+          <p>아래에서 사용할 기기를 고르세요. iPhone·iPad의 공식 앱은 <strong>AnkiMobile Flashcards</strong>, Android 앱은 무료 오픈소스 <strong>AnkiDroid</strong>입니다.</p>
+          <div class="v2-tabs" data-tabs data-platform-tabs>
+            <div class="v2-tab-list" role="tablist" aria-label="운영체제별 Anki 앱">
+              <button class="v2-tab" id="install-tab-macos" type="button" role="tab" aria-selected="true" aria-controls="install-panel-macos" data-platform="macos">macOS</button>
+              <button class="v2-tab" id="install-tab-windows" type="button" role="tab" aria-selected="false" aria-controls="install-panel-windows" data-platform="windows" tabindex="-1">Windows</button>
+              <button class="v2-tab" id="install-tab-linux" type="button" role="tab" aria-selected="false" aria-controls="install-panel-linux" data-platform="linux" tabindex="-1">Linux</button>
+              <button class="v2-tab" id="install-tab-ios" type="button" role="tab" aria-selected="false" aria-controls="install-panel-ios" data-platform="ios" tabindex="-1">iPhone / iPad</button>
+              <button class="v2-tab" id="install-tab-android" type="button" role="tab" aria-selected="false" aria-controls="install-panel-android" data-platform="android" tabindex="-1">Android</button>
+            </div>
+            <article class="v2-tab-panel v2-device-card" id="install-panel-macos" role="tabpanel" aria-labelledby="install-tab-macos"><span>macOS</span><h3>Anki Desktop for Mac</h3><p>Apple Silicon 또는 Intel 항목을 Mac 사양에 맞게 선택합니다.</p><ol><li>DMG 다운로드</li><li>Anki를 응용 프로그램으로 이동</li><li>첫 실행 후 프로필 생성</li></ol><a href="https://apps.ankiweb.net/" target="_blank" rel="noopener noreferrer">공식 다운로드 <span aria-hidden="true">↗</span></a></article>
+            <article class="v2-tab-panel v2-device-card" id="install-panel-windows" role="tabpanel" aria-labelledby="install-tab-windows" hidden><span>WINDOWS</span><h3>Anki Desktop for Windows</h3><p>대부분의 PC는 Windows x64 설치 파일을 사용합니다.</p><ol><li>설치 파일 다운로드</li><li>설치 마법사 완료</li><li>Anki 실행 후 프로필 생성</li></ol><a href="https://apps.ankiweb.net/" target="_blank" rel="noopener noreferrer">공식 다운로드 <span aria-hidden="true">↗</span></a></article>
+            <article class="v2-tab-panel v2-device-card" id="install-panel-linux" role="tabpanel" aria-labelledby="install-tab-linux" hidden><span>LINUX</span><h3>Anki Desktop for Linux</h3><p>공식 패키지의 지원 배포판과 아키텍처 조건을 먼저 확인합니다.</p><ol><li>공식 패키지 다운로드</li><li>설치 안내 실행</li><li>Anki 실행 후 프로필 생성</li></ol><a href="https://apps.ankiweb.net/" target="_blank" rel="noopener noreferrer">공식 다운로드 <span aria-hidden="true">↗</span></a></article>
+            <article class="v2-tab-panel v2-device-card" id="install-panel-ios" role="tabpanel" aria-labelledby="install-tab-ios" hidden><span>iPHONE · iPAD</span><h3>AnkiMobile Flashcards</h3><p>공식 iOS 앱입니다. 구독이 아닌 유료 구매이며, 가격은 App Store에서 확인하세요.</p><ol><li>App Store에서 개발자 확인</li><li>AnkiMobile 설치</li><li>APKG 열기 또는 AnkiWeb 동기화</li></ol><a href="https://apps.apple.com/us/app/ankimobile-flashcards/id373493387" target="_blank" rel="noopener noreferrer">App Store <span aria-hidden="true">↗</span></a></article>
+            <article class="v2-tab-panel v2-device-card" id="install-panel-android" role="tabpanel" aria-labelledby="install-tab-android" hidden><span>ANDROID</span><h3>AnkiDroid Flashcards</h3><p>무료 오픈소스 Android 앱입니다. AnkiWeb 동기화와 APKG 가져오기를 지원합니다.</p><ol><li>Google Play에서 앱 확인</li><li>AnkiDroid 설치</li><li>APKG 열기 또는 AnkiWeb 동기화</li></ol><a href="https://play.google.com/store/apps/details?id=com.ichi2.anki" target="_blank" rel="noopener noreferrer">Google Play <span aria-hidden="true">↗</span></a></article>
+          </div>
+          <div class="v2-callout warning"><strong>AnkiWeb은 앱을 대신하지 않습니다.</strong><p>브라우저의 AnkiWeb은 동기화와 간단한 학습용입니다. 기본 덱 APKG는 공부할 기기에 설치한 앱에 가져오세요.</p></div>
+        </section>
+
+        <section class="v2-guide-section" id="first-run">
+          <span class="v2-step-label">다음 단계</span>
+          <h2>설치가 끝났으면 기본 덱을 넣습니다.</h2>
+          <ol class="v2-step-list">
+            <li><div><strong>설치한 앱을 한 번 실행합니다.</strong><p>앱에 표시되는 첫 실행 안내를 완료합니다.</p></div></li>
+            <li><div><strong>기본 덱 APKG를 다운로드합니다.</strong><p>기본 덱 파일 <code>{{ release.artifacts.core.filename }}</code>을 받습니다.</p></div></li>
+            <li><div><strong>시작 가이드의 가져오기 순서를 따릅니다.</strong><p>처음 설치와 기존 버전 업데이트의 옵션 차이를 확인하세요.</p></div></li>
+          </ol>
+          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="getting-started.html#deck">기본 덱 설치 계속하기 <span aria-hidden="true">→</span></a></div>
+        </section>
+      </div>
+    </div>
+  </main>
+{% endblock %}
