@@ -1,12 +1,14 @@
 from __future__ import annotations
 
-import json
+import importlib.util
 import io
+import json
 import sys
 import tempfile
 import unittest
 import zipfile
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -19,6 +21,19 @@ from direct_release_contract import (  # noqa: E402
     sha256_json,
 )
 from public_release import _package_kanji_builder, _zip_write  # noqa: E402
+
+
+def load_repository_verifier() -> Any:
+    path = ROOT / "scripts" / "verify-direct-release-tree.py"
+    spec = importlib.util.spec_from_file_location(
+        "verify_direct_release_tree",
+        path,
+    )
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"cannot load {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 class DirectReleaseRepositoryTest(unittest.TestCase):
@@ -146,6 +161,23 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         ).read_text(encoding="utf-8")
         self.assertIn("직접 설치하는 파일이 아닙니다", warning)
         self.assertIn("더블클릭 실행 파일", warning)
+
+    def test_local_builder_runtime_files_cannot_enter_public_source(self) -> None:
+        ignored = set(
+            (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
+        )
+        verifier = load_repository_verifier()
+
+        self.assertIn("/.tools/", ignored)
+        self.assertIn("/kanji-builder.log", ignored)
+        for relative in (
+            ".tools/uv/uv",
+            "kanji-builder.log",
+            "nested/kanji-builder.log",
+        ):
+            with self.subTest(relative=relative):
+                with self.assertRaises(RuntimeError):
+                    verifier._verify_tracked_boundary((relative,))
 
     def test_release_pin_binds_current_kanji_builder_sources(self) -> None:
         pin = json.loads(

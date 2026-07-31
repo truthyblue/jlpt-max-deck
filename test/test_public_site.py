@@ -501,10 +501,15 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("display: block;", faq_summary.group(1))
         self.assertIn("padding: 25px 48px 25px 4px;", faq_summary.group(1))
         self.assertNotIn("grid-template-columns", faq_summary.group(1))
-        self.assertIn(
-            "grid-template-columns: repeat(5, minmax(0, 1fr));",
-            css,
-        )
+
+    def test_mobile_primary_nav_has_five_columns_in_both_designs(self) -> None:
+        for filename in ("site.css", "showcase.css"):
+            css = (SITE / "assets" / filename).read_text(encoding="utf-8")
+            with self.subTest(filename=filename):
+                self.assertIn(
+                    "grid-template-columns: repeat(5, minmax(0, 1fr));",
+                    css,
+                )
 
     def test_install_page_links_only_to_official_anki_apps(self) -> None:
         html = (SITE / "install-anki.html").read_text(encoding="utf-8")
