@@ -1,4 +1,5 @@
 * text=auto
+*.cmd text eol=crlf
 *.json text eol=lf
 *.lock text eol=lf
 *.md text eol=lf

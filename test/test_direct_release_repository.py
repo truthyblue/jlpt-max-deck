@@ -76,6 +76,9 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                 windows_entry = archive.getinfo(
                     f"{archive_root}/Windows에서 한자 확장 만들기.cmd"
                 )
+                windows_launcher = archive.read(
+                    f"{archive_root}/Windows에서 한자 확장 만들기.cmd"
+                )
                 mac_entry = archive.getinfo(
                     f"{archive_root}/Mac에서 한자 확장 만들기.command"
                 )
@@ -95,6 +98,9 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         self.assertIn(f"{archive_root}/assets/README.txt", members)
         self.assertEqual((windows_entry.external_attr >> 16) & 0o777, 0o644)
         self.assertEqual((mac_entry.external_attr >> 16) & 0o777, 0o755)
+        self.assertTrue(windows_launcher.startswith(b"@echo off\r\n"))
+        self.assertNotIn(b"\n", windows_launcher.replace(b"\r\n", b""))
+        windows_launcher.decode("ascii")
         self.assertTrue(windows_helper.startswith(b"\xef\xbb\xbf#requires"))
 
     def test_release_pin_is_self_bound(self) -> None:
@@ -129,9 +135,12 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         self.assertFalse((ROOT / "src" / "artifact_hashing.py").exists())
 
     def test_beginner_launchers_avoid_manual_terminal_setup(self) -> None:
-        windows_entry = (ROOT / "scripts" / "start-kanji-addon.cmd").read_text(
-            encoding="utf-8"
-        )
+        windows_entry_bytes = (
+            ROOT / "scripts" / "start-kanji-addon.cmd"
+        ).read_bytes()
+        self.assertTrue(windows_entry_bytes.startswith(b"@echo off\r\n"))
+        self.assertNotIn(b"\n", windows_entry_bytes.replace(b"\r\n", b""))
+        windows_entry = windows_entry_bytes.decode("ascii")
         windows_flow = (ROOT / "scripts" / "start-kanji-addon.ps1").read_text(
             encoding="utf-8"
         )
