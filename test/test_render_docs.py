@@ -68,6 +68,8 @@ class DocumentationRenderTest(unittest.TestCase):
             context["release"]["version"],
         )
         self.assertTrue(release_history[0]["current"])
+        self.assertEqual(release_history[0]["label"], "최신")
+        self.assertIsNone(release_history[1]["label"])
         self.assertEqual(
             1,
             sum(bool(item["current"]) for item in release_history),
