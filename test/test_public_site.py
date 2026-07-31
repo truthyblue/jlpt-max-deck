@@ -431,6 +431,11 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn("초심자용 전체 가이드", html)
         self.assertIn("기본 덱만 가져온 경우", html)
         self.assertIn("한자 확장까지 추가한 경우", html)
+        self.assertIn("한자 덱도 필요하신가요?", html)
+        self.assertIn(
+            '<a href="kanji.html">일상무따 한자 확장 가이드로 이동 →</a>',
+            html,
+        )
         self.assertNotIn("내가 선택한 구성", html)
         self.assertLess(html.index('id="verify"'), html.index('id="sync"'))
         self.assertIn("약 0.85GB", html)
