@@ -11,9 +11,12 @@ from direct_release_contract import (  # noqa: E402
     DirectReleaseContractError,
     EXPECTED_KANJI_NOTES,
     EXPECTED_KANJI_VECTOR_GLYPHS,
+    KANJI_BUILDER_EXECUTABLES,
     KANJI_FIELDS,
     POLICY_VERSION,
     SCHEMA_VERSION,
+    kanji_builder_archive_path,
+    kanji_builder_file_mode,
     release_filenames,
     skeleton_note_record,
     validate_skeleton_manifest,
@@ -30,7 +33,46 @@ class DirectReleaseContractTest(unittest.TestCase):
         self.assertEqual(
             names["kanji_addon"], "JLPT-MAX-kanji-addon-1.0.1.apkg"
         )
+        self.assertEqual(
+            names["kanji_skeleton"], "JLPT-MAX-kanji-skeleton-1.0.1.asset"
+        )
+        self.assertFalse(names["kanji_skeleton"].endswith(".apkg"))
         self.assertNotIn("autoplay_addon", names)
+
+    def test_beginner_launchers_are_prominent_in_the_builder_archive(self) -> None:
+        self.assertEqual(
+            kanji_builder_archive_path("scripts/start-kanji-addon.cmd"),
+            "Windows에서 한자 확장 만들기.cmd",
+        )
+        self.assertEqual(
+            kanji_builder_archive_path("scripts/start-kanji-addon.command"),
+            "Mac에서 한자 확장 만들기.command",
+        )
+        self.assertEqual(
+            kanji_builder_archive_path("docs/kanji-builder-assets.txt"),
+            "assets/README.txt",
+        )
+        self.assertEqual(
+            kanji_builder_archive_path("docs/kanji-builder.md"),
+            "README.md",
+        )
+
+    def test_only_shell_launchers_receive_execute_permissions(self) -> None:
+        self.assertEqual(
+            KANJI_BUILDER_EXECUTABLES,
+            (
+                "scripts/build-kanji-addon.sh",
+                "scripts/start-kanji-addon.command",
+                "scripts/start-kanji-addon.sh",
+            ),
+        )
+        for relative in KANJI_BUILDER_EXECUTABLES:
+            with self.subTest(relative=relative):
+                self.assertEqual(kanji_builder_file_mode(relative), 0o755)
+        self.assertEqual(
+            kanji_builder_file_mode("scripts/start-kanji-addon.cmd"),
+            0o644,
+        )
 
     def test_release_version_must_be_semver_triplet(self) -> None:
         with self.assertRaises(DirectReleaseContractError):
@@ -59,7 +101,7 @@ class DirectReleaseContractTest(unittest.TestCase):
             "policy_version": POLICY_VERSION,
             "product_version": "1.0.1",
             "schema_version": SCHEMA_VERSION,
-            "skeleton_apkg": "JLPT-MAX-kanji-skeleton-1.0.1.apkg",
+            "skeleton_apkg": "JLPT-MAX-kanji-skeleton-1.0.1.asset",
             "skeleton_apkg_sha256": "0" * 64,
             "vector_glyph_count": EXPECTED_KANJI_VECTOR_GLYPHS,
         }

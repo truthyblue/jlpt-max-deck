@@ -41,7 +41,7 @@
 | 원하는 구성 | 받을 파일 | 추가 준비물 |
 | --- | --- | --- |
 | 어휘·음성·실전 문제·참조표 | `JLPT-MAX-Deck-1.0.1.apkg` | Anki·AnkiMobile·AnkiDroid |
-| 위 구성 + 일상무따 한자 | 기본 덱 + `JLPT-MAX-kanji-builder-1.0.1.zip` | 지원 PDF 2개, Python 3.13, `uv`, 컴퓨터 |
+| 위 구성 + 일상무따 한자 | 기본 덱 + `JLPT-MAX-kanji-builder-1.0.1.zip` | 지원 PDF 2개, macOS 또는 Windows 컴퓨터 |
 
 ## 덱 구성
 
@@ -64,30 +64,27 @@
 
 ## 선택형 한자 확장
 
-일상무따 한자 2,337개를 추가하려면 같은
-v1.0.1의
-[JLPT-MAX-kanji-builder-1.0.1.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.1/JLPT-MAX-kanji-builder-1.0.1.zip)과
-길벗 《일본어 상용한자 무작정 따라하기》 1·2권의 지원 소책자 PDF가 필요합니다.
+일상무따 한자 2,337개는 저작권 때문에 한글 뜻이
+든 완성본으로 배포하지 않습니다. 필요한 학습자만 공식 PDF 2개를 자기 컴퓨터에서
+읽어 개인용 APKG를 완성합니다. 처음이라면
+[초심자용 한자 확장 가이드](https://truthyblue.github.io/jlpt-max-deck/kanji.html)를 그대로 따라가세요.
 
-- [1권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003617)
-- [2권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003669)
+1. [1권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003617)와
+   [2권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003669)에서
+   지원 소책자 PDF를 각각 받습니다.
+2. 같은 v1.0.1의
+   [JLPT-MAX-kanji-builder-1.0.1.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.1/JLPT-MAX-kanji-builder-1.0.1.zip)을
+   받아 압축을 완전히 풉니다.
+3. Windows는 `Windows에서 한자 확장 만들기.cmd`, macOS는
+   `Mac에서 한자 확장 만들기.command`를 더블클릭합니다.
+4. 첫 번째 PDF 선택창에 1권, 두 번째 선택창에 2권을 고르고 완료될 때까지 기다립니다.
+5. 자동으로 열린 폴더의 `JLPT-MAX-kanji-addon-1.0.1.apkg`를
+   기본 덱과 같은 Anki 컬렉션에 가져옵니다.
 
-각 페이지에서 자료 제공 방식과 이용 조건을 확인하고 정상적으로 받은 PDF 원본을
-사용하세요. 다시 저장·병합·최적화한 파일이나 다른 판본은 지원하지 않습니다.
-빌더는 Release에서 검증한 macOS 12+ 또는 Windows
-x64 컴퓨터에서 실행합니다.
-
-```bash
-./scripts/build-kanji-addon.sh "/경로/상권.pdf" "/경로/하권.pdf"
-```
-
-```powershell
-.\scripts\build-kanji-addon.ps1 -UpperPdf "C:\경로\상권.pdf" -LowerPdf "C:\경로\하권.pdf"
-```
-
-완성된 `JLPT-MAX-kanji-addon-1.0.1.apkg`를 기본 덱 다음에
-가져오면 됩니다. PDF·페이지 이미지·생성 APKG는 외부 서비스로 전송되지 않습니다.
-준비부터 오류 해결까지는 [한자 확장 가이드](docs/build.md)를 보세요.
+PowerShell·터미널 명령이나 Python 설치는 필요하지 않습니다. 빌더는 처음 한 번
+필요한 프로그램을 자동으로 준비하며, PDF·페이지 이미지·생성 APKG를 외부
+서비스로 전송하지 않습니다. 받은 PDF는 다시 저장·병합·최적화하지 마세요.
+세부 검증 정보는 [저장소용 한자 확장 문서](docs/build.md)에 있습니다.
 
 ## 업데이트와 문제 해결
 

@@ -404,14 +404,13 @@ a {
 }
 
 .v2-faq summary {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 20px;
-  align-items: center;
-  padding: 25px 4px;
+  position: relative;
+  display: block;
+  padding: 25px 48px 25px 4px;
   cursor: pointer;
   font-size: 19px;
   font-weight: 820;
+  line-height: 1.45;
   list-style: none;
 }
 
@@ -420,9 +419,14 @@ a {
 }
 
 .v2-faq summary::after {
+  position: absolute;
+  top: 50%;
+  right: 4px;
   content: "+";
   font-size: 25px;
   font-weight: 500;
+  line-height: 1;
+  transform: translateY(-50%);
 }
 
 .v2-faq details[open] summary::after {
@@ -491,10 +495,6 @@ a {
   margin-bottom: 14px;
   font-size: 11px;
   letter-spacing: 0.13em;
-}
-
-.v2-guide-toc .v2-guide-toc-subtitle {
-  margin-top: 22px;
 }
 
 .v2-guide-toc ol {
@@ -710,14 +710,6 @@ a {
 .v2-callout.warning {
   border-color: var(--coral);
   background: #ffe3dd;
-}
-
-.v2-optional-section {
-  margin-top: 72px;
-  padding: 58px 48px 64px;
-  background: #eef5ea;
-  border: 1px solid rgba(47, 89, 59, .18);
-  border-radius: var(--radius);
 }
 
 .v2-callout strong {
@@ -1257,11 +1249,6 @@ a {
     padding-block: 52px;
   }
 
-  .v2-optional-section {
-    margin-top: 52px;
-    padding: 38px 22px 44px;
-  }
-
   .v2-download-card {
     grid-template-columns: 1fr;
   }
@@ -1358,7 +1345,7 @@ a {
 
   .site-header .nav-primary-links {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     padding: 2px 0;
   }
 

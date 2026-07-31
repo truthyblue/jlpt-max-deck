@@ -7,6 +7,7 @@
       <p>선별 어휘를 깊이 익히고,<br>실전 문제로 확인하세요.</p>
       <nav aria-label="하단 메뉴">
         <a href="{% if absolute_links %}{{ product.site_url }}/getting-started.html{% else %}getting-started.html{% endif %}">시작 가이드</a>
+        <a href="{% if absolute_links %}{{ product.site_url }}/kanji.html{% else %}kanji.html{% endif %}">한자 확장</a>
         <a href="{% if absolute_links %}{{ product.site_url }}/install-anki.html{% else %}install-anki.html{% endif %}">Anki 설치</a>
         <a href="{% if absolute_links %}{{ product.site_url }}/support.html{% else %}support.html{% endif %}">지원</a>
         <a href="{{ product.repository_url }}" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>

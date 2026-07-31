@@ -42,6 +42,7 @@ class DocumentationRenderTest(unittest.TestCase):
         PurePosixPath("site/install-anki.html.j2"): PurePosixPath(
             "site/install-anki.html"
         ),
+        PurePosixPath("site/kanji.html.j2"): PurePosixPath("site/kanji.html"),
         PurePosixPath("site/support.html.j2"): PurePosixPath(
             "site/support.html"
         ),
@@ -171,6 +172,10 @@ class DocumentationRenderTest(unittest.TestCase):
             "무료로 내려받",
             "구매 인증 없이",
             "macOS / Linux",
+            "build-kanji-addon.ps1",
+            "build-kanji-addon.sh",
+            "PowerShell을 열고",
+            "Python {{ product.requirements.python }}과",
         ):
             with self.subTest(stale=stale):
                 self.assertNotIn(stale, sources)

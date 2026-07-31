@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from direct_release_contract import (  # noqa: E402
     KANJI_BUILDER_FILES,
+    kanji_builder_archive_path,
     sha256_file,
     sha256_json,
 )
@@ -31,6 +32,7 @@ ALLOWED_MP3_FILES = {
     "site/assets/demo-dasu-word.mp3",
 }
 FORBIDDEN_TOP_LEVEL = {
+    ".tools",
     ".venv",
     "build",
     "data",
@@ -38,6 +40,9 @@ FORBIDDEN_TOP_LEVEL = {
     "public-release",
     "tmp",
     "tools",
+}
+FORBIDDEN_FILENAMES = {
+    "kanji-builder.log",
 }
 FORBIDDEN_SUFFIXES = {
     ".anki2",
@@ -125,7 +130,7 @@ def _verify_builder_sources(pin: dict[str, object], tracked: set[str]) -> None:
         source = ROOT / relative
         if relative not in tracked or source.is_symlink() or not source.is_file():
             _fail(f"kanji builder source is missing or unsafe: {relative}")
-        target = "README.md" if relative == "docs/kanji-builder.md" else relative
+        target = kanji_builder_archive_path(relative)
         source_hashes[target] = sha256_file(source)
     kanji_builder = pin.get("kanji_builder")
     if (
@@ -138,10 +143,13 @@ def _verify_builder_sources(pin: dict[str, object], tracked: set[str]) -> None:
 
 def _verify_tracked_boundary(tracked: tuple[str, ...]) -> None:
     for relative in tracked:
-        suffix = Path(relative).suffix.lower()
-        top_level = Path(relative).parts[0]
+        path = Path(relative)
+        suffix = path.suffix.lower()
+        top_level = path.parts[0]
         if top_level in FORBIDDEN_TOP_LEVEL:
             _fail(f"tracked private or generated directory: {relative}")
+        if path.name in FORBIDDEN_FILENAMES:
+            _fail(f"tracked local builder log: {relative}")
         if suffix in FORBIDDEN_SUFFIXES:
             _fail(f"tracked release or private input payload: {relative}")
         if suffix == ".mp3" and relative not in ALLOWED_MP3_FILES:
