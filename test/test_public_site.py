@@ -507,6 +507,23 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn("짧게 답합니다.", html)
         self.assertNotIn("민감한 원본 없이 재현 정보를 보냅니다.", html)
 
+    def test_latest_release_feed_matches_the_closed_release_pin(self) -> None:
+        release = json.loads(
+            (ROOT / "config" / "public-release.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        feed = json.loads(
+            (SITE / "latest-release.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            feed,
+            {
+                "latest_version": release["product_version"],
+                "schema_version": 1,
+            },
+        )
+
     def test_social_card_matches_current_direct_release(self) -> None:
         source = (SITE / "assets" / "social-card.svg").read_text(encoding="utf-8")
         for current in (
@@ -610,6 +627,18 @@ class PublicSiteTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary) / "pages"
             module.prepare_site(SITE, output)
+            self.assertEqual(
+                json.loads(
+                    (output / "latest-release.json").read_text(
+                        encoding="utf-8"
+                    )
+                ),
+                json.loads(
+                    (SITE / "latest-release.json").read_text(
+                        encoding="utf-8"
+                    )
+                ),
+            )
             for name in PAGES:
                 html = (output / name).read_text(encoding="utf-8")
                 with self.subTest(page=name):
