@@ -30,6 +30,8 @@ from direct_release_contract import (
     ROOT_DECK_NAME,
     SCHEMA_VERSION,
     checksum_lines,
+    kanji_builder_archive_path,
+    kanji_builder_file_mode,
     release_filenames,
     sha256_file,
     sha256_json,
@@ -279,11 +281,13 @@ def _build_skeleton(
             ):
                 raise PublicReleaseError("kanji skeleton vector count changed")
             _clear_collection_media(collection)
-            exported = _export_root(collection, output)
+            export_output = output.with_suffix(".apkg")
+            exported = _export_root(collection, export_output)
             if exported != EXPECTED_KANJI_NOTES:
                 raise PublicReleaseError(
                     f"kanji skeleton card count changed: {exported}"
                 )
+            export_output.replace(output)
         finally:
             collection.close(downgrade=False)
     snapshot = _package_snapshot(output)
@@ -336,13 +340,13 @@ def _package_kanji_builder(
             source = ROOT / relative
             if not source.is_file() or source.is_symlink():
                 raise PublicReleaseError(f"kanji builder source is missing: {relative}")
-            target = "README.md" if relative == "docs/kanji-builder.md" else relative
+            target = kanji_builder_archive_path(relative)
             payload = source.read_bytes()
             _zip_write(
                 archive,
                 f"{BUILDER_ARCHIVE_ROOT}/{target}",
                 payload,
-                mode=0o755 if relative == "scripts/build-kanji-addon.sh" else 0o644,
+                mode=kanji_builder_file_mode(relative),
             )
             source_hashes[target] = sha256_file(source)
         for source in (skeleton_apkg, skeleton_manifest):

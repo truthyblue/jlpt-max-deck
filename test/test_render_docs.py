@@ -171,6 +171,10 @@ class DocumentationRenderTest(unittest.TestCase):
             "무료로 내려받",
             "구매 인증 없이",
             "macOS / Linux",
+            "build-kanji-addon.ps1",
+            "build-kanji-addon.sh",
+            "PowerShell을 열고",
+            "Python {{ product.requirements.python }}과",
         ):
             with self.subTest(stale=stale):
                 self.assertNotIn(stale, sources)

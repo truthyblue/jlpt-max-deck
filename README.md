@@ -41,7 +41,7 @@
 | 원하는 구성 | 받을 파일 | 추가 준비물 |
 | --- | --- | --- |
 | 어휘·음성·실전 문제·참조표 | `JLPT-MAX-Deck-1.0.1.apkg` | Anki·AnkiMobile·AnkiDroid |
-| 위 구성 + 일상무따 한자 | 기본 덱 + `JLPT-MAX-kanji-builder-1.0.1.zip` | 지원 PDF 2개, Python 3.13, `uv`, 컴퓨터 |
+| 위 구성 + 일상무따 한자 | 기본 덱 + `JLPT-MAX-kanji-builder-1.0.1.zip` | 지원 PDF 2개, macOS 또는 Windows 컴퓨터 |
 
 ## 덱 구성
 
@@ -77,13 +77,9 @@ v1.0.1의
 빌더는 Release에서 검증한 macOS 12+ 또는 Windows
 x64 컴퓨터에서 실행합니다.
 
-```bash
-./scripts/build-kanji-addon.sh "/경로/상권.pdf" "/경로/하권.pdf"
-```
-
-```powershell
-.\scripts\build-kanji-addon.ps1 -UpperPdf "C:\경로\상권.pdf" -LowerPdf "C:\경로\하권.pdf"
-```
+ZIP을 푼 뒤 Windows에서는 `Windows에서 한자 확장 만들기.cmd`, macOS에서는
+`Mac에서 한자 확장 만들기.command`를 더블클릭하세요. 이어지는 PDF 선택창에서
+1권과 2권을 순서대로 고르면 필요한 프로그램을 자동으로 준비하고 덱을 만듭니다.
 
 완성된 `JLPT-MAX-kanji-addon-1.0.1.apkg`를 기본 덱 다음에
 가져오면 됩니다. PDF·페이지 이미지·생성 APKG는 외부 서비스로 전송되지 않습니다.

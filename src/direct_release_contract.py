@@ -31,15 +31,31 @@ KANJI_FIELDS = (
 KANJI_BUILDER_FILES = (
     "LICENSE",
     "NOTICE",
+    "docs/kanji-builder-assets.txt",
     "docs/kanji-builder.md",
     "pyproject.toml",
     "scripts/build-kanji-addon.ps1",
     "scripts/build-kanji-addon.sh",
+    "scripts/start-kanji-addon.cmd",
+    "scripts/start-kanji-addon.command",
+    "scripts/start-kanji-addon.ps1",
+    "scripts/start-kanji-addon.sh",
     "src/build_kanji_addon.py",
     "src/direct_release_contract.py",
     "src/public_kanji.py",
     "uv.lock",
 )
+KANJI_BUILDER_EXECUTABLES = (
+    "scripts/build-kanji-addon.sh",
+    "scripts/start-kanji-addon.command",
+    "scripts/start-kanji-addon.sh",
+)
+KANJI_BUILDER_ARCHIVE_PATHS = {
+    "docs/kanji-builder-assets.txt": "assets/README.txt",
+    "docs/kanji-builder.md": "README.md",
+    "scripts/start-kanji-addon.cmd": "Windows에서 한자 확장 만들기.cmd",
+    "scripts/start-kanji-addon.command": "Mac에서 한자 확장 만들기.command",
+}
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
 
@@ -65,13 +81,29 @@ def sha256_json(value: object) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def kanji_builder_archive_path(relative: str) -> str:
+    if relative not in KANJI_BUILDER_FILES:
+        raise DirectReleaseContractError(
+            f"unknown kanji builder source: {relative}"
+        )
+    return KANJI_BUILDER_ARCHIVE_PATHS.get(relative, relative)
+
+
+def kanji_builder_file_mode(relative: str) -> int:
+    if relative not in KANJI_BUILDER_FILES:
+        raise DirectReleaseContractError(
+            f"unknown kanji builder source: {relative}"
+        )
+    return 0o755 if relative in KANJI_BUILDER_EXECUTABLES else 0o644
+
+
 def release_filenames(version: str) -> dict[str, str]:
     if re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version) is None:
         raise DirectReleaseContractError(f"invalid product version: {version!r}")
     return {
         "core_apkg": f"JLPT-MAX-Deck-{version}.apkg",
         "kanji_builder": f"JLPT-MAX-kanji-builder-{version}.zip",
-        "kanji_skeleton": f"JLPT-MAX-kanji-skeleton-{version}.apkg",
+        "kanji_skeleton": f"JLPT-MAX-kanji-skeleton-{version}.asset",
         "kanji_addon": f"JLPT-MAX-kanji-addon-{version}.apkg",
         "kanji_build_report": "kanji-addon-build-report.json",
         "release_pin": "public-release.json",
@@ -140,6 +172,10 @@ def validate_skeleton_manifest(value: Mapping[str, Any]) -> tuple[dict[str, Any]
         or value.get("vector_glyph_count") != EXPECTED_KANJI_VECTOR_GLYPHS
     ):
         raise DirectReleaseContractError("kanji skeleton manifest is invalid")
+    if skeleton_name != release_filenames(
+        str(value["product_version"])
+    )["kanji_skeleton"]:
+        raise DirectReleaseContractError("kanji skeleton asset name changed")
     records: list[dict[str, Any]] = []
     for sequence, raw in enumerate(notes, start=1):
         if not isinstance(raw, dict) or set(raw) != {

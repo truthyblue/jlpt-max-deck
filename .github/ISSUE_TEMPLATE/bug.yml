@@ -63,7 +63,7 @@ body:
     id: reproduction
     attributes:
       label: 최소 재현 절차
-      description: 실행한 명령과 개인 정보를 지운 출력을 적으세요. 책 내용이나 실제 로컬 경로는 포함하지 마세요.
+      description: 더블클릭한 실행 파일, PDF 선택 뒤 멈춘 단계와 개인 정보를 지운 오류 문구를 적으세요. 책 내용이나 실제 로컬 경로는 포함하지 마세요.
       render: shell
     validations:
       required: true

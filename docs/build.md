@@ -17,8 +17,11 @@
 - 길벗 《일본어 상용한자 무작정 따라하기》 1·2권의 지원 소책자 PDF 2개
   - [1권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003617)
   - [2권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003669)
-- Python 3.13과 [`uv`](https://docs.astral.sh/uv/)
 - Release에서 검증한 macOS 12+ 또는 Windows x64 컴퓨터
+- 처음 실행할 때 필요한 프로그램을 받을 인터넷 연결
+
+Python이나 별도 명령어를 준비할 필요는 없습니다. 더블클릭 실행 파일이 빌더
+전용 폴더에 필요한 프로그램을 자동으로 준비합니다.
 
 공식 자료 페이지에서 제공 방식과 이용 조건을 확인하고 정상적으로 받은 원본을
 사용하세요. 빌더는 상·하권의 SHA-256, 페이지 수와 표 구조를 함께 확인합니다.
@@ -27,29 +30,30 @@ PDF를 다시 저장·병합·최적화하거나 상·하권 순서를 바꾸면
 
 ## 1. ZIP 풀기
 
-빌더 ZIP을 빈 폴더에 풉니다. 이전 버전 폴더 위에 덮어쓰지 마세요. 빌더 폴더와
-PDF 폴더는 어디에 있어도 되지만, 명령에는 각 PDF의 실제 경로를 넣어야 합니다.
+빌더 ZIP을 빈 폴더에 풉니다. 이전 버전 폴더 위에 덮어쓰지 마세요.
 
-## 2. 실행
+## 2. 실행 파일 더블클릭
 
-macOS 터미널:
+Windows:
 
-```bash
-./scripts/build-kanji-addon.sh "/경로/상권.pdf" "/경로/하권.pdf"
-```
+1. 압축을 푼 폴더에서 `Windows에서 한자 확장 만들기.cmd`를 더블클릭합니다.
+2. 첫 번째 PDF 선택창에서 1권(상권) PDF를 고릅니다.
+3. 두 번째 PDF 선택창에서 2권(하권) PDF를 고릅니다.
+4. 완료 안내가 나올 때까지 열린 창을 닫지 않습니다.
 
-Windows PowerShell:
+macOS:
 
-```powershell
-.\scripts\build-kanji-addon.ps1 -UpperPdf "C:\경로\상권.pdf" -LowerPdf "C:\경로\하권.pdf"
-```
+1. 압축을 푼 폴더에서 `Mac에서 한자 확장 만들기.command`를 더블클릭합니다.
+2. 첫 번째 PDF 선택창에서 1권(상권) PDF를 고릅니다.
+3. 두 번째 PDF 선택창에서 2권(하권) PDF를 고릅니다.
+4. 완료 안내가 나올 때까지 열린 창을 닫지 않습니다.
 
-`uv`는 필요한 프로그램을 내려받기 위해 패키지 저장소에 접속합니다. 한자
-자료와 PDF 내용은 외부 서비스로 보내지 않습니다.
+첫 실행은 빌드 도구와 Python을 자동으로 받으므로 시간이 걸릴 수 있습니다.
+한자 자료와 PDF 내용은 외부 서비스로 보내지 않습니다.
 
 ## 3. 결과 확인
 
-성공하면 다음 두 파일이 생깁니다.
+성공하면 완성된 폴더가 자동으로 열리고 다음 두 파일이 생깁니다.
 
 - `build/kanji-addon/JLPT-MAX-kanji-addon-1.0.1.apkg`
 - `build/kanji-addon/kanji-addon-build-report.json`
@@ -66,8 +70,8 @@ Windows PowerShell:
 4. 합산 수량이 노트 16,240개, 카드
    22,402개, 미디어 17,913개인지 확인합니다.
 
-오류가 나면 기존 출력 폴더를 비우거나 덮어쓰지 말고 [문제 해결](troubleshooting.md)의
-오류 문구별 안내를 확인하세요.
+다시 실행하면 기존 결과를 지우고 새로 만들지 먼저 묻습니다. 오류가 나면
+`kanji-builder.log`와 [문제 해결](troubleshooting.md)의 안내를 확인하세요.
 
 ## 개인정보와 저작권 경계
 

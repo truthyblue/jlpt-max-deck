@@ -155,20 +155,20 @@
             <a class="v2-button" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.1/JLPT-MAX-kanji-builder-1.0.1.zip">빌더 받기 <span aria-hidden="true">↓</span></a>
           </div>
           <div class="v2-tabs" data-tabs data-platform-tabs>
-            <div class="v2-tab-list" role="tablist" aria-label="운영체제별 한자 빌드 명령">
+            <div class="v2-tab-list" role="tablist" aria-label="운영체제별 한자 확장 만들기">
               <button class="v2-tab" id="kanji-tab-macos" type="button" role="tab" aria-selected="true" aria-controls="kanji-panel-macos" data-platform="macos">macOS</button>
               <button class="v2-tab" id="kanji-tab-windows" type="button" role="tab" aria-selected="false" aria-controls="kanji-panel-windows" data-platform="windows" tabindex="-1">Windows</button>
             </div>
             <div class="v2-tab-panel" id="kanji-panel-macos" role="tabpanel" aria-labelledby="kanji-tab-macos">
-              <strong>ZIP을 푼 폴더에서 터미널을 열고, 아래 명령을 실행합니다.</strong>
-              <div class="v2-command"><code id="kanji-command-macos">./scripts/build-kanji-addon.sh "/경로/상권.pdf" "/경로/하권.pdf"</code><button class="v2-copy" type="button" data-copy-target="kanji-command-macos">복사</button></div>
+              <strong><code>Mac에서 한자 확장 만들기.command</code>를 더블클릭합니다.</strong>
+              <p>첫 번째 PDF 선택창에서 1권(상권), 두 번째 선택창에서 2권(하권)을 고르세요. 완료되면 완성된 폴더가 자동으로 열립니다.</p>
             </div>
             <div class="v2-tab-panel" id="kanji-panel-windows" role="tabpanel" aria-labelledby="kanji-tab-windows" hidden>
-              <strong>ZIP을 푼 폴더에서 PowerShell을 열고, 아래 명령을 실행합니다.</strong>
-              <div class="v2-command"><code id="kanji-command-windows">.\scripts\build-kanji-addon.ps1 -UpperPdf "C:\경로\상권.pdf" -LowerPdf "C:\경로\하권.pdf"</code><button class="v2-copy" type="button" data-copy-target="kanji-command-windows">복사</button></div>
+              <strong><code>Windows에서 한자 확장 만들기.cmd</code>를 더블클릭합니다.</strong>
+              <p>첫 번째 PDF 선택창에서 1권(상권), 두 번째 선택창에서 2권(하권)을 고르세요. 완료되면 완성된 폴더가 자동으로 열립니다.</p>
             </div>
           </div>
-          <div class="v2-callout"><strong>지원 환경</strong><p>현재 버전은 macOS 12+와 Windows x64에서 검증했습니다. 완성된 한자 확장 APKG는 다른 Anki 기기에서도 학습할 수 있습니다.</p></div>
+          <div class="v2-callout"><strong>별도 설치나 명령어 입력은 없습니다.</strong><p>처음 실행할 때 필요한 프로그램을 자동으로 받으므로 인터넷 연결이 필요합니다. 현재 버전은 macOS 12+와 Windows x64에서 검증했습니다.</p></div>
           <div class="v2-callout"><strong>생성 후 기본 덱 다음에 가져오기</strong><p>빌더가 만든 <code>JLPT-MAX-kanji-addon-1.0.1.apkg</code>를 같은 Anki 컬렉션에 가져오면 <code>일상무따</code> 하위 덱이 추가됩니다.</p></div>
         </section>
       </div>

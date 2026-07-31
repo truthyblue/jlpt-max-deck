@@ -394,14 +394,21 @@ class PublicSiteTests(unittest.TestCase):
             'role="tab"',
             'aria-controls="kanji-panel-macos"',
             'aria-controls="kanji-panel-windows"',
-            'data-copy-target="kanji-command-macos"',
-            'data-copy-target="kanji-command-windows"',
+            "Mac에서 한자 확장 만들기.command",
+            "Windows에서 한자 확장 만들기.cmd",
+            "PDF 선택창",
+            "완성된 폴더가 자동으로 열립니다",
             "Android는 AnkiDroid를 설치하세요",
             "최상위 항목 <code>JLPT MAX덱</code>을 확인합니다",
             "켜기 · 권장",
             "동기화는 여러 기기에서 이어볼 때만 합니다",
         ):
             self.assertIn(token, html)
+        self.assertNotIn("kanji-command-macos", html)
+        self.assertNotIn("kanji-command-windows", html)
+        self.assertNotIn("PowerShell", html)
+        self.assertNotIn("./scripts/build-kanji-addon.sh", html)
+        self.assertNotIn("Python 3.13", html)
         self.assertNotIn("자동재생 애드온", html)
         self.assertNotIn(".ankiaddon", html)
         self.assertNotIn("<code>JLPT MAX덱</code> 덱", html)
@@ -492,12 +499,15 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("<h2>한자 확장 빌드가 안돼요.</h2>", html)
         self.assertIn("한자 확장 빌드 가이드", html)
         for build_error in (
-            "Python 또는 <code>uv</code> 오류가 나요.",
+            "필요한 프로그램을 받지 못했다고 나와요.",
             "<code>PDF hash</code> 또는 <code>page count</code> 오류가 나요.",
             "<code>alignment</code> 오류가 나요.",
-            "<code>output root must be absent or empty</code> 오류가 나요.",
+            "완성 파일을 다시 만들고 싶어요.",
         ):
             self.assertIn(build_error, html)
+        self.assertNotIn("Python 3.13", html)
+        self.assertNotIn("PowerShell", html)
+        self.assertNotIn("output root must be absent or empty", html)
         self.assertNotIn("한자 확장 문제는 PDF와 빌더 버전을 맞춥니다.", html)
         self.assertIn("<h2>자주 묻는 질문</h2>", html)
         self.assertIn("<h2>오류를 제보하고 싶어요.</h2>", html)

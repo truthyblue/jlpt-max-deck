@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from direct_release_contract import (  # noqa: E402
     KANJI_BUILDER_FILES,
+    kanji_builder_archive_path,
     sha256_file,
     sha256_json,
 )
@@ -125,7 +126,7 @@ def _verify_builder_sources(pin: dict[str, object], tracked: set[str]) -> None:
         source = ROOT / relative
         if relative not in tracked or source.is_symlink() or not source.is_file():
             _fail(f"kanji builder source is missing or unsafe: {relative}")
-        target = "README.md" if relative == "docs/kanji-builder.md" else relative
+        target = kanji_builder_archive_path(relative)
         source_hashes[target] = sha256_file(source)
     kanji_builder = pin.get("kanji_builder")
     if (
