@@ -463,7 +463,8 @@ class PublicSiteTests(unittest.TestCase):
         ):
             self.assertIn(section_id, parser.ids)
         for token in (
-            "PDF 두 개를 고르면",
+            "일상무따 한자 확장",
+            "초심자용 만들기 가이드",
             "한글 뜻이 든 완성본을 배포하지 않습니다",
             "1권 공식 자료 페이지",
             "2권 공식 자료 페이지",
@@ -479,6 +480,9 @@ class PublicSiteTests(unittest.TestCase):
             "PDF와 완성 APKG는 사용자 컴퓨터 안에서만",
         ):
             self.assertIn(token, html)
+        self.assertNotIn("PDF 두 개를 고르면", html)
+        self.assertNotIn("한자 확장이 완성됩니다.", html)
+        self.assertNotIn("PDF 2개를 선택하면", html)
         self.assertIn('role="tab"', html)
         self.assertIn('aria-controls="kanji-run-panel-macos"', html)
         self.assertIn('aria-controls="kanji-run-panel-windows"', html)
