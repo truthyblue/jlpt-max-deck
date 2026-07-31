@@ -64,26 +64,27 @@
 
 ## 선택형 한자 확장
 
-일상무따 한자 {{ product.deck.kanji_notes | number }}개를 추가하려면 같은
-{{ release.tag }}의
-[{{ release.artifacts.kanji_builder.filename }}]({{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.kanji_builder.filename }})과
-길벗 《일본어 상용한자 무작정 따라하기》 1·2권의 지원 소책자 PDF가 필요합니다.
+일상무따 한자 {{ product.deck.kanji_notes | number }}개는 저작권 때문에 한글 뜻이
+든 완성본으로 배포하지 않습니다. 필요한 학습자만 공식 PDF 2개를 자기 컴퓨터에서
+읽어 개인용 APKG를 완성합니다. 처음이라면
+[초심자용 한자 확장 가이드]({{ product.site_url }}/kanji.html)를 그대로 따라가세요.
 
-- [1권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003617)
-- [2권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003669)
+1. [1권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003617)와
+   [2권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003669)에서
+   지원 소책자 PDF를 각각 받습니다.
+2. 같은 {{ release.tag }}의
+   [{{ release.artifacts.kanji_builder.filename }}]({{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.kanji_builder.filename }})을
+   받아 압축을 완전히 풉니다.
+3. Windows는 `Windows에서 한자 확장 만들기.cmd`, macOS는
+   `Mac에서 한자 확장 만들기.command`를 더블클릭합니다.
+4. 첫 번째 PDF 선택창에 1권, 두 번째 선택창에 2권을 고르고 완료될 때까지 기다립니다.
+5. 자동으로 열린 폴더의 `JLPT-MAX-kanji-addon-{{ release.version }}.apkg`를
+   기본 덱과 같은 Anki 컬렉션에 가져옵니다.
 
-각 페이지에서 자료 제공 방식과 이용 조건을 확인하고 정상적으로 받은 PDF 원본을
-사용하세요. 다시 저장·병합·최적화한 파일이나 다른 판본은 지원하지 않습니다.
-빌더는 Release에서 검증한 macOS {{ product.requirements.macos_minimum }}+ 또는 Windows
-{{ product.requirements.windows_architecture }} 컴퓨터에서 실행합니다.
-
-ZIP을 푼 뒤 Windows에서는 `Windows에서 한자 확장 만들기.cmd`, macOS에서는
-`Mac에서 한자 확장 만들기.command`를 더블클릭하세요. 이어지는 PDF 선택창에서
-1권과 2권을 순서대로 고르면 필요한 프로그램을 자동으로 준비하고 덱을 만듭니다.
-
-완성된 `JLPT-MAX-kanji-addon-{{ release.version }}.apkg`를 기본 덱 다음에
-가져오면 됩니다. PDF·페이지 이미지·생성 APKG는 외부 서비스로 전송되지 않습니다.
-준비부터 오류 해결까지는 [한자 확장 가이드](docs/build.md)를 보세요.
+PowerShell·터미널 명령이나 Python 설치는 필요하지 않습니다. 빌더는 처음 한 번
+필요한 프로그램을 자동으로 준비하며, PDF·페이지 이미지·생성 APKG를 외부
+서비스로 전송하지 않습니다. 받은 PDF는 다시 저장·병합·최적화하지 마세요.
+세부 검증 정보는 [저장소용 한자 확장 문서](docs/build.md)에 있습니다.
 
 ## 업데이트와 문제 해결
 

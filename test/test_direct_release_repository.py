@@ -207,10 +207,14 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         ).read_text(encoding="utf-8")
         self.assertIn("# 일상무따 한자 확장 만들기", builder_guide)
         self.assertIn("더블클릭", builder_guide)
+        self.assertIn("1권 공식 자료", builder_guide)
+        self.assertIn("2권 공식 자료", builder_guide)
+        self.assertIn("한글이나 띄어쓰기", builder_guide)
+        self.assertIn("kanji-builder.log", builder_guide)
         self.assertNotIn("Python 3.13", builder_guide)
-        self.assertNotIn("PowerShell", builder_guide)
         self.assertNotIn("./scripts/build-kanji-addon.sh", builder_guide)
         self.assertIn("기본 덱 다운로드·가져오기", issue_template)
+        self.assertIn("한자 확장 ZIP 풀기 또는 실행 파일", issue_template)
         for stale in ("코어 덱", "코어 APKG", "코어 배포"):
             with self.subTest(stale=stale):
                 self.assertNotIn(stale, builder_guide)

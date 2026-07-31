@@ -17,6 +17,7 @@ PAGES = (
     "index.html",
     "getting-started.html",
     "install-anki.html",
+    "kanji.html",
     "support.html",
     "404.html",
 )
@@ -198,11 +199,13 @@ class PublicSiteTests(unittest.TestCase):
         html = (SITE / "index.html").read_text(encoding="utf-8")
         self.assertIn("JLPT-MAX-Deck-1.0.1.apkg", html)
         self.assertNotIn("JLPT-MAX-core", html)
-        self.assertNotIn("JLPT-MAX-kanji-builder-1.0.1.zip", html)
-        self.assertNotIn('id="kanji-builder-download-link"', html)
+        self.assertIn("JLPT-MAX-kanji-builder-1.0.1.zip", html)
+        self.assertIn('id="kanji-builder-download-link"', html)
         self.assertNotIn('id="materials-doc-link"', html)
         self.assertIn('id="kanji-guide-link"', html)
-        self.assertIn("한자 확장 적용 방법", html)
+        self.assertIn("한자 확장 만들기", html)
+        self.assertIn("명령어 없이 만드는 순서", html)
+        self.assertIn("실행 파일 더블클릭", html)
         self.assertIn("13,903", html)
         self.assertIn("20,065", html)
         self.assertIn("17,899", html)
@@ -391,13 +394,12 @@ class PublicSiteTests(unittest.TestCase):
         ):
             self.assertIn(section_id, parser.ids)
         for token in (
-            'role="tab"',
-            'aria-controls="kanji-panel-macos"',
-            'aria-controls="kanji-panel-windows"',
             "Mac에서 한자 확장 만들기.command",
             "Windows에서 한자 확장 만들기.cmd",
-            "PDF 선택창",
-            "완성된 폴더가 자동으로 열립니다",
+            "첫 번째 창에 1권",
+            "자동으로 열린 폴더",
+            "초심자용 전체 가이드",
+            'href="kanji.html"',
             "Android는 AnkiDroid를 설치하세요",
             "최상위 항목 <code>JLPT MAX덱</code>을 확인합니다",
             "켜기 · 권장",
@@ -420,6 +422,49 @@ class PublicSiteTests(unittest.TestCase):
         self.assertLess(html.index('id="sync"'), html.index('id="kanji"'))
         self.assertIn("약 0.85GB", html)
         self.assertNotIn("QUICK START", html)
+
+    def test_kanji_guide_is_beginner_complete_and_private_by_default(self) -> None:
+        html = (SITE / "kanji.html").read_text(encoding="utf-8")
+        parser = self.parsers["kanji.html"]
+        for section_id in (
+            "why",
+            "prepare",
+            "pdfs",
+            "builder",
+            "run",
+            "finish",
+            "trouble",
+            "privacy",
+        ):
+            self.assertIn(section_id, parser.ids)
+        for token in (
+            "PDF 두 개를 고르면",
+            "한글 뜻이 든 완성본을 배포하지 않습니다",
+            "1권 공식 자료 페이지",
+            "2권 공식 자료 페이지",
+            "모두 압축 풀기",
+            "ZIP 안에서 바로 실행하지 마세요",
+            "Mac에서 한자 확장 만들기.command",
+            "Windows에서 한자 확장 만들기.cmd",
+            "첫 번째 창에서 1권 PDF",
+            "두 번째 창에서 2권 PDF",
+            "한글이나 띄어쓰기가 있는 폴더",
+            "JLPT-MAX-kanji-addon-1.0.1.apkg",
+            "kanji-builder.log",
+            "PDF와 완성 APKG는 사용자 컴퓨터 안에서만",
+        ):
+            self.assertIn(token, html)
+        self.assertIn('role="tab"', html)
+        self.assertIn('aria-controls="kanji-run-panel-macos"', html)
+        self.assertIn('aria-controls="kanji-run-panel-windows"', html)
+        self.assertIn("JLPT-MAX-kanji-builder-1.0.1.zip", html)
+        self.assertNotIn("./scripts/build-kanji-addon.sh", html)
+        self.assertNotIn("build-kanji-addon.ps1", html)
+        self.assertNotIn("Python 3.13", html)
+        self.assertNotIn("상권.pdf", html)
+        self.assertLess(html.index('id="pdfs"'), html.index('id="builder"'))
+        self.assertLess(html.index('id="builder"'), html.index('id="run"'))
+        self.assertLess(html.index('id="run"'), html.index('id="finish"'))
 
     def test_install_page_links_only_to_official_anki_apps(self) -> None:
         html = (SITE / "install-anki.html").read_text(encoding="utf-8")
@@ -496,15 +541,18 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("미사용 미디어를 삭제해 저장 공간을 확보합니다.", html)
         self.assertIn("도구 → 미디어 검사", html)
         self.assertIn("휴지통을 비워야 실제 여유 공간이 생깁니다.", html)
-        self.assertIn("<h2>한자 확장 빌드가 안돼요.</h2>", html)
-        self.assertIn("한자 확장 빌드 가이드", html)
+        self.assertIn("<h2>한자 확장을 만들 수 없어요.</h2>", html)
+        self.assertIn("한자 확장 만들기 전체 가이드", html)
         for build_error in (
+            "더블클릭할 실행 파일이 보이지 않아요.",
             "필요한 프로그램을 받지 못했다고 나와요.",
             "<code>PDF hash</code> 또는 <code>page count</code> 오류가 나요.",
             "<code>alignment</code> 오류가 나요.",
+            "PDF 선택창을 취소했어요.",
             "완성 파일을 다시 만들고 싶어요.",
         ):
             self.assertIn(build_error, html)
+        self.assertIn("kanji-builder.log", html)
         self.assertNotIn("Python 3.13", html)
         self.assertNotIn("PowerShell", html)
         self.assertNotIn("output root must be absent or empty", html)

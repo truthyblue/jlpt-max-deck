@@ -17,6 +17,8 @@ v1.0.1 기본 덱 APKG는 공식 GitHub Release에서 직접 받습니다. 어�
 ## 선택형 한자 확장
 
 한자 빌더는 사용자가 지정한 길벗 PDF 2개를 사용자 컴퓨터에서만 읽습니다.
+[초심자용 한자 확장 가이드](https://truthyblue.github.io/jlpt-max-deck/kanji.html)에서 공식 PDF 링크와
+더블클릭 실행 순서를 확인할 수 있습니다.
 
 | 동작 | 외부로 나가는 정보 |
 | --- | --- |

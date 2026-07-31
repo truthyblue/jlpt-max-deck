@@ -51,6 +51,7 @@ TEMPLATE_OUTPUTS: tuple[tuple[PurePosixPath, PurePosixPath], ...] = (
         PurePosixPath("site/install-anki.html.j2"),
         PurePosixPath("site/install-anki.html"),
     ),
+    (PurePosixPath("site/kanji.html.j2"), PurePosixPath("site/kanji.html")),
     (PurePosixPath("site/support.html.j2"), PurePosixPath("site/support.html")),
 )
 

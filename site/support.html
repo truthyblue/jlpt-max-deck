@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08120e">
   <meta name="robots" content="index,follow">
-  <meta name="description" content="JLPT MAX 기본 덱 다운로드 확인, 업데이트, 일상무따 한자 확장 빌드, 안전한 오류 제보 안내입니다.">
+  <meta name="description" content="JLPT MAX 기본 덱 다운로드 확인, 업데이트, 일상무따 한자 확장 만들기와 안전한 오류 제보 안내입니다.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="지원 — JLPT MAX Deck">
-  <meta property="og:description" content="다운로드, Anki 가져오기, 한자 빌드, 버전 교체 방법을 확인하세요.">
+  <meta property="og:description" content="다운로드, Anki 가져오기, 한자 확장 만들기, 버전 교체 방법을 확인하세요.">
   <meta property="og:url" content="https://truthyblue.github.io/jlpt-max-deck/support.html">
   <meta property="og:image" content="https://truthyblue.github.io/jlpt-max-deck/assets/social-card.jpg">
   <link rel="canonical" href="https://truthyblue.github.io/jlpt-max-deck/support.html">
@@ -49,7 +49,7 @@
           <li><a href="#quick">문제 선택</a></li>
           <li><a href="#download">파일이 안 받아져요</a></li>
           <li><a href="#import">가져오기가 멈춰요</a></li>
-          <li><a href="#kanji-build">한자 확장 빌드가 안돼요</a></li>
+          <li><a href="#kanji-build">한자 확장을 만들 수 없어요</a></li>
           <li><a href="#history">업데이트하고 싶어요</a></li>
           <li><a href="#faq">자주 묻는 질문</a></li>
           <li><a href="#report">오류를 제보하고 싶어요</a></li>
@@ -62,7 +62,7 @@
           <div class="v2-support-grid">
             <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">↓</div><h3>파일이 안 받아져요</h3><p>공식 배포 파일과 SHA-256을 확인합니다.</p><a href="#download">다운로드 확인 →</a></article>
             <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">入</div><h3>Anki 가져오기가 멈춰요</h3><p>앱 버전, 저장 공간, 미디어 처리 상태를 확인합니다.</p><a href="#import">가져오기 진단 →</a></article>
-            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">漢</div><h3>한자 확장 빌드가 안돼요</h3><p>기본 덱에 없는 것은 정상입니다. 필요하면 별도로 빌드합니다.</p><a href="#kanji-build">빌드 가이드 →</a></article>
+            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">漢</div><h3>한자 확장을 만들 수 없어요</h3><p>ZIP 풀기, 실행 파일, PDF 선택과 오류 문구를 확인합니다.</p><a href="#kanji-build">오류 확인 →</a></article>
             <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">↻</div><h3>업데이트하고 싶어요</h3><p>현재 버전의 변경점과 필요한 교체 절차를 확인합니다.</p><a href="#history">업데이트 내역 →</a></article>
           </div>
         </section>
@@ -93,15 +93,18 @@
         </section>
 
         <section class="v2-guide-section" id="kanji-build">
-          <h2>한자 확장 빌드가 안돼요.</h2>
-          <p>기본 덱에 <code>일상무따</code> 덱이 없는 것은 정상입니다. 한자 확장을 빌드하다 멈췄다면 표시된 오류 문구를 확인하세요.</p>
+          <h2>한자 확장을 만들 수 없어요.</h2>
+          <p>기본 덱에 <code>일상무따</code>가 없는 것은 정상입니다. 한자 확장이 필요하다면 <a href="kanji.html">처음부터 따라가는 만들기 가이드</a>를 먼저 확인하세요.</p>
           <ol class="v2-step-list">
+            <li><div><strong>더블클릭할 실행 파일이 보이지 않아요.</strong><p>ZIP 미리보기 안이 아니라 압축을 푼 새 폴더를 여세요. Windows에는 <code>Windows에서 한자 확장 만들기.cmd</code>, macOS에는 <code>Mac에서 한자 확장 만들기.command</code>가 있습니다.</p></div></li>
             <li><div><strong>필요한 프로그램을 받지 못했다고 나와요.</strong><p>처음 실행할 때만 빌드 도구와 Python을 자동으로 받습니다. 인터넷 연결을 확인한 뒤 ZIP을 새 폴더에 다시 풀고 더블클릭 실행 파일을 다시 여세요.</p></div></li>
             <li><div><strong><code>PDF hash</code> 또는 <code>page count</code> 오류가 나요.</strong><p>공식 자료 페이지에서 정상적으로 받은 상·하권 소책자 PDF 2개와 순서를 확인하세요. 다시 저장·병합·최적화한 PDF나 미리보기 파일은 지원되지 않습니다.</p></div></li>
             <li><div><strong><code>alignment</code> 오류가 나요.</strong><p>같은 v1.0.1의 빌더와 지원 PDF가 맞지 않거나 1권·2권 선택 순서가 바뀌었을 수 있습니다. 현재 빌더 ZIP을 새 폴더에 다시 풀고 실행하세요.</p></div></li>
+            <li><div><strong>PDF 선택창을 취소했어요.</strong><p>아무 파일도 바뀌지 않습니다. 실행 파일을 다시 더블클릭하고 처음부터 선택하면 됩니다.</p></div></li>
             <li><div><strong>완성 파일을 다시 만들고 싶어요.</strong><p>더블클릭 실행 파일을 다시 열면 기존 결과를 지우고 새로 만들지 묻습니다. <strong>다시 만들기</strong>를 선택한 뒤 PDF 두 개를 다시 고르세요.</p></div></li>
           </ol>
-          <p><a href="getting-started.html#kanji">한자 확장 빌드 가이드 →</a></p>
+          <div class="v2-callout warning"><strong>실패하면 빌더 폴더의 <code>kanji-builder.log</code>를 확인하세요.</strong><p>공개 issue에 전체 로그나 PDF를 올리지 말고 개인 경로를 지운 오류 문구만 적어 주세요.</p></div>
+          <p><a href="kanji.html">한자 확장 만들기 전체 가이드 →</a></p>
         </section>
 
         <section class="v2-guide-section" id="history">
@@ -167,6 +170,7 @@
       <p>선별 어휘를 깊이 익히고,<br>실전 문제로 확인하세요.</p>
       <nav aria-label="하단 메뉴">
         <a href="getting-started.html">시작 가이드</a>
+        <a href="kanji.html">한자 확장</a>
         <a href="install-anki.html">Anki 설치</a>
         <a href="support.html">지원</a>
         <a href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
