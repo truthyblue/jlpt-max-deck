@@ -94,10 +94,25 @@ class PublicSiteTests(unittest.TestCase):
                     '<span class="nav-label-full">지원</span>',
                     html,
                 )
+                self.assertIn('aria-label="한자 확장"', html)
+                self.assertIn(
+                    '<span class="nav-label-full">한자 확장</span>',
+                    html,
+                )
+                self.assertIn(
+                    '<span class="nav-label-compact">한자</span>',
+                    html,
+                )
                 if name == "support.html":
                     self.assertIn(
                         'href="support.html" aria-current="page" '
                         'aria-label="지원"',
+                        html,
+                    )
+                if name == "kanji.html":
+                    self.assertIn(
+                        'href="kanji.html" aria-current="page" '
+                        'aria-label="한자 확장"',
                         html,
                     )
                 self.assertIn('id="repo-link"', html)
@@ -465,6 +480,17 @@ class PublicSiteTests(unittest.TestCase):
         self.assertLess(html.index('id="pdfs"'), html.index('id="builder"'))
         self.assertLess(html.index('id="builder"'), html.index('id="run"'))
         self.assertLess(html.index('id="run"'), html.index('id="finish"'))
+        css = (SITE / "assets" / "site.css").read_text(encoding="utf-8")
+        faq_summary = re.search(r"\.v2-faq summary\s*\{([^}]+)\}", css)
+        if faq_summary is None:
+            self.fail("missing FAQ summary styles")
+        self.assertIn("display: block;", faq_summary.group(1))
+        self.assertIn("padding: 25px 48px 25px 4px;", faq_summary.group(1))
+        self.assertNotIn("grid-template-columns", faq_summary.group(1))
+        self.assertIn(
+            "grid-template-columns: repeat(5, minmax(0, 1fr));",
+            css,
+        )
 
     def test_install_page_links_only_to_official_anki_apps(self) -> None:
         html = (SITE / "install-anki.html").read_text(encoding="utf-8")

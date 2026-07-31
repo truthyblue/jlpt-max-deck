@@ -404,14 +404,13 @@ a {
 }
 
 .v2-faq summary {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 20px;
-  align-items: center;
-  padding: 25px 4px;
+  position: relative;
+  display: block;
+  padding: 25px 48px 25px 4px;
   cursor: pointer;
   font-size: 19px;
   font-weight: 820;
+  line-height: 1.45;
   list-style: none;
 }
 
@@ -420,9 +419,14 @@ a {
 }
 
 .v2-faq summary::after {
+  position: absolute;
+  top: 50%;
+  right: 4px;
   content: "+";
   font-size: 25px;
   font-weight: 500;
+  line-height: 1;
+  transform: translateY(-50%);
 }
 
 .v2-faq details[open] summary::after {
@@ -1358,7 +1362,7 @@ a {
 
   .site-header .nav-primary-links {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     padding: 2px 0;
   }
 
