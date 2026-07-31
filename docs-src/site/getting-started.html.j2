@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08120e">
   <meta name="robots" content="index,follow">
-  <meta name="description" content="JLPT MAX 기본 덱 다운로드부터 Anki 가져오기, FSRS 설정, 일상무따 한자 확장 추가까지 이어지는 시작 가이드입니다.">
+  <meta name="description" content="JLPT MAX 기본 덱 다운로드부터 Anki 가져오기, FSRS 설정과 기기 동기화까지 이어지는 시작 가이드입니다.">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="ko_KR">
   <meta property="og:title" content="시작 가이드 — JLPT MAX Deck">
@@ -40,8 +40,6 @@
           <li><a href="#verify">수량 확인</a></li>
           <li><a href="#sync">기기 동기화 <span class="sr-only">(선택)</span></a></li>
         </ol>
-        <strong class="v2-guide-toc-subtitle">선택 확장</strong>
-        <ol><li><a href="#kanji">일상무따 한자</a></li></ol>
       </aside>
 
       <div class="v2-guide-content">
@@ -124,25 +122,6 @@
           <h2>동기화는 여러 기기에서 이어볼 때만 합니다.</h2>
           <p>한 기기에서만 공부한다면 AnkiWeb 계정이나 동기화는 필요하지 않습니다. 여러 기기에서 같은 카드와 학습 일정을 이어갈 때만 동기화하세요. 첫 미디어 동기화는 데이터가 크므로 안정적인 Wi-Fi에서 진행합니다.</p>
           <div class="v2-callout warning"><strong>처음 동기화할 때 방향을 확인하세요.</strong><p>기본 덱을 가져온 현재 기기의 컬렉션을 AnkiWeb에 업로드한 뒤, 다른 기기에서 내려받는 순서가 안전합니다.</p></div>
-        </section>
-
-        <section class="v2-guide-section v2-optional-section" id="kanji">
-          <span class="v2-step-label">별도 선택 · 한자 확장</span>
-          <h2>원하면 일상무따 한자를 추가합니다.</h2>
-          <p>저작권 때문에 한글 뜻이 든 완성본은 배포하지 않습니다. 길벗 공식 PDF 2개를 고르면 빌더가 사용자 컴퓨터에서 개인용 APKG를 완성합니다.</p>
-          <div class="v2-download-card">
-            <div><small>명령어 입력 없음 · 내 컴퓨터에서 생성</small><h3>{{ release.artifacts.kanji_builder.filename }}</h3><p>PDF 2개 선택 → JLPT-MAX-kanji-addon-{{ release.version }}.apkg</p></div>
-            <a class="v2-button" href="{{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.kanji_builder.filename }}">빌더 받기 <span aria-hidden="true">↓</span></a>
-          </div>
-          <ol class="v2-step-list">
-            <li><div><strong>공식 자료 페이지에서 1권과 2권 지원 PDF를 받습니다.</strong><p>다시 저장·병합·최적화하지 않은 원본을 사용합니다.</p></div></li>
-            <li><div><strong>한자 빌더 ZIP의 압축을 완전히 풉니다.</strong><p>ZIP 미리보기 안에서 바로 실행하지 않습니다.</p></div></li>
-            <li><div><strong>운영체제에 맞는 실행 파일을 더블클릭합니다.</strong><p>Windows는 <code>Windows에서 한자 확장 만들기.cmd</code>, macOS는 <code>Mac에서 한자 확장 만들기.command</code>입니다.</p></div></li>
-            <li><div><strong>첫 번째 창에 1권, 두 번째 창에 2권 PDF를 고릅니다.</strong><p>필요한 프로그램은 처음 한 번 자동으로 준비됩니다. 열린 창을 닫지 마세요.</p></div></li>
-            <li><div><strong>자동으로 열린 폴더의 APKG를 Anki에 가져옵니다.</strong><p>기본 덱과 같은 컬렉션에 넣으면 <code>일상무따</code> 하위 덱이 추가됩니다.</p></div></li>
-          </ol>
-          <div class="v2-callout"><strong>PDF·이미지·생성 APKG는 외부로 전송되지 않습니다.</strong><p>한글이나 띄어쓰기가 있는 폴더도 사용할 수 있습니다. 처음 실행할 때 필요한 프로그램을 받기 위한 인터넷 연결만 필요합니다.</p></div>
-          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="kanji.html">초심자용 전체 가이드 <span aria-hidden="true">→</span></a><a class="v2-button v2-button-ghost" href="support.html#kanji-build">오류 해결</a></div>
         </section>
       </div>
     </div>

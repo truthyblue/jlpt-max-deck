@@ -497,10 +497,6 @@ a {
   letter-spacing: 0.13em;
 }
 
-.v2-guide-toc .v2-guide-toc-subtitle {
-  margin-top: 22px;
-}
-
 .v2-guide-toc ol {
   display: grid;
   gap: 9px;
@@ -714,14 +710,6 @@ a {
 .v2-callout.warning {
   border-color: var(--coral);
   background: #ffe3dd;
-}
-
-.v2-optional-section {
-  margin-top: 72px;
-  padding: 58px 48px 64px;
-  background: #eef5ea;
-  border: 1px solid rgba(47, 89, 59, .18);
-  border-radius: var(--radius);
 }
 
 .v2-callout strong {
@@ -1259,11 +1247,6 @@ a {
   .v2-guide-section,
   .v2-guide-section + .v2-guide-section {
     padding-block: 52px;
-  }
-
-  .v2-optional-section {
-    margin-top: 52px;
-    padding: 38px 22px 44px;
   }
 
   .v2-download-card {
