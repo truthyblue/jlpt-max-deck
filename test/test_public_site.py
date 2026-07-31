@@ -398,6 +398,14 @@ class PublicSiteTests(unittest.TestCase):
     def test_start_guide_contains_complete_import_contract(self) -> None:
         html = (SITE / "getting-started.html").read_text(encoding="utf-8")
         parser = self.parsers["getting-started.html"]
+        self.assertIn(
+            '<p class="v2-kicker"><span></span>시작 가이드</p>',
+            html,
+        )
+        self.assertNotIn(
+            '<p class="v2-kicker"><span></span>시작 가이드 · v',
+            html,
+        )
         for section_id in (
             "deck",
             "import",
@@ -451,6 +459,14 @@ class PublicSiteTests(unittest.TestCase):
     def test_kanji_guide_is_beginner_complete_and_private_by_default(self) -> None:
         html = (SITE / "kanji.html").read_text(encoding="utf-8")
         parser = self.parsers["kanji.html"]
+        self.assertIn(
+            '<p class="v2-kicker"><span></span>선택 확장</p>',
+            html,
+        )
+        self.assertNotIn(
+            '<p class="v2-kicker"><span></span>선택 확장 · v',
+            html,
+        )
         for section_id in (
             "why",
             "prepare",
