@@ -54,7 +54,6 @@
     "desired_retention": "0.90",
     "desired_retention_percent": 90,
     "new_cards_per_day": 20,
-    "audio_new_cards_per_day": 0,
     "suggested_new_cards_min": 10,
     "suggested_audio_new_cards_min": 5,
     "suggested_audio_new_cards_max": 10

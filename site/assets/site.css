@@ -43,6 +43,19 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Inline labels and deck names should follow the surrounding Korean typography.
+   Components made for machine-readable values set their own monospace font. */
+.v2-site code {
+  font-family: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
+}
+
+.v2-site .v2-release-facts code {
+  font-family: var(--font-mono);
+  letter-spacing: normal;
+}
+
 body.nav-open {
   overflow: hidden;
 }
@@ -221,6 +234,142 @@ a {
 .site-header .nav-primary-links a:hover,
 .site-header .nav-primary-links a[aria-current="page"] {
   background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-guide-menu {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  color: inherit;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-guide-menu::after {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  height: 8px;
+  content: "";
+}
+
+.nav-guide-menu[data-open="true"],
+.nav-guide-menu[data-current="true"] {
+  color: var(--lime);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.site-header .nav-primary-links .nav-guide-entry {
+  padding-right: 3px;
+  background: transparent;
+}
+
+.site-header .nav-primary-links .nav-guide-entry:hover,
+.site-header .nav-primary-links .nav-guide-entry[aria-current="page"] {
+  background: transparent;
+}
+
+.nav-guide-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 44px;
+  padding: 0 8px 0 2px;
+  border: 0;
+  border-radius: 999px;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+}
+
+.nav-guide-chevron {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-guide-chevron svg {
+  display: block;
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nav-guide-menu[data-open="true"] .nav-guide-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-guide-menu[data-open="true"] .nav-guide-chevron,
+.nav-guide-menu[data-current="true"] .nav-guide-chevron {
+  border-color: rgba(217, 255, 87, 0.38);
+  background: rgba(217, 255, 87, 0.1);
+}
+
+.nav-guide-submenu {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  left: 50%;
+  display: none;
+  width: 260px;
+  padding: 8px;
+  color: var(--night);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  transform: translateX(-50%);
+}
+
+.nav-guide-menu[data-open="true"] .nav-guide-submenu {
+  display: grid;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-guide-menu:hover {
+    color: var(--lime);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .nav-guide-menu:hover .nav-guide-chevron {
+    border-color: rgba(217, 255, 87, 0.38);
+    background: rgba(217, 255, 87, 0.1);
+    transform: rotate(180deg);
+  }
+
+  .nav-guide-menu:hover .nav-guide-submenu {
+    display: grid;
+  }
+}
+
+.site-header .nav-primary-links .nav-guide-submenu a {
+  justify-content: flex-start;
+  min-height: 42px;
+  padding: 0 13px;
+  border-radius: 9px;
+  color: var(--night);
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.site-header .nav-primary-links .nav-guide-submenu a:hover,
+.site-header .nav-primary-links .nav-guide-submenu a[aria-current="page"] {
+  color: var(--night);
+  background: var(--paper-2);
 }
 
 .nav-label-compact,
@@ -557,6 +706,91 @@ a {
   font-size: 17px;
 }
 
+.v2-guide-subsection {
+  margin-top: 44px;
+  padding-top: 36px;
+  border-top: 1px solid var(--line);
+}
+
+.v2-guide-subsection > h3 {
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: 1.15;
+  word-break: keep-all;
+}
+
+.v2-guide-subsection > h3.v2-subsection-heading {
+  margin-top: 52px;
+}
+
+.v2-guide-subsection > p {
+  max-width: 780px;
+  margin: 16px 0 0;
+  color: var(--ink-soft);
+  font-size: 17px;
+}
+
+.v2-optional-guide {
+  margin-top: 26px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.v2-optional-guide > summary {
+  position: relative;
+  display: block;
+  padding: 24px 64px 24px 24px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.v2-optional-guide > summary::-webkit-details-marker {
+  display: none;
+}
+
+.v2-optional-guide > summary::after {
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  content: "+";
+  font-size: 28px;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.v2-optional-guide[open] > summary::after {
+  content: "−";
+}
+
+.v2-optional-guide > summary strong,
+.v2-optional-guide > summary small {
+  display: block;
+}
+
+.v2-optional-guide > summary strong {
+  font-size: 18px;
+}
+
+.v2-optional-guide > summary small {
+  margin-top: 5px;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.v2-optional-guide-body {
+  padding: 0 24px 28px;
+  border-top: 1px solid var(--line);
+}
+
+.v2-optional-guide-body > h3.v2-subsection-heading {
+  margin-top: 52px;
+}
+
 .v2-step-list {
   display: grid;
   gap: 14px;
@@ -641,6 +875,10 @@ a {
   margin-top: 28px;
 }
 
+.v2-option-grid-single {
+  grid-template-columns: 1fr;
+}
+
 .v2-option-group-title,
 .v2-verify-heading {
   margin: 30px 0 0;
@@ -678,6 +916,13 @@ a {
   margin: 8px 0 0;
   color: var(--ink-soft);
   font-size: 14px;
+}
+
+.v2-option .v2-option-button {
+  min-height: 40px;
+  margin-top: 16px;
+  padding-inline: 15px;
+  font-size: 13px;
 }
 
 .v2-state {
@@ -1186,6 +1431,34 @@ a {
     font-size: clamp(48px, 15vw, 70px);
   }
 
+  .nav-guide-menu {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .site-header .nav-primary-links .nav-guide-entry {
+    min-width: 0;
+    padding-right: 0;
+    padding-left: 8px;
+  }
+
+  .nav-guide-trigger {
+    width: 30px;
+    min-width: 30px;
+    padding: 0 6px 0 0;
+  }
+
+  .nav-guide-submenu {
+    position: fixed;
+    top: 120px;
+    right: 16px;
+    left: 16px;
+    width: auto;
+    transform: none;
+  }
+
 
 
   .v2-hero-actions {
@@ -1345,7 +1618,7 @@ a {
 
   .site-header .nav-primary-links {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     padding: 2px 0;
   }
 

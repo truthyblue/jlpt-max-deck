@@ -44,7 +44,7 @@
             <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">↓</div><h3>파일이 안 받아져요</h3><p>공식 배포 파일과 SHA-256을 확인합니다.</p><a href="#download">다운로드 확인 →</a></article>
             <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">入</div><h3>Anki 가져오기가 멈춰요</h3><p>앱 버전, 저장 공간, 미디어 처리 상태를 확인합니다.</p><a href="#import">가져오기 진단 →</a></article>
             <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">漢</div><h3>한자 확장을 만들 수 없어요</h3><p>ZIP 풀기, 실행 파일, PDF 선택과 오류 문구를 확인합니다.</p><a href="#kanji-build">오류 확인 →</a></article>
-            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">↻</div><h3>업데이트하고 싶어요</h3><p>현재 버전의 변경점과 필요한 교체 절차를 확인합니다.</p><a href="#history">업데이트 내역 →</a></article>
+            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">↻</div><h3>업데이트하고 싶어요</h3><p>학습 기록을 지키는 순서와 현재 버전 변경점을 확인합니다.</p><a href="update.html">업데이트 가이드 →</a></article>
           </div>
         </section>
 
@@ -90,7 +90,7 @@
 
         <section class="v2-guide-section" id="history">
           <h2>새 버전으로 업데이트하고 싶어요.</h2>
-          <p>최신 버전부터 시간순으로 정리합니다. 설치 전에 현재 버전의 변경점과 별도 업데이트 절차가 있는지 확인하세요.</p>
+          <p>먼저 <a href="update.html">학습 기록을 보존하는 업데이트 순서</a>를 확인한 뒤, 아래에서 현재 버전의 변경점과 별도 교정이 있는지 확인하세요.</p>
           <ol class="v2-release-history">{% for item in release_history %}
             <li class="v2-release-entry{% if item.current %} is-current{% endif %}">
               <header>

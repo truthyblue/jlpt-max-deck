@@ -9,32 +9,27 @@
 > 한국어권 JLPT 학습용 Anki 덱. 어휘·음성·실전 문제·참조표가 담긴 기본 덱으로
 > 시작하고, 원하면 일상무따 한자 2,337개를 확장으로 추가할 수 있습니다.
 
-## 처음 시작한다면
+## 어디서 시작하나요?
 
-가장 쉬운 방법은 [웹 시작 가이드]({{ product.site_url }}/getting-started.html)를
-따르는 것입니다.
+전체 흐름은 [웹 시작 가이드]({{ product.site_url }}/getting-started.html)에서
+확인할 수 있습니다.
 
-1. 공부할 기기에 맞는 [Anki 앱]({{ product.site_url }}/install-anki.html)을 설치합니다.
-2. [{{ release.artifacts.core.filename }}]({{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.core.filename }})를 받습니다.
-3. 다운로드한 APKG를 Anki에서 열고 가져오기가 끝날 때까지 기다립니다.
-4. `JLPT MAX덱::어휘`에서 목표 급수의 새 카드를 시작합니다.
+- **Anki가 처음이에요**: [기기별 설치 안내]({{ product.site_url }}/install-anki.html)부터
+  시작합니다.
+- **Anki를 이미 사용 중이에요**: 동기화를 마친 뒤
+  [기존 사용자 가져오기]({{ product.site_url }}/getting-started.html#existing-user)를
+  따릅니다.
+- **JLPT MAX덱을 업데이트할게요**:
+  [업데이트 가이드]({{ product.site_url }}/update.html)를 먼저 확인합니다.
+
+처음 가져온 뒤에는 시험 볼 급수와 관계없이 `JLPT MAX덱::어휘::N5`부터 시작합니다.
+아는 카드는 `Easy`로 빠르게 넘기고, 시험 볼 급수까지 차례대로 공부합니다.
+어떤 덱을 언제 시작하는지는
+[덱 학습법]({{ product.site_url }}/study-guide.html)에 정리했습니다.
 
 기본 덱은 완성된 APKG 파일입니다. Anki Desktop, AnkiMobile 또는 AnkiDroid에서
 다운로드한 파일을 열어 가져오세요. 브라우저의 AnkiWeb은 APKG 가져오기를
 지원하지 않습니다.
-
-## 1.0.0 사용자의 필수 교정
-
-1. 모든 기기의 동기화를 끝내거나 컬렉션 백업을 만듭니다.
-2. 최상위 `JLPT MAX덱` 전체가 아니라 `JLPT MAX덱::종합 실전`만 삭제합니다.
-   그 아래 급수·문제 유형 덱도 함께 삭제되는지 확인합니다.
-3. `{{ release.artifacts.core.filename }}`를 가져옵니다.
-
-이 교정은 `종합 실전`의 학습 기록만 초기화합니다. `어휘`, `음성`,
-`일상무따`, `참조표`의 카드 ID와 학습 일정은 유지됩니다. APKG만 덮어쓰면
-1.0.0의 없어진 N1 `표기` 덱과 기존 카드 위치가 남을 수 있습니다. 자세한
-내용은 [{{ release.tag }} 릴리스 노트](docs/releases/{{ release.tag }}.md)를
-확인하세요.
 
 ## 어떤 파일을 받으면 되나요?
 
@@ -53,14 +48,15 @@
 
 기본 덱에는 어휘 {{ product.deck.vocabulary_notes | number }}개, 실전 문제
 {{ product.deck.practice_notes | number }}개, 참조표 {{ product.deck.reference_notes }}개와
-단어·예문 음성이 들어 있습니다. 일상무따 한자 2,337개는 아래 별도 선택 확장
-과정에서 개인용 APKG로 만든 뒤 같은 Anki 컬렉션에 추가합니다.
+단어·예문 음성이 들어 있습니다. 일상무따 한자 2,337개는 원할 때 아래 방법으로
+개인용 APKG를 만들어 같은 Anki 컬렉션에 추가합니다.
 
 처음에는 FSRS 기억 유지율을 {{ product.study_defaults.desired_retention_percent }}%,
 어휘 새 카드를 하루 {{ product.study_defaults.suggested_new_cards_min }}~{{ product.study_defaults.new_cards_per_day }}장으로 두는 것을 권합니다.
-독립 음성 카드는 처음에는 하루 {{ product.study_defaults.audio_new_cards_per_day }}장으로
-두고 어휘가 익숙해진 뒤 늘리세요. 자세한 설정과 업데이트 절차는
-[Anki 가이드](docs/anki.md)에 있습니다.
+독립 음성 카드는 필요할 때만 공부하고, 이미 공부 중이라면 지금 설정을 유지하세요.
+종합 실전은 시험 볼 급수까지 어휘를 모두 한 번 본 뒤
+그 급수의 문제만 풉니다. 자세한 순서는 [덱 학습법]({{ product.site_url }}/study-guide.html),
+설정과 업데이트 절차는 [Anki 가이드](docs/anki.md)에 있습니다.
 
 ## 선택형 한자 확장
 
@@ -88,7 +84,7 @@ PowerShell·터미널 명령이나 Python 설치는 필요하지 않습니다. �
 
 ## 업데이트와 문제 해결
 
-- 기존 학습 기록을 유지하는 업데이트: [Anki 가져오기·업데이트](docs/anki.md)
+- 기존 학습 기록을 유지하는 업데이트: [웹 업데이트 가이드]({{ product.site_url }}/update.html)
 - 다운로드, 음성, PDF 또는 빌더 오류: [문제 해결](docs/troubleshooting.md)
 - 현재 자산과 검증 결과: [{{ release.tag }} 릴리스 노트](docs/releases/{{ release.tag }}.md)
 - 개인정보와 재배포 범위: [개인정보·저작권·라이선스](docs/privacy-and-licensing.md)

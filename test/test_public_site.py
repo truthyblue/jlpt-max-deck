@@ -21,6 +21,8 @@ PAGES = (
     "index.html",
     "getting-started.html",
     "install-anki.html",
+    "study-guide.html",
+    "update.html",
     "kanji.html",
     "support.html",
     "404.html",
@@ -67,6 +69,16 @@ def parse_page(path: Path) -> PageParser:
     return parser
 
 
+def css_declarations(css: str, selector: str) -> dict[str, str]:
+    rule = re.search(rf"{re.escape(selector)}\s*\{{([^}}]+)\}}", css)
+    if rule is None:
+        raise AssertionError(f"missing CSS rule: {selector}")
+    return {
+        name: value.strip()
+        for name, value in re.findall(r"([\w-]+)\s*:\s*([^;]+);", rule.group(1))
+    }
+
+
 def load_prepare_module():
     path = ROOT / "scripts" / "prepare-pages-site.py"
     spec = importlib.util.spec_from_file_location("prepare_pages_site", path)
@@ -107,6 +119,32 @@ class PublicSiteTests(unittest.TestCase):
                     '<span class="nav-label-compact">한자</span>',
                     html,
                 )
+                self.assertIn('class="nav-guide-menu"', html)
+                self.assertRegex(
+                    html,
+                    r'class="nav-guide-entry" href="[^"]*getting-started\.html"',
+                )
+                self.assertIn(
+                    'class="nav-guide-trigger" type="button"',
+                    html,
+                )
+                self.assertIn(
+                    'aria-label="시작 가이드 하위 메뉴 펼치기"',
+                    html,
+                )
+                self.assertIn('aria-expanded="false"', html)
+                self.assertIn('aria-controls="nav-guide-submenu"', html)
+                self.assertIn('id="nav-guide-submenu"', html)
+                self.assertIn('class="nav-guide-chevron"', html)
+                self.assertIn('d="m3.5 5.75 4.5 4.5 4.5-4.5"', html)
+                self.assertNotIn('<details class="nav-guide-menu"', html)
+                self.assertNotIn('<summary class="nav-guide-trigger"', html)
+                self.assertNotIn(">⌄</span>", html)
+                self.assertIn('>Anki가 처음이에요</a>', html)
+                self.assertIn('>Anki를 이미 사용 중이에요</a>', html)
+                self.assertIn('>JLPT MAX덱 업데이트</a>', html)
+                self.assertNotIn('aria-label="받기"', html)
+                self.assertNotIn('>덱 받기</span>', html)
                 if name == "support.html":
                     self.assertIn(
                         'href="support.html" aria-current="page" '
@@ -117,6 +155,12 @@ class PublicSiteTests(unittest.TestCase):
                     self.assertIn(
                         'href="kanji.html" aria-current="page" '
                         'aria-label="한자 확장"',
+                        html,
+                    )
+                if name == "study-guide.html":
+                    self.assertIn(
+                        'href="study-guide.html" aria-current="page" '
+                        'aria-label="덱 학습법"',
                         html,
                     )
                 self.assertIn('id="repo-link"', html)
@@ -147,6 +191,41 @@ class PublicSiteTests(unittest.TestCase):
             self.assertIn("font-family: var(--font-sans);", header.group(1))
             self.assertIn("letter-spacing: normal;", header.group(1))
         self.assertEqual(nav_font_values[0], nav_font_values[1])
+
+    def test_home_and_guide_navigation_use_the_same_spacing(self) -> None:
+        expected = {
+            ".site-header nav": {"gap": "20px"},
+            ".site-header .nav-group": {"gap": "28px"},
+            ".site-header .nav-primary-links": {"gap": "2px"},
+            ".site-header .nav-primary-links a": {"padding": "0 11px"},
+            ".nav-guide-menu": {
+                "display": "inline-flex",
+                "border-radius": "999px",
+            },
+            ".site-header .nav-primary-links .nav-guide-entry": {
+                "padding-right": "3px",
+            },
+            ".nav-guide-trigger": {
+                "min-width": "32px",
+                "padding": "0 8px 0 2px",
+            },
+            ".nav-guide-chevron": {
+                "flex": "0 0 auto",
+                "width": "20px",
+                "height": "20px",
+            },
+            ".nav-guide-chevron svg": {
+                "width": "12px",
+                "height": "12px",
+            },
+        }
+        for asset in ("site.css", "showcase.css"):
+            css = (SITE / "assets" / asset).read_text(encoding="utf-8")
+            for selector, declarations in expected.items():
+                actual = css_declarations(css, selector)
+                with self.subTest(asset=asset, selector=selector):
+                    for property_name, value in declarations.items():
+                        self.assertEqual(value, actual.get(property_name))
 
     def test_local_references_and_fragments_resolve(self) -> None:
         for page_name, parser in self.parsers.items():
@@ -307,7 +386,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn("DETERMINISTIC RELEASE", html)
         self.assertNotIn("논리 APKG 해시", html)
         self.assertNotIn('href="#curation" aria-label="덱 제작 과정"', html)
-        self.assertIn('href="#start" aria-label="받기"', html)
+        self.assertNotIn('aria-label="받기"', html)
         self.assertEqual(4, html.count('class="pipeline-step reveal"'))
         self.assertLess(html.index('id="meaning-focus"'), html.index('id="cards"'))
         self.assertLess(html.index('id="cards"'), html.index('id="practice"'))
@@ -414,23 +493,40 @@ class PublicSiteTests(unittest.TestCase):
             html,
         )
         for section_id in (
+            "choose",
+            "existing-user",
             "deck",
             "import",
-            "import-options",
-            "settings",
             "verify",
-            "kanji",
+            "fsrs",
+            "first-review",
             "sync",
         ):
             self.assertIn(section_id, parser.ids)
         for token in (
+            "Anki가 처음이에요",
+            "Anki를 이미 사용 중이에요",
+            "JLPT MAX덱을 업데이트할게요",
+            'href="study-guide.html"',
+            'href="update.html"',
+            "받은 덱 파일을 Anki로 여세요.",
+            "사용하는 기기에서 아래 메뉴를 열면 FSRS를 켤 수 있습니다",
+            "JLPT MAX덱</code> 옆 톱니바퀴 누르기",
+            "톱니바퀴 → <strong>학습 옵션</strong> 누르기",
+            "덱 이름 길게 누르기",
+            "컬렉션의 모든 덱에 함께 적용",
+            "<h2>어휘::N5를 열어 첫 카드가 나오는지 확인하세요.</h2>",
+            "채점 기준과 하루 학습량은 덱 학습법에서 이어집니다",
             'href="kanji.html"',
-            "Android는 AnkiDroid를 설치하세요",
-            "최상위 항목 <code>JLPT MAX덱</code>을 확인합니다",
-            "켜기 · 권장",
-            "동기화는 여러 기기에서 이어볼 때만 합니다",
+            "학습 기록을 안전하게 보관하려면 동기화하세요",
+            "권장 · AnkiWeb 동기화",
+            "처음 설치했다면 덱을 넣고 첫 학습을 마친 뒤 동기화하세요",
+            "한 기기만 쓰더라도 분실이나 고장에 대비해",
         ):
             self.assertIn(token, html)
+        self.assertNotIn("여러 기기에서 공부할 때만 동기화하세요", html)
+        self.assertNotIn("이 단계는 건너뛰어도 됩니다", html)
+        self.assertNotIn("선택 · AnkiWeb 동기화", html)
         self.assertNotIn("kanji-command-macos", html)
         self.assertNotIn("kanji-command-windows", html)
         self.assertNotIn("PowerShell", html)
@@ -439,24 +535,27 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn("자동재생 애드온", html)
         self.assertNotIn(".ankiaddon", html)
         self.assertNotIn("<code>JLPT MAX덱</code> 덱", html)
+        self.assertNotIn("<h2><code>", html)
         self.assertNotIn('id="autoplay"', html)
         self.assertNotIn("별도 선택 · 한자 확장", html)
         self.assertNotIn("Mac에서 한자 확장 만들기.command", html)
         self.assertNotIn("Windows에서 한자 확장 만들기.cmd", html)
         self.assertNotIn("초심자용 전체 가이드", html)
         self.assertIn("기본 덱만 가져온 경우", html)
-        self.assertIn("한자 확장까지 추가한 경우", html)
-        self.assertIn('href="#kanji">한자 확장', html)
-        self.assertIn("필요하다면 한자 확장을 추가합니다.", html)
-        self.assertIn(
-            '<a class="v2-button v2-button-dark" href="kanji.html">'
-            '한자 확장 가이드 보기',
-            html,
-        )
         self.assertNotIn("한자 덱도 필요하신가요?", html)
         self.assertNotIn("내가 선택한 구성", html)
-        self.assertLess(html.index('id="verify"'), html.index('id="kanji"'))
-        self.assertLess(html.index('id="kanji"'), html.index('id="sync"'))
+        self.assertNotIn("다시 · Again", html)
+        self.assertNotIn("어려움 · Hard", html)
+        self.assertNotIn("알맞음 · Good", html)
+        self.assertNotIn("쉬움 · Easy", html)
+        self.assertLess(
+            html.index('id="existing-user"'),
+            html.index('id="deck"'),
+        )
+        self.assertLess(html.index('id="import"'), html.index('id="verify"'))
+        self.assertLess(html.index('id="verify"'), html.index('id="fsrs"'))
+        self.assertLess(html.index('id="fsrs"'), html.index('id="first-review"'))
+        self.assertLess(html.index('id="verify"'), html.index('id="sync"'))
         self.assertIn("약 0.85GB", html)
         self.assertNotIn("QUICK START", html)
         css = (SITE / "assets" / "site.css").read_text(encoding="utf-8")
@@ -467,7 +566,7 @@ class PublicSiteTests(unittest.TestCase):
         html = (SITE / "kanji.html").read_text(encoding="utf-8")
         parser = self.parsers["kanji.html"]
         self.assertIn(
-            '<p class="v2-kicker"><span></span>선택 확장</p>',
+            '<p class="v2-kicker"><span></span>한자 덱 추가</p>',
             html,
         )
         self.assertNotIn(
@@ -476,6 +575,7 @@ class PublicSiteTests(unittest.TestCase):
         )
         for section_id in (
             "why",
+            "study-order",
             "prepare",
             "pdfs",
             "builder",
@@ -489,6 +589,9 @@ class PublicSiteTests(unittest.TestCase):
             "일상무따 한자 확장",
             "초심자용 만들기 가이드",
             "한글 뜻이 든 완성본을 배포하지 않습니다",
+            "1권이 상권이고 2권이 하권입니다",
+            "N3 어휘를 시작할 때 1권(상권)",
+            "이미 N1을 공부하고 있다면 2권을 지금 시작하면 됩니다",
             "1권 공식 자료 페이지",
             "2권 공식 자료 페이지",
             "모두 압축 풀기",
@@ -528,14 +631,56 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("padding: 25px 48px 25px 4px;", faq_summary.group(1))
         self.assertNotIn("grid-template-columns", faq_summary.group(1))
 
-    def test_mobile_primary_nav_has_five_columns_in_both_designs(self) -> None:
+    def test_mobile_primary_nav_has_four_columns_in_both_designs(self) -> None:
         for filename in ("site.css", "showcase.css"):
             css = (SITE / "assets" / filename).read_text(encoding="utf-8")
             with self.subTest(filename=filename):
                 self.assertIn(
+                    "grid-template-columns: repeat(4, minmax(0, 1fr));",
+                    css,
+                )
+                self.assertNotIn(
                     "grid-template-columns: repeat(5, minmax(0, 1fr));",
                     css,
                 )
+
+    def test_guide_menu_opens_on_desktop_hover_and_button_toggle(self) -> None:
+        for filename in ("site.css", "showcase.css"):
+            css = (SITE / "assets" / filename).read_text(encoding="utf-8")
+            with self.subTest(filename=filename):
+                self.assertIn(
+                    "@media (hover: hover) and (pointer: fine)",
+                    css,
+                )
+                self.assertEqual(
+                    "none",
+                    css_declarations(css, ".nav-guide-submenu").get("display"),
+                )
+                self.assertEqual(
+                    "grid",
+                    css_declarations(
+                        css,
+                        '.nav-guide-menu[data-open="true"] '
+                        ".nav-guide-submenu",
+                    ).get("display"),
+                )
+                self.assertEqual(
+                    "grid",
+                    css_declarations(
+                        css,
+                        ".nav-guide-menu:hover .nav-guide-submenu",
+                    ).get("display"),
+                )
+
+    def test_inline_code_uses_surrounding_korean_typography(self) -> None:
+        css = (SITE / "assets" / "site.css").read_text(encoding="utf-8")
+        inline_code = re.search(r"\.v2-site code\s*\{([^}]+)\}", css)
+        if inline_code is None:
+            self.fail("missing inline code typography rule")
+        rule = inline_code.group(1)
+        self.assertIn("font-family: inherit;", rule)
+        self.assertIn("font-size: inherit;", rule)
+        self.assertIn("letter-spacing: inherit;", rule)
 
     def test_install_page_links_only_to_official_anki_apps(self) -> None:
         html = (SITE / "install-anki.html").read_text(encoding="utf-8")
@@ -543,35 +688,38 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("id373493387", html)
         self.assertIn("id=com.ichi2.anki", html)
         self.assertIn("공식 iOS 앱", html)
-        self.assertIn("유료 구매", html)
+        self.assertIn("한 번 구매하는 유료 앱", html)
+        self.assertIn('id="what-is-anki"', html)
         self.assertIn('id="apps"', html)
-        self.assertIn("공부할 기기의 Anki를 설치합니다.", html)
+        self.assertIn('id="first-launch"', html)
+        self.assertIn("Anki는 잊을 때쯤 다시 보여주는 암기 앱입니다", html)
+        self.assertIn("카드를 보여주고 복습 일정을 관리합니다", html)
+        self.assertIn("Anki에 넣어 공부할 일본어 단어와 문제 카드입니다", html)
+        self.assertIn("직접 카드를 만들 필요는 없습니다", html)
+        self.assertLess(html.index('id="what-is-anki"'), html.index('id="apps"'))
+        self.assertIn("평소 공부할 기기에", html)
         self.assertIn("data-tabs data-platform-tabs", html)
-        self.assertEqual(5, html.count('class="v2-tab"'))
-        self.assertEqual(5, html.count('class="v2-tab-panel v2-device-card"'))
-        for platform in ("macos", "windows", "linux", "ios", "android"):
+        self.assertEqual(3, html.count('class="v2-tab"'))
+        self.assertEqual(3, html.count('class="v2-tab-panel v2-device-card"'))
+        for platform in ("desktop", "ios", "android"):
             with self.subTest(platform=platform):
                 self.assertIn(f'data-platform="{platform}"', html)
-        self.assertNotIn('id="desktop"', html)
-        self.assertNotIn('id="mobile"', html)
-        self.assertNotIn('href="#desktop"', html)
-        self.assertNotIn('href="#mobile"', html)
-        self.assertNotIn('id="capabilities"', html)
-        self.assertNotIn("WHAT WORKS WHERE", html)
-        self.assertNotIn("일상무따 한자 확장 빌드</th>", html)
-        self.assertNotIn("일상무따 한자 확장은 빌드 후 가져옵니다.", html)
-        self.assertNotIn("현재 Release에서 검증한 macOS", html)
-        for redundant_badge in (
-            "macOS·Windows·Linux 무료",
-            "iPhone·iPad 공식 앱 유료",
-            "Android AnkiDroid 무료",
+        self.assertIn("AnkiApp", html)
+        self.assertIn('href="getting-started.html#deck"', html)
+        self.assertIn("설치를 마쳤다면 시작 가이드로 돌아가기", html)
+        self.assertIn("덱을 넣고 첫 학습을 마친 뒤에는", html)
+        self.assertIn("AnkiWeb 동기화를 권합니다", html)
+        for duplicated_topic in (
+            'id="fsrs"',
+            'id="next"',
+            "FSRS",
+            "기본 덱을 받으세요",
+            "기본 덱 APKG",
+            "덱을 가져온",
+            "기존 Anki 사용자는",
         ):
-            with self.subTest(redundant_badge=redundant_badge):
-                self.assertNotIn(redundant_badge, html)
-        self.assertIn(
-            'href="install-anki.html" aria-current="page" aria-label="Anki 설치"',
-            html,
-        )
+            with self.subTest(duplicated_topic=duplicated_topic):
+                self.assertNotIn(duplicated_topic, html)
         for desktop_first in (
             "처음 설치한다면 컴퓨터에서 시작한 뒤",
             "컴퓨터에서 처음 설정합니다",
@@ -581,7 +729,151 @@ class PublicSiteTests(unittest.TestCase):
         ):
             with self.subTest(desktop_first=desktop_first):
                 self.assertNotIn(desktop_first, html)
-        self.assertNotIn("AnkiApp", html)
+
+    def test_study_guide_defines_four_tracks_and_level_routes(self) -> None:
+        html = (SITE / "study-guide.html").read_text(encoding="utf-8")
+        parser = self.parsers["study-guide.html"]
+        toc_match = re.search(
+            r'<aside class="v2-guide-toc".*?</aside>',
+            html,
+            flags=re.DOTALL,
+        )
+        if toc_match is None:
+            self.fail("missing study-guide shortcuts")
+        toc = toc_match.group(0)
+        self.assertEqual(5, toc.count("<li>"))
+        for anchor in ("#tracks", "#vocabulary", "#kanji", "#practice", "#audio"):
+            self.assertIn(f'href="{anchor}"', toc)
+        for nested_anchor in ("#daily", "#filtered", "#n5-foundation"):
+            self.assertNotIn(f'href="{nested_anchor}"', toc)
+        for section_id in (
+            "tracks",
+            "vocabulary",
+            "daily",
+            "filtered",
+            "n5-foundation",
+            "kanji",
+            "practice",
+            "audio",
+        ):
+            self.assertIn(section_id, parser.ids)
+        for token in (
+            "N5 → N4 → N3 → N2",
+            "선택 · 필터 덱",
+            "여러 급수의 어휘를 한 덱에 모아 보고 싶을 때만 사용하세요",
+            "처음이라면 이 부분은 건너뛰고",
+            'details class="v2-optional-guide"',
+            "필터 덱 설정 보기",
+            "처음에 한 번 설정해야 하는 선택 기능입니다",
+            "필터 덱이란?",
+            "원래 덱을 합치거나 카드를 복사하는 기능이 아닙니다",
+            'class="v2-subsection-heading">처음 한 번만 필터 덱을 만드세요',
+            "두 칸에는 복습용·새 카드용 조건을 따로 넣으세요",
+            "검색식</code>은 Anki가 가져올 카드를 고르는 조건입니다",
+            "복습용 필터",
+            "새 카드용 필터",
+            "필터 1",
+            "필터 2",
+            "도구 → 필터 덱 만들기",
+            "오른쪽 아래 톱니바퀴 → <strong>Filter/Cram</strong>",
+            "덱 목록 오른쪽 아래 <strong>+</strong>",
+            "두 번째 필터 사용을 켜고 필터 2에 N5 새 카드 조건을 넣습니다",
+            'deck:"JLPT MAX덱::어휘::N5" is:new',
+            'data-copy-target="vocabulary-new-filter"',
+            "한도 9999장 · 선택 기준: Relative overdueness",
+            "한도 20장 · 선택 기준: Order due",
+            "어휘 통합 학습",
+            "만들기(Build)",
+            "필터 덱을 쓸 때는 이 덱 하나만 열면 됩니다",
+            "오늘 공부할 카드를 불러오는 기능이며, 학습 기록을 초기화하지 않습니다",
+            "한 급수의 새 카드가 끝나면 새 카드용 필터만 바꾸세요",
+            "시험 볼 급수에서 멈추세요",
+            "다시 만들기(Rebuild)",
+            '(deck:"JLPT MAX덱::어휘::N5" or deck:"JLPT MAX덱::어휘::N4") is:due',
+            'data-copy-target="vocabulary-review-filter-n4"',
+            "카드 일정 다시 잡기를 켜고",
+            "하위 덱을 따로 누르지 않아도 됩니다",
+            "1권이 상권이고 2권이 하권입니다",
+            "JLPT MAX덱::일상무따::상권",
+            "JLPT MAX덱::일상무따::하권",
+            "N3 어휘 + 일상무따 1권(상권)",
+            "N2·N1 어휘 + 일상무따 2권(하권)",
+            "이미 N1을 공부하고 있다면 2권 덱을 지금 시작하면 됩니다",
+            "종합 실전::어휘::N4",
+            "종합 실전::어휘::N2",
+            "무작위 노트",
+            "문장을 듣고 이해하는 청해 연습은 나중에 별도 청해 덱",
+        ):
+            self.assertIn(token, html)
+        self.assertLess(
+            html.index("필터 덱이란?"),
+            html.index("처음 한 번만 필터 덱을 만드세요"),
+        )
+        self.assertLess(
+            html.index("처음 한 번만 필터 덱을 만드세요"),
+            html.index('id="review-filter-tab-n5"'),
+        )
+        self.assertLess(
+            html.index('id="n5-foundation"'),
+            html.index('id="filtered"'),
+        )
+        optional_details = re.search(
+            r'<details class="v2-optional-guide"(?P<attrs>[^>]*)>',
+            html,
+        )
+        if optional_details is None:
+            self.fail("missing optional filtered-deck disclosure")
+        self.assertNotIn("open", optional_details.group("attrs"))
+        self.assertNotIn("오늘의 어휘 복습", html)
+        self.assertNotIn("오늘 복습만 모읍니다", html)
+        css = (SITE / "assets" / "site.css").read_text(encoding="utf-8")
+        subsection_heading = css_declarations(
+            css,
+            ".v2-guide-subsection > h3.v2-subsection-heading",
+        )
+        self.assertEqual("52px", subsection_heading.get("margin-top"))
+        for level in ("n5", "n4", "n3", "n2", "n1"):
+            with self.subTest(level=level):
+                self.assertIn(f'id="review-filter-tab-{level}"', html)
+                self.assertIn(f'id="review-filter-panel-{level}"', html)
+                self.assertIn(f'data-copy-target="vocabulary-review-filter-{level}"', html)
+        self.assertIn(
+            'id="review-filter-tab-n4" type="button" role="tab" '
+            'aria-selected="true"',
+            html,
+        )
+        self.assertIn("이미 음성 카드를 공부하고 있다면 지금 새 카드 설정을 유지하세요", html)
+        self.assertNotIn("새 카드 기본값은 0장", html)
+        self.assertLess(html.index('id="vocabulary"'), html.index('id="practice"'))
+
+    def test_update_guide_preserves_history_and_personal_options(self) -> None:
+        html = (SITE / "update.html").read_text(encoding="utf-8")
+        parser = self.parsers["update.html"]
+        for section_id in (
+            "before",
+            "ordinary",
+            "import-options",
+            "recommended-settings",
+            "verify",
+        ):
+            self.assertIn(section_id, parser.ids)
+        for token in (
+            "최상위 <code>JLPT MAX덱</code>을 삭제하지 마세요",
+            "학습 진행 상태",
+            "개인 덱 옵션",
+            "JLPT MAX덱 · 실전",
+            "무작위 노트",
+        ):
+            self.assertIn(token, html)
+        self.assertIn("업데이트한 뒤에는 실전 설정만 확인하세요", html)
+        self.assertIn("음성 덱의 새 카드 수를 포함한 나머지 옵션은 지금 설정을 그대로 두세요", html)
+        self.assertNotIn("JLPT MAX덱 · 음성", html)
+        self.assertNotIn("새 카드 0장", html)
+        self.assertNotIn('id="fsrs"', html)
+        self.assertNotIn("업데이트가 FSRS 상태를 바꾸지는 않습니다", html)
+        self.assertNotIn('id="from-100"', html)
+        self.assertNotIn("1.0.0", html)
+        self.assertNotIn("JLPT MAX덱::종합 실전", html)
 
     def test_support_page_publishes_safe_diagnostic_boundary(self) -> None:
         html = (SITE / "support.html").read_text(encoding="utf-8")
@@ -763,6 +1055,11 @@ class PublicSiteTests(unittest.TestCase):
             "data-carousel-next",
             "ArrowLeft",
             "ArrowRight",
+            "data-guide-menu",
+            'aria-expanded="false"',
+            "시작 가이드 하위 메뉴 펼치기",
+            "시작 가이드 하위 메뉴 닫기",
+            'event.key === "Escape"',
         ):
             self.assertIn(token, homepage)
 

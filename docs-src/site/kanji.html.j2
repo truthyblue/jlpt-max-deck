@@ -20,7 +20,7 @@
 {% block main %}  <main class="v2-main" id="main" tabindex="-1">
     <section class="v2-page-hero">
       <div class="v2-shell">
-        <p class="v2-kicker"><span></span>선택 확장</p>
+        <p class="v2-kicker"><span></span>한자 덱 추가</p>
         <h1>일상무따 한자 확장<br><em>초심자용 만들기 가이드</em></h1>
         <p class="v2-hero-lead">PowerShell이나 터미널 명령어를 입력할 필요가 없습니다. ZIP을 풀고 운영체제에 맞는 실행 파일을 더블클릭하세요.</p>
         <div class="v2-hero-actions"><a class="v2-button" href="{{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.kanji_builder.filename }}">한자 빌더 다운로드 <span aria-hidden="true">↓</span></a><a class="v2-button v2-button-ghost" href="#pdfs">공식 PDF 확인 <span aria-hidden="true">→</span></a></div>
@@ -33,6 +33,7 @@
         <strong>한자 확장 만들기</strong>
         <ol>
           <li><a href="#why">왜 따로 만드나요?</a></li>
+          <li><a href="#study-order">언제 공부하나요?</a></li>
           <li><a href="#prepare">준비물</a></li>
           <li><a href="#pdfs">공식 PDF 받기</a></li>
           <li><a href="#builder">빌더 ZIP 받기</a></li>
@@ -52,6 +53,13 @@
             <article class="v2-option"><div class="v2-option-head"><h3>일상무따 한자 확장</h3><span class="v2-state">직접 완성</span></div><p>저작권 때문에 한글 뜻이 든 완성본을 배포하지 않습니다. 공식 PDF 2개를 사용자의 컴퓨터에서 읽어 개인용 APKG를 만듭니다.</p></article>
           </div>
           <div class="v2-callout"><strong>한자 확장은 선택 사항입니다.</strong><p>기본 덱만으로 어휘·음성·실전 문제·참조표를 모두 학습할 수 있습니다. 한자 확장이 필요한 경우에만 아래 과정을 진행하세요.</p></div>
+        </section>
+
+        <section class="v2-guide-section" id="study-order">
+          <span class="v2-step-label">공부 순서</span>
+          <h2>일상무따 1권은 N3, 2권은 N2·N1 어휘와 함께 공부하세요.</h2>
+          <p>1권이 상권이고 2권이 하권입니다. N5와 N4는 어휘만 공부하고, N3 어휘를 시작할 때 1권(상권)을 함께 시작하세요. N2 어휘를 시작할 때는 2권(하권)을 함께 시작하고, 이미 N1을 공부하고 있다면 2권을 지금 시작하면 됩니다.</p>
+          <div class="v2-callout"><strong>기본 학습량은 어휘 20장 + 한자 20장입니다.</strong><p>부담되면 한자 새 카드를 10장으로 먼저 줄입니다. 자세한 조절 방법은 <a href="study-guide.html#kanji">덱 학습법</a>에서 확인하세요.</p></div>
         </section>
 
         <section class="v2-guide-section" id="prepare">
@@ -80,7 +88,7 @@
           <span class="v2-step-label">03 · 빌더</span>
           <h2>한자 빌더 ZIP을 받아 완전히 풉니다.</h2>
           <div class="v2-download-card">
-            <div><small>선택 확장 · {{ release.tag }}</small><h3>{{ release.artifacts.kanji_builder.filename }}</h3><p>출력: JLPT-MAX-kanji-addon-{{ release.version }}.apkg</p></div>
+            <div><small>한자 덱 만들기 · {{ release.tag }}</small><h3>{{ release.artifacts.kanji_builder.filename }}</h3><p>출력: JLPT-MAX-kanji-addon-{{ release.version }}.apkg</p></div>
             <a class="v2-button" href="{{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.kanji_builder.filename }}">다운로드 <span aria-hidden="true">↓</span></a>
           </div>
           <ol class="v2-step-list">

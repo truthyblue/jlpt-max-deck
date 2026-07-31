@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08120e">
   <meta name="robots" content="index,follow">
-  <meta name="description" content="Anki가 어떤 앱인지 알아보고 JLPT MAX Deck을 사용할 공식 앱을 기기별로 설치합니다.">
+  <meta name="description" content="JLPT MAX Deck을 기존 학습 기록과 개인 덱 옵션을 보존하며 업데이트하는 절차입니다.">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="ko_KR">
-  <meta property="og:title" content="Anki 설치 — JLPT MAX Deck">
-  <meta property="og:description" content="평소 공부할 기기에 맞는 공식 Anki 앱을 설치하세요.">
-  <meta property="og:url" content="https://truthyblue.github.io/jlpt-max-deck/install-anki.html">
+  <meta property="og:title" content="업데이트 가이드 — JLPT MAX Deck">
+  <meta property="og:description" content="학습 기록을 유지하면서 JLPT MAX덱을 새 버전으로 업데이트하는 방법입니다.">
+  <meta property="og:url" content="https://truthyblue.github.io/jlpt-max-deck/update.html">
   <meta property="og:image" content="https://truthyblue.github.io/jlpt-max-deck/assets/social-card.jpg">
-  <link rel="canonical" href="https://truthyblue.github.io/jlpt-max-deck/install-anki.html">
+  <link rel="canonical" href="https://truthyblue.github.io/jlpt-max-deck/update.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <title>Anki 설치 — JLPT MAX Deck</title>
+  <title>업데이트 가이드 — JLPT MAX Deck</title>
   <link rel="stylesheet" href="assets/site.css?v=575a7936a72e">
 </head>
 <body class="v2-site">
@@ -31,9 +31,9 @@
           <a class="nav-guide-entry" href="getting-started.html"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">시작</span></a>
           <button class="nav-guide-trigger" type="button" aria-label="시작 가이드 하위 메뉴 펼치기" aria-expanded="false" aria-controls="nav-guide-submenu" aria-haspopup="true"><span class="nav-guide-chevron" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="m3.5 5.75 4.5 4.5 4.5-4.5"/></svg></span></button>
           <div class="nav-guide-submenu" id="nav-guide-submenu">
-            <a href="install-anki.html" aria-current="page">Anki가 처음이에요</a>
+            <a href="install-anki.html">Anki가 처음이에요</a>
             <a href="getting-started.html#existing-user">Anki를 이미 사용 중이에요</a>
-            <a href="update.html">JLPT MAX덱 업데이트</a>
+            <a href="update.html" aria-current="page">JLPT MAX덱 업데이트</a>
           </div>
         </div>
         <a href="study-guide.html" aria-label="덱 학습법"><span class="nav-label-full">덱 학습법</span><span class="nav-label-compact">학습</span></a>
@@ -82,56 +82,74 @@
   <main class="v2-main" id="main" tabindex="-1">
     <section class="v2-page-hero">
       <div class="v2-shell">
-        <p class="v2-kicker"><span></span>Anki 설치</p>
-        <h1>평소 공부할 기기에<br><em>Anki부터 설치하세요.</em></h1>
-        <p class="v2-hero-lead">휴대폰으로 공부할 거라면 휴대폰에 바로 설치하는 편이 좋습니다.</p>
-        <div class="v2-page-badges"><span>Desktop</span><span>iPhone·iPad</span><span>Android</span></div>
+        <p class="v2-kicker"><span></span>업데이트 가이드</p>
+        <h1>학습 기록은 그대로,<br><em>덱만 새 버전으로.</em></h1>
+        <p class="v2-hero-lead">먼저 모든 기기를 동기화한 뒤, 지금 쓰는 버전에 맞는 방법으로 덱을 다시 가져오세요.</p>
+        <div class="v2-page-badges"><span>현재 v1.0.2</span><span>기록 유지</span><span>개인 설정 보존</span></div>
       </div>
     </section>
 
     <div class="v2-shell v2-guide-layout">
-      <aside class="v2-guide-toc" aria-label="Anki 설치 순서">
-        <strong>처음 시작 순서</strong>
+      <aside class="v2-guide-toc" aria-label="업데이트 목차">
+        <strong>업데이트 순서</strong>
         <ol>
-          <li><a href="#what-is-anki">Anki란?</a></li>
-          <li><a href="#apps">기기별 공식 앱</a></li>
-          <li><a href="#first-launch">처음 실행</a></li>
+          <li><a href="#before">동기화·백업</a></li>
+          <li><a href="#ordinary">일반 업데이트</a></li>
+          <li><a href="#import-options">가져오기 옵션</a></li>
+          <li><a href="#recommended-settings">업데이트 뒤 설정</a></li>
+          <li><a href="#verify">업데이트 확인</a></li>
         </ol>
       </aside>
 
       <div class="v2-guide-content">
-        <section class="v2-guide-section" id="what-is-anki">
+        <section class="v2-guide-section" id="before">
           <span class="v2-step-label">00 · 먼저</span>
-          <h2>Anki는 잊을 때쯤 다시 보여주는 암기 앱입니다.</h2>
-          <p>카드 앞면을 보고 답을 떠올린 뒤 뒷면에서 확인합니다. 답을 얼마나 잘 기억했는지 선택하면 Anki가 다음 복습 시점을 자동으로 정합니다.</p>
+          <h2>먼저 모든 기기를 동기화하세요.</h2>
+          <p>여러 기기를 쓴다면 각 기기의 최신 복습 기록이 AnkiWeb에 반영됐는지 확인합니다. 가능하면 컬렉션 백업도 확인하세요.</p>
+          <div class="v2-callout warning"><strong>최상위 <code>JLPT MAX덱</code>을 삭제하지 마세요.</strong><p>기존 카드와 학습 일정은 그대로 두고 새 덱 파일을 가져오면 됩니다.</p></div>
+        </section>
+
+        <section class="v2-guide-section" id="ordinary">
+          <span class="v2-step-label">01 · 일반 업데이트</span>
+          <h2>기존 덱을 지우지 말고 새 파일을 가져오세요.</h2>
+          <div class="v2-download-card">
+            <div><small>현재 기본 덱</small><h3>JLPT-MAX-Deck-1.0.2.apkg</h3><p>v1.0.2 · 약 0.85GB</p></div>
+            <a class="v2-button" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.2/JLPT-MAX-Deck-1.0.2.apkg">다시 받기 <span aria-hidden="true">↓</span></a>
+          </div>
+          <p>새 덱 파일을 가져오면 기존 학습 기록과 일정은 유지되고, 새 노트와 바뀐 카드 내용만 반영됩니다. 새 버전에서 없어진 카드가 있다면 해당 릴리스의 추가 안내를 따르세요.</p>
+        </section>
+
+        <section class="v2-guide-section" id="import-options">
+          <span class="v2-step-label">02 · 가져오기 옵션</span>
+          <h2>복습 기록은 유지하고 카드 내용만 새로 바꿉니다.</h2>
           <div class="v2-option-grid">
-            <article class="v2-option"><div class="v2-option-head"><h3>Anki</h3><span class="v2-state on">학습 앱</span></div><p>카드를 보여주고 복습 일정을 관리합니다.</p></article>
-            <article class="v2-option"><div class="v2-option-head"><h3>JLPT MAX덱</h3><span class="v2-state">카드 묶음</span></div><p>Anki에 넣어 공부할 일본어 단어와 문제 카드입니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>학습 진행 상태</h3><span class="v2-state off">끄기</span></div><p>기존 복습 기록과 일정을 그대로 둡니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>기존 노트 업데이트</h3><span class="v2-state on">새 버전일 때</span></div><p>바뀐 필드와 카드 내용을 적용합니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>노트 유형 병합</h3><span class="v2-state on">켜기</span></div><p>기존 노트 유형을 새 버전과 연결합니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>개인 덱 옵션</h3><span class="v2-state">보존</span></div><p>직접 바꾼 새 카드 수와 FSRS 설정을 그대로 둡니다.</p></article>
           </div>
-          <div class="v2-callout"><strong>직접 카드를 만들 필요는 없습니다.</strong><p>Anki를 설치한 뒤 JLPT MAX덱을 넣으면 바로 학습을 시작할 수 있습니다.</p></div>
+          <div class="v2-callout warning"><strong>카드 템플릿을 직접 수정했나요?</strong><p>먼저 별도 프로필에서 결과를 확인하세요. 일반 사용자는 최신 노트와 노트 유형을 반영하면 됩니다.</p></div>
         </section>
 
-        <section class="v2-guide-section" id="apps">
-          <span class="v2-step-label">01 · 앱 선택</span>
-          <h2>내 기기에 맞는 공식 Anki 앱을 설치하세요.</h2>
-          <div class="v2-tabs" data-tabs data-platform-tabs>
-            <div class="v2-tab-list" role="tablist" aria-label="기기별 Anki 앱">
-              <button class="v2-tab" id="install-tab-desktop" type="button" role="tab" aria-selected="true" aria-controls="install-panel-desktop" data-platform="desktop">Desktop</button>
-              <button class="v2-tab" id="install-tab-ios" type="button" role="tab" aria-selected="false" aria-controls="install-panel-ios" data-platform="ios" tabindex="-1">iPhone / iPad</button>
-              <button class="v2-tab" id="install-tab-android" type="button" role="tab" aria-selected="false" aria-controls="install-panel-android" data-platform="android" tabindex="-1">Android</button>
-            </div>
-            <article class="v2-tab-panel v2-device-card" id="install-panel-desktop" role="tabpanel" aria-labelledby="install-tab-desktop"><span>WINDOWS · macOS · LINUX</span><h3>Anki Desktop</h3><p>공식 사이트에서 운영체제와 CPU에 맞는 설치 파일을 받습니다.</p><ol><li>공식 다운로드 페이지 열기</li><li>내 컴퓨터에 맞는 설치 파일 실행</li><li>Anki를 열고 기본 프로필 선택</li></ol><a href="https://apps.ankiweb.net/" target="_blank" rel="noopener noreferrer">공식 다운로드 <span aria-hidden="true">↗</span></a></article>
-            <article class="v2-tab-panel v2-device-card" id="install-panel-ios" role="tabpanel" aria-labelledby="install-tab-ios" hidden><span>iPHONE · iPAD</span><h3>AnkiMobile Flashcards</h3><p>iPhone·iPad용 공식 iOS 앱입니다. 한 번 구매하는 유료 앱이며 가격은 App Store에서 확인할 수 있습니다.</p><ol><li>앱 이름과 개발자 확인</li><li>AnkiMobile 설치</li><li>앱이 열리는지 확인</li></ol><a href="https://apps.apple.com/us/app/ankimobile-flashcards/id373493387" target="_blank" rel="noopener noreferrer">App Store <span aria-hidden="true">↗</span></a></article>
-            <article class="v2-tab-panel v2-device-card" id="install-panel-android" role="tabpanel" aria-labelledby="install-tab-android" hidden><span>ANDROID</span><h3>AnkiDroid Flashcards</h3><p>Android용 무료 오픈소스 앱입니다.</p><ol><li>Google Play에서 앱 이름 확인</li><li>AnkiDroid 설치</li><li>앱이 열리는지 확인</li></ol><a href="https://play.google.com/store/apps/details?id=com.ichi2.anki" target="_blank" rel="noopener noreferrer">Google Play <span aria-hidden="true">↗</span></a></article>
+        <section class="v2-guide-section" id="recommended-settings">
+          <span class="v2-step-label">03 · 설정</span>
+          <h2>업데이트한 뒤에는 실전 설정만 확인하세요.</h2>
+          <p>개인 설정은 그대로 유지됩니다. 음성 덱의 새 카드 수를 포함한 나머지 옵션은 지금 설정을 그대로 두세요.</p>
+          <div class="v2-option-grid v2-option-grid-single">
+            <article class="v2-option"><div class="v2-option-head"><h3>JLPT MAX덱 · 실전</h3><span class="v2-state on">무작위 노트</span></div><p><strong>신규 카드 수집</strong>을 <code>무작위 노트</code>로 바꿉니다. 급수 덱을 눌렀을 때 문제 유형이 섞여 나옵니다.</p></article>
           </div>
-          <div class="v2-callout warning"><strong>AnkiWeb과 AnkiApp을 헷갈리지 마세요.</strong><p>브라우저의 AnkiWeb은 동기화용 웹사이트입니다. AnkiApp처럼 이름만 비슷한 다른 앱에서는 이 덱을 사용할 수 없습니다.</p></div>
         </section>
 
-        <section class="v2-guide-section" id="first-launch">
-          <span class="v2-step-label">02 · 처음 실행</span>
-          <h2>앱을 열어 첫 화면이 보이는지 확인하세요.</h2>
-          <p>Anki가 처음이라면 기본 프로필을 그대로 사용해도 됩니다. 지금은 계정을 만들지 않아도 되지만, 덱을 넣고 첫 학습을 마친 뒤에는 분실·고장에 대비해 AnkiWeb 동기화를 권합니다.</p>
-          <div class="v2-hero-actions"><a class="v2-button" href="getting-started.html#deck">설치를 마쳤다면 시작 가이드로 돌아가기 <span aria-hidden="true">→</span></a></div>
+        <section class="v2-guide-section" id="verify">
+          <span class="v2-step-label">04 · 확인</span>
+          <h2>업데이트가 잘 됐는지 확인하세요.</h2>
+          <ol class="v2-step-list">
+            <li><div><strong>전에 공부한 어휘 몇 장의 복습 일정이 그대로인지 확인합니다.</strong></div></li>
+            <li><div><strong>새 카드 내용과 템플릿이 반영됐는지 확인합니다.</strong></div></li>
+            <li><div><strong>실전의 신규 카드 수집이 무작위 노트인지 확인합니다.</strong></div></li>
+            <li><div><strong>이번 버전에서 한자 빌더가 바뀌었다면 한자 덱도 다시 만듭니다.</strong></div></li>
+          </ol>
+          <div class="v2-hero-actions"><a class="v2-button" href="study-guide.html">덱 학습법 보기 <span aria-hidden="true">→</span></a><a class="v2-button v2-button-ghost" href="support.html#import">업데이트 문제 해결 <span aria-hidden="true">→</span></a></div>
         </section>
       </div>
     </div>

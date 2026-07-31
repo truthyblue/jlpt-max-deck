@@ -45,6 +45,12 @@ class DocumentationRenderTest(unittest.TestCase):
         PurePosixPath("site/install-anki.html.j2"): PurePosixPath(
             "site/install-anki.html"
         ),
+        PurePosixPath("site/study-guide.html.j2"): PurePosixPath(
+            "site/study-guide.html"
+        ),
+        PurePosixPath("site/update.html.j2"): PurePosixPath(
+            "site/update.html"
+        ),
         PurePosixPath("site/kanji.html.j2"): PurePosixPath("site/kanji.html"),
         PurePosixPath("site/latest-release.json.j2"): PurePosixPath(
             "site/latest-release.json"
@@ -222,6 +228,21 @@ class DocumentationRenderTest(unittest.TestCase):
         self.assertIn("덱 카드의 최신 버전 확인", privacy)
         self.assertIn("PDF·카드 내용·학습", privacy)
         self.assertIn("접속 IP와 브라우저", privacy)
+
+    def test_current_entry_guides_do_not_repeat_retired_update_or_filter_flows(
+        self,
+    ) -> None:
+        readme = (ROOT / "docs-src/README.md.j2").read_text(encoding="utf-8")
+        anki_guide = (ROOT / "docs-src/docs/anki.md.j2").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertNotIn("## 1.0.0에서 업데이트한다면", readme)
+        self.assertNotIn("JLPT MAX덱::종합 실전`만 삭제", readme)
+        self.assertNotIn("오늘의 어휘 복습", anki_guide)
+        self.assertNotIn('deck:"JLPT MAX덱::어휘" is:due', anki_guide)
+        self.assertIn("필터 덱은 선택 기능입니다", anki_guide)
+        self.assertIn("study-guide.html#filtered", anki_guide)
 
 
 if __name__ == "__main__":

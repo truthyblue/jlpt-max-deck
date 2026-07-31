@@ -14,7 +14,7 @@
   <link rel="canonical" href="https://truthyblue.github.io/jlpt-max-deck/support.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <title>지원 — JLPT MAX Deck</title>
-  <link rel="stylesheet" href="assets/site.css?v=4f81b321bcde">
+  <link rel="stylesheet" href="assets/site.css?v=575a7936a72e">
 </head>
 <body class="v2-site">
   <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -26,15 +26,57 @@
     </a>
     <nav aria-label="주요 메뉴">
       <div class="nav-group nav-primary-links" role="group" aria-label="주요 페이지">
-        <a href="index.html#start" aria-label="받기"><span class="nav-label-full">덱 받기</span><span class="nav-label-compact">받기</span></a>
-        <a href="getting-started.html" aria-label="시작 가이드"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">시작</span></a>
+        <div class="nav-guide-menu" data-guide-menu data-open="false">
+          <a class="nav-guide-entry" href="getting-started.html"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">시작</span></a>
+          <button class="nav-guide-trigger" type="button" aria-label="시작 가이드 하위 메뉴 펼치기" aria-expanded="false" aria-controls="nav-guide-submenu" aria-haspopup="true"><span class="nav-guide-chevron" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="m3.5 5.75 4.5 4.5 4.5-4.5"/></svg></span></button>
+          <div class="nav-guide-submenu" id="nav-guide-submenu">
+            <a href="install-anki.html">Anki가 처음이에요</a>
+            <a href="getting-started.html#existing-user">Anki를 이미 사용 중이에요</a>
+            <a href="update.html">JLPT MAX덱 업데이트</a>
+          </div>
+        </div>
+        <a href="study-guide.html" aria-label="덱 학습법"><span class="nav-label-full">덱 학습법</span><span class="nav-label-compact">학습</span></a>
         <a href="kanji.html" aria-label="한자 확장"><span class="nav-label-full">한자 확장</span><span class="nav-label-compact">한자</span></a>
-        <a href="install-anki.html" aria-label="Anki 설치"><span class="nav-label-full">Anki 설치</span><span class="nav-label-compact">설치</span></a>
         <a href="support.html" aria-current="page" aria-label="지원"><span class="nav-label-full">지원</span><span class="nav-label-compact">지원</span></a>
       </div>
     </nav>
     <a class="nav-action" id="repo-link" href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer" aria-label="GitHub에서 Star, 새 탭에서 열림"><svg class="nav-action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.87c-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .08 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.86.09-.66.35-1.12.64-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.53a9.3 9.3 0 0 1 2.5.35c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg><span class="nav-action-label">GitHub에서 Star</span><span class="nav-action-arrow" aria-hidden="true">↗</span></a>
   </header>
+  <script>
+    (() => {
+      const menu = document.querySelector("[data-guide-menu]");
+      if (!menu) return;
+      const trigger = menu.querySelector(".nav-guide-trigger");
+      const submenu = menu.querySelector(".nav-guide-submenu");
+      if (!trigger || !submenu) return;
+
+      const setOpen = (open) => {
+        menu.dataset.open = String(open);
+        trigger.setAttribute("aria-expanded", String(open));
+        trigger.setAttribute(
+          "aria-label",
+          open ? "시작 가이드 하위 메뉴 닫기" : "시작 가이드 하위 메뉴 펼치기",
+        );
+      };
+
+      trigger.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setOpen(menu.dataset.open !== "true");
+      });
+      submenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => setOpen(false));
+      });
+      document.addEventListener("click", (event) => {
+        if (!menu.contains(event.target)) setOpen(false);
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && menu.dataset.open === "true") {
+          setOpen(false);
+          trigger.focus();
+        }
+      });
+    })();
+  </script>
 
   <main class="v2-main" id="main" tabindex="-1">
     <section class="v2-page-hero">
@@ -64,7 +106,7 @@
             <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">↓</div><h3>파일이 안 받아져요</h3><p>공식 배포 파일과 SHA-256을 확인합니다.</p><a href="#download">다운로드 확인 →</a></article>
             <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">入</div><h3>Anki 가져오기가 멈춰요</h3><p>앱 버전, 저장 공간, 미디어 처리 상태를 확인합니다.</p><a href="#import">가져오기 진단 →</a></article>
             <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">漢</div><h3>한자 확장을 만들 수 없어요</h3><p>ZIP 풀기, 실행 파일, PDF 선택과 오류 문구를 확인합니다.</p><a href="#kanji-build">오류 확인 →</a></article>
-            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">↻</div><h3>업데이트하고 싶어요</h3><p>현재 버전의 변경점과 필요한 교체 절차를 확인합니다.</p><a href="#history">업데이트 내역 →</a></article>
+            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">↻</div><h3>업데이트하고 싶어요</h3><p>학습 기록을 지키는 순서와 현재 버전 변경점을 확인합니다.</p><a href="update.html">업데이트 가이드 →</a></article>
           </div>
         </section>
 
@@ -110,7 +152,7 @@
 
         <section class="v2-guide-section" id="history">
           <h2>새 버전으로 업데이트하고 싶어요.</h2>
-          <p>최신 버전부터 시간순으로 정리합니다. 설치 전에 현재 버전의 변경점과 별도 업데이트 절차가 있는지 확인하세요.</p>
+          <p>먼저 <a href="update.html">학습 기록을 보존하는 업데이트 순서</a>를 확인한 뒤, 아래에서 현재 버전의 변경점과 별도 교정이 있는지 확인하세요.</p>
           <ol class="v2-release-history">
             <li class="v2-release-entry is-current">
               <header>
@@ -199,6 +241,8 @@
       <p>선별 어휘를 깊이 익히고,<br>실전 문제로 확인하세요.</p>
       <nav aria-label="하단 메뉴">
         <a href="getting-started.html">시작 가이드</a>
+        <a href="study-guide.html">덱 학습법</a>
+        <a href="update.html">업데이트</a>
         <a href="kanji.html">한자 확장</a>
         <a href="install-anki.html">Anki 설치</a>
         <a href="support.html">지원</a>
