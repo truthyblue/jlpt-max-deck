@@ -77,7 +77,7 @@ def _read_manifest(path: Path) -> dict[str, Any]:
 
 def _import_package(path: Path, collection_path: Path) -> Collection:
     if not path.is_file():
-        raise KanjiAddonBuildError(f"kanji skeleton APKG is missing: {path}")
+        raise KanjiAddonBuildError(f"kanji builder asset is missing: {path}")
     collection = Collection(str(collection_path))
     try:
         options = collection._backend.get_import_anki_package_presets()
@@ -298,7 +298,7 @@ def build_kanji_addon(
     names = release_filenames(product_version)
     skeleton = asset_root / str(manifest["skeleton_apkg"])
     if sha256_file(skeleton) != manifest["skeleton_apkg_sha256"]:
-        raise KanjiAddonBuildError("kanji skeleton APKG hash changed")
+        raise KanjiAddonBuildError("kanji builder asset hash changed")
     if output_root.exists() and (not output_root.is_dir() or any(output_root.iterdir())):
         raise KanjiAddonBuildError(
             f"output root must be absent or empty: {output_root}"

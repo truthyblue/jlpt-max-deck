@@ -1246,6 +1246,53 @@ main:focus {
   word-break: keep-all;
 }
 
+.kanji-build-route {
+  margin-top: 28px;
+  padding: 22px;
+  color: var(--paper);
+  background: var(--night-2);
+  border-radius: 18px;
+}
+
+.kanji-build-route > strong {
+  display: block;
+  color: var(--lime);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+
+.kanji-build-route ol {
+  display: grid;
+  gap: 11px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.kanji-build-route li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  color: rgba(255, 255, 255, .82);
+  font-size: 15px;
+  font-weight: 720;
+}
+
+.kanji-build-route li span {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  color: var(--night);
+  background: var(--lime);
+  border-radius: 50%;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 11px;
+  font-weight: 900;
+}
+
 .curation-section {
   background: var(--paper-2);
 }
@@ -2624,7 +2671,16 @@ main:focus {
 }
 
 .kanji-actions {
+  display: grid;
+  gap: 16px;
   margin-top: 30px;
+}
+
+.kanji-actions .text-link {
+  justify-self: start;
+  margin-top: 0;
+  color: #315a3e;
+  font-weight: 850;
 }
 
 .kanji-guide-cta {
@@ -3529,7 +3585,7 @@ footer .disclaimer {
 
   .site-header .nav-primary-links {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     padding: 2px 0;
   }
 

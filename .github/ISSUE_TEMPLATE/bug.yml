@@ -16,11 +16,10 @@ body:
       label: 발생 위치
       options:
         - 기본 덱 APKG 다운로드 또는 가져오기
-        - 선택형 한자 덱 빌드
+        - 한자 확장 ZIP 풀기 또는 실행 파일
+        - 한자 확장 PDF 선택 또는 생성
         - 길벗 PDF 판본 확인
         - 카드 표시 또는 음성
-        - macOS 한자 빌드 스크립트
-        - Windows 한자 빌드 스크립트
         - Anki 가져오기 또는 업데이트
         - 문서 또는 프로젝트 사이트
         - 기타
@@ -31,8 +30,8 @@ body:
     id: version
     attributes:
       label: 사용한 버전
-      description: "릴리스 이름(예: v1.0.0)을 적으세요. 알고 있다면 commit SHA나 asset SHA-256도 함께 적어 주세요."
-      placeholder: v1.0.0
+      description: "릴리스 이름(예: v1.0.2)을 적으세요. 한자 확장은 기본 덱과 빌더 ZIP의 버전이 같은지도 확인해 주세요."
+      placeholder: v1.0.2
     validations:
       required: true
 
@@ -63,7 +62,7 @@ body:
     id: reproduction
     attributes:
       label: 최소 재현 절차
-      description: 실행한 명령과 개인 정보를 지운 출력을 적으세요. 책 내용이나 실제 로컬 경로는 포함하지 마세요.
+      description: 더블클릭한 실행 파일, PDF 선택 뒤 멈춘 단계와 kanji-builder.log에서 개인 경로를 지운 오류 문구를 적으세요. 전체 로그, 책 내용이나 실제 로컬 경로는 포함하지 마세요.
       render: shell
     validations:
       required: true

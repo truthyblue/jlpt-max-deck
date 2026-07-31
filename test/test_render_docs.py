@@ -31,6 +31,9 @@ class DocumentationRenderTest(unittest.TestCase):
         PurePosixPath("docs/releases/v1.0.1.md.j2"): PurePosixPath(
             "docs/releases/v1.0.1.md"
         ),
+        PurePosixPath("docs/releases/v1.0.2.md.j2"): PurePosixPath(
+            "docs/releases/v1.0.2.md"
+        ),
         PurePosixPath("docs/troubleshooting.md.j2"): PurePosixPath(
             "docs/troubleshooting.md"
         ),
@@ -41,6 +44,10 @@ class DocumentationRenderTest(unittest.TestCase):
         PurePosixPath("site/index.html.j2"): PurePosixPath("site/index.html"),
         PurePosixPath("site/install-anki.html.j2"): PurePosixPath(
             "site/install-anki.html"
+        ),
+        PurePosixPath("site/kanji.html.j2"): PurePosixPath("site/kanji.html"),
+        PurePosixPath("site/latest-release.json.j2"): PurePosixPath(
+            "site/latest-release.json"
         ),
         PurePosixPath("site/support.html.j2"): PurePosixPath(
             "site/support.html"
@@ -65,6 +72,8 @@ class DocumentationRenderTest(unittest.TestCase):
             context["release"]["version"],
         )
         self.assertTrue(release_history[0]["current"])
+        self.assertEqual(release_history[0]["label"], "최신")
+        self.assertIsNone(release_history[1]["label"])
         self.assertEqual(
             1,
             sum(bool(item["current"]) for item in release_history),
@@ -86,6 +95,19 @@ class DocumentationRenderTest(unittest.TestCase):
                 pin_artifacts[filename],
                 {"bytes": record["bytes"], "sha256": record["sha256"]},
             )
+
+    def test_staged_release_history_activates_with_matching_pin(self) -> None:
+        release_history = RENDER._load_release_history(
+            ROOT,
+            current_version="1.0.2",
+        )
+
+        self.assertEqual(release_history[0]["version"], "1.0.2")
+        self.assertTrue(release_history[0]["current"])
+        self.assertEqual(release_history[0]["label"], "최신")
+        self.assertEqual(release_history[1]["version"], "1.0.1")
+        self.assertFalse(release_history[1]["current"])
+        self.assertIsNone(release_history[1]["label"])
 
     def test_tracked_outputs_match_rendered_sources(self) -> None:
         rendered = dict(RENDER.render_documents(ROOT))
@@ -132,6 +154,12 @@ class DocumentationRenderTest(unittest.TestCase):
                 continue
             template = (ROOT / "docs-src" / source).read_text(encoding="utf-8")
             with self.subTest(template=source.as_posix()):
+                if source.name.endswith(".json.j2"):
+                    self.assertNotIn(
+                        '{% extends "_layouts/site.html.j2" %}',
+                        template,
+                    )
+                    continue
                 if source == PurePosixPath("site/index.html.j2"):
                     self.assertNotIn(
                         '{% extends "_layouts/site.html.j2" %}',
@@ -171,6 +199,10 @@ class DocumentationRenderTest(unittest.TestCase):
             "무료로 내려받",
             "구매 인증 없이",
             "macOS / Linux",
+            "build-kanji-addon.ps1",
+            "build-kanji-addon.sh",
+            "PowerShell을 열고",
+            "Python {{ product.requirements.python }}과",
         ):
             with self.subTest(stale=stale):
                 self.assertNotIn(stale, sources)
@@ -184,6 +216,12 @@ class DocumentationRenderTest(unittest.TestCase):
         ):
             with self.subTest(reference=reference):
                 self.assertIn(reference, sources)
+        privacy = (
+            ROOT / "docs-src/docs/privacy-and-licensing.md.j2"
+        ).read_text(encoding="utf-8")
+        self.assertIn("덱 카드의 최신 버전 확인", privacy)
+        self.assertIn("PDF·카드 내용·학습", privacy)
+        self.assertIn("접속 IP와 브라우저", privacy)
 
 
 if __name__ == "__main__":

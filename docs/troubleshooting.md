@@ -8,7 +8,7 @@
 | --- | --- |
 | 기본 덱 다운로드·가져오기·음성 | 아래 **기본 덱**과 **Anki** |
 | `일상무따` 덱이 없음 | 정상 동작 또는 [선택형 한자 확장](build.md) |
-| PDF·Python·빌더 오류 | 아래 **한자 확장 빌더** |
+| PDF·자동 준비·빌더 오류 | 아래 **한자 확장 빌더** |
 | 민감 정보가 포함된 보안 문제 | [SECURITY](../SECURITY.md) |
 
 ## 기본 덱
@@ -17,24 +17,24 @@
 
 파일 이름과 크기가 현재 Release와 맞는지 확인한 뒤 SHA-256을 비교하세요.
 
-- 파일: `JLPT-MAX-Deck-1.0.1.apkg`
+- 파일: `JLPT-MAX-Deck-1.0.2.apkg`
 - 크기: 약 0.85GB
-- SHA-256: `e674c973ecabc6e8843abb5495f75c927b4d18dd8f1f45464f160ab11c7f6583`
+- SHA-256: `17fab24dd938c5fb520ba9f2bdee8574858cba2b41be6f0ab7a0ad75701029bc`
 
 macOS:
 
 ```bash
-shasum -a 256 JLPT-MAX-Deck-1.0.1.apkg
+shasum -a 256 JLPT-MAX-Deck-1.0.2.apkg
 ```
 
 Windows PowerShell:
 
 ```powershell
-Get-FileHash .\JLPT-MAX-Deck-1.0.1.apkg -Algorithm SHA256
+Get-FileHash .\JLPT-MAX-Deck-1.0.2.apkg -Algorithm SHA256
 ```
 
-같은 v1.0.1의
-[SHA256SUMS](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.1/SHA256SUMS)와
+같은 v1.0.2의
+[SHA256SUMS](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.2/SHA256SUMS)와
 결과가 다르면 파일을 삭제하고 안정적인 네트워크에서 다시 받으세요.
 
 ### 기본 덱에 `일상무따`가 없습니다
@@ -71,6 +71,13 @@ Get-FileHash .\JLPT-MAX-Deck-1.0.1.apkg -Algorithm SHA256
 
 ## 한자 확장 빌더
 
+### 더블클릭할 실행 파일이 보이지 않습니다
+
+ZIP 미리보기 안이 아니라 압축을 푼 새 폴더를 여세요. Windows에는
+`Windows에서 한자 확장 만들기.cmd`, macOS에는
+`Mac에서 한자 확장 만들기.command`가 있습니다. `assets` 폴더 안의 파일은
+제작용이므로 직접 열거나 Anki에 가져오지 마세요.
+
 ### `PDF hash` 또는 `page count` 오류
 
 상·하권 순서가 맞는지, 공식 자료 페이지에서 받은 원본인지 확인하세요. 다시
@@ -80,20 +87,31 @@ Get-FileHash .\JLPT-MAX-Deck-1.0.1.apkg -Algorithm SHA256
 
 ### `kanji skeleton/PDF ... alignment` 오류
 
-같은 v1.0.1의 빌더와 지원 PDF가 서로 맞지 않거나, PDF 표를 한자 골격과
-유일하게 대응하지 못했다는 뜻입니다. 빌더 ZIP을 새 폴더에 다시 풀고 상·하권
-경로를 확인한 뒤 실행하세요.
+같은 v1.0.2의 빌더와 지원 PDF가 서로 맞지 않거나, PDF 표를 한자 골격과
+유일하게 대응하지 못했다는 뜻입니다. 빌더 ZIP을 새 폴더에 다시 풀고 첫 선택창에서
+1권(상권), 두 번째 선택창에서 2권(하권)을 고르세요.
 
-### `output root must be absent or empty`
+### 완성 파일을 다시 만들고 싶습니다
 
-기존 결과를 덮어쓰지 않는 안전장치입니다. 기존 `build/kanji-addon`을 백업한 뒤
-비어 있는 새 출력 폴더를 지정하거나, 빌더 ZIP을 새 폴더에 풀어 실행하세요.
+더블클릭 실행 파일을 다시 열면 기존 결과를 지우고 새로 만들지 묻습니다. 기존
+APKG가 필요하면 다른 폴더에 복사해 둔 뒤 **다시 만들기**를 선택하세요.
 
-### `uv` 또는 Python 오류
+### PDF 선택창을 취소했습니다
 
-Python 3.13과 `uv`가 설치되어 있는지 확인하고, ZIP을 푼
-폴더에서 명령을 실행했는지 확인하세요. 필요한 프로그램 다운로드에는 네트워크가
-필요하지만 PDF 처리는 로컬에서만 이루어집니다.
+아무 파일도 바뀌지 않습니다. 운영체제에 맞는 실행 파일을 다시 더블클릭하고
+첫 번째 창에서 1권, 두 번째 창에서 2권 PDF를 고르세요.
+
+### 필요한 프로그램을 자동으로 받지 못했습니다
+
+인터넷 연결을 확인하고 ZIP을 새 폴더에 다시 푼 뒤 운영체제에 맞는 더블클릭 실행
+파일을 여세요. 처음 실행할 때 빌드 도구와 Python을 빌더 전용 폴더에 자동으로
+받습니다. PDF 처리는 계속 사용자 컴퓨터 안에서만 이루어집니다.
+
+### 오류 내용을 어디서 확인하나요?
+
+빌더 폴더의 `kanji-builder.log`를 확인하세요. 전체 로그에는 개인 경로가 들어갈
+수 있으므로 공개 issue에 파일을 그대로 첨부하지 마세요. 개인 경로를 지운 오류
+문구, 사용한 v1.0.2, 운영체제와 멈춘 단계만 알려주세요.
 
 ## 제보할 때
 

@@ -1,4 +1,4 @@
-# {{ release.tag }}
+# v1.0.1
 
 1.0.1은 실전 문제의 JLPT 급수 귀속을 바로잡고, 음성 카드 앞면의
 `다시 듣기` 버튼을 복구한 교정판입니다.
@@ -8,7 +8,7 @@
 1. 모든 기기의 Anki 동기화를 끝내거나 컬렉션 백업을 만듭니다.
 2. 최상위 `JLPT MAX덱` 전체가 아니라 **`JLPT MAX덱::종합 실전`만
    삭제**합니다. 그 아래 급수·문제 유형 덱도 함께 삭제되는지 확인합니다.
-3. `{{ release.artifacts.core.filename }}`를 가져옵니다. 학습 진행 상태
+3. `JLPT-MAX-Deck-1.0.1.apkg`를 가져옵니다. 학습 진행 상태
    가져오기는 끄고, 기존 노트 업데이트와 노트 유형 병합은 켭니다.
 
 이 절차에서는 `종합 실전`의 학습 기록만 초기화됩니다. `어휘`, `음성`,
@@ -28,9 +28,9 @@ APKG만 바로 덮어쓰면 1.0.0의 없어진 N1 `표기` 하위 덱과 기존 
 
 ## 학습자가 받는 것
 
-- `{{ release.artifacts.core.filename }}`: 어휘·음성·실전 문제·참조표가 들어 있는 완성 APKG
-- `{{ release.artifacts.kanji_builder.filename }}`: 지원 PDF 2개로 개인용 한자 확장을 만드는 선택형 빌더
-- `{{ release.artifacts.checksums.filename }}`: 위 Release 자산의 SHA-256 목록
+- `JLPT-MAX-Deck-1.0.1.apkg`: 어휘·음성·실전 문제·참조표가 들어 있는 완성 APKG
+- `JLPT-MAX-kanji-builder-1.0.1.zip`: 지원 PDF 2개로 개인용 한자 확장을 만드는 선택형 빌더
+- `SHA256SUMS`: 위 Release 자산의 SHA-256 목록
 - `public-release.json`: 릴리스 수량·해시·정책을 묶은 검증 pin
 
 ## 검증 결과
@@ -49,9 +49,9 @@ APKG만 바로 덮어쓰면 1.0.0의 없어진 N1 `표기` 하위 덱과 기존 
 
 | 파일 | 크기 | SHA-256 |
 | --- | ---: | --- |
-| `{{ release.artifacts.core.filename }}` | {{ release.artifacts.core.bytes | number }} bytes | `{{ release.artifacts.core.sha256 }}` |
-| `{{ release.artifacts.kanji_builder.filename }}` | {{ release.artifacts.kanji_builder.bytes | number }} bytes | `{{ release.artifacts.kanji_builder.sha256 }}` |
-| `{{ release.artifacts.checksums.filename }}` | {{ release.artifacts.checksums.bytes | number }} bytes | `{{ release.artifacts.checksums.sha256 }}` |
+| `JLPT-MAX-Deck-1.0.1.apkg` | 854,966,788 bytes | `e674c973ecabc6e8843abb5495f75c927b4d18dd8f1f45464f160ab11c7f6583` |
+| `JLPT-MAX-kanji-builder-1.0.1.zip` | 740,083 bytes | `12f20d7569c66b16595b8adc8e05c48fe08cf756d05fffcd55c99dc09433d22e` |
+| `SHA256SUMS` | 190 bytes | `04ef2c9129743493bda896a0cd9d672d44e21ba14453a06f022b74123006ac18` |
 
 기본 덱 가져오기는 Anki Desktop·AnkiMobile·AnkiDroid에서 사용할 수 있습니다.
 한자 빌더 Release 검증 범위는 macOS {{ product.requirements.macos_minimum }}+와

@@ -13,10 +13,15 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
+RELEASE_PIN = json.loads(
+    (ROOT / "config" / "public-release.json").read_text(encoding="utf-8")
+)
+RELEASE_VERSION = RELEASE_PIN["product_version"]
 PAGES = (
     "index.html",
     "getting-started.html",
     "install-anki.html",
+    "kanji.html",
     "support.html",
     "404.html",
 )
@@ -93,10 +98,25 @@ class PublicSiteTests(unittest.TestCase):
                     '<span class="nav-label-full">지원</span>',
                     html,
                 )
+                self.assertIn('aria-label="한자 확장"', html)
+                self.assertIn(
+                    '<span class="nav-label-full">한자 확장</span>',
+                    html,
+                )
+                self.assertIn(
+                    '<span class="nav-label-compact">한자</span>',
+                    html,
+                )
                 if name == "support.html":
                     self.assertIn(
                         'href="support.html" aria-current="page" '
                         'aria-label="지원"',
+                        html,
+                    )
+                if name == "kanji.html":
+                    self.assertIn(
+                        'href="kanji.html" aria-current="page" '
+                        'aria-label="한자 확장"',
                         html,
                     )
                 self.assertIn('id="repo-link"', html)
@@ -196,13 +216,18 @@ class PublicSiteTests(unittest.TestCase):
 
     def test_home_explains_direct_core_and_optional_kanji(self) -> None:
         html = (SITE / "index.html").read_text(encoding="utf-8")
-        self.assertIn("JLPT-MAX-Deck-1.0.1.apkg", html)
+        self.assertIn(f"JLPT-MAX-Deck-{RELEASE_VERSION}.apkg", html)
         self.assertNotIn("JLPT-MAX-core", html)
-        self.assertNotIn("JLPT-MAX-kanji-builder-1.0.1.zip", html)
-        self.assertNotIn('id="kanji-builder-download-link"', html)
+        self.assertIn(
+            f"JLPT-MAX-kanji-builder-{RELEASE_VERSION}.zip",
+            html,
+        )
+        self.assertIn('id="kanji-builder-download-link"', html)
         self.assertNotIn('id="materials-doc-link"', html)
         self.assertIn('id="kanji-guide-link"', html)
-        self.assertIn("한자 확장 적용 방법", html)
+        self.assertIn("한자 확장 만들기", html)
+        self.assertIn("명령어 없이 만드는 순서", html)
+        self.assertIn("실행 파일 더블클릭", html)
         self.assertIn("13,903", html)
         self.assertIn("20,065", html)
         self.assertIn("17,899", html)
@@ -380,39 +405,137 @@ class PublicSiteTests(unittest.TestCase):
     def test_start_guide_contains_complete_import_contract(self) -> None:
         html = (SITE / "getting-started.html").read_text(encoding="utf-8")
         parser = self.parsers["getting-started.html"]
+        self.assertIn(
+            '<p class="v2-kicker"><span></span>시작 가이드</p>',
+            html,
+        )
+        self.assertNotIn(
+            '<p class="v2-kicker"><span></span>시작 가이드 · v',
+            html,
+        )
         for section_id in (
             "deck",
             "import",
             "import-options",
             "settings",
-            "kanji",
             "verify",
+            "kanji",
             "sync",
         ):
             self.assertIn(section_id, parser.ids)
         for token in (
-            'role="tab"',
-            'aria-controls="kanji-panel-macos"',
-            'aria-controls="kanji-panel-windows"',
-            'data-copy-target="kanji-command-macos"',
-            'data-copy-target="kanji-command-windows"',
+            'href="kanji.html"',
             "Android는 AnkiDroid를 설치하세요",
             "최상위 항목 <code>JLPT MAX덱</code>을 확인합니다",
             "켜기 · 권장",
             "동기화는 여러 기기에서 이어볼 때만 합니다",
         ):
             self.assertIn(token, html)
+        self.assertNotIn("kanji-command-macos", html)
+        self.assertNotIn("kanji-command-windows", html)
+        self.assertNotIn("PowerShell", html)
+        self.assertNotIn("./scripts/build-kanji-addon.sh", html)
+        self.assertNotIn("Python 3.13", html)
         self.assertNotIn("자동재생 애드온", html)
         self.assertNotIn(".ankiaddon", html)
         self.assertNotIn("<code>JLPT MAX덱</code> 덱", html)
         self.assertNotIn('id="autoplay"', html)
+        self.assertNotIn("별도 선택 · 한자 확장", html)
+        self.assertNotIn("Mac에서 한자 확장 만들기.command", html)
+        self.assertNotIn("Windows에서 한자 확장 만들기.cmd", html)
+        self.assertNotIn("초심자용 전체 가이드", html)
         self.assertIn("기본 덱만 가져온 경우", html)
         self.assertIn("한자 확장까지 추가한 경우", html)
+        self.assertIn('href="#kanji">한자 확장', html)
+        self.assertIn("필요하다면 한자 확장을 추가합니다.", html)
+        self.assertIn(
+            '<a class="v2-button v2-button-dark" href="kanji.html">'
+            '한자 확장 가이드 보기',
+            html,
+        )
+        self.assertNotIn("한자 덱도 필요하신가요?", html)
         self.assertNotIn("내가 선택한 구성", html)
         self.assertLess(html.index('id="verify"'), html.index('id="kanji"'))
-        self.assertLess(html.index('id="sync"'), html.index('id="kanji"'))
+        self.assertLess(html.index('id="kanji"'), html.index('id="sync"'))
         self.assertIn("약 0.85GB", html)
         self.assertNotIn("QUICK START", html)
+        css = (SITE / "assets" / "site.css").read_text(encoding="utf-8")
+        self.assertNotIn(".v2-optional-section", css)
+        self.assertNotIn(".v2-guide-toc-subtitle", css)
+
+    def test_kanji_guide_is_beginner_complete_and_private_by_default(self) -> None:
+        html = (SITE / "kanji.html").read_text(encoding="utf-8")
+        parser = self.parsers["kanji.html"]
+        self.assertIn(
+            '<p class="v2-kicker"><span></span>선택 확장</p>',
+            html,
+        )
+        self.assertNotIn(
+            '<p class="v2-kicker"><span></span>선택 확장 · v',
+            html,
+        )
+        for section_id in (
+            "why",
+            "prepare",
+            "pdfs",
+            "builder",
+            "run",
+            "finish",
+            "trouble",
+            "privacy",
+        ):
+            self.assertIn(section_id, parser.ids)
+        for token in (
+            "일상무따 한자 확장",
+            "초심자용 만들기 가이드",
+            "한글 뜻이 든 완성본을 배포하지 않습니다",
+            "1권 공식 자료 페이지",
+            "2권 공식 자료 페이지",
+            "모두 압축 풀기",
+            "ZIP 안에서 바로 실행하지 마세요",
+            "Mac에서 한자 확장 만들기.command",
+            "Windows에서 한자 확장 만들기.cmd",
+            "첫 번째 창에서 1권 PDF",
+            "두 번째 창에서 2권 PDF",
+            "한글이나 띄어쓰기가 있는 폴더",
+            f"JLPT-MAX-kanji-addon-{RELEASE_VERSION}.apkg",
+            "kanji-builder.log",
+            "PDF와 완성 APKG는 사용자 컴퓨터 안에서만",
+        ):
+            self.assertIn(token, html)
+        self.assertNotIn("PDF 두 개를 고르면", html)
+        self.assertNotIn("한자 확장이 완성됩니다.", html)
+        self.assertNotIn("PDF 2개를 선택하면", html)
+        self.assertIn('role="tab"', html)
+        self.assertIn('aria-controls="kanji-run-panel-macos"', html)
+        self.assertIn('aria-controls="kanji-run-panel-windows"', html)
+        self.assertIn(
+            f"JLPT-MAX-kanji-builder-{RELEASE_VERSION}.zip",
+            html,
+        )
+        self.assertNotIn("./scripts/build-kanji-addon.sh", html)
+        self.assertNotIn("build-kanji-addon.ps1", html)
+        self.assertNotIn("Python 3.13", html)
+        self.assertNotIn("상권.pdf", html)
+        self.assertLess(html.index('id="pdfs"'), html.index('id="builder"'))
+        self.assertLess(html.index('id="builder"'), html.index('id="run"'))
+        self.assertLess(html.index('id="run"'), html.index('id="finish"'))
+        css = (SITE / "assets" / "site.css").read_text(encoding="utf-8")
+        faq_summary = re.search(r"\.v2-faq summary\s*\{([^}]+)\}", css)
+        if faq_summary is None:
+            self.fail("missing FAQ summary styles")
+        self.assertIn("display: block;", faq_summary.group(1))
+        self.assertIn("padding: 25px 48px 25px 4px;", faq_summary.group(1))
+        self.assertNotIn("grid-template-columns", faq_summary.group(1))
+
+    def test_mobile_primary_nav_has_five_columns_in_both_designs(self) -> None:
+        for filename in ("site.css", "showcase.css"):
+            css = (SITE / "assets" / filename).read_text(encoding="utf-8")
+            with self.subTest(filename=filename):
+                self.assertIn(
+                    "grid-template-columns: repeat(5, minmax(0, 1fr));",
+                    css,
+                )
 
     def test_install_page_links_only_to_official_anki_apps(self) -> None:
         html = (SITE / "install-anki.html").read_text(encoding="utf-8")
@@ -468,10 +591,34 @@ class PublicSiteTests(unittest.TestCase):
             )
         )
         version = release["product_version"]
-        core = release["artifacts"][f"JLPT-MAX-Deck-{version}.apkg"]
+        core_filename = f"JLPT-MAX-Deck-{version}.apkg"
+        core = release["artifacts"][core_filename]
+        direct_core_url = (
+            "https://github.com/truthyblue/jlpt-max-deck/releases/"
+            f"download/v{version}/{core_filename}"
+        )
         self.assertIn(core["sha256"], html)
         self.assertIn(
             '기본 덱 다시 받기 <svg class="button-download-icon"',
+            html,
+        )
+        self.assertEqual(html.count(direct_core_url), 2)
+        self.assertIn(
+            f"v{version} 기본 덱 받기 "
+            '<svg class="button-download-icon"',
+            html,
+        )
+        self.assertIn(
+            'class="v2-button v2-button-ghost" '
+            f'href="https://github.com/truthyblue/jlpt-max-deck/'
+            f'releases/tag/v{version}"',
+            html,
+        )
+        self.assertNotIn("releases/download/v1.0.0/", html)
+        self.assertIn(
+            'class="v2-button v2-button-ghost" '
+            'href="https://github.com/truthyblue/jlpt-max-deck/'
+            'releases/tag/v1.0.0"',
             html,
         )
         self.assertIn('class="brand v2-footer-brand"', html)
@@ -483,21 +630,28 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn('class="v2-release-history"', html)
         self.assertIn("v1.0.1 GitHub Release", html)
         self.assertIn("v1.0.0 GitHub Release", html)
-        self.assertIn("현재 · 교정판", html)
-        self.assertIn("최초 공개", html)
+        self.assertIn("<span>최신</span>", html)
+        self.assertNotIn("현재 · 교정판", html)
+        self.assertNotIn("최초 공개", html)
         self.assertIn("종합 실전 학습 기록만 초기화됩니다.", html)
         self.assertIn("미사용 미디어를 삭제해 저장 공간을 확보합니다.", html)
         self.assertIn("도구 → 미디어 검사", html)
         self.assertIn("휴지통을 비워야 실제 여유 공간이 생깁니다.", html)
-        self.assertIn("<h2>한자 확장 빌드가 안돼요.</h2>", html)
-        self.assertIn("한자 확장 빌드 가이드", html)
+        self.assertIn("<h2>한자 확장을 만들 수 없어요.</h2>", html)
+        self.assertIn("한자 확장 만들기 전체 가이드", html)
         for build_error in (
-            "Python 또는 <code>uv</code> 오류가 나요.",
+            "더블클릭할 실행 파일이 보이지 않아요.",
+            "필요한 프로그램을 받지 못했다고 나와요.",
             "<code>PDF hash</code> 또는 <code>page count</code> 오류가 나요.",
             "<code>alignment</code> 오류가 나요.",
-            "<code>output root must be absent or empty</code> 오류가 나요.",
+            "PDF 선택창을 취소했어요.",
+            "완성 파일을 다시 만들고 싶어요.",
         ):
             self.assertIn(build_error, html)
+        self.assertIn("kanji-builder.log", html)
+        self.assertNotIn("Python 3.13", html)
+        self.assertNotIn("PowerShell", html)
+        self.assertNotIn("output root must be absent or empty", html)
         self.assertNotIn("한자 확장 문제는 PDF와 빌더 버전을 맞춥니다.", html)
         self.assertIn("<h2>자주 묻는 질문</h2>", html)
         self.assertIn("<h2>오류를 제보하고 싶어요.</h2>", html)
@@ -506,6 +660,23 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn('id="update"', html)
         self.assertNotIn("짧게 답합니다.", html)
         self.assertNotIn("민감한 원본 없이 재현 정보를 보냅니다.", html)
+
+    def test_latest_release_feed_matches_the_closed_release_pin(self) -> None:
+        release = json.loads(
+            (ROOT / "config" / "public-release.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        feed = json.loads(
+            (SITE / "latest-release.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            feed,
+            {
+                "latest_version": release["product_version"],
+                "schema_version": 1,
+            },
+        )
 
     def test_social_card_matches_current_direct_release(self) -> None:
         source = (SITE / "assets" / "social-card.svg").read_text(encoding="utf-8")
@@ -610,6 +781,18 @@ class PublicSiteTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary) / "pages"
             module.prepare_site(SITE, output)
+            self.assertEqual(
+                json.loads(
+                    (output / "latest-release.json").read_text(
+                        encoding="utf-8"
+                    )
+                ),
+                json.loads(
+                    (SITE / "latest-release.json").read_text(
+                        encoding="utf-8"
+                    )
+                ),
+            )
             for name in PAGES:
                 html = (output / name).read_text(encoding="utf-8")
                 with self.subTest(page=name):
