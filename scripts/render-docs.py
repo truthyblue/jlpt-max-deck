@@ -52,6 +52,10 @@ TEMPLATE_OUTPUTS: tuple[tuple[PurePosixPath, PurePosixPath], ...] = (
         PurePosixPath("site/install-anki.html"),
     ),
     (PurePosixPath("site/kanji.html.j2"), PurePosixPath("site/kanji.html")),
+    (
+        PurePosixPath("site/latest-release.json.j2"),
+        PurePosixPath("site/latest-release.json"),
+    ),
     (PurePosixPath("site/support.html.j2"), PurePosixPath("site/support.html")),
 )
 
@@ -100,6 +104,10 @@ def _load_release_history(
     }
     releases: list[dict[str, Any]] = []
     for index, raw in enumerate(raw_releases):
+        label = raw.get("label") if isinstance(raw, dict) else None
+        label_is_valid = label is None or (
+            isinstance(label, str) and bool(label.strip())
+        )
         if (
             not isinstance(raw, dict)
             or set(raw) != expected_keys
@@ -113,8 +121,7 @@ def _load_release_history(
             or not isinstance(raw.get("date"), str)
             or re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", raw["date"])
             is None
-            or not isinstance(raw.get("label"), str)
-            or not raw["label"].strip()
+            or not label_is_valid
             or not isinstance(raw.get("migration"), str)
             or not raw["migration"].strip()
             or not isinstance(raw.get("summary"), str)

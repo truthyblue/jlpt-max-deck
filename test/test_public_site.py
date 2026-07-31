@@ -581,10 +581,34 @@ class PublicSiteTests(unittest.TestCase):
             )
         )
         version = release["product_version"]
-        core = release["artifacts"][f"JLPT-MAX-Deck-{version}.apkg"]
+        core_filename = f"JLPT-MAX-Deck-{version}.apkg"
+        core = release["artifacts"][core_filename]
+        direct_core_url = (
+            "https://github.com/truthyblue/jlpt-max-deck/releases/"
+            f"download/v{version}/{core_filename}"
+        )
         self.assertIn(core["sha256"], html)
         self.assertIn(
             '기본 덱 다시 받기 <svg class="button-download-icon"',
+            html,
+        )
+        self.assertEqual(html.count(direct_core_url), 2)
+        self.assertIn(
+            f"v{version} 기본 덱 받기 "
+            '<svg class="button-download-icon"',
+            html,
+        )
+        self.assertIn(
+            'class="v2-button v2-button-ghost" '
+            f'href="https://github.com/truthyblue/jlpt-max-deck/'
+            f'releases/tag/v{version}"',
+            html,
+        )
+        self.assertNotIn("releases/download/v1.0.0/", html)
+        self.assertIn(
+            'class="v2-button v2-button-ghost" '
+            'href="https://github.com/truthyblue/jlpt-max-deck/'
+            'releases/tag/v1.0.0"',
             html,
         )
         self.assertIn('class="brand v2-footer-brand"', html)
@@ -596,8 +620,9 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn('class="v2-release-history"', html)
         self.assertIn("v1.0.1 GitHub Release", html)
         self.assertIn("v1.0.0 GitHub Release", html)
-        self.assertIn("현재 · 교정판", html)
-        self.assertIn("최초 공개", html)
+        self.assertIn("<span>최신</span>", html)
+        self.assertNotIn("현재 · 교정판", html)
+        self.assertNotIn("최초 공개", html)
         self.assertIn("종합 실전 학습 기록만 초기화됩니다.", html)
         self.assertIn("미사용 미디어를 삭제해 저장 공간을 확보합니다.", html)
         self.assertIn("도구 → 미디어 검사", html)
@@ -625,6 +650,23 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn('id="update"', html)
         self.assertNotIn("짧게 답합니다.", html)
         self.assertNotIn("민감한 원본 없이 재현 정보를 보냅니다.", html)
+
+    def test_latest_release_feed_matches_the_closed_release_pin(self) -> None:
+        release = json.loads(
+            (ROOT / "config" / "public-release.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        feed = json.loads(
+            (SITE / "latest-release.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            feed,
+            {
+                "latest_version": release["product_version"],
+                "schema_version": 1,
+            },
+        )
 
     def test_social_card_matches_current_direct_release(self) -> None:
         source = (SITE / "assets" / "social-card.svg").read_text(encoding="utf-8")
@@ -729,6 +771,18 @@ class PublicSiteTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary) / "pages"
             module.prepare_site(SITE, output)
+            self.assertEqual(
+                json.loads(
+                    (output / "latest-release.json").read_text(
+                        encoding="utf-8"
+                    )
+                ),
+                json.loads(
+                    (SITE / "latest-release.json").read_text(
+                        encoding="utf-8"
+                    )
+                ),
+            )
             for name in PAGES:
                 html = (output / name).read_text(encoding="utf-8")
                 with self.subTest(page=name):

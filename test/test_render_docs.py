@@ -43,6 +43,9 @@ class DocumentationRenderTest(unittest.TestCase):
             "site/install-anki.html"
         ),
         PurePosixPath("site/kanji.html.j2"): PurePosixPath("site/kanji.html"),
+        PurePosixPath("site/latest-release.json.j2"): PurePosixPath(
+            "site/latest-release.json"
+        ),
         PurePosixPath("site/support.html.j2"): PurePosixPath(
             "site/support.html"
         ),
@@ -66,6 +69,8 @@ class DocumentationRenderTest(unittest.TestCase):
             context["release"]["version"],
         )
         self.assertTrue(release_history[0]["current"])
+        self.assertEqual(release_history[0]["label"], "최신")
+        self.assertIsNone(release_history[1]["label"])
         self.assertEqual(
             1,
             sum(bool(item["current"]) for item in release_history),
@@ -133,6 +138,12 @@ class DocumentationRenderTest(unittest.TestCase):
                 continue
             template = (ROOT / "docs-src" / source).read_text(encoding="utf-8")
             with self.subTest(template=source.as_posix()):
+                if source.name.endswith(".json.j2"):
+                    self.assertNotIn(
+                        '{% extends "_layouts/site.html.j2" %}',
+                        template,
+                    )
+                    continue
                 if source == PurePosixPath("site/index.html.j2"):
                     self.assertNotIn(
                         '{% extends "_layouts/site.html.j2" %}',
@@ -189,6 +200,12 @@ class DocumentationRenderTest(unittest.TestCase):
         ):
             with self.subTest(reference=reference):
                 self.assertIn(reference, sources)
+        privacy = (
+            ROOT / "docs-src/docs/privacy-and-licensing.md.j2"
+        ).read_text(encoding="utf-8")
+        self.assertIn("덱 카드의 최신 버전 확인", privacy)
+        self.assertIn("PDF·카드 내용·학습", privacy)
+        self.assertIn("접속 IP와 브라우저", privacy)
 
 
 if __name__ == "__main__":

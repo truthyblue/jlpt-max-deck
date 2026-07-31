@@ -94,7 +94,7 @@
           <ol class="v2-release-history">{% for item in release_history %}
             <li class="v2-release-entry{% if item.current %} is-current{% endif %}">
               <header>
-                <div><strong>v{{ item.version }}</strong><span>{{ item.label }}</span></div>
+                <div><strong>v{{ item.version }}</strong>{% if item.label %}<span>{{ item.label }}</span>{% endif %}</div>
                 <time datetime="{{ item.date }}">{{ item.date }}</time>
               </header>
               <h3>{{ item.summary }}</h3>
@@ -102,7 +102,16 @@
                 <li>{{ change }}</li>{% endfor %}
               </ul>
               <p class="v2-release-migration"><strong>업데이트 안내</strong>{{ item.migration }}</p>
-              <a class="v2-release-link" href="{{ product.repository_url }}/releases/tag/v{{ item.version }}" target="_blank" rel="noopener noreferrer">v{{ item.version }} GitHub Release <span aria-hidden="true">↗</span></a>
+{% if item.current %}
+              <div class="v2-hero-actions">
+                <a class="v2-button v2-button-dark" href="{{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.core.filename }}">v{{ item.version }} 기본 덱 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a>
+                <a class="v2-button v2-button-ghost" href="{{ product.repository_url }}/releases/tag/v{{ item.version }}" target="_blank" rel="noopener noreferrer">v{{ item.version }} GitHub Release <span aria-hidden="true">↗</span></a>
+              </div>
+{% else %}
+              <div class="v2-hero-actions">
+                <a class="v2-button v2-button-ghost" href="{{ product.repository_url }}/releases/tag/v{{ item.version }}" target="_blank" rel="noopener noreferrer">v{{ item.version }} GitHub Release <span aria-hidden="true">↗</span></a>
+              </div>
+{% endif %}
             </li>{% endfor %}
           </ol>
         </section>
