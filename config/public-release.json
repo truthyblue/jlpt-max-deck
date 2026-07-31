@@ -5,12 +5,12 @@
       "sha256": "17fab24dd938c5fb520ba9f2bdee8574858cba2b41be6f0ab7a0ad75701029bc"
     },
     "JLPT-MAX-kanji-builder-1.0.2.zip": {
-      "bytes": 753016,
-      "sha256": "24b73dcb15ccd66d452b840f2d14d0af21f7ea92b86ec41fe903b545c29dc839"
+      "bytes": 753139,
+      "sha256": "cd10d9655fa45eb72a934eeff7b22b29a475e69e9e7c3a5e052df49ef98c635c"
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "6051c0eec1a80447590a532e36893569d718d55e29d180a2707f20d99651691a"
+      "sha256": "cad01c4a0c4b763365a3bb4b4fd0ae807e6ec3e110fcc802994d0f362976d307"
     }
   },
   "core": {
@@ -41,9 +41,9 @@
     "expected_pdf_count": 2,
     "expected_vector_glyphs": 14,
     "output_apkg": "JLPT-MAX-kanji-addon-1.0.2.apkg",
-    "source_hash": "bb8463bd5f7b1f5003df3bbbbe10d1ba0c42671422ffbf5ae94a9e1d71794c31"
+    "source_hash": "39a43f54ed4645db31f53b2a5c7d3e1fe72665711c121854ad92be066eec8f08"
   },
-  "payload_hash": "09f3cba6ead48a0d0bb9af3f77b923119e4cd90a49e995de8b51bacd51dfe6b7",
+  "payload_hash": "f495f6d5cf83fc49249c9a282d6dac768eb7f6ce88e02ecf4e938c1c8900a67a",
   "policy_version": "direct-core-plus-kanji-addon-v1",
   "product_version": "1.0.2",
   "schema_version": 2,
