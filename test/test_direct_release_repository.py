@@ -154,6 +154,13 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
             with self.subTest(source=source[:20]):
                 self.assertIn("0.11.32", source)
                 self.assertIn("build/kanji-addon", source)
+                self.assertIn("kanji-addon-build-report.json", source)
+                self.assertNotIn(
+                    "JLPT-MAX-kanji-addon-1.0.1.apkg",
+                    source,
+                )
+        self.assertIn("ConvertFrom-Json", windows_flow)
+        self.assertIn('report.get("apkg")', mac_flow)
 
     def test_builder_assets_warn_against_direct_install(self) -> None:
         warning = (
@@ -213,13 +220,19 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
 
     def test_readme_leads_with_direct_basic_deck_download(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        release = json.loads(
+            (ROOT / "config" / "public-release.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        names = release_filenames(release["product_version"])
         self.assertIn(
             '<img src="site/assets/brand-lockup.svg" '
             'alt="JLPT MAX Deck" width="560">',
             readme,
         )
         self.assertTrue((ROOT / "site" / "assets" / "brand-lockup.svg").is_file())
-        self.assertIn("JLPT-MAX-Deck-1.0.1.apkg", readme)
+        self.assertIn(names["core_apkg"], readme)
         self.assertNotIn("JLPT-MAX-core", readme)
         self.assertIn(
             "기본 덱은 완성된 APKG 파일입니다",

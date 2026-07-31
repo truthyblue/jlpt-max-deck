@@ -8,23 +8,22 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from typing import NoReturn
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from direct_release_contract import (  # noqa: E402
     KANJI_BUILDER_FILES,
+    POLICY_VERSION,
+    SCHEMA_VERSION,
     kanji_builder_archive_path,
+    release_filenames,
     sha256_file,
     sha256_json,
 )
 
 PIN = ROOT / "config" / "public-release.json"
-EXPECTED_ARTIFACTS = {
-    "JLPT-MAX-Deck-1.0.1.apkg",
-    "JLPT-MAX-kanji-builder-1.0.1.zip",
-    "SHA256SUMS",
-}
 ALLOWED_MP3_FILES = {
     "site/assets/demo-dasu-example-2.mp3",
     "site/assets/demo-dasu-example-3.mp3",
@@ -65,24 +64,31 @@ def _payload_hash(value: object) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
-def _fail(message: str) -> None:
+def _fail(message: str) -> NoReturn:
     raise RuntimeError(message)
 
 
-def _verify_pin() -> None:
-    pin = json.loads(PIN.read_text(encoding="utf-8"))
+def _verify_pin(pin: dict[str, object]) -> None:
     payload = {key: value for key, value in pin.items() if key != "payload_hash"}
+    version = pin.get("product_version")
     if (
-        pin.get("schema_version") != 2
-        or pin.get("policy_version") != "direct-core-plus-kanji-addon-v1"
-        or pin.get("product_version") != "1.0.1"
+        pin.get("schema_version") != SCHEMA_VERSION
+        or pin.get("policy_version") != POLICY_VERSION
+        or not isinstance(version, str)
+        or re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version) is None
         or pin.get("status") != "passed"
         or pin.get("unresolved") != 0
         or pin.get("payload_hash") != _payload_hash(payload)
     ):
         _fail("public release pin is not closed")
+    names = release_filenames(version)
+    expected_artifacts = {
+        names["core_apkg"],
+        names["kanji_builder"],
+        names["checksums"],
+    }
     artifacts = pin.get("artifacts")
-    if not isinstance(artifacts, dict) or set(artifacts) != EXPECTED_ARTIFACTS:
+    if not isinstance(artifacts, dict) or set(artifacts) != expected_artifacts:
         _fail("public release artifact inventory changed")
     for name, record in artifacts.items():
         if (
@@ -92,8 +98,10 @@ def _verify_pin() -> None:
             or SHA256.fullmatch(str(record.get("sha256"))) is None
         ):
             _fail(f"invalid release artifact record: {name}")
-    core = pin.get("core", {})
-    kanji = pin.get("kanji_builder", {})
+    core = pin.get("core")
+    kanji = pin.get("kanji_builder")
+    if not isinstance(core, dict) or not isinstance(kanji, dict):
+        _fail("direct-release logical metadata is missing")
     if (
         core.get("notes") != 13_903
         or core.get("cards") != 20_065
@@ -101,6 +109,7 @@ def _verify_pin() -> None:
         or kanji.get("expected_pdf_count") != 2
         or kanji.get("expected_kanji_notes") != 2_337
         or kanji.get("expected_vector_glyphs") != 14
+        or kanji.get("output_apkg") != names["kanji_addon"]
     ):
         _fail("direct-release logical counts changed")
 
@@ -160,7 +169,7 @@ def main() -> int:
     try:
         pin = json.loads(PIN.read_text(encoding="utf-8"))
         tracked = _tracked_files()
-        _verify_pin()
+        _verify_pin(pin)
         _verify_builder_sources(pin, set(tracked))
         _verify_tracked_boundary(tracked)
     except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as exc:

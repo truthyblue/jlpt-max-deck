@@ -5,7 +5,7 @@
 ## 처음 설치
 
 1. 공부할 기기에 맞는 [Anki 앱](https://truthyblue.github.io/jlpt-max-deck/install-anki.html)을 설치합니다.
-2. [JLPT-MAX-Deck-1.0.1.apkg](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.1/JLPT-MAX-Deck-1.0.1.apkg)를 받습니다.
+2. [JLPT-MAX-Deck-1.0.2.apkg](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.2/JLPT-MAX-Deck-1.0.2.apkg)를 받습니다.
 3. Anki Desktop에서는 **파일 → 가져오기**, 모바일에서는 다운로드한 APKG의
    **열기** 또는 **공유**를 사용합니다.
 4. 약 0.85GB의 미디어 처리가 끝날 때까지
@@ -43,12 +43,12 @@ AnkiWeb 계정이나 동기화 없이도 시작할 수 있습니다.
 업데이트 옵션을 자세히 확인할 수 있는 Anki Desktop 사용을 권합니다. 메뉴 이름은
 Anki 버전과 표시 언어에 따라 조금 다를 수 있습니다.
 
-### 1.0.0에서 1.0.1로 업데이트
+### 1.0.0 사용자의 필수 교정
 
 1. 모든 기기의 동기화를 끝내거나 컬렉션 백업을 만듭니다.
 2. 최상위 `JLPT MAX덱` 전체가 아니라 `JLPT MAX덱::종합 실전`만 삭제합니다.
    그 아래 급수·문제 유형 덱도 함께 삭제되는지 확인합니다.
-3. 새 1.0.1 기본 덱을 아래 가져오기 옵션으로 가져옵니다.
+3. 새 v1.0.2 기본 덱을 아래 가져오기 옵션으로 가져옵니다.
 
 이 절차는 `종합 실전`의 학습 기록만 초기화합니다. `어휘`, `음성`,
 `일상무따`, `참조표`의 카드 ID와 학습 일정은 유지됩니다. 이번 교정 때문에
@@ -71,7 +71,7 @@ N1 `표기` 덱과 기존 카드 위치가 남을 수 있습니다.
 
 APKG 재가져오기는 기존 노트를 갱신하고 새 노트를 추가하지만, 새 Release에서
 없어진 카드를 사용자 컬렉션에서 자동으로 삭제하지는 않습니다. 삭제나 이전이
-있는 버전은 해당 [릴리스 노트](releases/v1.0.1.md)의 추가 절차를
+있는 버전은 해당 [릴리스 노트](releases/v1.0.2.md)의 추가 절차를
 따르세요. 자세한 일반 동작은 [Anki 공식 packaged decks 안내](https://docs.ankiweb.net/importing/packaged-decks.html)를 참고할 수 있습니다.
 
 ## 여러 기기에서 이어서 학습

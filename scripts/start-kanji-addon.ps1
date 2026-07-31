@@ -149,7 +149,20 @@ try {
         throw "한자 확장을 만들지 못했습니다. 선택한 PDF와 오류 내용을 확인해 주세요."
     }
 
-    $Package = Join-Path $OutputRoot "JLPT-MAX-kanji-addon-1.0.1.apkg"
+    $BuildReportPath = Join-Path $OutputRoot "kanji-addon-build-report.json"
+    if (-not (Test-Path -LiteralPath $BuildReportPath -PathType Leaf)) {
+        throw "완성 파일 정보를 찾지 못했습니다."
+    }
+    $BuildReport = Get-Content -LiteralPath $BuildReportPath -Raw -Encoding UTF8 |
+        ConvertFrom-Json
+    $PackageName = [string]$BuildReport.apkg
+    if (
+        [string]::IsNullOrWhiteSpace($PackageName) -or
+        [IO.Path]::GetFileName($PackageName) -ne $PackageName
+    ) {
+        throw "완성 파일 정보가 올바르지 않습니다."
+    }
+    $Package = Join-Path $OutputRoot $PackageName
     if (-not (Test-Path -LiteralPath $Package -PathType Leaf)) {
         throw "완성된 APKG를 찾지 못했습니다."
     }
@@ -158,7 +171,7 @@ try {
     Write-Host "3/3 한자 확장을 완성했습니다."
     Start-Process -FilePath "explorer.exe" -ArgumentList @($OutputRoot)
     [System.Windows.Forms.MessageBox]::Show(
-        "한자 확장을 완성했습니다.`n열린 폴더의 JLPT-MAX-kanji-addon-1.0.1.apkg를 Anki에 가져오세요.",
+        "한자 확장을 완성했습니다.`n열린 폴더의 $PackageName 파일을 Anki에 가져오세요.",
         "JLPT MAX 한자 확장",
         [System.Windows.Forms.MessageBoxButtons]::OK,
         [System.Windows.Forms.MessageBoxIcon]::Information

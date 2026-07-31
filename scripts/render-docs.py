@@ -38,6 +38,10 @@ TEMPLATE_OUTPUTS: tuple[tuple[PurePosixPath, PurePosixPath], ...] = (
         PurePosixPath("docs/releases/v1.0.1.md"),
     ),
     (
+        PurePosixPath("docs/releases/v1.0.2.md.j2"),
+        PurePosixPath("docs/releases/v1.0.2.md"),
+    ),
+    (
         PurePosixPath("docs/troubleshooting.md.j2"),
         PurePosixPath("docs/troubleshooting.md"),
     ),
@@ -95,7 +99,6 @@ def _load_release_history(
         )
     expected_keys = {
         "changes",
-        "current",
         "date",
         "label",
         "migration",
@@ -117,7 +120,6 @@ def _load_release_history(
                 isinstance(change, str) and change.strip()
                 for change in raw["changes"]
             )
-            or not isinstance(raw.get("current"), bool)
             or not isinstance(raw.get("date"), str)
             or re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", raw["date"])
             is None
@@ -135,16 +137,23 @@ def _load_release_history(
             )
         releases.append(dict(raw))
     versions = [str(release["version"]) for release in releases]
+    parsed_versions = [
+        tuple(int(part) for part in version.split("."))
+        for version in versions
+    ]
     if (
         len(versions) != len(set(versions))
-        or versions[0] != current_version
-        or releases[0]["current"] is not True
-        or sum(bool(release["current"]) for release in releases) != 1
+        or parsed_versions != sorted(parsed_versions, reverse=True)
+        or current_version not in versions
     ):
         raise DocumentationRenderError(
             f"{RELEASE_HISTORY} current release does not match {RELEASE_PIN}"
         )
-    return tuple(releases)
+    published = releases[versions.index(current_version) :]
+    for index, release in enumerate(published):
+        release["current"] = index == 0
+        release["label"] = "최신" if index == 0 else release["label"]
+    return tuple(published)
 
 
 def load_context(root: Path = ROOT) -> dict[str, Any]:

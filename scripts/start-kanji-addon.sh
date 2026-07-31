@@ -120,7 +120,22 @@ if [[ "$BUILD_EXIT_CODE" -ne 0 ]]; then
   exit 1
 fi
 
-PACKAGE="$OUTPUT_ROOT/JLPT-MAX-kanji-addon-1.0.1.apkg"
+BUILD_REPORT="$OUTPUT_ROOT/kanji-addon-build-report.json"
+if [[ ! -f "$BUILD_REPORT" ]]; then
+  show_error "완성 파일 정보를 찾지 못했습니다."
+  exit 1
+fi
+
+if ! PACKAGE_NAME="$(
+  "$UV_BIN" run --locked --python 3.13 python -c \
+    'import json, pathlib, sys; report = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8")); name = report.get("apkg"); valid = isinstance(name, str) and bool(name) and pathlib.Path(name).name == name; print(name if valid else "", end=""); raise SystemExit(0 if valid else 1)' \
+    "$BUILD_REPORT"
+)"; then
+  show_error "완성 파일 정보가 올바르지 않습니다."
+  exit 1
+fi
+
+PACKAGE="$OUTPUT_ROOT/$PACKAGE_NAME"
 if [[ ! -f "$PACKAGE" ]]; then
   show_error "완성된 APKG를 찾지 못했습니다."
   exit 1
@@ -129,7 +144,9 @@ fi
 echo
 echo "3/3 한자 확장을 완성했습니다."
 open "$OUTPUT_ROOT"
-/usr/bin/osascript >/dev/null 2>&1 <<'APPLESCRIPT' || true
-display dialog "한자 확장을 완성했습니다.
-열린 폴더의 JLPT-MAX-kanji-addon-1.0.1.apkg를 Anki에 가져오세요." with title "JLPT MAX 한자 확장" buttons {"확인"} default button "확인" with icon note
+/usr/bin/osascript - "$PACKAGE_NAME" >/dev/null 2>&1 <<'APPLESCRIPT' || true
+on run argv
+  display dialog "한자 확장을 완성했습니다.
+열린 폴더의 " & (item 1 of argv) & "를 Anki에 가져오세요." with title "JLPT MAX 한자 확장" buttons {"확인"} default button "확인" with icon note
+end run
 APPLESCRIPT

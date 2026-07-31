@@ -13,6 +13,10 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
+RELEASE_PIN = json.loads(
+    (ROOT / "config" / "public-release.json").read_text(encoding="utf-8")
+)
+RELEASE_VERSION = RELEASE_PIN["product_version"]
 PAGES = (
     "index.html",
     "getting-started.html",
@@ -212,9 +216,12 @@ class PublicSiteTests(unittest.TestCase):
 
     def test_home_explains_direct_core_and_optional_kanji(self) -> None:
         html = (SITE / "index.html").read_text(encoding="utf-8")
-        self.assertIn("JLPT-MAX-Deck-1.0.1.apkg", html)
+        self.assertIn(f"JLPT-MAX-Deck-{RELEASE_VERSION}.apkg", html)
         self.assertNotIn("JLPT-MAX-core", html)
-        self.assertIn("JLPT-MAX-kanji-builder-1.0.1.zip", html)
+        self.assertIn(
+            f"JLPT-MAX-kanji-builder-{RELEASE_VERSION}.zip",
+            html,
+        )
         self.assertIn('id="kanji-builder-download-link"', html)
         self.assertNotIn('id="materials-doc-link"', html)
         self.assertIn('id="kanji-guide-link"', html)
@@ -491,7 +498,7 @@ class PublicSiteTests(unittest.TestCase):
             "첫 번째 창에서 1권 PDF",
             "두 번째 창에서 2권 PDF",
             "한글이나 띄어쓰기가 있는 폴더",
-            "JLPT-MAX-kanji-addon-1.0.1.apkg",
+            f"JLPT-MAX-kanji-addon-{RELEASE_VERSION}.apkg",
             "kanji-builder.log",
             "PDF와 완성 APKG는 사용자 컴퓨터 안에서만",
         ):
@@ -502,7 +509,10 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn('role="tab"', html)
         self.assertIn('aria-controls="kanji-run-panel-macos"', html)
         self.assertIn('aria-controls="kanji-run-panel-windows"', html)
-        self.assertIn("JLPT-MAX-kanji-builder-1.0.1.zip", html)
+        self.assertIn(
+            f"JLPT-MAX-kanji-builder-{RELEASE_VERSION}.zip",
+            html,
+        )
         self.assertNotIn("./scripts/build-kanji-addon.sh", html)
         self.assertNotIn("build-kanji-addon.ps1", html)
         self.assertNotIn("Python 3.13", html)

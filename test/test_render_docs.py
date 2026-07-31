@@ -31,6 +31,9 @@ class DocumentationRenderTest(unittest.TestCase):
         PurePosixPath("docs/releases/v1.0.1.md.j2"): PurePosixPath(
             "docs/releases/v1.0.1.md"
         ),
+        PurePosixPath("docs/releases/v1.0.2.md.j2"): PurePosixPath(
+            "docs/releases/v1.0.2.md"
+        ),
         PurePosixPath("docs/troubleshooting.md.j2"): PurePosixPath(
             "docs/troubleshooting.md"
         ),
@@ -92,6 +95,19 @@ class DocumentationRenderTest(unittest.TestCase):
                 pin_artifacts[filename],
                 {"bytes": record["bytes"], "sha256": record["sha256"]},
             )
+
+    def test_staged_release_history_activates_with_matching_pin(self) -> None:
+        release_history = RENDER._load_release_history(
+            ROOT,
+            current_version="1.0.2",
+        )
+
+        self.assertEqual(release_history[0]["version"], "1.0.2")
+        self.assertTrue(release_history[0]["current"])
+        self.assertEqual(release_history[0]["label"], "최신")
+        self.assertEqual(release_history[1]["version"], "1.0.1")
+        self.assertFalse(release_history[1]["current"])
+        self.assertIsNone(release_history[1]["label"])
 
     def test_tracked_outputs_match_rendered_sources(self) -> None:
         rendered = dict(RENDER.render_documents(ROOT))

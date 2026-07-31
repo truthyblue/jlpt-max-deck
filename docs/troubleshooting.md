@@ -17,24 +17,24 @@
 
 파일 이름과 크기가 현재 Release와 맞는지 확인한 뒤 SHA-256을 비교하세요.
 
-- 파일: `JLPT-MAX-Deck-1.0.1.apkg`
+- 파일: `JLPT-MAX-Deck-1.0.2.apkg`
 - 크기: 약 0.85GB
-- SHA-256: `0a6d2583e7996e0d13dc9bba9f923f702e7064c4875d3d3f2ec8406b70abd5d4`
+- SHA-256: `77d73a6df01588ffd7d9622aa102973aa9b02cddf6a910f73741afc5430e99a3`
 
 macOS:
 
 ```bash
-shasum -a 256 JLPT-MAX-Deck-1.0.1.apkg
+shasum -a 256 JLPT-MAX-Deck-1.0.2.apkg
 ```
 
 Windows PowerShell:
 
 ```powershell
-Get-FileHash .\JLPT-MAX-Deck-1.0.1.apkg -Algorithm SHA256
+Get-FileHash .\JLPT-MAX-Deck-1.0.2.apkg -Algorithm SHA256
 ```
 
-같은 v1.0.1의
-[SHA256SUMS](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.1/SHA256SUMS)와
+같은 v1.0.2의
+[SHA256SUMS](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.2/SHA256SUMS)와
 결과가 다르면 파일을 삭제하고 안정적인 네트워크에서 다시 받으세요.
 
 ### 기본 덱에 `일상무따`가 없습니다
@@ -87,7 +87,7 @@ ZIP 미리보기 안이 아니라 압축을 푼 새 폴더를 여세요. Windows
 
 ### `kanji skeleton/PDF ... alignment` 오류
 
-같은 v1.0.1의 빌더와 지원 PDF가 서로 맞지 않거나, PDF 표를 한자 골격과
+같은 v1.0.2의 빌더와 지원 PDF가 서로 맞지 않거나, PDF 표를 한자 골격과
 유일하게 대응하지 못했다는 뜻입니다. 빌더 ZIP을 새 폴더에 다시 풀고 첫 선택창에서
 1권(상권), 두 번째 선택창에서 2권(하권)을 고르세요.
 
@@ -111,7 +111,7 @@ APKG가 필요하면 다른 폴더에 복사해 둔 뒤 **다시 만들기**를 
 
 빌더 폴더의 `kanji-builder.log`를 확인하세요. 전체 로그에는 개인 경로가 들어갈
 수 있으므로 공개 issue에 파일을 그대로 첨부하지 마세요. 개인 경로를 지운 오류
-문구, 사용한 v1.0.1, 운영체제와 멈춘 단계만 알려주세요.
+문구, 사용한 v1.0.2, 운영체제와 멈춘 단계만 알려주세요.
 
 ## 제보할 때
 
