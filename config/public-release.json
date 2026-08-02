@@ -1,16 +1,16 @@
 {
   "artifacts": {
     "JLPT-MAX-Deck-1.0.3.apkg": {
-      "bytes": 861567128,
-      "sha256": "f96273807a558d336aa01d7c0778d71cb047366fc9acfb2b2068f91e40fbab9d"
+      "bytes": 861566527,
+      "sha256": "ee715dcd9a197e6abdb0221df45d7ee168f5b91489f741ab81d58e00ae495ad7"
     },
     "JLPT-MAX-kanji-builder-1.0.3.zip": {
-      "bytes": 756643,
-      "sha256": "541b71dd9ce8b2dd107c7f9f40b41b8ebb087409549e06a6de67b464d073f114"
+      "bytes": 757005,
+      "sha256": "de52ffbdf87328a177ae025123712a14874ff8549a7bd1a3c81b21f759143515"
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "f49e07a854fbe8817380d7a88bde4a9d5447577e09d1be07a23421a09674dbf0"
+      "sha256": "008c0ff202adb913fad3e1fcea56bbf4ed8966cbf81f995a7ee1dd2edb140a94"
     }
   },
   "core": {
@@ -41,9 +41,9 @@
     "expected_pdf_count": 2,
     "expected_vector_glyphs": 14,
     "output_apkg": "JLPT-MAX-kanji-addon-1.0.3.apkg",
-    "source_hash": "d713fa29681cc25b98fd4554eeeb7f375131ec3223f0458e1edd497afc1e69d1"
+    "source_hash": "d08c2b5fc38b6dab3986ebf6c7b23fc4ac91ecab16a1a819ea17892edf5370d3"
   },
-  "payload_hash": "0e4005b8907b59d3e782f881a22ec72e79624e407a6146792e721935e43fc682",
+  "payload_hash": "9ba380b728aee0fb055a92afbeaccc7e1fb79f766297a6eb72204dd5c246925a",
   "policy_version": "direct-core-plus-kanji-addon-v1",
   "product_version": "1.0.3",
   "schema_version": 2,
