@@ -1,16 +1,16 @@
 {
   "artifacts": {
-    "JLPT-MAX-Deck-1.0.2.apkg": {
-      "bytes": 854996998,
-      "sha256": "17fab24dd938c5fb520ba9f2bdee8574858cba2b41be6f0ab7a0ad75701029bc"
+    "JLPT-MAX-Deck-1.0.3.apkg": {
+      "bytes": 861551673,
+      "sha256": "a06e68e2928674d9156e9e472ed9f0e40c3d1b6da904f5b0b8d22624f5998f4e"
     },
-    "JLPT-MAX-kanji-builder-1.0.2.zip": {
-      "bytes": 753139,
-      "sha256": "cd10d9655fa45eb72a934eeff7b22b29a475e69e9e7c3a5e052df49ef98c635c"
+    "JLPT-MAX-kanji-builder-1.0.3.zip": {
+      "bytes": 754913,
+      "sha256": "36f9f0b8784bcae24f4c4591ada99beb535b4823ca352d022032cdf2673cddd0"
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "cad01c4a0c4b763365a3bb4b4fd0ae807e6ec3e110fcc802994d0f362976d307"
+      "sha256": "2d16c3f5195e538dcc872e84ffa100b6ae487827e8080c8d7704a9bd00a2382a"
     }
   },
   "core": {
@@ -27,25 +27,25 @@
       "JLPT MAX덱::종합 실전",
       "JLPT MAX덱::참조표"
     ],
-    "media_files": 17899,
-    "media_hash": "e7597922332e444a87a55d4a38e3ff92bc2369750420b847d9aba647ee9fb009",
+    "media_files": 18051,
+    "media_hash": "ca30374d945995a6c9062235c7b42dcd7b24bf993b443dfc5a856ec57afbe77f",
     "notes": 13903
   },
   "full_source": {
     "cards": 22402,
     "notes": 16240,
-    "sha256": "85847bdf35153128072b0877a3af717ab45585713eb99e2d9111252de1c19d33"
+    "sha256": "57a4dde614805b0c3f2d0e2b577d832b44b383c6be663eb8795ab3d1ee22aea0"
   },
   "kanji_builder": {
     "expected_kanji_notes": 2337,
     "expected_pdf_count": 2,
     "expected_vector_glyphs": 14,
-    "output_apkg": "JLPT-MAX-kanji-addon-1.0.2.apkg",
-    "source_hash": "39a43f54ed4645db31f53b2a5c7d3e1fe72665711c121854ad92be066eec8f08"
+    "output_apkg": "JLPT-MAX-kanji-addon-1.0.3.apkg",
+    "source_hash": "d713fa29681cc25b98fd4554eeeb7f375131ec3223f0458e1edd497afc1e69d1"
   },
-  "payload_hash": "f495f6d5cf83fc49249c9a282d6dac768eb7f6ce88e02ecf4e938c1c8900a67a",
+  "payload_hash": "79cebd7c573158f38368d49a8285f31b331b222cb8c8958f2c8305bc8f5c2c64",
   "policy_version": "direct-core-plus-kanji-addon-v1",
-  "product_version": "1.0.2",
+  "product_version": "1.0.3",
   "schema_version": 2,
   "status": "passed",
   "unresolved": 0

@@ -1,0 +1,67 @@
+# v1.0.3
+
+1.0.3은 공개 1.0.2의 노트·카드 구조와 사용법은 유지하면서, 학습자가 실제로
+외울 뜻과 그 뜻을 보여 주는 예문을 더 정확하고 분명하게 다듬은 콘텐츠
+업데이트입니다.
+
+## 1.0.2 사용자의 업데이트 절차
+
+1. 모든 기기의 Anki 동기화를 끝내거나 컬렉션 백업을 확인합니다.
+2. `{{ release.artifacts.core.filename }}`를 기존 덱을 삭제하지 않고 가져옵니다.
+3. **학습 진행 상태 가져오기**는 끄고, **기존 노트 업데이트**와
+   **노트 유형 병합**은 켭니다.
+
+기존 어휘·음성·실전 문제·참조표의 카드와 학습 기록은 그대로 유지됩니다.
+카드 템플릿과 조작 방법도 1.0.2와 같습니다.
+
+이미 만든 일상무따 한자 확장도 계속 사용할 수 있습니다. 다만 한자 카드의
+연결 어휘 89개에서 이번에 바뀐 뜻까지 보고 싶다면 같은 v1.0.3 한자 빌더로
+확장을 다시 만든 뒤 기존 컬렉션에 가져오세요. 한자 카드의 학습 기록은
+유지됩니다.
+
+## 이번 업데이트
+
+- 어휘 208개의 학습용 뜻을 실제 쓰임과 의미 구분이 더 잘 드러나도록
+  고쳤습니다.
+- 158개 단어에는 빠져 있던 독립 의미 165개를 추가했습니다. 새 의미에도
+  그 뜻을 직접 보여 주는 예문과 음성을 붙였습니다.
+- 50개 단어는 뜻의 범위를 좁히거나 자연스러운 한국어로 다듬었습니다.
+  예를 들어 `克明`은 `정밀하다`에서 `세세하고 꼼꼼하다`로 바뀝니다.
+- 의미와 함께 바뀌어야 하는 예문·번역·활용·관련어·사용 정보와 실전 문제
+  77개의 한국어 정답 표시를 같은 기준으로 맞췄습니다.
+- 최종 예문은 6,681개이며, 모든 어휘 6,018개에 적어도 하나의 예문이 있습니다.
+
+## 학습자가 받는 것
+
+- `{{ release.artifacts.core.filename }}`: 어휘·음성·실전 문제·참조표가 들어 있는 완성 APKG
+- `{{ release.artifacts.kanji_builder.filename }}`: 지원 PDF 2개로 개인용 한자 확장을 만드는 선택형 빌더
+- `{{ release.artifacts.checksums.filename }}`: 위 Release 자산의 SHA-256 목록
+- `public-release.json`: 릴리스 수량·해시·정책을 묶은 검증 pin
+
+## 검증 결과
+
+| 가져온 구성 | 노트 | 카드 | 미디어 |
+| --- | ---: | ---: | ---: |
+| 기본 덱 | {{ product.deck.core_notes | number }} | {{ product.deck.core_cards | number }} | {{ product.deck.core_media | number }} |
+| 선택형 한자 확장 | {{ product.deck.kanji_notes | number }} | {{ product.deck.kanji_notes | number }} | {{ product.deck.static_media }} |
+| 두 APKG 합산 | {{ product.deck.total_notes | number }} | {{ product.deck.total_cards | number }} | {{ product.deck.total_media | number }} |
+
+공개 1.0.2와 비교해 기본 덱의 13,903개 노트와 20,065개 카드는 모두
+그대로 남았습니다. 카드 템플릿은 버전 표기 외에 기능 변화가 없고, 새로 생기거나
+삭제된 기본 덱 노트도 없습니다.
+
+## Release 자산 검증값
+
+| 파일 | 크기 | SHA-256 |
+| --- | ---: | --- |
+| `{{ release.artifacts.core.filename }}` | {{ release.artifacts.core.bytes | number }} bytes | `{{ release.artifacts.core.sha256 }}` |
+| `{{ release.artifacts.kanji_builder.filename }}` | {{ release.artifacts.kanji_builder.bytes | number }} bytes | `{{ release.artifacts.kanji_builder.sha256 }}` |
+| `{{ release.artifacts.checksums.filename }}` | {{ release.artifacts.checksums.bytes | number }} bytes | `{{ release.artifacts.checksums.sha256 }}` |
+
+기본 덱 가져오기는 Anki Desktop·AnkiMobile·AnkiDroid에서 사용할 수 있습니다.
+한자 빌더 Release 검증 범위는 macOS {{ product.requirements.macos_minimum }}+와
+Windows {{ product.requirements.windows_architecture }}입니다.
+
+저장소와 Release에는 출판사 PDF·페이지 이미지·추출 원문을 넣지 않습니다.
+자세한 사용 절차는 [README](../../README.md), 재배포와 권리 경계는
+[개인정보·저작권·라이선스](../privacy-and-licensing.md)를 확인하세요.
