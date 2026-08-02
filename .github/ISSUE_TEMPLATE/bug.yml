@@ -30,8 +30,8 @@ body:
     id: version
     attributes:
       label: 사용한 버전
-      description: "릴리스 이름(예: v1.0.2)을 적으세요. 한자 확장은 기본 덱과 빌더 ZIP의 버전이 같은지도 확인해 주세요."
-      placeholder: v1.0.2
+      description: "릴리스 이름(예: v1.0.3)을 적으세요. 한자 확장은 기본 덱과 빌더 ZIP의 버전이 같은지도 확인해 주세요."
+      placeholder: v1.0.3
     validations:
       required: true
 

@@ -10,22 +10,22 @@
     "reference_notes": 9,
     "total_notes": 16240,
     "total_cards": 22402,
-    "total_media": 17913,
+    "total_media": 18065,
     "static_media": 14,
     "core_notes": 13903,
     "core_cards": 20065,
-    "core_media": 17899,
-    "example_count": 6517,
+    "core_media": 18051,
+    "example_count": 6681,
     "coverage": {
       "vocabulary_with_examples": 6018,
-      "conjugation_notes": 3019,
-      "related_word_notes": 1213,
-      "related_word_links": 1507,
+      "conjugation_notes": 3026,
+      "related_word_notes": 1222,
+      "related_word_links": 1517,
       "word_formation_notes": 25,
-      "usage_register_notes": 88,
-      "usage_register_items": 93,
-      "usage_detail_notes": 92,
-      "usage_detail_items": 94,
+      "usage_register_notes": 91,
+      "usage_register_items": 96,
+      "usage_detail_notes": 89,
+      "usage_detail_items": 90,
       "auxiliary_form_cards": 105
     },
     "study_priority": {
@@ -47,8 +47,8 @@
     "python": "3.13",
     "macos_minimum": "12",
     "windows_architecture": "x64",
-    "approximate_apkg_size_mb": 855,
-    "approximate_apkg_size_gb": "0.85"
+    "approximate_apkg_size_mb": 862,
+    "approximate_apkg_size_gb": "0.86"
   },
   "study_defaults": {
     "desired_retention": "0.90",
