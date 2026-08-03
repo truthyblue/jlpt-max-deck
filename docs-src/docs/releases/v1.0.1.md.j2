@@ -37,9 +37,9 @@ APKG만 바로 덮어쓰면 1.0.0의 없어진 N1 `표기` 하위 덱과 기존 
 
 | 가져온 구성 | 노트 | 카드 | 미디어 |
 | --- | ---: | ---: | ---: |
-| 기본 덱 | {{ product.deck.core_notes | number }} | {{ product.deck.core_cards | number }} | {{ product.deck.core_media | number }} |
-| 선택형 한자 확장 | {{ product.deck.kanji_notes | number }} | {{ product.deck.kanji_notes | number }} | {{ product.deck.static_media }} |
-| 두 APKG 합산 | {{ product.deck.total_notes | number }} | {{ product.deck.total_cards | number }} | {{ product.deck.total_media | number }} |
+| 기본 덱 | 13,903 | 20,065 | 17,899 |
+| 선택형 한자 확장 | 2,337 | 2,337 | 14 |
+| 두 APKG 합산 | 16,240 | 22,402 | 17,913 |
 
 공개 1.0.0 기본 덱을 임시 컬렉션에 가져온 뒤 `종합 실전`만 삭제하고 1.0.1을
 가져오는 회귀 검증에서, 나머지 카드 ID와 학습 일정이 보존되고 실전 문제 분포가
@@ -58,5 +58,5 @@ APKG만 바로 덮어쓰면 1.0.0의 없어진 N1 `표기` 하위 덱과 기존 
 Windows {{ product.requirements.windows_architecture }}입니다.
 
 저장소와 Release에는 출판사 PDF·페이지 이미지·추출 원문을 넣지 않습니다.
-자세한 사용 절차는 [README](../../README.md), 재배포와 권리 경계는
-[개인정보·저작권·라이선스](../privacy-and-licensing.md)를 확인하세요.
+자세한 사용 절차는 [README]({{ product.repository_url }}), 재배포와 권리 경계는
+[개인정보·저작권·라이선스]({{ product.repository_url }}/blob/main/docs/privacy-and-licensing.md)를 확인하세요.

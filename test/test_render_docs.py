@@ -34,6 +34,9 @@ class DocumentationRenderTest(unittest.TestCase):
         PurePosixPath("docs/releases/v1.0.2.md.j2"): PurePosixPath(
             "docs/releases/v1.0.2.md"
         ),
+        PurePosixPath("docs/releases/v1.0.3.md.j2"): PurePosixPath(
+            "docs/releases/v1.0.3.md"
+        ),
         PurePosixPath("docs/troubleshooting.md.j2"): PurePosixPath(
             "docs/troubleshooting.md"
         ),
@@ -141,6 +144,16 @@ class DocumentationRenderTest(unittest.TestCase):
                 resolved = (ROOT / relative).parent / unquote(parsed.path)
                 with self.subTest(source=relative.as_posix(), target=target):
                     self.assertTrue(resolved.is_file(), f"missing link: {resolved}")
+
+    def test_release_notes_use_publication_safe_absolute_links(self) -> None:
+        link_pattern = re.compile(r"\[[^]]+\]\(([^)]+)\)")
+        for path in sorted((ROOT / "docs" / "releases").glob("v*.md")):
+            content = path.read_text(encoding="utf-8")
+            for target in link_pattern.findall(content):
+                parsed = urlsplit(target)
+                with self.subTest(source=path.name, target=target):
+                    self.assertIn(parsed.scheme, {"http", "https"})
+                    self.assertTrue(parsed.netloc)
 
     def test_final_newline_normalization_is_deterministic(self) -> None:
         for source in ("value", "value\n", "value\n\n", "value\r\n"):

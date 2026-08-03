@@ -17,24 +17,24 @@
 
 파일 이름과 크기가 현재 Release와 맞는지 확인한 뒤 SHA-256을 비교하세요.
 
-- 파일: `JLPT-MAX-Deck-1.0.2.apkg`
-- 크기: 약 0.85GB
-- SHA-256: `17fab24dd938c5fb520ba9f2bdee8574858cba2b41be6f0ab7a0ad75701029bc`
+- 파일: `JLPT-MAX-Deck-1.0.3.apkg`
+- 크기: 약 0.86GB
+- SHA-256: `08846d902f2bec4bb7afad5e7526273864bb6ef5e9a15379e00e253004e7f7ea`
 
 macOS:
 
 ```bash
-shasum -a 256 JLPT-MAX-Deck-1.0.2.apkg
+shasum -a 256 JLPT-MAX-Deck-1.0.3.apkg
 ```
 
 Windows PowerShell:
 
 ```powershell
-Get-FileHash .\JLPT-MAX-Deck-1.0.2.apkg -Algorithm SHA256
+Get-FileHash .\JLPT-MAX-Deck-1.0.3.apkg -Algorithm SHA256
 ```
 
-같은 v1.0.2의
-[SHA256SUMS](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.2/SHA256SUMS)와
+같은 v1.0.3의
+[SHA256SUMS](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.3/SHA256SUMS)와
 결과가 다르면 파일을 삭제하고 안정적인 네트워크에서 다시 받으세요.
 
 ### 기본 덱에 `일상무따`가 없습니다
@@ -45,7 +45,7 @@ Get-FileHash .\JLPT-MAX-Deck-1.0.2.apkg -Algorithm SHA256
 ### 예상 수량과 다릅니다
 
 처음 설치한 기본 덱은 노트 13,903개, 카드
-20,065개, 미디어 17,899개입니다.
+20,065개, 미디어 18,051개입니다.
 기존 버전이나 다른 덱이 같은 컬렉션에 있으면 전체 컬렉션 수량은 더 클 수
 있습니다. 새 프로필에 현재 기본 덱만 가져와 비교하면 경계를 확인하기 쉽습니다.
 
@@ -56,6 +56,16 @@ Get-FileHash .\JLPT-MAX-Deck-1.0.2.apkg -Algorithm SHA256
 가져오기가 완전히 끝났는지, 기기 음량과 무음 모드, 카드 답면 오른쪽 위 `재생`
 설정을 확인하세요. 특정 카드만 문제라면 단어와 카드 화면을 적되 APKG나 오디오
 파일 자체는 issue에 첨부하지 마세요.
+
+### 카드 음성 때문에 듣던 음악이 줄어들거나 멈춥니다
+
+v1.0.3 기본 덱으로 업데이트했는지 먼저 확인하세요. v1.0.3부터 카드 음성은 다른
+앱의 음악과 섞어 재생됩니다. iPhone·iPad의 무음 모드에서는 카드 음성도 나오지
+않는 것이 정상입니다.
+
+Bluetooth·Android Auto에서는 연결 기기와 앱 버전에 따라 동작이 달라질 수
+있습니다. 계속 재현되면 Anki 버전, 휴대폰 기종, 유선·Bluetooth·Android Auto 중
+어떤 연결인지와 자동재생·수동재생 중 어느 쪽인지 적어 주세요.
 
 ### 업데이트 뒤 복습 일정이 바뀌었습니다
 
@@ -87,7 +97,7 @@ ZIP 미리보기 안이 아니라 압축을 푼 새 폴더를 여세요. Windows
 
 ### `kanji skeleton/PDF ... alignment` 오류
 
-같은 v1.0.2의 빌더와 지원 PDF가 서로 맞지 않거나, PDF 표를 한자 골격과
+같은 v1.0.3의 빌더와 지원 PDF가 서로 맞지 않거나, PDF 표를 한자 골격과
 유일하게 대응하지 못했다는 뜻입니다. 빌더 ZIP을 새 폴더에 다시 풀고 첫 선택창에서
 1권(상권), 두 번째 선택창에서 2권(하권)을 고르세요.
 
@@ -111,7 +121,7 @@ APKG가 필요하면 다른 폴더에 복사해 둔 뒤 **다시 만들기**를 
 
 빌더 폴더의 `kanji-builder.log`를 확인하세요. 전체 로그에는 개인 경로가 들어갈
 수 있으므로 공개 issue에 파일을 그대로 첨부하지 마세요. 개인 경로를 지운 오류
-문구, 사용한 v1.0.2, 운영체제와 멈춘 단계만 알려주세요.
+문구, 사용한 v1.0.3, 운영체제와 멈춘 단계만 알려주세요.
 
 ## 제보할 때
 
