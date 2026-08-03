@@ -145,6 +145,16 @@ class DocumentationRenderTest(unittest.TestCase):
                 with self.subTest(source=relative.as_posix(), target=target):
                     self.assertTrue(resolved.is_file(), f"missing link: {resolved}")
 
+    def test_release_notes_use_publication_safe_absolute_links(self) -> None:
+        link_pattern = re.compile(r"\[[^]]+\]\(([^)]+)\)")
+        for path in sorted((ROOT / "docs" / "releases").glob("v*.md")):
+            content = path.read_text(encoding="utf-8")
+            for target in link_pattern.findall(content):
+                parsed = urlsplit(target)
+                with self.subTest(source=path.name, target=target):
+                    self.assertIn(parsed.scheme, {"http", "https"})
+                    self.assertTrue(parsed.netloc)
+
     def test_final_newline_normalization_is_deterministic(self) -> None:
         for source in ("value", "value\n", "value\n\n", "value\r\n"):
             with self.subTest(source=repr(source)):
