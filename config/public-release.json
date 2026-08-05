@@ -1,16 +1,16 @@
 {
   "artifacts": {
     "JLPT-MAX-Deck-1.1.0.apkg": {
-      "bytes": 861673346,
-      "sha256": "4b2ed093f87e21c1ee1cf48233a41079dc738955a9057c35bce2492775ce5bd4"
+      "bytes": 861670054,
+      "sha256": "432be6c7cdc3a42f9eb5179664e15349e0358f0c3fca9954350248f0cd93c6fc"
     },
     "JLPT-MAX-kanji-builder-1.1.0.zip": {
-      "bytes": 779146,
-      "sha256": "4b56d8963bbdbd5b3d5495b2bc89251d1b1be76df24d3d3baecc3b46825fa8e7"
+      "bytes": 779512,
+      "sha256": "c5949f6fc1055f4aab90b7a1fa42e299095afb57d17453d5fec21ce85e596fda"
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "8485329e4fdb26aa5f9f4301a39c5f61a6c6db23c7e775a07fc621dc2971f238"
+      "sha256": "31d897ea56369c9d8e83a3ea8b8419215029aa13540dfa526c87af6983112204"
     }
   },
   "core": {
@@ -34,7 +34,7 @@
   "full_source": {
     "cards": 22402,
     "notes": 16240,
-    "sha256": "17e747004001d6885e62e38f580f1d762d6d54a10bbadc3acfe55d7f811a4f0a"
+    "sha256": "4e440641eba2ebc2b43e1a3322772eea14692272901bd5f933d254d8c52bbcdc"
   },
   "kanji_builder": {
     "expected_kanji_notes": 2337,
@@ -43,7 +43,7 @@
     "output_apkg": "JLPT-MAX-kanji-addon-1.1.0.apkg",
     "source_hash": "0e673895bba0e4f71145dd8571baf073cbf8d705b811f88463a9bdb7abc1fa15"
   },
-  "payload_hash": "418e2354dc490c1288667ddf23aff7c49410f0640cf87bcfe9aeaf94ceb0eefb",
+  "payload_hash": "ffeee92a41ef2d4fd5b5384ee22b9cab3b6fce542a524bc0acb9e5e4df283889",
   "policy_version": "direct-core-plus-kanji-addon-v1",
   "product_version": "1.1.0",
   "schema_version": 2,
