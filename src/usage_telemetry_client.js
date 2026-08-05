@@ -1,10 +1,12 @@
 (function () {
   "use strict";
 
-  var CONSENT_KEY = "jlpt-max-deck.usage-consent.v1";
-  var INSTALLATION_KEY = "jlpt-max-deck.usage-installation.v1";
-  var COUNTERS_KEY = "jlpt-max-deck.usage-counters.v1";
-  var PROMPT_COUNT_KEY = "jlpt-max-deck.usage-prompt-count.v1";
+  var CONSENT_COOKIE = "jlpt_max_deck_usage_consent_v1";
+  var INSTALLATION_COOKIE = "jlpt_max_deck_usage_installation_v1";
+  var CURRENT_COUNTERS_COOKIE = "jlpt_max_deck_usage_current_v1";
+  var PREVIOUS_COUNTERS_COOKIE = "jlpt_max_deck_usage_previous_v1";
+  var PROMPT_COUNT_COOKIE = "jlpt_max_deck_usage_prompt_count_v1";
+  var COOKIE_ATTRIBUTES = "; Max-Age=31536000; Path=/; SameSite=Lax";
   var VALID_TRACKS = ["vocabulary", "audio", "practice", "reference", "kanji"];
   var VALID_PRACTICE_TYPES = [
     "kanji_reading", "orthography", "word_formation", "context_defined",
@@ -32,51 +34,58 @@
     }
   }
 
-  function storageAvailable() {
-    var probe = "jlpt-max-deck.usage-storage-probe";
+  function readCookie(name) {
     try {
-      window.localStorage.setItem(probe, "1");
-      window.localStorage.removeItem(probe);
-      return true;
-    } catch (_error) {
-      return false;
-    }
-  }
-
-  function readStorage(key) {
-    try {
-      return window.localStorage.getItem(key);
-    } catch (_error) {
-      return null;
-    }
-  }
-
-  function writeStorage(key, value) {
-    try {
-      window.localStorage.setItem(key, value);
-      return true;
-    } catch (_error) {
-      return false;
-    }
-  }
-
-  function removeStorage(key) {
-    try {
-      window.localStorage.removeItem(key);
+      var prefix = name + "=";
+      var cookies = String(document.cookie || "").split(";");
+      for (var index = 0; index < cookies.length; index += 1) {
+        var cookie = cookies[index].trim();
+        if (cookie.indexOf(prefix) === 0) {
+          return decodeURIComponent(cookie.slice(prefix.length));
+        }
+      }
     } catch (_error) {}
+    return null;
+  }
+
+  function writeCookie(name, value) {
+    try {
+      document.cookie = name + "=" + encodeURIComponent(value) +
+        COOKIE_ATTRIBUTES;
+      return readCookie(name) === value;
+    } catch (_error) {
+      return false;
+    }
+  }
+
+  function removeCookie(name) {
+    try {
+      document.cookie = name + "=; Max-Age=0; Path=/; SameSite=Lax";
+    } catch (_error) {}
+  }
+
+  function cookieAvailable() {
+    var probe = "jlpt_max_deck_usage_probe";
+    var available = writeCookie(probe, "1");
+    removeCookie(probe);
+    return available;
   }
 
   function detectPlatform() {
     var platform = String(globalThis.ankiPlatform || "").toLowerCase();
+    var root = document.documentElement;
+    var isAnkiDroidClass = root && root.classList.contains("android");
+    if (isAnkiDroidClass) {
+      return "android";
+    }
     if (platform === "ankidroid") {
-      // AnkiDroid injects this class only into the reviewer asset, while its
-      // previewers receive the common card-viewer asset alone.
+      // Retain the legacy bridge fallback while excluding previewers that
+      // expose only the platform label.
       return (
-        typeof AnkiDroidJS === "function" ||
-        typeof globalThis.AnkiDroidJS === "function"
+        typeof AnkiDroidJS !== "undefined" ||
+        typeof globalThis.AnkiDroidJS !== "undefined"
       ) ? "android" : null;
     }
-    var root = document.documentElement;
     var isAnkiMobileClass = root && (
       root.classList.contains("iphone") || root.classList.contains("ipad")
     );
@@ -132,7 +141,7 @@
   }
 
   function readConsent(policyVersion) {
-    var consent = parseJson(readStorage(CONSENT_KEY));
+    var consent = parseJson(readCookie(CONSENT_COOKIE));
     if (
       !isObject(consent) || consent.policy_version !== policyVersion ||
       (consent.choice !== "on" && consent.choice !== "off")
@@ -143,20 +152,21 @@
   }
 
   function writeConsent(policyVersion, choice) {
-    return writeStorage(CONSENT_KEY, JSON.stringify({
+    return writeCookie(CONSENT_COOKIE, JSON.stringify({
       policy_version: policyVersion,
       choice: choice
     }));
   }
 
   function clearTransmittedUsageState() {
-    removeStorage(INSTALLATION_KEY);
-    removeStorage(COUNTERS_KEY);
+    removeCookie(INSTALLATION_COOKIE);
+    removeCookie(CURRENT_COUNTERS_COOKIE);
+    removeCookie(PREVIOUS_COUNTERS_COOKIE);
   }
 
   function clearUsageState() {
     clearTransmittedUsageState();
-    removeStorage(PROMPT_COUNT_KEY);
+    removeCookie(PROMPT_COUNT_COOKIE);
   }
 
   function randomInstallationId() {
@@ -180,12 +190,12 @@
   }
 
   function ensureInstallationId() {
-    var current = String(readStorage(INSTALLATION_KEY) || "");
+    var current = String(readCookie(INSTALLATION_COOKIE) || "");
     if (/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(current)) {
       return current;
     }
     var created = randomInstallationId();
-    if (!created || !writeStorage(INSTALLATION_KEY, created)) {
+    if (!created || !writeCookie(INSTALLATION_COOKIE, created)) {
       return null;
     }
     return created;
@@ -195,19 +205,68 @@
     return {schema_version: 1, days: {}, last_success_day: null};
   }
 
-  function readCounters() {
-    var counters = parseJson(readStorage(COUNTERS_KEY));
+  function readCounterCookie(name) {
+    var record = parseJson(readCookie(name));
     if (
-      !isObject(counters) || counters.schema_version !== 1 ||
-      !isObject(counters.days)
+      !isObject(record) ||
+      !/^\d{4}-\d{2}-\d{2}$/.test(String(record.activity_day || "")) ||
+      !isObject(record.state) ||
+      !isObject(record.state.buckets)
     ) {
-      return emptyCounters();
+      return null;
     }
+    return record;
+  }
+
+  function readCounters() {
+    var counters = emptyCounters();
+    [PREVIOUS_COUNTERS_COOKIE, CURRENT_COUNTERS_COOKIE].forEach(function (name) {
+      var record = readCounterCookie(name);
+      if (!record) {
+        return;
+      }
+      counters.days[record.activity_day] = record.state;
+      if (
+        Number(record.state.last_success_total) > 0 &&
+        (!counters.last_success_day ||
+          record.activity_day > counters.last_success_day)
+      ) {
+        counters.last_success_day = record.activity_day;
+      }
+    });
     return counters;
   }
 
   function writeCounters(counters) {
-    return writeStorage(COUNTERS_KEY, JSON.stringify(counters));
+    if (!isObject(counters) || !isObject(counters.days)) {
+      return false;
+    }
+    var dayKeys = Object.keys(counters.days).filter(function (dayKey) {
+      var day = counters.days[dayKey];
+      return /^\d{4}-\d{2}-\d{2}$/.test(dayKey) &&
+        isObject(day) && isObject(day.buckets);
+    }).sort().slice(-2);
+    var currentKey = dayKeys.length ? dayKeys[dayKeys.length - 1] : null;
+    var previousKey = dayKeys.length > 1 ? dayKeys[dayKeys.length - 2] : null;
+    var previousWritten = true;
+    var currentWritten = true;
+    if (previousKey) {
+      previousWritten = writeCookie(PREVIOUS_COUNTERS_COOKIE, JSON.stringify({
+        activity_day: previousKey,
+        state: counters.days[previousKey]
+      }));
+    } else {
+      removeCookie(PREVIOUS_COUNTERS_COOKIE);
+    }
+    if (currentKey) {
+      currentWritten = writeCookie(CURRENT_COUNTERS_COOKIE, JSON.stringify({
+        activity_day: currentKey,
+        state: counters.days[currentKey]
+      }));
+    } else {
+      removeCookie(CURRENT_COUNTERS_COOKIE);
+    }
+    return previousWritten && currentWritten;
   }
 
   function bucketKey(context) {
@@ -245,17 +304,16 @@
     return {day: day, newBucket: previous === 0};
   }
 
-  function pruneExpiredLocalDays(counters, today) {
-    var cutoff = new Date(today + "T12:00:00");
-    cutoff.setDate(cutoff.getDate() - 90);
-    var cutoffKey = [
-      String(cutoff.getFullYear()),
-      String(cutoff.getMonth() + 1).padStart(2, "0"),
-      String(cutoff.getDate()).padStart(2, "0")
-    ].join("-");
-    Object.keys(counters.days).forEach(function (key) {
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(key) || key < cutoffKey || key > today) {
-        delete counters.days[key];
+  function retainCurrentAndPreviousDay(counters, today) {
+    var previousDays = Object.keys(counters.days).filter(function (dayKey) {
+      return /^\d{4}-\d{2}-\d{2}$/.test(dayKey) && dayKey < today;
+    }).sort();
+    var previousDay = previousDays.length
+      ? previousDays[previousDays.length - 1]
+      : null;
+    Object.keys(counters.days).forEach(function (dayKey) {
+      if (dayKey !== today && dayKey !== previousDay) {
+        delete counters.days[dayKey];
       }
     });
   }
@@ -389,8 +447,26 @@
       return;
     }
     button.textContent = choice === "on"
-      ? "사용 통계: 켜짐"
-      : choice === "off" ? "사용 통계: 꺼짐" : "사용 통계 설정";
+      ? "통계 켜짐"
+      : choice === "off" ? "통계 꺼짐" : "통계 설정";
+  }
+
+  function focusModalStart(root) {
+    var panel = root.querySelector(".usage-telemetry-panel");
+    var title = root.querySelector(".usage-telemetry-title");
+    if (panel) {
+      panel.scrollTop = 0;
+    }
+    if (title && typeof title.focus === "function") {
+      try {
+        title.focus({preventScroll: true});
+      } catch (_error) {
+        title.focus();
+      }
+    }
+    if (panel) {
+      panel.scrollTop = 0;
+    }
   }
 
   function renderModal(root, choice, forcedChoice) {
@@ -426,7 +502,7 @@
       disable.textContent = "공유하지 않기";
     }
     modal.hidden = false;
-    enable.focus();
+    focusModalStart(root);
   }
 
   function closeModal(root) {
@@ -498,9 +574,9 @@
   }
 
   function countPreConsentAnswer(root, policyVersion, promptAfter) {
-    var raw = Number.parseInt(readStorage(PROMPT_COUNT_KEY) || "0", 10);
+    var raw = Number.parseInt(readCookie(PROMPT_COUNT_COOKIE) || "0", 10);
     var count = Number.isInteger(raw) && raw >= 0 ? raw + 1 : 1;
-    writeStorage(PROMPT_COUNT_KEY, String(count));
+    writeCookie(PROMPT_COUNT_COOKIE, String(count));
     if (count >= promptAfter) {
       renderModal(root, readConsent(policyVersion), true);
     }
@@ -510,7 +586,7 @@
     var roots = document.querySelectorAll("[data-jlpt-max-usage-telemetry]");
     var root = roots.length ? roots[roots.length - 1] : null;
     var platform = detectPlatform();
-    if (!root || !platform || !storageAvailable()) {
+    if (!root || !platform || !cookieAvailable()) {
       return;
     }
     var policyVersion = Number(root.getAttribute("data-policy-version"));
@@ -539,7 +615,7 @@
     }
     var today = localDay();
     var counters = readCounters();
-    pruneExpiredLocalDays(counters, today);
+    retainCurrentAndPreviousDay(counters, today);
     var incremented = incrementCounter(counters, today, context);
     if (!writeCounters(counters)) {
       return;
@@ -558,15 +634,21 @@
       detectPlatform: detectPlatform,
       emptyCounters: emptyCounters,
       ensureInstallationId: ensureInstallationId,
+      focusModalStart: focusModalStart,
       incrementCounter: incrementCounter,
       normalizeLevel: normalizeLevel,
       normalizePracticeType: normalizePracticeType,
       payloadDays: payloadDays,
       buildSnapshotPayload: buildSnapshotPayload,
-      pruneExpiredLocalDays: pruneExpiredLocalDays,
+      readCookie: readCookie,
+      removeCookie: removeCookie,
+      retainCurrentAndPreviousDay: retainCurrentAndPreviousDay,
       readConsent: readConsent,
       readCounters: readCounters,
+      renderModal: renderModal,
+      sendSnapshot: sendSnapshot,
       shouldUpload: shouldUpload,
+      writeCookie: writeCookie,
       writeConsent: writeConsent,
       writeCounters: writeCounters
     };

@@ -29,8 +29,18 @@ class UsageTelemetryClientSourceTests(unittest.TestCase):
 
     def test_opt_out_clears_installation_and_unsent_counters(self) -> None:
         self.assertIn("clearTransmittedUsageState();", CLIENT)
-        self.assertIn("removeStorage(INSTALLATION_KEY);", CLIENT)
-        self.assertIn("removeStorage(COUNTERS_KEY);", CLIENT)
+        self.assertIn("removeCookie(INSTALLATION_COOKIE);", CLIENT)
+        self.assertIn("removeCookie(CURRENT_COUNTERS_COOKIE);", CLIENT)
+        self.assertIn("removeCookie(PREVIOUS_COUNTERS_COOKIE);", CLIENT)
+
+    def test_public_source_uses_only_cookie_persistence(self) -> None:
+        self.assertIn("document.cookie", CLIENT)
+        self.assertIn('var CONSENT_COOKIE = "jlpt_max_deck_usage_consent_v1";', CLIENT)
+        self.assertIn('var CURRENT_COUNTERS_COOKIE = "jlpt_max_deck_usage_current_v1";', CLIENT)
+        self.assertIn('var PREVIOUS_COUNTERS_COOKIE = "jlpt_max_deck_usage_previous_v1";', CLIENT)
+        self.assertIn("retainCurrentAndPreviousDay(counters, today);", CLIENT)
+        self.assertNotIn("localStorage", CLIENT)
+        self.assertNotIn("window.name", CLIENT)
 
 
 if __name__ == "__main__":
