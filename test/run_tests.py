@@ -13,6 +13,7 @@ TEST_MODULES = (
     "test_direct_release_repository",
     "test_render_docs",
     "test_public_site",
+    "test_usage_telemetry_client",
 )
 
 

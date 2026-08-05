@@ -115,13 +115,13 @@
           <p>공식 배포 페이지에서 받은 APKG의 파일명과 SHA-256을 아래 값과 대조하세요.</p>
           <table class="v2-release-facts">
             <tbody>
-              <tr><th scope="row">버전</th><td>v1.0.3</td></tr>
-              <tr><th scope="row">파일</th><td><code>JLPT-MAX-Deck-1.0.3.apkg</code></td></tr>
+              <tr><th scope="row">버전</th><td>v1.1.0</td></tr>
+              <tr><th scope="row">파일</th><td><code>JLPT-MAX-Deck-1.1.0.apkg</code></td></tr>
               <tr><th scope="row">크기</th><td>약 0.86GB</td></tr>
-              <tr><th scope="row">SHA-256</th><td><code>08846d902f2bec4bb7afad5e7526273864bb6ef5e9a15379e00e253004e7f7ea</code></td></tr>
+              <tr><th scope="row">SHA-256</th><td><code>2df5b99d33cc30c636777387a016dcfb9a22ceaa1cf89d1f8432cf33fd8da8a0</code></td></tr>
             </tbody>
           </table>
-          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.3/JLPT-MAX-Deck-1.0.3.apkg">기본 덱 다시 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a><a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.3/SHA256SUMS">SHA256SUMS</a></div>
+          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.1.0/JLPT-MAX-Deck-1.1.0.apkg">기본 덱 다시 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a><a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.1.0/SHA256SUMS">SHA256SUMS</a></div>
         </section>
 
         <section class="v2-guide-section" id="import">
@@ -142,7 +142,7 @@
             <li><div><strong>더블클릭할 실행 파일이 보이지 않아요.</strong><p>ZIP 미리보기 안이 아니라 압축을 푼 새 폴더를 여세요. Windows에는 <code>Windows에서 한자 확장 만들기.cmd</code>, macOS에는 <code>Mac에서 한자 확장 만들기.command</code>가 있습니다.</p></div></li>
             <li><div><strong>필요한 프로그램을 받지 못했다고 나와요.</strong><p>처음 실행할 때만 빌드 도구와 Python을 자동으로 받습니다. 인터넷 연결을 확인한 뒤 ZIP을 새 폴더에 다시 풀고 더블클릭 실행 파일을 다시 여세요.</p></div></li>
             <li><div><strong><code>PDF hash</code> 또는 <code>page count</code> 오류가 나요.</strong><p>공식 자료 페이지에서 정상적으로 받은 상·하권 소책자 PDF 2개와 순서를 확인하세요. 다시 저장·병합·최적화한 PDF나 미리보기 파일은 지원되지 않습니다.</p></div></li>
-            <li><div><strong><code>alignment</code> 오류가 나요.</strong><p>같은 v1.0.3의 빌더와 지원 PDF가 맞지 않거나 1권·2권 선택 순서가 바뀌었을 수 있습니다. 현재 빌더 ZIP을 새 폴더에 다시 풀고 실행하세요.</p></div></li>
+            <li><div><strong><code>alignment</code> 오류가 나요.</strong><p>같은 v1.1.0의 빌더와 지원 PDF가 맞지 않거나 1권·2권 선택 순서가 바뀌었을 수 있습니다. 현재 빌더 ZIP을 새 폴더에 다시 풀고 실행하세요.</p></div></li>
             <li><div><strong>PDF 선택창을 취소했어요.</strong><p>아무 파일도 바뀌지 않습니다. 실행 파일을 다시 더블클릭하고 처음부터 선택하면 됩니다.</p></div></li>
             <li><div><strong>완성 파일을 다시 만들고 싶어요.</strong><p>더블클릭 실행 파일을 다시 열면 기존 결과를 지우고 새로 만들지 묻습니다. <strong>다시 만들기</strong>를 선택한 뒤 PDF 두 개를 다시 고르세요.</p></div></li>
           </ol>
@@ -156,7 +156,28 @@
           <ol class="v2-release-history">
             <li class="v2-release-entry is-current">
               <header>
-                <div><strong>v1.0.3</strong><span>최신</span></div>
+                <div><strong>v1.1.0</strong><span>최신</span></div>
+                <time datetime="2026-08-05">2026-08-05</time>
+              </header>
+              <h3>선택형 익명 모바일 사용 통계를 추가하고 Android 야간 모드의 한자 자형 표시를 개선했습니다.</h3>
+              <ul>
+                <li>AnkiMobile과 AnkiDroid에서만, 답안 화면 10회 뒤 명시적으로 동의한 경우에 한해 익명 사용 통계를 공유할 수 있습니다.</li>
+                <li>통계에는 무작위 설치 ID, 모바일 환경, JLPT MAX 버전, 학습한 세부 덱과 날짜별 답안 확인 누적 횟수만 포함됩니다.</li>
+                <li>사용 통계 설정에서 언제든 공유를 끌 수 있으며, 끄면 설치 ID와 아직 전송하지 않은 기록을 즉시 삭제하고 이후 전송을 중단합니다.</li>
+                <li>Android 야간 모드에서 일상무따 한자의 이미지 자형이 어둡게 보이던 문제를 수정했습니다.</li>
+                <li>노트·카드 수와 안정 ID, 덱 구조, 학습 콘텐츠는 1.0.3과 동일하게 유지했습니다.</li>
+              </ul>
+              <p class="v2-release-migration"><strong>업데이트 안내</strong>1.0.3 사용자는 동기화 또는 백업 후 v1.1.0 기본 덱을 기존 덱 위에 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트 업데이트와 노트 유형 병합은 켭니다. Android에서 한자 확장을 야간 모드로 사용한다면 v1.1.0 빌더로 다시 만드는 것을 권장합니다.</p>
+
+              <div class="v2-hero-actions">
+                <a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.1.0/JLPT-MAX-Deck-1.1.0.apkg">v1.1.0 기본 덱 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a>
+                <a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v1.1.0" target="_blank" rel="noopener noreferrer">v1.1.0 GitHub Release <span aria-hidden="true">↗</span></a>
+              </div>
+
+            </li>
+            <li class="v2-release-entry">
+              <header>
+                <div><strong>v1.0.3</strong></div>
                 <time datetime="2026-08-03">2026-08-03</time>
               </header>
               <h3>빠져 있던 독립 의미를 보강하고 뜻·예문·정답 표시, 복습 화면과 모바일 음악 동시 재생을 개선했습니다.</h3>
@@ -171,7 +192,6 @@
               <p class="v2-release-migration"><strong>업데이트 안내</strong>1.0.2 사용자는 동기화 또는 백업 후 v1.0.3 기본 덱을 기존 덱 위에 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트 업데이트와 노트 유형 병합은 켭니다. 기존 한자 확장도 계속 쓸 수 있지만 연결 어휘의 새 뜻까지 반영하려면 v1.0.3 빌더로 다시 만드세요.</p>
 
               <div class="v2-hero-actions">
-                <a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.3/JLPT-MAX-Deck-1.0.3.apkg">v1.0.3 기본 덱 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a>
                 <a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v1.0.3" target="_blank" rel="noopener noreferrer">v1.0.3 GitHub Release <span aria-hidden="true">↗</span></a>
               </div>
 
@@ -271,7 +291,7 @@
       </nav>
     </div>
     <div class="v2-footer-legal">
-      <span>v1.0.3 · Code AGPL-3.0-or-later</span>
+      <span>v1.1.0 · Code AGPL-3.0-or-later</span>
       <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/NOTICE">NOTICE</a>
       <span>Anki·JLPT·출판사의 공식 제품 또는 후원 프로젝트가 아닙니다.</span>
     </div>

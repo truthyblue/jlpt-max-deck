@@ -37,6 +37,9 @@ class DocumentationRenderTest(unittest.TestCase):
         PurePosixPath("docs/releases/v1.0.3.md.j2"): PurePosixPath(
             "docs/releases/v1.0.3.md"
         ),
+        PurePosixPath("docs/releases/v1.1.0.md.j2"): PurePosixPath(
+            "docs/releases/v1.1.0.md"
+        ),
         PurePosixPath("docs/troubleshooting.md.j2"): PurePosixPath(
             "docs/troubleshooting.md"
         ),
@@ -154,6 +157,17 @@ class DocumentationRenderTest(unittest.TestCase):
                 with self.subTest(source=path.name, target=target):
                     self.assertIn(parsed.scheme, {"http", "https"})
                     self.assertTrue(parsed.netloc)
+
+    def test_historical_v103_release_evidence_is_immutable(self) -> None:
+        content = (ROOT / "docs" / "releases" / "v1.0.3.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("JLPT-MAX-Deck-1.0.3.apkg", content)
+        self.assertIn(
+            "08846d902f2bec4bb7afad5e7526273864bb6ef5e9a15379e00e253004e7f7ea",
+            content,
+        )
+        self.assertNotIn("JLPT-MAX-Deck-1.1.0.apkg", content)
 
     def test_final_newline_normalization_is_deterministic(self) -> None:
         for source in ("value", "value\n", "value\n\n", "value\r\n"):

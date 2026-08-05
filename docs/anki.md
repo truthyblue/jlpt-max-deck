@@ -20,7 +20,7 @@ Anki에 익숙해도 덱마다 시작하는 때와 공부 방법이 다릅니다
 1. 공부할 기기에 맞는 [공식 Anki 앱](https://truthyblue.github.io/jlpt-max-deck/install-anki.html)을
    설치합니다. 휴대폰으로 공부할 예정이라면 휴대폰에 바로 설치하는 방식을
    권장합니다.
-2. [JLPT-MAX-Deck-1.0.3.apkg](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.0.3/JLPT-MAX-Deck-1.0.3.apkg)를
+2. [JLPT-MAX-Deck-1.1.0.apkg](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.1.0/JLPT-MAX-Deck-1.1.0.apkg)를
    같은 기기에서 받습니다.
 3. Anki Desktop에서는 **파일 → 가져오기**, 모바일에서는 다운로드한 APKG의
    **열기** 또는 **공유**를 사용합니다.
@@ -112,7 +112,7 @@ N2 시험을 본다면 `N5 → N4 → N3 → N2`, N4 시험을 본다면 `N5 →
 ## 새 버전으로 업데이트
 
 업데이트 전 모든 기기의 동기화를 끝내거나 백업을 확인합니다. 기존 덱을 삭제하지
-않고 현재 v1.0.3 APKG를 가져옵니다.
+않고 현재 v1.1.0 APKG를 가져옵니다.
 
 - 학습 진행 상태 가져오기: 끄기
 - 기존 노트 업데이트: 새 버전일 때
