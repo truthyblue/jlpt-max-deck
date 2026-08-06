@@ -6,6 +6,9 @@ ROOT = Path(__file__).resolve().parents[1]
 UPDATE = (
     ROOT / "docs" / "jlpt-gallery-updates" / "v1.1.0.html"
 ).read_text(encoding="utf-8")
+RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.1.0.md").read_text(
+    encoding="utf-8"
+)
 SCREENSHOTS = {
     "gallery-v1.1.0-card-settings.webp": (390, 500),
     "gallery-v1.1.0-error-report.webp": (354, 644),
@@ -54,6 +57,16 @@ class GalleryUpdateTests(unittest.TestCase):
             self.assertIn(f'width="{width}" height="{height}"', UPDATE)
         self.assertIn("0.8·1·1.2·1.5배속을 조절하는 화면", UPDATE)
         self.assertIn("함께 전송되는 정보를 확인하는 화면", UPDATE)
+
+    def test_release_notes_use_main_hosted_ui_screenshots(self) -> None:
+        for filename in SCREENSHOTS:
+            self.assertIn(
+                "https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/"
+                f"main/site/assets/{filename}",
+                RELEASE_NOTES,
+            )
+        self.assertIn("0.8·1·1.2·1.5배속을 조절하는 화면", RELEASE_NOTES)
+        self.assertIn("함께 전송되는 정보를 확인하는 화면", RELEASE_NOTES)
 
 
 if __name__ == "__main__":
