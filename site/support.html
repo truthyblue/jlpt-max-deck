@@ -118,7 +118,7 @@
               <tr><th scope="row">버전</th><td>v1.1.0</td></tr>
               <tr><th scope="row">파일</th><td><code>JLPT-MAX-Deck-1.1.0.apkg</code></td></tr>
               <tr><th scope="row">크기</th><td>약 0.86GB</td></tr>
-              <tr><th scope="row">SHA-256</th><td><code>83f793c27120cd58b5477b4f53331f182ba41404ae2e7166096c51880d1a047a</code></td></tr>
+              <tr><th scope="row">SHA-256</th><td><code>56e40f8170dbebc5e8f03c6dc11808277ea6f95435aab48b8b5f8bc424689b20</code></td></tr>
             </tbody>
           </table>
           <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.1.0/JLPT-MAX-Deck-1.1.0.apkg">기본 덱 다시 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a><a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.1.0/SHA256SUMS">SHA256SUMS</a></div>
@@ -157,18 +157,20 @@
             <li class="v2-release-entry is-current">
               <header>
                 <div><strong>v1.1.0</strong><span>최신</span></div>
-                <time datetime="2026-08-05">2026-08-05</time>
+                <time datetime="2026-08-06">2026-08-06</time>
               </header>
-              <h3>선택형 익명 모바일 사용 통계를 추가하고 어휘 답안 도구와 Android 야간 모드의 한자 표시를 개선했습니다.</h3>
+              <h3>카드 설정·재생 속도·인앱 오류 제보와 선택형 익명 모바일 사용 통계를 추가하고 한자 표시와 음성 발음을 개선했습니다.</h3>
               <ul>
                 <li>AnkiMobile과 AnkiDroid에서만, 답안 화면 10회 뒤 명시적으로 동의한 경우에 한해 익명 사용 통계를 공유할 수 있습니다.</li>
                 <li>통계에는 무작위 설치 ID, 모바일 환경, JLPT MAX 버전, 학습한 세부 덱과 날짜별 답안 확인 누적 횟수만 포함됩니다.</li>
+                <li>모든 플랫폼의 답안 화면에서 내용·표시·음성 문제를 현재 카드 식별 정보와 함께 직접 제보할 수 있습니다.</li>
+                <li>후리가나·해석·자동재생을 하나의 설정 메뉴로 모으고 0.8·1·1.2·1.5배 재생 속도를 추가했습니다.</li>
                 <li>카드 설정과 통계 상태를 WebView 쿠키에 저장해 Android 앱 재시작으로 카드 포트가 바뀌어도 유지하며, 기기에는 오늘과 직전 학습일 최대 이틀치만 남깁니다.</li>
                 <li>사용 통계 설정에서 언제든 공유를 끌 수 있으며, 끄면 설치 ID와 아직 전송하지 않은 기록을 즉시 삭제하고 이후 전송을 중단합니다.</li>
-                <li>사용 통계 팝업에서 동의 상태를 바꾸지 않고 GitHub 오류 제보 양식을 열 수 있습니다.</li>
                 <li>어휘 답안에서 한자 정보와 네이버 사전 링크를 단어 아래의 작은 도구로 묶고, 한자 정보를 간결한 행으로 표시합니다.</li>
                 <li>Android 야간 모드에서 일상무따 한자의 이미지 자형이 어둡게 보이던 문제를 수정했습니다.</li>
-                <li>노트·카드 수와 안정 ID, 덱 구조, 학습 콘텐츠는 1.0.3과 동일하게 유지했습니다.</li>
+                <li>AIVIS 장음 처리와 남아 있던 문맥·표식 발음 오류를 보정했습니다.</li>
+                <li>노트·카드 수와 안정 ID, 덱 구조를 1.0.3과 동일하게 유지했습니다.</li>
               </ul>
               <p class="v2-release-migration"><strong>업데이트 안내</strong>1.0.3 사용자는 동기화 또는 백업 후 v1.1.0 기본 덱을 기존 덱 위에 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트 업데이트와 노트 유형 병합은 켭니다. Android에서 한자 확장을 야간 모드로 사용한다면 v1.1.0 빌더로 다시 만드는 것을 권장합니다.</p>
 
@@ -268,9 +270,9 @@
 
         <section class="v2-guide-section" id="report">
           <h2>오류를 제보하고 싶어요.</h2>
-          <p>버전, 운영체제, Anki 버전, 실행 단계, 비민감 오류 문구를 적어 주세요. 같은 문제를 재현하는 데 필요한 정보만 있으면 됩니다.</p>
+          <p>카드 내용·표시·음성 문제는 해당 카드 답안 아래의 <strong>오류 제보</strong>를 사용하세요. 설치·다운로드·한자 빌더 문제는 GitHub 양식에 버전, 운영체제, Anki 버전, 실행 단계와 비민감 오류 문구를 적어 주세요.</p>
           <div class="v2-callout warning"><strong>첨부하면 안 되는 것</strong><p>출판사 PDF, 책 본문·페이지 이미지, 기본 덱/한자 확장 APKG, 개인 Anki 컬렉션, 실명이나 홈 폴더가 드러나는 전체 경로는 올리지 마세요.</p></div>
-          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/issues/new?template=bug.yml" target="_blank" rel="noopener noreferrer">GitHub에 오류 제보 <span aria-hidden="true">↗</span></a><a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">보안 제보 안내 <span aria-hidden="true">↗</span></a></div>
+          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/issues/new?template=bug.yml" target="_blank" rel="noopener noreferrer">설치·빌더 문제 제보 <span aria-hidden="true">↗</span></a><a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">보안 제보 안내 <span aria-hidden="true">↗</span></a></div>
         </section>
       </div>
     </div>

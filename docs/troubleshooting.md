@@ -19,7 +19,7 @@
 
 - 파일: `JLPT-MAX-Deck-1.1.0.apkg`
 - 크기: 약 0.86GB
-- SHA-256: `83f793c27120cd58b5477b4f53331f182ba41404ae2e7166096c51880d1a047a`
+- SHA-256: `56e40f8170dbebc5e8f03c6dc11808277ea6f95435aab48b8b5f8bc424689b20`
 
 macOS:
 
@@ -53,7 +53,7 @@ Get-FileHash .\JLPT-MAX-Deck-1.1.0.apkg -Algorithm SHA256
 
 ### 소리가 나지 않습니다
 
-가져오기가 완전히 끝났는지, 기기 음량과 무음 모드, 카드 답면 오른쪽 위 `재생`
+가져오기가 완전히 끝났는지, 기기 음량과 무음 모드, 카드 답면 오른쪽 위 `설정`
 설정을 확인하세요. 특정 카드만 문제라면 단어와 카드 화면을 적되 APKG나 오디오
 파일 자체는 issue에 첨부하지 마세요.
 
@@ -125,7 +125,9 @@ APKG가 필요하면 다른 폴더에 복사해 둔 뒤 **다시 만들기**를 
 
 ## 제보할 때
 
-[오류 제보 양식](https://github.com/truthyblue/jlpt-max-deck/issues/new?template=bug.yml)에 버전,
-운영체제, Anki 버전, 실패 단계와 비민감 오류 문구를 적어 주세요. PDF, 책 본문,
-페이지 이미지, 기본 덱이나 생성한 한자 확장 APKG, 개인 컬렉션과 전체 로컬 경로는
-올리지 마세요.
+카드 내용·표시·음성 문제는 해당 카드 답안 아래의 **오류 제보**를 사용하세요.
+설치·다운로드·한자 빌더 문제는
+[GitHub 오류 제보 양식](https://github.com/truthyblue/jlpt-max-deck/issues/new?template=bug.yml)에
+버전, 운영체제, Anki 버전, 실패 단계와 비민감 오류 문구를 적어 주세요. PDF,
+책 본문, 페이지 이미지, 기본 덱이나 생성한 한자 확장 APKG, 개인 컬렉션과 전체
+로컬 경로는 올리지 마세요.

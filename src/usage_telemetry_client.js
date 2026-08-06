@@ -446,9 +446,15 @@
     if (!button) {
       return;
     }
-    button.textContent = choice === "on"
-      ? "통계 켜짐"
-      : choice === "off" ? "통계 꺼짐" : "통계 설정";
+    button.textContent = "익명 통계";
+    button.setAttribute(
+      "aria-label",
+      choice === "on"
+        ? "익명 통계 켜짐, 설정 열기"
+        : choice === "off"
+          ? "익명 통계 꺼짐, 설정 열기"
+          : "익명 통계 설정 열기"
+    );
   }
 
   function focusModalStart(root) {

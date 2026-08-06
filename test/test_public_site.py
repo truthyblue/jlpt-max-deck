@@ -276,10 +276,34 @@ class PublicSiteTests(unittest.TestCase):
 
     def test_card_audio_hotspots_match_example_boxes(self) -> None:
         css = (SITE / "assets" / "showcase.css").read_text(encoding="utf-8")
+        word_rule = re.search(r"\.word-audio-hotspot\s*\{([^}]+)\}", css)
+        if word_rule is None:
+            self.fail("missing word hotspot rule")
+        for declaration in (
+            "top: 4.589372%;",
+            "left: 37.5%;",
+            "width: 25%;",
+            "height: 8.21256%;",
+        ):
+            self.assertIn(declaration, word_rule.group(1))
+
+        settings_rule = re.search(
+            r"\.autoplay-feature-callout\s*\{([^}]+)\}", css
+        )
+        if settings_rule is None:
+            self.fail("missing settings callout rule")
+        for declaration in (
+            "top: 1.288245%;",
+            "left: 91.09375%;",
+            "width: 6.71875%;",
+            "height: 2.093398%;",
+        ):
+            self.assertIn(declaration, settings_rule.group(1))
+
         expected_tops = {
-            "example-1-audio-hotspot": "18.445897%",
-            "example-2-audio-hotspot": "27.087872%",
-            "example-3-audio-hotspot": "35.729847%",
+            "example-1-audio-hotspot": "30.193237%",
+            "example-2-audio-hotspot": "39.774557%",
+            "example-3-audio-hotspot": "49.436393%",
         }
         for selector, expected_top in expected_tops.items():
             rule = re.search(rf"\.{selector}\s*\{{([^}}]+)\}}", css)
@@ -291,7 +315,7 @@ class PublicSiteTests(unittest.TestCase):
         shared_rule = re.search(r"\.example-audio-hotspot\s*\{([^}]+)\}", css)
         if shared_rule is None:
             self.fail("missing shared example hotspot rule")
-        self.assertIn("height: 8.061002%;", shared_rule.group(1))
+        self.assertIn("height: 9.017713%;", shared_rule.group(1))
 
     def test_home_explains_direct_core_and_optional_kanji(self) -> None:
         html = (SITE / "index.html").read_text(encoding="utf-8")
@@ -338,7 +362,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("data-carousel-prev", html)
         self.assertIn("data-carousel-next", html)
         self.assertIn("autoplay-feature-callout", html)
-        self.assertIn("<strong>자동재생 설정</strong>", html)
+        self.assertIn("<strong>카드 설정</strong>", html)
         self.assertNotIn("단어·첫 예문·모든 예문 선택</small>", html)
         self.assertIn("음성과 자동재생", html)
         self.assertIn("뜻마다 대표 예문", html)

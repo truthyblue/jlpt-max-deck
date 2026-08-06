@@ -8,6 +8,9 @@ ROOT = Path(__file__).resolve().parents[1]
 CLIENT = (ROOT / "src" / "usage_telemetry_client.js").read_text(
     encoding="utf-8"
 )
+REPORT_CLIENT = (ROOT / "src" / "error_report_client.js").read_text(
+    encoding="utf-8"
+)
 
 
 class UsageTelemetryClientSourceTests(unittest.TestCase):
@@ -41,6 +44,26 @@ class UsageTelemetryClientSourceTests(unittest.TestCase):
         self.assertIn("retainCurrentAndPreviousDay(counters, today);", CLIENT)
         self.assertNotIn("localStorage", CLIENT)
         self.assertNotIn("window.name", CLIENT)
+
+
+class ErrorReportClientSourceTests(unittest.TestCase):
+    def test_public_source_exposes_only_the_explicit_report_contract(self) -> None:
+        for field in (
+            "category: category",
+            "description: text",
+            "content_ref: contentRef",
+            "platform: detectPlatform()",
+        ):
+            self.assertIn(field, REPORT_CLIENT)
+        self.assertIn('credentials: "omit"', REPORT_CLIENT)
+        self.assertIn('referrerPolicy: "no-referrer"', REPORT_CLIENT)
+
+    def test_report_source_excludes_usage_identity_and_review_data(self) -> None:
+        self.assertNotIn("installation_id", REPORT_CLIENT)
+        self.assertNotIn("review_history", REPORT_CLIENT)
+        self.assertNotIn("answer_count", REPORT_CLIENT)
+        self.assertNotIn("request.cf", REPORT_CLIENT)
+        self.assertNotIn("navigator.userAgent", REPORT_CLIENT)
 
 
 if __name__ == "__main__":
