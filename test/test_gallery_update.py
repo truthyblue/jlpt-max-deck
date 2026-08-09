@@ -68,6 +68,8 @@ class GalleryUpdateTests(unittest.TestCase):
         self.assertIn("音がする", UPDATE)
         self.assertIn("주제·제안을 ‘다루다’라는 문맥", UPDATE)
         self.assertIn("성과나 상태가 좋은 ‘호조’", UPDATE)
+        self.assertIn("각 예문 위에 <strong>뜻</strong> 칩을 표시", UPDATE)
+        self.assertIn("각 예문 위에 **뜻** 칩을 표시", RELEASE_NOTES)
         self.assertIn("기존 뜻만으로 해석하기 어려웠던", RELEASE_NOTES)
 
     def test_announcement_preserves_verified_update_instructions(self) -> None:
