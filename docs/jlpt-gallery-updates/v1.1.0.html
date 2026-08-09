@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<!-- 상태: v1.1.0 릴리스 후보. GitHub Release와 Pages 공개 뒤 링크를 최종 검증해야 함. -->
+<!-- 상태: v1.1.0 공개 완료. 갤러리 게시 전 최종 검토용 초안. -->
 <!-- 게시글 제목: [Anki] JLPT MAX 덱 v1.1.0 - 뜻 386개 교정·설정 통합·4단계 배속 -->
 <!-- 디시인사이드가 저장 후 제거하는 스타일이나 표 레이아웃에 의존하지 않는 본문입니다. -->
 <div style="max-width:760px;margin:0 auto;color:#1b211d;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;font-size:16px;line-height:1.8;word-break:keep-all;">
@@ -42,8 +42,20 @@
     <p style="margin:12px 0 0;">
       카드에서도 각 예문 위에 <strong>뜻</strong> 칩을 표시해, 같은 단어 안의 여러 쓰임과 그에 맞는 문장을 바로 연결해 볼 수 있음.
     </p>
+    <div style="margin-top:20px;padding:20px;color:#1b211d;background:#eef8f2;border-left:8px solid #d8ff62;">
+      <strong style="color:#173b26;font-size:19px;">386개를 전부 같은 방식으로 고친 건 아님</strong>
+      <p style="margin:10px 0 0;color:#4e5852;">
+        카드에서 <strong>/</strong>는 서로 다른 뜻 묶음, <strong>,</strong>는 같은 뜻 묶음 안에서 문맥에 따라 자연스럽게 바뀌는 한국어 표현을 나타냄. 이번 교정은 아래 네 유형을 모두 포함함.
+      </p>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #cbded2;"><strong>① 새 뜻 묶음 추가</strong> · 144개<br><span style="color:#4e5852;">빠져 있던 별도 쓰임과 그 쓰임에 맞는 예문을 추가함.</span></div>
+      <div style="margin-top:12px;"><strong>② 기존 뜻 묶음 안의 한국어 표현 보강</strong> · 77개<br><span style="color:#4e5852;">새로운 일본어 뜻은 아니지만, 문맥에 맞는 자연스러운 한국어 표현을 같은 묶음 안에 더함.</span></div>
+      <div style="margin-top:12px;"><strong>③ 과하게 나뉜 뜻 묶음 통합</strong> · 75개<br><span style="color:#4e5852;">같은 쓰임의 한국어 표현을 별도 뜻처럼 나눴던 경우를 하나로 합침.</span></div>
+      <div style="margin-top:12px;"><strong>④ 뜻 표현 자체를 자연스럽게 교정</strong> · 90개<br><span style="color:#4e5852;">뜻 묶음 수는 유지하면서 어색하거나 오해하기 쉬운 번역을 바로잡음.</span></div>
+      <p style="margin:14px 0 0;color:#173b26;font-weight:800;">합계 386개이며, 기존 카드에서 완전히 삭제한 뜻은 0개임.</p>
+    </div>
     <div style="margin-top:22px;padding:20px;color:#1b211d;background:#f4f7f5;border-left:7px solid #8ee6b1;">
-      <div style="font-size:19px;font-weight:900;letter-spacing:-.03em;">예를 들면 이렇게 달라짐</div>
+      <div style="font-size:19px;font-weight:900;letter-spacing:-.03em;">유형별로 보면 이렇게 달라짐</div>
+      <div style="margin-top:16px;color:#173b26;font-size:15px;font-weight:900;">① 새 뜻 묶음 추가 · 144개</div>
       <div style="margin-top:16px;padding-top:16px;border-top:1px solid #d5ddd8;">
         <div><strong>する</strong> · <span style="color:#6a736e;">하다</span> → <strong style="color:#173b26;">하다 / 나다</strong></div>
         <div style="margin-top:6px;">外で変な音がする。<br><span style="color:#4e5852;">밖에서 이상한 소리가 난다.</span></div>
@@ -59,6 +71,19 @@
         <div style="margin-top:6px;">私のパスポートは来月で期限が切れる。<br><span style="color:#4e5852;">내 여권은 다음 달이면 기한이 만료된다.</span></div>
         <div style="margin-top:6px;color:#6a736e;font-size:14px;">재고나 전화뿐 아니라 여권·계약 등의 기한이 만료되는 쓰임도 예문으로 확인할 수 있음.</div>
       </div>
+      <div style="margin-top:24px;color:#173b26;font-size:15px;font-weight:900;">② 기존 뜻 묶음 안의 한국어 표현 보강 · 77개</div>
+      <div style="margin-top:10px;padding-top:16px;border-top:1px solid #d5ddd8;">
+        <div><strong>思い出す</strong> · <span style="color:#6a736e;">생각해내다</span> → <strong style="color:#173b26;">생각해내다, 생각나다</strong></div>
+        <div style="margin-top:6px;">この歌を聞くと故郷を思い出す。<br><span style="color:#4e5852;">이 노래를 들으면 고향이 생각난다.</span></div>
+        <div style="margin-top:6px;color:#6a736e;font-size:14px;">별도 뜻을 하나 더 만든 것이 아니라, 같은 회상 의미를 한국어 문맥에 맞게 ‘생각나다’로도 볼 수 있게 보강했음.</div>
+      </div>
+      <div style="margin-top:24px;color:#173b26;font-size:15px;font-weight:900;">③ 과하게 나뉜 뜻 묶음 통합 · 75개</div>
+      <div style="margin-top:10px;padding-top:16px;border-top:1px solid #d5ddd8;">
+        <div><strong>クラス</strong> · <span style="color:#6a736e;">학급 / 수업</span> → <strong style="color:#173b26;">학급, 수업</strong></div>
+        <div style="margin-top:6px;">病気で昨日のクラスを休んだ。<br><span style="color:#4e5852;">아파서 어제 수업을 쉬었다.</span></div>
+        <div style="margin-top:6px;color:#6a736e;font-size:14px;">학급과 수업을 서로 다른 일본어 뜻처럼 나누지 않고, 같은 뜻 묶음 안의 문맥별 한국어 표현으로 정리했음.</div>
+      </div>
+      <div style="margin-top:24px;color:#173b26;font-size:15px;font-weight:900;">④ 뜻 표현 자체를 자연스럽게 교정 · 90개</div>
       <div style="margin-top:16px;padding-top:16px;border-top:1px solid #d5ddd8;">
         <div><strong>好調</strong> · <span style="color:#6a736e;">순조롭다</span> → <strong style="color:#173b26;">호조이다</strong></div>
         <div style="margin-top:6px;">今月の輸出は好調だと報告された。<br><span style="color:#4e5852;">이번 달 수출은 호조라고 보고되었다.</span></div>
@@ -117,14 +142,25 @@
   <div style="margin-top:40px;padding:32px 20px;text-align:center;color:#fff;background:#101512;border-top:8px solid #d8ff62;border-bottom:1px solid #2f3933;">
     <div style="font-size:25px;font-weight:900;letter-spacing:-.04em;">v1.0.3에서 업데이트하기</div>
     <p style="max-width:590px;margin:12px auto 18px;color:#d9dedb;">
-      먼저 Anki를 동기화하거나 백업한 뒤 v1.1.0 기본 덱을 기존 덱 위에 가져오면 됨. <strong>학습 진행 상태 가져오기</strong>는 끄고, <strong>기존 노트 업데이트</strong>와 <strong>노트 유형 병합</strong>은 켜면 됨.
+      먼저 Anki를 동기화하거나 백업한 뒤 v1.1.0 기본 덱을 기존 덱 위에 가져오면 됨. <strong>학습 진행 상태 가져오기</strong>는 끄고, <strong>기존 노트 업데이트</strong>는 반드시 <strong>항상</strong>, <strong>노트 유형 병합</strong>은 <strong>켜기</strong>를 선택하면 됨.
     </p>
+    <div style="max-width:590px;margin:0 auto 18px;padding:18px 20px;text-align:left;color:#1b211d;background:#fff3cd;border-left:8px solid #ffbf47;">
+      <strong style="font-size:19px;">중요: <span style="white-space:nowrap;">새 버전일 때</span>가 아니라 <span style="white-space:nowrap;">항상</span></strong><br>
+      <span style="color:#5f5436;"><strong>새 버전일 때</strong>로 두면 v1.0.3 뜻과 예문이 그대로 남음. <strong>クラス</strong>가 아직 <strong>학급 / 수업</strong>, <strong>思い出す</strong>가 <strong>생각해내다</strong>로만 보인다면 같은 v1.1.0 APKG를 위 옵션으로 다시 가져오면 됨. <strong>항상</strong>은 직접 고친 뜻·예문 필드도 덮어쓸 수 있으니 그런 수정이 있다면 먼저 백업해야 함.</span>
+    </div>
+    <div style="max-width:590px;margin:0 auto 22px;padding:18px 20px;color:#101512;background:#d8ff62;border-left:8px solid #8ee6b1;">
+      <strong style="font-size:19px;">써보고 괜찮았다면 개추 + GitHub Star 부탁함</strong><br>
+      <span style="color:#354039;">글 아래 개추 한 번과 GitHub Star가 다음 뜻 교정과 업데이트를 이어가는 데 큰 도움이 됨.</span>
+    </div>
     <div style="max-width:360px;margin:0 auto;">
       <div style="margin:10px 0;padding:14px 18px;background:#d8ff62;border:1px solid #d8ff62;">
         <a href="https://truthyblue.github.io/jlpt-max-deck/update.html" target="_blank" rel="noopener noreferrer" style="color:#101512;font-weight:900;line-height:1.5;text-decoration:none;">업데이트 방법 보기 →</a>
       </div>
       <div style="margin:10px 0;padding:14px 18px;background:#101512;border:1px solid #d8ff62;">
         <a href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v1.1.0" target="_blank" rel="noopener noreferrer" style="color:#d8ff62;font-weight:900;line-height:1.5;text-decoration:none;">v1.1.0 GitHub Release →</a>
+      </div>
+      <div style="margin:10px 0;padding:14px 18px;background:#d8ff62;border:1px solid #d8ff62;">
+        <a href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer" style="color:#101512;font-weight:900;line-height:1.5;text-decoration:none;">★ GitHub에서 Star →</a>
       </div>
     </div>
   </div>
