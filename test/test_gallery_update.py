@@ -49,6 +49,25 @@ class GalleryUpdateTests(unittest.TestCase):
         ):
             self.assertIn(copy, UPDATE)
 
+    def test_announcement_covers_every_learner_visible_meaning_change_type(self) -> None:
+        for copy in (
+            "① 새 뜻 묶음 추가",
+            "144개",
+            "② 기존 뜻 묶음 안의 한국어 표현 보강",
+            "77개",
+            "③ 과하게 나뉜 뜻 묶음 통합",
+            "75개",
+            "④ 뜻 표현 자체를 자연스럽게 교정",
+            "90개",
+            "완전히 삭제한 뜻은 0개",
+            "생각해내다, 생각나다",
+            "この歌を聞くと故郷を思い出す。",
+            "학급, 수업",
+            "病気で昨日のクラスを休んだ。",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, UPDATE)
+
     def test_announcement_and_release_notes_show_concrete_meaning_examples(self) -> None:
         for copy in (
             "하다 / 나다",
@@ -77,8 +96,16 @@ class GalleryUpdateTests(unittest.TestCase):
             "학습 진행 상태 가져오기",
             "기존 노트 업데이트",
             "노트 유형 병합",
+            "반드시 <strong>항상</strong>",
+            "새 버전일 때</strong>로 두면 v1.0.3 뜻과 예문이 그대로 남음",
+            "クラス</strong>가 아직 <strong>학급 / 수업",
+            "思い出す</strong>가 <strong>생각해내다</strong>로만 보인다면",
+            "직접 고친 뜻·예문 필드도 덮어쓸 수 있으니",
         ):
             self.assertIn(copy, UPDATE)
+        self.assertIn("**기존 노트 업데이트**는 반드시", RELEASE_NOTES)
+        self.assertIn("**항상**, **노트 유형 병합**", RELEASE_NOTES)
+        self.assertIn("**새 버전일 때**로 두면 v1.0.3 기존 노트의 뜻·예문", RELEASE_NOTES)
 
     def test_announcement_uses_pages_hosted_ui_screenshots(self) -> None:
         for filename, (width, height) in SCREENSHOTS.items():

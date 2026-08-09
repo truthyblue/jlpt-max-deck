@@ -274,6 +274,28 @@ class DocumentationRenderTest(unittest.TestCase):
         self.assertIn("필터 덱은 선택 기능입니다", anki_guide)
         self.assertIn("study-guide.html#filtered", anki_guide)
 
+    def test_current_update_guides_require_always_updating_existing_notes(
+        self,
+    ) -> None:
+        sources = (
+            ROOT / "docs-src/docs/anki.md.j2",
+            ROOT / "docs-src/docs/releases/v1.1.0.md.j2",
+            ROOT / "docs-src/site/update.html.j2",
+        )
+        for path in sources:
+            content = path.read_text(encoding="utf-8")
+            with self.subTest(source=path.relative_to(ROOT).as_posix()):
+                self.assertIn("항상", content)
+                self.assertIn("새 버전일 때", content)
+                self.assertIn("덮어쓸 수", content)
+
+        anki_guide = sources[0].read_text(encoding="utf-8")
+        update_page = sources[2].read_text(encoding="utf-8")
+        self.assertIn("기존 노트 업데이트: 항상", anki_guide)
+        self.assertNotIn("기존 노트 업데이트: 새 버전일 때", anki_guide)
+        self.assertIn(">항상</span>", update_page)
+        self.assertNotIn(">새 버전일 때</span>", update_page)
+
 
 if __name__ == "__main__":
     unittest.main()
