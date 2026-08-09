@@ -1,13 +1,13 @@
 <meta charset="utf-8">
 <!-- 상태: v1.1.0 릴리스 후보. GitHub Release와 Pages 공개 뒤 링크를 최종 검증해야 함. -->
-<!-- 게시글 제목: [Anki] JLPT MAX 덱 v1.1.0 - 설정 통합·4단계 배속·카드 오류 제보 -->
+<!-- 게시글 제목: [Anki] JLPT MAX 덱 v1.1.0 - 뜻 386개 교정·설정 통합·4단계 배속 -->
 <!-- 디시인사이드가 저장 후 제거하는 스타일이나 표 레이아웃에 의존하지 않는 본문입니다. -->
 <div style="max-width:760px;margin:0 auto;color:#1b211d;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;font-size:16px;line-height:1.8;word-break:keep-all;">
   <div style="padding:38px 28px 34px;text-align:center;color:#fff;background:#101512;border-top:8px solid #d8ff62;border-bottom:1px solid #2f3933;">
     <div style="margin-bottom:12px;color:#d8ff62;font-size:13px;font-weight:800;letter-spacing:.12em;">JLPT MAX Deck · v1.1.0</div>
-    <div style="font-size:36px;font-weight:900;line-height:1.2;letter-spacing:-.05em;">설정은 한곳에,<br>음성은 내 속도에 맞게.</div>
+    <div style="font-size:36px;font-weight:900;line-height:1.2;letter-spacing:-.05em;">뜻은 더 정확하게,<br>설정은 한곳에.</div>
     <p style="max-width:620px;margin:18px auto 0;color:#d9dedb;font-size:18px;line-height:1.65;">
-      v1.0.3의 후리가나·해석·자동재생 설정을 하나로 모으고 0.8·1·1.2·1.5배속을 추가했음. 문제 있는 카드는 답안에서 바로 제보할 수 있고, 어휘 답안과 Android 야간 한자 표시도 다듬었음.
+      어휘 386개의 한국어 뜻과 의미별 예문을 교정했음. v1.0.3의 후리가나·해석·자동재생 설정도 하나로 모으고 0.8·1·1.2·1.5배속을 추가했으며, 문제 있는 카드는 답안에서 바로 제보할 수 있음.
     </p>
   </div>
 
@@ -35,7 +35,18 @@
   </div>
 
   <div style="padding:44px 8px 8px;">
-    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">2. 문제 있는 카드에서 바로 오류 제보</div>
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">2. 어휘 뜻 386개와 의미별 예문 교정</div>
+    <p style="margin:16px 0 0;">
+      N5 70개, N4 46개, N3 77개, N2 91개, N1 102개 어휘의 한국어 뜻을 실제 쓰임이 더 잘 드러나도록 고쳤음. 뜻이 여러 개인 단어는 각 의미에 맞는 예문을 다시 연결하고 빠져 있던 예문을 보강해, 검토된 예문이 6,681개에서 6,783개로 늘었음.
+    </p>
+    <div style="margin-top:20px;padding:18px 20px;color:#1b211d;background:#eef8f2;border-left:8px solid #d8ff62;">
+      <strong style="color:#173b26;">학습 기록과 실전 문제는 그대로 유지</strong><br>
+      <span style="color:#4e5852;">어휘 노트·카드 ID와 실전 문제 GUID는 바꾸지 않았음. 기존 덱 위에 가져오면 새 뜻과 예문을 받으면서 복습 기록은 유지됨.</span>
+    </div>
+  </div>
+
+  <div style="padding:44px 8px 8px;">
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">3. 문제 있는 카드에서 바로 오류 제보</div>
     <p style="margin:16px 0 0;">
       모든 플랫폼의 답안 아래에 <strong>오류 제보</strong>를 추가했음. 내용 오류, 화면·표시 문제, 음성 문제, 기타 중 하나를 고르고 설명을 적으면 현재 카드를 찾는 데 필요한 버전과 내부 식별 정보가 함께 접수됨.
     </p>
@@ -50,7 +61,7 @@
 
   <div style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
     <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">OPTIONAL MOBILE STATS</div>
-    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">3. 선택형 모바일 익명 통계 추가</div>
+    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">4. 선택형 모바일 익명 통계 추가</div>
     <p style="margin:18px 0 0;color:#d9dedb;">
       AnkiMobile·AnkiDroid에서 실제로 쓰이는 버전과 학습 영역을 확인해 모바일 호환성 점검과 개선 순서를 정할 수 있도록 <strong>선택형 익명 통계</strong> 설정을 추가했음.
     </p>
@@ -64,14 +75,14 @@
   </div>
 
   <div style="padding:44px 8px 8px;">
-    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">4. 한자·사전 도구는 작게, Android 야간 자형은 밝게</div>
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">5. 한자·사전 도구는 작게, Android 야간 자형은 밝게</div>
     <p style="margin:16px 0 0;">
       v1.0.3 어휘 답안의 한자 정보와 네이버 사전 링크를 단어 아래의 작은 버튼으로 묶어 예문을 덜 가리게 했음. 여러 한자도 큰 타일 대신 간결한 행으로 표시함. 일상무따 한자 확장의 이미지 자형은 Android 야간 모드에서 밝게 보이도록 고쳤음.
     </p>
   </div>
 
   <div style="padding:44px 8px 8px;">
-    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">5. 장음과 일부 실전 정답 발음 보정</div>
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">6. 장음과 일부 실전 정답 발음 보정</div>
     <p style="margin:16px 0 0;">
       합성 음성의 장음이 의도한 길이로 들리도록 처리하고, 실전 정답의 문맥이나 표시 기호 때문에 잘못 읽히던 남은 사례를 보정했음. 노트·카드 구조는 바꾸지 않고 해당 음성과 발음 입력만 갱신함.
     </p>

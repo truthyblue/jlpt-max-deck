@@ -167,6 +167,9 @@ class DocumentationRenderTest(unittest.TestCase):
             "08846d902f2bec4bb7afad5e7526273864bb6ef5e9a15379e00e253004e7f7ea",
             content,
         )
+        self.assertIn("| 기본 덱 | 13,903 | 20,065 | 18,051 |", content)
+        self.assertIn("| 두 APKG 합산 | 16,240 | 22,402 | 18,065 |", content)
+        self.assertNotIn("18,153", content)
         self.assertNotIn("JLPT-MAX-Deck-1.1.0.apkg", content)
 
     def test_final_newline_normalization_is_deterministic(self) -> None:

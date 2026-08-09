@@ -580,7 +580,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertLess(html.index('id="verify"'), html.index('id="fsrs"'))
         self.assertLess(html.index('id="fsrs"'), html.index('id="first-review"'))
         self.assertLess(html.index('id="verify"'), html.index('id="sync"'))
-        self.assertIn("약 0.86GB", html)
+        self.assertIn("약 0.87GB", html)
         self.assertNotIn("QUICK START", html)
         css = (SITE / "assets" / "site.css").read_text(encoding="utf-8")
         self.assertNotIn(".v2-optional-section", css)

@@ -18,10 +18,12 @@ SCREENSHOTS = {
 class GalleryUpdateTests(unittest.TestCase):
     def test_announcement_leads_with_new_feature_value(self) -> None:
         settings_heading = "1. 카드 설정 통합 + 4단계 재생 배속"
-        report_heading = "2. 문제 있는 카드에서 바로 오류 제보"
-        telemetry_heading = "3. 선택형 모바일 익명 통계 추가"
+        meaning_heading = "2. 어휘 뜻 386개와 의미별 예문 교정"
+        report_heading = "3. 문제 있는 카드에서 바로 오류 제보"
+        telemetry_heading = "4. 선택형 모바일 익명 통계 추가"
 
-        self.assertLess(UPDATE.index(settings_heading), UPDATE.index(report_heading))
+        self.assertLess(UPDATE.index(settings_heading), UPDATE.index(meaning_heading))
+        self.assertLess(UPDATE.index(meaning_heading), UPDATE.index(report_heading))
         self.assertLess(UPDATE.index(report_heading), UPDATE.index(telemetry_heading))
         self.assertNotIn("동의하기 전에는 사용 통계를 보내지 않음", UPDATE)
         self.assertNotIn("1. v1.0.3 덱을 지우지 않고 업데이트", UPDATE)
@@ -38,6 +40,14 @@ class GalleryUpdateTests(unittest.TestCase):
         ):
             self.assertIn(copy, UPDATE)
         self.assertNotIn("설정 안에 안내를 표시", UPDATE)
+
+    def test_announcement_describes_meaning_corrections_without_id_churn(self) -> None:
+        for copy in (
+            "N5 70개, N4 46개, N3 77개, N2 91개, N1 102개",
+            "6,681개에서 6,783개",
+            "어휘 노트·카드 ID와 실전 문제 GUID는 바꾸지 않았음",
+        ):
+            self.assertIn(copy, UPDATE)
 
     def test_announcement_preserves_verified_update_instructions(self) -> None:
         for copy in (
