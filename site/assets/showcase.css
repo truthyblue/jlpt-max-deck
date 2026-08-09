@@ -859,29 +859,30 @@ main:focus {
 }
 
 .word-audio-hotspot {
-  top: 4.289941%;
-  left: 3.125%;
-  width: 93.75%;
-  height: 6.985059%;
+  /* card-dasu-answer.webp: center the target on 出す and its reading only. */
+  top: 4.589372%;
+  left: 37.5%;
+  width: 25%;
+  height: 8.21256%;
 }
 
 .example-audio-hotspot {
   left: 2.1875%;
   width: 95.625%;
-  /* card-dasu-answer.webp: 640×1377, each example box is 111px tall. */
-  height: 8.061002%;
+  /* card-dasu-answer.webp: 640×1242, each example box is about 112px tall. */
+  height: 9.017713%;
 }
 
 .example-1-audio-hotspot {
-  top: 18.445897%;
+  top: 30.193237%;
 }
 
 .example-2-audio-hotspot {
-  top: 27.087872%;
+  top: 39.774557%;
 }
 
 .example-3-audio-hotspot {
-  top: 35.729847%;
+  top: 49.436393%;
 }
 
 .hotspot-badge {
@@ -900,7 +901,8 @@ main:focus {
 
 .word-audio-hotspot .hotspot-badge {
   top: 6px;
-  right: 6px;
+  right: auto;
+  left: calc(100% + 12px);
 }
 
 .example-audio-hotspot .hotspot-badge {
@@ -978,10 +980,11 @@ main:focus {
 }
 
 .autoplay-feature-callout {
-  top: 1.05%;
-  left: 87.1%;
-  width: 10.8%;
-  height: 2.1%;
+  /* card-dasu-answer.webp: exact 43×26px settings button at (583, 16). */
+  top: 1.288245%;
+  left: 91.09375%;
+  width: 6.71875%;
+  height: 2.093398%;
   border: 2px solid var(--lime);
   border-radius: 9px;
   box-shadow: 0 0 0 5px rgba(216, 255, 98, .15);
@@ -1005,18 +1008,18 @@ main:focus {
 }
 
 .conjugation-feature-callout {
-  top: 44.361688%;
-  height: 15.840865%;
+  top: 58.937198%;
+  height: 17.552335%;
 }
 
 .related-feature-callout {
-  top: 60.783868%;
-  height: 14.968891%;
+  top: 77.294686%;
+  height: 16.425121%;
 }
 
 .kanji-feature-callout {
-  top: 79.5%;
-  height: 15.8%;
+  top: 22.544283%;
+  height: 7.326892%;
 }
 
 .kanji-feature-callout .card-feature-label {

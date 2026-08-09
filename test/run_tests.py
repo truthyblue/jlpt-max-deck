@@ -11,8 +11,10 @@ TEST_MODULES = (
     "test_build_kanji_addon",
     "test_direct_release_contract",
     "test_direct_release_repository",
+    "test_gallery_update",
     "test_render_docs",
     "test_public_site",
+    "test_usage_telemetry_client",
 )
 
 
