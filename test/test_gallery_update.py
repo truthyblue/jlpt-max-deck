@@ -49,6 +49,27 @@ class GalleryUpdateTests(unittest.TestCase):
         ):
             self.assertIn(copy, UPDATE)
 
+    def test_announcement_and_release_notes_show_concrete_meaning_examples(self) -> None:
+        for copy in (
+            "하다 / 나다",
+            "外で変な音がする。",
+            "집어 들다 / 다루다 / 빼앗다",
+            "次の会議で、この提案を取り上げる。",
+            "소진되다 / 끊어지다 / (기한이) 만료되다",
+            "私のパスポートは来月で期限が切れる。",
+            "순조롭다",
+            "호조이다",
+            "今月の輸出は好調だと報告された。",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, UPDATE)
+                self.assertIn(copy, RELEASE_NOTES)
+
+        self.assertIn("音がする", UPDATE)
+        self.assertIn("주제·제안을 ‘다루다’라는 문맥", UPDATE)
+        self.assertIn("성과나 상태가 좋은 ‘호조’", UPDATE)
+        self.assertIn("기존 뜻만으로 해석하기 어려웠던", RELEASE_NOTES)
+
     def test_announcement_preserves_verified_update_instructions(self) -> None:
         for copy in (
             "학습 진행 상태 가져오기",
