@@ -1,0 +1,36 @@
+<div style="max-width:760px;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#f5f7f2;background:#0b1712;border:1px solid #274536;border-radius:22px;overflow:hidden;line-height:1.75;">
+  <div style="padding:34px 30px 28px;background:linear-gradient(135deg,#173629,#0b1712);">
+    <div style="display:inline-block;padding:4px 10px;border-radius:999px;background:#d8ff62;color:#14200e;font-size:13px;font-weight:900;">v1.1.1 HOTFIX</div>
+    <h2 style="margin:14px 0 8px;font-size:30px;line-height:1.25;color:#fff;">아이폰·아이패드 설정 저장 수정</h2>
+    <p style="margin:0;color:#c9d8cf;">카드 내용이나 음성 재생 방식은 그대로 두고, 모바일에서 설정과 선택형 익명 통계 상태가 유지되는 방식만 보강함.</p>
+  </div>
+
+  <div style="padding:30px;">
+    <h3 style="margin:0 0 10px;color:#d8ff62;">1. 쿠키 + localStorage 이중 저장</h3>
+    <p style="margin:0 0 20px;">일부 iPhone·iPad에서는 AnkiMobile 카드 화면의 쿠키 저장이 실패해서 후리가나·해석·자동재생·배속 설정이 앱을 다시 열면 초기화되고, 익명 통계 동의 상태도 유지되지 않을 수 있었음. v1.1.1부터 같은 값을 쿠키와 <code style="color:#d8ff62;">localStorage</code>에 함께 저장함.</p>
+
+    <div style="padding:18px 20px;margin:0 0 24px;border-radius:14px;background:#13271e;border:1px solid #315442;">
+      <strong style="color:#fff;">기존 값도 자동으로 이어받음</strong>
+      <p style="margin:6px 0 0;color:#c9d8cf;">유효한 쿠키가 있으면 먼저 사용해 localStorage에 복제하고, 쿠키를 쓸 수 없으면 localStorage에서 복원함. 둘 중 하나만 작동해도 설정을 저장할 수 있음.</p>
+    </div>
+
+    <h3 style="margin:0 0 10px;color:#d8ff62;">2. AnkiDroid 설정</h3>
+    <p style="margin:0 0 10px;">Android는 기존처럼 쿠키만으로도 저장됨. 아래 옵션을 켜면 카드 서버 주소가 고정돼 localStorage도 앱 재시작 뒤 유지됨.</p>
+    <div style="padding:15px 18px;margin:0 0 24px;border-radius:12px;background:#d8ff62;color:#17200f;font-weight:900;text-align:center;">설정 → 고급 → 학습 화면 로컬 스토리지</div>
+
+    <h3 style="margin:0 0 10px;color:#d8ff62;">3. 음성 재생은 그대로</h3>
+    <p style="margin:0 0 24px;">1배속 혼합 재생, 다른 앱 음악과의 동시 재생, 배속 재생과 덕킹 동작은 건드리지 않았음. 노트 16,240개·카드 22,402개·미디어 18,167개와 안정 ID도 v1.1.0 그대로임.</p>
+
+    <h3 style="margin:0 0 10px;color:#d8ff62;">업데이트 방법</h3>
+    <ol style="margin:0 0 22px;padding-left:22px;color:#e8eee9;">
+      <li>모든 기기 동기화 또는 백업 확인</li>
+      <li>기존 덱을 지우지 않고 v1.1.1 APKG 가져오기</li>
+      <li><strong>학습 진행 상태 가져오기: 끄기</strong></li>
+      <li><strong>기존 노트 업데이트: 항상</strong></li>
+      <li><strong>노트 유형 병합: 켜기</strong></li>
+    </ol>
+    <p style="margin:0 0 24px;color:#ffcf8a;">직접 고친 뜻·예문 필드가 있으면 <strong>항상</strong> 가져오기가 그 내용도 덮어쓸 수 있으니 먼저 백업 권장. 기존 한자 확장은 다시 만들 필요 없음.</p>
+
+    <a href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v1.1.1" target="_blank" rel="noopener noreferrer" style="display:block;padding:15px 18px;border-radius:12px;background:#d8ff62;color:#17200f;font-weight:900;text-align:center;text-decoration:none;">v1.1.1 GitHub Release →</a>
+  </div>
+</div>

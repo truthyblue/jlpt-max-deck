@@ -6,6 +6,9 @@ ROOT = Path(__file__).resolve().parents[1]
 UPDATE = (
     ROOT / "docs" / "jlpt-gallery-updates" / "v1.1.0.html"
 ).read_text(encoding="utf-8")
+HOTFIX_UPDATE = (
+    ROOT / "docs" / "jlpt-gallery-updates" / "v1.1.1.html"
+).read_text(encoding="utf-8")
 RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.1.0.md").read_text(
     encoding="utf-8"
 )
@@ -16,6 +19,18 @@ SCREENSHOTS = {
 
 
 class GalleryUpdateTests(unittest.TestCase):
+    def test_hotfix_announcement_matches_the_storage_only_scope(self) -> None:
+        for copy in (
+            "쿠키 + localStorage 이중 저장",
+            "설정 → 고급 → 학습 화면 로컬 스토리지",
+            "음성 재생은 그대로",
+            "기존 노트 업데이트: 항상",
+            "노트 유형 병합: 켜기",
+            "v1.1.1 GitHub Release",
+        ):
+            self.assertIn(copy, HOTFIX_UPDATE)
+        self.assertNotIn("음성 재생 방식을 바꿨", HOTFIX_UPDATE)
+
     def test_announcement_leads_with_new_feature_value(self) -> None:
         settings_heading = "1. 카드 설정 통합 + 4단계 재생 배속"
         meaning_heading = "2. 어휘 뜻 386개와 의미별 예문 교정"

@@ -64,10 +64,58 @@
     } catch (_error) {}
   }
 
-  function cookieAvailable() {
+  function readLocalStorage(name) {
+    try {
+      return globalThis.localStorage.getItem(name);
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function writeLocalStorage(name, value) {
+    try {
+      globalThis.localStorage.setItem(name, value);
+      return globalThis.localStorage.getItem(name) === value;
+    } catch (_error) {
+      return false;
+    }
+  }
+
+  function removeLocalStorage(name) {
+    try {
+      globalThis.localStorage.removeItem(name);
+    } catch (_error) {}
+  }
+
+  function readPersistentValue(name, isValid) {
+    var cookieValue = readCookie(name);
+    if (cookieValue !== null && isValid(cookieValue)) {
+      writeLocalStorage(name, cookieValue);
+      return cookieValue;
+    }
+    var localValue = readLocalStorage(name);
+    if (localValue !== null && isValid(localValue)) {
+      writeCookie(name, localValue);
+      return localValue;
+    }
+    return null;
+  }
+
+  function writePersistentValue(name, value) {
+    var cookieWritten = writeCookie(name, value);
+    var localStorageWritten = writeLocalStorage(name, value);
+    return cookieWritten || localStorageWritten;
+  }
+
+  function removePersistentValue(name) {
+    removeCookie(name);
+    removeLocalStorage(name);
+  }
+
+  function persistentStorageAvailable() {
     var probe = "jlpt_max_deck_usage_probe";
-    var available = writeCookie(probe, "1");
-    removeCookie(probe);
+    var available = writePersistentValue(probe, "1");
+    removePersistentValue(probe);
     return available;
   }
 
@@ -141,7 +189,16 @@
   }
 
   function readConsent(policyVersion) {
-    var consent = parseJson(readCookie(CONSENT_COOKIE));
+    function validConsent(value) {
+      var candidate = parseJson(value);
+      return isObject(candidate) &&
+        candidate.policy_version === policyVersion &&
+        (candidate.choice === "on" || candidate.choice === "off");
+    }
+    var consent = parseJson(readPersistentValue(
+      CONSENT_COOKIE,
+      validConsent
+    ));
     if (
       !isObject(consent) || consent.policy_version !== policyVersion ||
       (consent.choice !== "on" && consent.choice !== "off")
@@ -152,21 +209,21 @@
   }
 
   function writeConsent(policyVersion, choice) {
-    return writeCookie(CONSENT_COOKIE, JSON.stringify({
+    return writePersistentValue(CONSENT_COOKIE, JSON.stringify({
       policy_version: policyVersion,
       choice: choice
     }));
   }
 
   function clearTransmittedUsageState() {
-    removeCookie(INSTALLATION_COOKIE);
-    removeCookie(CURRENT_COUNTERS_COOKIE);
-    removeCookie(PREVIOUS_COUNTERS_COOKIE);
+    removePersistentValue(INSTALLATION_COOKIE);
+    removePersistentValue(CURRENT_COUNTERS_COOKIE);
+    removePersistentValue(PREVIOUS_COUNTERS_COOKIE);
   }
 
   function clearUsageState() {
     clearTransmittedUsageState();
-    removeCookie(PROMPT_COUNT_COOKIE);
+    removePersistentValue(PROMPT_COUNT_COOKIE);
   }
 
   function randomInstallationId() {
@@ -190,12 +247,17 @@
   }
 
   function ensureInstallationId() {
-    var current = String(readCookie(INSTALLATION_COOKIE) || "");
-    if (/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(current)) {
+    var installationPattern =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    var current = String(readPersistentValue(
+      INSTALLATION_COOKIE,
+      function (value) { return installationPattern.test(value); }
+    ) || "");
+    if (installationPattern.test(current)) {
       return current;
     }
     var created = randomInstallationId();
-    if (!created || !writeCookie(INSTALLATION_COOKIE, created)) {
+    if (!created || !writePersistentValue(INSTALLATION_COOKIE, created)) {
       return null;
     }
     return created;
@@ -205,8 +267,8 @@
     return {schema_version: 1, days: {}, last_success_day: null};
   }
 
-  function readCounterCookie(name) {
-    var record = parseJson(readCookie(name));
+  function parseCounterRecord(value) {
+    var record = parseJson(value);
     if (
       !isObject(record) ||
       !/^\d{4}-\d{2}-\d{2}$/.test(String(record.activity_day || "")) ||
@@ -218,10 +280,17 @@
     return record;
   }
 
+  function readCounterRecord(name) {
+    return parseCounterRecord(readPersistentValue(
+      name,
+      function (value) { return parseCounterRecord(value) !== null; }
+    ));
+  }
+
   function readCounters() {
     var counters = emptyCounters();
     [PREVIOUS_COUNTERS_COOKIE, CURRENT_COUNTERS_COOKIE].forEach(function (name) {
-      var record = readCounterCookie(name);
+      var record = readCounterRecord(name);
       if (!record) {
         return;
       }
@@ -251,20 +320,20 @@
     var previousWritten = true;
     var currentWritten = true;
     if (previousKey) {
-      previousWritten = writeCookie(PREVIOUS_COUNTERS_COOKIE, JSON.stringify({
+      previousWritten = writePersistentValue(PREVIOUS_COUNTERS_COOKIE, JSON.stringify({
         activity_day: previousKey,
         state: counters.days[previousKey]
       }));
     } else {
-      removeCookie(PREVIOUS_COUNTERS_COOKIE);
+      removePersistentValue(PREVIOUS_COUNTERS_COOKIE);
     }
     if (currentKey) {
-      currentWritten = writeCookie(CURRENT_COUNTERS_COOKIE, JSON.stringify({
+      currentWritten = writePersistentValue(CURRENT_COUNTERS_COOKIE, JSON.stringify({
         activity_day: currentKey,
         state: counters.days[currentKey]
       }));
     } else {
-      removeCookie(CURRENT_COUNTERS_COOKIE);
+      removePersistentValue(CURRENT_COUNTERS_COOKIE);
     }
     return previousWritten && currentWritten;
   }
@@ -580,9 +649,16 @@
   }
 
   function countPreConsentAnswer(root, policyVersion, promptAfter) {
-    var raw = Number.parseInt(readCookie(PROMPT_COUNT_COOKIE) || "0", 10);
+    var serialized = readPersistentValue(
+      PROMPT_COUNT_COOKIE,
+      function (value) {
+        var parsed = Number.parseInt(value, 10);
+        return Number.isInteger(parsed) && parsed >= 0;
+      }
+    );
+    var raw = Number.parseInt(serialized || "0", 10);
     var count = Number.isInteger(raw) && raw >= 0 ? raw + 1 : 1;
-    writeCookie(PROMPT_COUNT_COOKIE, String(count));
+    writePersistentValue(PROMPT_COUNT_COOKIE, String(count));
     if (count >= promptAfter) {
       renderModal(root, readConsent(policyVersion), true);
     }
@@ -592,7 +668,7 @@
     var roots = document.querySelectorAll("[data-jlpt-max-usage-telemetry]");
     var root = roots.length ? roots[roots.length - 1] : null;
     var platform = detectPlatform();
-    if (!root || !platform || !cookieAvailable()) {
+    if (!root || !platform || !persistentStorageAvailable()) {
       return;
     }
     var policyVersion = Number(root.getAttribute("data-policy-version"));
@@ -646,8 +722,13 @@
       normalizePracticeType: normalizePracticeType,
       payloadDays: payloadDays,
       buildSnapshotPayload: buildSnapshotPayload,
+      persistentStorageAvailable: persistentStorageAvailable,
       readCookie: readCookie,
+      readLocalStorage: readLocalStorage,
+      readPersistentValue: readPersistentValue,
       removeCookie: removeCookie,
+      removeLocalStorage: removeLocalStorage,
+      removePersistentValue: removePersistentValue,
       retainCurrentAndPreviousDay: retainCurrentAndPreviousDay,
       readConsent: readConsent,
       readCounters: readCounters,
@@ -655,6 +736,8 @@
       sendSnapshot: sendSnapshot,
       shouldUpload: shouldUpload,
       writeCookie: writeCookie,
+      writeLocalStorage: writeLocalStorage,
+      writePersistentValue: writePersistentValue,
       writeConsent: writeConsent,
       writeCounters: writeCounters
     };
