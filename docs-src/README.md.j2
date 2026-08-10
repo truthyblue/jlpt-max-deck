@@ -64,6 +64,9 @@ v1.1.1부터 카드 설정과 익명 통계 상태를 쿠키와 `localStorage`�
 iPhone·iPad에서도 앱을 다시 연 뒤 선택이 유지됩니다. AnkiDroid에서는
 **설정 → 고급 → 학습 화면 로컬 스토리지**를 켜면 `localStorage`도 같은 카드
 주소에서 유지되며, 이 설정을 끈 상태에서도 기존 쿠키 저장은 계속 사용합니다.
+iPhone·iPad 음성은 Web Audio의 fetch·decode 경로를 거치지 않고 HTML 오디오
+요소를 직접 재생합니다. 모든 카드 답면의 새 버전 안내에서는 업데이트 가이드로
+바로 이동하거나 7일간 숨기고, 해당 버전 알림을 다시 보지 않도록 선택할 수 있습니다.
 
 처음에는 FSRS 기억 유지율을 {{ product.study_defaults.desired_retention_percent }}%,
 어휘 새 카드를 하루 {{ product.study_defaults.suggested_new_cards_min }}~{{ product.study_defaults.new_cards_per_day }}장으로 두는 것을 권합니다.

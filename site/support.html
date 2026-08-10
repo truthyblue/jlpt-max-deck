@@ -118,7 +118,7 @@
               <tr><th scope="row">버전</th><td>v1.1.1</td></tr>
               <tr><th scope="row">파일</th><td><code>JLPT-MAX-Deck-1.1.1.apkg</code></td></tr>
               <tr><th scope="row">크기</th><td>약 0.87GB</td></tr>
-              <tr><th scope="row">SHA-256</th><td><code>591ced567496f39278d138031ed2bb2d6a0f07be07aa9e217199173b837610be</code></td></tr>
+              <tr><th scope="row">SHA-256</th><td><code>8cfbe3b7d070895a73b060b8ec718d80631eff78acbe6332c06b0aab01cd10bd</code></td></tr>
             </tbody>
           </table>
           <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.1.1/JLPT-MAX-Deck-1.1.1.apkg">기본 덱 다시 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a><a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.1.1/SHA256SUMS">SHA256SUMS</a></div>
@@ -159,12 +159,13 @@
                 <div><strong>v1.1.1</strong><span>최신</span></div>
                 <time datetime="2026-08-10">2026-08-10</time>
               </header>
-              <h3>iPhone·iPad와 AnkiDroid에서 카드 설정과 선택형 익명 통계 상태가 안정적으로 유지되도록 영속 저장을 보강했습니다.</h3>
+              <h3>모바일 설정 저장, iPhone·iPad 음성 재생과 카드 안의 새 버전 안내를 보강했습니다.</h3>
               <ul>
                 <li>iPhone·iPad에서 쿠키 저장이 거부돼 후리가나·해석·자동재생·배속 설정이 초기화되거나 익명 통계 상태가 유지되지 않던 문제를 수정했습니다.</li>
                 <li>설정과 익명 통계 상태를 쿠키와 localStorage에 함께 저장하고, 한쪽만 남아 있어도 다른 쪽을 자동으로 복구합니다.</li>
                 <li>기존 Android 사용자의 쿠키 값을 우선해 그대로 이어받으며, AnkiDroid의 학습 화면 로컬 스토리지 설정을 켜면 localStorage도 앱 재시작 뒤 유지됩니다.</li>
-                <li>음성 재생 방식, 다른 앱 음악과의 혼합 재생, 덕킹 동작은 바꾸지 않았습니다.</li>
+                <li>iPhone·iPad에서는 ambient 오디오 세션을 요청한 뒤 HTML 오디오 요소를 직접 재생하고, Android와 데스크톱은 기존 Web Audio 경로를 유지합니다.</li>
+                <li>모든 카드 답면의 새 버전 안내에서 업데이트 가이드, 7일간 숨기기와 해당 버전 알림 다시 보지 않기를 제공합니다.</li>
                 <li>노트·카드·미디어 수와 안정 ID, 학습 기록 호환성은 1.1.0과 동일합니다.</li>
               </ul>
               <p class="v2-release-migration"><strong>업데이트 안내</strong>1.1.0 사용자는 동기화 또는 백업 후 v1.1.1 기본 덱을 기존 덱 위에 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트 업데이트는 항상, 노트 유형 병합은 켜기를 선택합니다. 기존 한자 확장은 다시 만들 필요가 없습니다.</p>
