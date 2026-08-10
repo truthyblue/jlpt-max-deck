@@ -370,7 +370,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn('class="deck-support-features reveal"', html)
         self.assertNotIn("BEYOND THIS CARD", html)
         self.assertIn("덱 안내와 업데이트", html)
-        self.assertIn("가나·부분 한자 표기 105개는 별도 보조 카드로", html)
+        self.assertIn("가나·부분 한자 표기 144개는 별도 보조 카드로", html)
         self.assertIn("card-hannichi-formation.webp", html)
         self.assertIn("구어(일부 뜻)", html)
         self.assertIn("‘괜찮다’에만", html)

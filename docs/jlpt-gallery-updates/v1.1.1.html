@@ -1,19 +1,34 @@
 <meta charset="utf-8">
 <!-- 상태: v1.1.1 릴리스 후보 검증 완료. 갤러리 게시 전 최종 검토용 초안. -->
-<!-- 게시글 제목: [Anki] JLPT MAX 덱 v1.1.1 - 모바일 설정·아이폰 음성 안정화 -->
+<!-- 게시글 제목: [Anki] JLPT MAX 덱 v1.1.1 - 뜻·예문 표시와 모바일 안정화 -->
 <!-- 디시인사이드가 저장 후 제거하는 스타일이나 표 레이아웃에 의존하지 않는 본문입니다. -->
 <div style="max-width:760px;margin:0 auto;color:#1b211d;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;font-size:16px;line-height:1.8;word-break:keep-all;">
   <div style="padding:38px 28px 34px;text-align:center;color:#fff;background:#101512;border-top:8px solid #d8ff62;border-bottom:1px solid #2f3933;">
     <div style="margin-bottom:12px;color:#d8ff62;font-size:13px;font-weight:800;letter-spacing:.12em;">JLPT MAX Deck · v1.1.1 HOTFIX</div>
-    <div style="font-size:36px;font-weight:900;line-height:1.2;letter-spacing:-.05em;">모바일 설정은 오래 유지하고,<br>아이폰 음성은 더 안정적으로.</div>
+    <div style="font-size:36px;font-weight:900;line-height:1.2;letter-spacing:-.05em;">뜻과 예문의 연결은 또렷하게,<br>모바일 복습은 더 안정적으로.</div>
     <p style="max-width:620px;margin:18px auto 0;color:#d9dedb;font-size:18px;line-height:1.65;">
-      카드 내용과 학습 기록은 그대로 두고, 일부 모바일 환경에서 초기화되던 설정 저장과 iPhone·iPad 음성 재생을 보완했음. 새 버전 안내도 7일간 숨기거나 버전별로 끌 수 있게 바뀜.
+      같은 뜻 묶음과 서로 다른 뜻을 카드에서 구분하고, 각 예문이 어떤 표현에 대응하는지 바로 보이게 바꿨음. 보충 예문 100개를 더했으며, 모바일 설정 저장과 iPhone·iPad 음성 재생도 함께 보완했음.
+    </p>
+  </div>
+
+  <div style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
+    <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">MEANING &amp; EXAMPLES</div>
+    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">1. 뜻 묶음과 예문의 연결을 더 또렷하게</div>
+    <p style="margin:18px 0 0;color:#d9dedb;">
+      같은 의미 묶음 안의 표현은 <strong>가운데점(·)</strong>으로, 서로 다른 독립 의미는 <strong>슬래시(/)</strong>로 표시함. 예문 1·2 대신 각 문장 위에 대응하는 뜻 칩을 붙여 어떤 의미의 예문인지 바로 확인할 수 있음.
+    </p>
+    <div style="margin-top:20px;padding:18px 20px;color:#1b211d;background:#eef8f2;border-left:8px solid #d8ff62;">
+      <strong style="color:#173b26;font-size:20px;">兄 — 형 · 오빠</strong><br>
+      <span style="color:#4e5852;"><strong>오빠</strong>　私は妹で、兄は私より三歳上です。<br><strong>형</strong>　弟は兄と毎朝一緒に学校へ行く。</span>
+    </div>
+    <p style="margin:18px 0 0;color:#d9dedb;">
+      구성 요소별로 빠져 있던 보충 예문 100개와 음성을 추가해 검토 예문은 6,883개가 됐음. 노트·카드 ID는 바꾸지 않아 기존 학습 기록을 이어서 쓸 수 있음.
     </p>
   </div>
 
   <div style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
     <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">MOBILE SETTINGS</div>
-    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">1. 쿠키 + localStorage 이중 저장</div>
+    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">2. 쿠키 + localStorage 이중 저장</div>
     <p style="margin:18px 0 0;color:#d9dedb;">
       일부 iPhone·iPad에서는 AnkiMobile 카드 화면의 쿠키 저장이 실패해 후리가나·해석·자동재생·배속 설정이 앱을 다시 열면 초기화되고, 익명 통계 동의 상태도 유지되지 않을 수 있었음. v1.1.1부터 같은 값을 쿠키와 <code style="color:#d8ff62;">localStorage</code>에 함께 저장함.
     </p>
@@ -24,7 +39,7 @@
   </div>
 
   <div style="padding:44px 8px 8px;">
-    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">2. 아이폰·아이패드 음성 재생 수정</div>
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">3. 아이폰·아이패드 음성 재생 수정</div>
     <p style="margin:16px 0 0;">
       AnkiMobile에서는 다른 앱의 소리를 존중하는 <strong>ambient</strong> 오디오 세션을 요청한 뒤 HTML 오디오 요소를 직접 재생함. Web Audio의 fetch·decode 경로를 거치지 않아 iPhone·iPad 카드 화면에서 재생이 시작되지 않거나 중간에 끊기는 경로를 줄였음.
     </p>
@@ -35,7 +50,7 @@
 
   <div style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
     <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">UPDATE NOTICE</div>
-    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">3. 새 버전 안내 보강</div>
+    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">4. 새 버전 안내 보강</div>
     <p style="margin:18px 0 0;color:#d9dedb;">
       카드 답면에서 더 최신 버전을 알려 주고 업데이트 가이드로 바로 이동할 수 있음. 당장 업데이트하기 어렵다면 <strong>7일간 숨기기</strong>를 누르거나, 해당 버전의 <strong>알림 다시 보지 않기</strong>를 선택할 수 있음.
     </p>
@@ -46,13 +61,13 @@
   </div>
 
   <div style="padding:44px 8px 8px;">
-    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">4. AnkiDroid 로컬 스토리지 설정</div>
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">5. AnkiDroid 로컬 스토리지 설정</div>
     <p style="margin:16px 0 0;">
       Android는 기존처럼 쿠키만으로도 설정을 저장함. <strong>설정 → 고급 → 학습 화면 로컬 스토리지</strong>를 켜면 카드 서버 주소가 고정돼 <code>localStorage</code>도 앱을 다시 연 뒤 같은 저장소를 사용할 수 있음.
     </p>
     <div style="margin-top:20px;padding:18px 20px;color:#1b211d;background:#eef8f2;border-left:8px solid #d8ff62;">
-      <strong style="color:#173b26;">카드 내용과 학습 기록은 그대로</strong><br>
-      <span style="color:#4e5852;">노트 16,240개·카드 22,402개·미디어 18,167개와 안정 ID는 v1.1.0에서 바뀌지 않았음. 기존 한자 확장도 다시 만들 필요 없음.</span>
+      <strong style="color:#173b26;">학습 기록과 기존 한자 확장은 그대로</strong><br>
+      <span style="color:#4e5852;">노트 16,240개·카드 22,402개와 안정 ID는 유지했음. 보충 예문 음성을 더해 전체 미디어는 18,267개이며, 기존 한자 확장은 다시 만들 필요 없음.</span>
     </div>
   </div>
 

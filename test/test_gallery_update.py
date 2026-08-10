@@ -41,6 +41,15 @@ class GalleryUpdateTests(unittest.TestCase):
 
     def test_hotfix_announcement_matches_the_closed_v111_scope(self) -> None:
         for copy in (
+            "뜻 묶음과 예문의 연결을 더 또렷하게",
+            "가운데점(·)",
+            "슬래시(/)",
+            "예문 1·2 대신 각 문장 위에 대응하는 뜻 칩",
+            "兄 — 형 · 오빠",
+            "私は妹で、兄は私より三歳上です。",
+            "弟は兄と毎朝一緒に学校へ行く。",
+            "보충 예문 100개",
+            "6,883개",
             "쿠키 + localStorage 이중 저장",
             "아이폰·아이패드 음성 재생 수정",
             "HTML 오디오 요소를 직접 재생",
@@ -50,10 +59,13 @@ class GalleryUpdateTests(unittest.TestCase):
             "설정 → 고급 → 학습 화면 로컬 스토리지",
             "기존 노트 업데이트: 항상",
             "노트 유형 병합: 켜기",
+            "18,267개",
             "v1.1.1 GitHub Release",
         ):
             self.assertIn(copy, HOTFIX_UPDATE)
         self.assertNotIn("음성 재생은 그대로", HOTFIX_UPDATE)
+        self.assertNotIn("카드 내용과 학습 기록은 그대로", HOTFIX_UPDATE)
+        self.assertNotIn("미디어 18,167개", HOTFIX_UPDATE)
 
     def test_announcement_leads_with_new_feature_value(self) -> None:
         settings_heading = "1. 카드 설정 통합 + 4단계 재생 배속"

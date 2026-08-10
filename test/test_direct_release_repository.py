@@ -110,6 +110,15 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         payload = {key: value for key, value in pin.items() if key != "payload_hash"}
         self.assertEqual(pin["payload_hash"], sha256_json(payload))
 
+    def test_release_pin_matches_current_logical_counts(self) -> None:
+        pin = json.loads(
+            (ROOT / "config" / "public-release.json").read_text(encoding="utf-8")
+        )
+        verifier = load_repository_verifier()
+
+        verifier._verify_pin(pin)
+        self.assertEqual(pin["core"]["media_files"], 18_253)
+
     def test_runtime_is_only_the_optional_kanji_builder(self) -> None:
         self.assertEqual(
             KANJI_BUILDER_FILES,
