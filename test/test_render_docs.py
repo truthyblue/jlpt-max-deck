@@ -288,28 +288,38 @@ class DocumentationRenderTest(unittest.TestCase):
         self.assertIn("필터 덱은 선택 기능입니다", anki_guide)
         self.assertIn("study-guide.html#filtered", anki_guide)
 
-    def test_current_update_guides_require_always_updating_existing_notes(
+    def test_update_guides_distinguish_patch_and_minor_import_policies(
         self,
     ) -> None:
-        sources = (
+        current_sources = (
             ROOT / "docs-src/docs/anki.md.j2",
-            ROOT / "docs-src/docs/releases/v1.1.0.md.j2",
             ROOT / "docs-src/docs/releases/v1.1.1.md.j2",
             ROOT / "docs-src/site/update.html.j2",
         )
-        for path in sources:
+        for path in current_sources:
             content = path.read_text(encoding="utf-8")
             with self.subTest(source=path.relative_to(ROOT).as_posix()):
                 self.assertIn("항상", content)
                 self.assertIn("새 버전일 때", content)
-                self.assertIn("덮어쓸 수", content)
+                self.assertIn("1.1.0 → 1.1.1", content)
+                self.assertIn("1.0.x → 1.1.x", content)
+                self.assertIn("가운데 숫자가 바뀌는 마이너 버전", content)
 
-        anki_guide = sources[0].read_text(encoding="utf-8")
-        update_page = sources[3].read_text(encoding="utf-8")
-        self.assertIn("기존 노트 업데이트: 항상", anki_guide)
-        self.assertNotIn("기존 노트 업데이트: 새 버전일 때", anki_guide)
-        self.assertIn(">항상</span>", update_page)
-        self.assertNotIn(">새 버전일 때</span>", update_page)
+        anki_guide = current_sources[0].read_text(encoding="utf-8")
+        update_page = current_sources[2].read_text(encoding="utf-8")
+        self.assertIn("기존 노트 업데이트: 새 버전일 때", anki_guide)
+        self.assertNotIn("기존 노트 업데이트: 항상", anki_guide)
+        self.assertIn(">새 버전일 때</span>", update_page)
+        self.assertNotIn(">항상</span>", update_page)
+
+        historical_minor_release = (
+            ROOT / "docs-src/docs/releases/v1.1.0.md.j2"
+        ).read_text(encoding="utf-8")
+        self.assertIn("1.0.3", historical_minor_release)
+        self.assertIn("**기존 노트 업데이트**는 반드시", historical_minor_release)
+        self.assertIn("**항상**", historical_minor_release)
+        self.assertIn("새 버전일 때", historical_minor_release)
+        self.assertIn("덮어쓸 수", historical_minor_release)
 
 
 if __name__ == "__main__":
