@@ -891,12 +891,16 @@ class PublicSiteTests(unittest.TestCase):
             self.assertIn(token, html)
         self.assertIn("업데이트한 뒤에는 실전 설정만 확인하세요", html)
         self.assertIn("음성 덱의 새 카드 수를 포함한 나머지 옵션은 지금 설정을 그대로 두세요", html)
-        self.assertIn("기존 노트 업데이트</h3><span class=\"v2-state on\">항상", html)
         self.assertIn(
-            "새 버전일 때</code>로 두면 이전 버전의 기존 노트와 카드 템플릿",
+            "기존 노트 업데이트</h3><span class=\"v2-state on\">새 버전일 때",
             html,
         )
-        self.assertIn("직접 수정한 노트 필드도 패키지 내용으로 덮어쓸 수 있으므로", html)
+        self.assertIn(
+            "1.1.0 → 1.1.1처럼 마지막 숫자만 바뀌는 패치 버전 업데이트",
+            html,
+        )
+        self.assertIn("1.0.x → 1.1.x처럼 가운데 숫자가 바뀌는 마이너 버전", html)
+        self.assertIn("직접 수정한 뜻·예문까지 공식 덱 내용으로 교체하려고", html)
         self.assertNotIn("JLPT MAX덱 · 음성", html)
         self.assertNotIn("새 카드 0장", html)
         self.assertNotIn('id="fsrs"', html)
