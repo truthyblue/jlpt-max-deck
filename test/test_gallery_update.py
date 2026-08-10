@@ -19,6 +19,26 @@ SCREENSHOTS = {
 
 
 class GalleryUpdateTests(unittest.TestCase):
+    def test_hotfix_announcement_preserves_the_established_gallery_format(
+        self,
+    ) -> None:
+        for copy in (
+            '<meta charset="utf-8">',
+            "<!-- 상태:",
+            "<!-- 게시글 제목:",
+            "디시인사이드가 저장 후 제거하는 스타일이나 표 레이아웃에 의존하지 않는 본문",
+            "color:#1b211d;background:#fff",
+            "border-top:8px solid #d8ff62",
+            "border-left:8px solid #8ee6b1",
+            "업데이트 방법 보기 →",
+            "★ GitHub에서 Star →",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, HOTFIX_UPDATE)
+
+        self.assertNotIn("border-radius:22px", HOTFIX_UPDATE)
+        self.assertNotIn("linear-gradient(135deg", HOTFIX_UPDATE)
+
     def test_hotfix_announcement_matches_the_closed_v111_scope(self) -> None:
         for copy in (
             "쿠키 + localStorage 이중 저장",

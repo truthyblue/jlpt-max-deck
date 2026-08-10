@@ -1,41 +1,89 @@
-<div style="max-width:760px;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#f5f7f2;background:#0b1712;border:1px solid #274536;border-radius:22px;overflow:hidden;line-height:1.75;">
-  <div style="padding:34px 30px 28px;background:linear-gradient(135deg,#173629,#0b1712);">
-    <div style="display:inline-block;padding:4px 10px;border-radius:999px;background:#d8ff62;color:#14200e;font-size:13px;font-weight:900;">v1.1.1 HOTFIX</div>
-    <h2 style="margin:14px 0 8px;font-size:30px;line-height:1.25;color:#fff;">모바일 설정·음성 재생 안정화</h2>
-    <p style="margin:0;color:#c9d8cf;">카드 내용과 학습 기록은 그대로 두고, 설정 저장·아이폰 음성·새 버전 안내를 보강함.</p>
+<meta charset="utf-8">
+<!-- 상태: v1.1.1 릴리스 후보 검증 완료. 갤러리 게시 전 최종 검토용 초안. -->
+<!-- 게시글 제목: [Anki] JLPT MAX 덱 v1.1.1 - 모바일 설정·아이폰 음성 안정화 -->
+<!-- 디시인사이드가 저장 후 제거하는 스타일이나 표 레이아웃에 의존하지 않는 본문입니다. -->
+<div style="max-width:760px;margin:0 auto;color:#1b211d;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;font-size:16px;line-height:1.8;word-break:keep-all;">
+  <div style="padding:38px 28px 34px;text-align:center;color:#fff;background:#101512;border-top:8px solid #d8ff62;border-bottom:1px solid #2f3933;">
+    <div style="margin-bottom:12px;color:#d8ff62;font-size:13px;font-weight:800;letter-spacing:.12em;">JLPT MAX Deck · v1.1.1 HOTFIX</div>
+    <div style="font-size:36px;font-weight:900;line-height:1.2;letter-spacing:-.05em;">모바일 설정은 오래 유지하고,<br>아이폰 음성은 더 안정적으로.</div>
+    <p style="max-width:620px;margin:18px auto 0;color:#d9dedb;font-size:18px;line-height:1.65;">
+      카드 내용과 학습 기록은 그대로 두고, 일부 모바일 환경에서 초기화되던 설정 저장과 iPhone·iPad 음성 재생을 보완했음. 새 버전 안내도 7일간 숨기거나 버전별로 끌 수 있게 바뀜.
+    </p>
   </div>
 
-  <div style="padding:30px;">
-    <h3 style="margin:0 0 10px;color:#d8ff62;">1. 쿠키 + localStorage 이중 저장</h3>
-    <p style="margin:0 0 20px;">일부 iPhone·iPad에서는 AnkiMobile 카드 화면의 쿠키 저장이 실패해서 후리가나·해석·자동재생·배속 설정이 앱을 다시 열면 초기화되고, 익명 통계 동의 상태도 유지되지 않을 수 있었음. v1.1.1부터 같은 값을 쿠키와 <code style="color:#d8ff62;">localStorage</code>에 함께 저장함.</p>
-
-    <div style="padding:18px 20px;margin:0 0 24px;border-radius:14px;background:#13271e;border:1px solid #315442;">
-      <strong style="color:#fff;">기존 값도 자동으로 이어받음</strong>
-      <p style="margin:6px 0 0;color:#c9d8cf;">유효한 쿠키가 있으면 먼저 사용해 localStorage에 복제하고, 쿠키를 쓸 수 없으면 localStorage에서 복원함. 둘 중 하나만 작동해도 설정을 저장할 수 있음.</p>
+  <div style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
+    <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">MOBILE SETTINGS</div>
+    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">1. 쿠키 + localStorage 이중 저장</div>
+    <p style="margin:18px 0 0;color:#d9dedb;">
+      일부 iPhone·iPad에서는 AnkiMobile 카드 화면의 쿠키 저장이 실패해 후리가나·해석·자동재생·배속 설정이 앱을 다시 열면 초기화되고, 익명 통계 동의 상태도 유지되지 않을 수 있었음. v1.1.1부터 같은 값을 쿠키와 <code style="color:#d8ff62;">localStorage</code>에 함께 저장함.
+    </p>
+    <div style="margin-top:20px;padding:18px 20px;color:#1b211d;background:#eef8f2;border-left:8px solid #d8ff62;">
+      <strong style="color:#173b26;">기존 값도 자동으로 이어받음</strong><br>
+      <span style="color:#4e5852;">유효한 쿠키가 있으면 먼저 사용해 localStorage에 복제하고, 쿠키를 쓸 수 없으면 localStorage에서 복원함. 둘 중 하나만 작동해도 설정을 계속 저장할 수 있음.</span>
     </div>
+  </div>
 
-    <h3 style="margin:0 0 10px;color:#d8ff62;">2. 아이폰·아이패드 음성 재생 수정</h3>
-    <p style="margin:0 0 24px;">AnkiMobile에서는 ambient 오디오 세션을 요청한 뒤 HTML 오디오 요소를 직접 재생함. Web Audio의 fetch·decode 경로를 거치지 않고, 자동재생·직접 재생·배속에 같은 종료와 취소 규칙을 적용함.</p>
+  <div style="padding:44px 8px 8px;">
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">2. 아이폰·아이패드 음성 재생 수정</div>
+    <p style="margin:16px 0 0;">
+      AnkiMobile에서는 다른 앱의 소리를 존중하는 <strong>ambient</strong> 오디오 세션을 요청한 뒤 HTML 오디오 요소를 직접 재생함. Web Audio의 fetch·decode 경로를 거치지 않아 iPhone·iPad 카드 화면에서 재생이 시작되지 않거나 중간에 끊기는 경로를 줄였음.
+    </p>
+    <p style="margin:12px 0 0;color:#4e5852;">
+      표제어·예문·실전 정답의 직접 재생과 순차 자동재생에 같은 배속·종료·취소 규칙을 적용함. Android와 데스크톱은 기존 재생 경로를 유지함.
+    </p>
+  </div>
 
-    <h3 style="margin:0 0 10px;color:#d8ff62;">3. 새 버전 안내 보강</h3>
-    <p style="margin:0 0 24px;">카드 답면에서 새 버전을 알려 주고 업데이트 가이드로 바로 이동할 수 있음. 당장 업데이트하기 어렵다면 <strong>7일간 숨기기</strong>를 누르거나, 해당 버전 <strong>알림 다시 보지 않기</strong>를 선택할 수 있음.</p>
+  <div style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
+    <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">UPDATE NOTICE</div>
+    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">3. 새 버전 안내 보강</div>
+    <p style="margin:18px 0 0;color:#d9dedb;">
+      카드 답면에서 더 최신 버전을 알려 주고 업데이트 가이드로 바로 이동할 수 있음. 당장 업데이트하기 어렵다면 <strong>7일간 숨기기</strong>를 누르거나, 해당 버전의 <strong>알림 다시 보지 않기</strong>를 선택할 수 있음.
+    </p>
+    <div style="margin-top:20px;padding:18px 20px;color:#1b211d;background:#eef8f2;border-left:8px solid #d8ff62;">
+      <strong style="color:#173b26;">학습을 방해하지 않게 제한</strong><br>
+      <span style="color:#4e5852;">하루 최대 3번만 표시하며, 최신 버전 확인에 실패해도 학습 화면을 막거나 오류 메시지를 띄우지 않음.</span>
+    </div>
+  </div>
 
-    <h3 style="margin:0 0 10px;color:#d8ff62;">4. AnkiDroid 설정</h3>
-    <p style="margin:0 0 10px;">Android는 기존처럼 쿠키만으로도 저장됨. 아래 옵션을 켜면 카드 서버 주소가 고정돼 localStorage도 앱 재시작 뒤 유지됨.</p>
-    <div style="padding:15px 18px;margin:0 0 24px;border-radius:12px;background:#d8ff62;color:#17200f;font-weight:900;text-align:center;">설정 → 고급 → 학습 화면 로컬 스토리지</div>
+  <div style="padding:44px 8px 8px;">
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">4. AnkiDroid 로컬 스토리지 설정</div>
+    <p style="margin:16px 0 0;">
+      Android는 기존처럼 쿠키만으로도 설정을 저장함. <strong>설정 → 고급 → 학습 화면 로컬 스토리지</strong>를 켜면 카드 서버 주소가 고정돼 <code>localStorage</code>도 앱을 다시 연 뒤 같은 저장소를 사용할 수 있음.
+    </p>
+    <div style="margin-top:20px;padding:18px 20px;color:#1b211d;background:#eef8f2;border-left:8px solid #d8ff62;">
+      <strong style="color:#173b26;">카드 내용과 학습 기록은 그대로</strong><br>
+      <span style="color:#4e5852;">노트 16,240개·카드 22,402개·미디어 18,167개와 안정 ID는 v1.1.0에서 바뀌지 않았음. 기존 한자 확장도 다시 만들 필요 없음.</span>
+    </div>
+  </div>
 
-    <p style="margin:0 0 24px;">노트 16,240개·카드 22,402개·미디어 18,167개와 안정 ID는 v1.1.0 그대로임.</p>
-
-    <h3 style="margin:0 0 10px;color:#d8ff62;">업데이트 방법</h3>
-    <ol style="margin:0 0 22px;padding-left:22px;color:#e8eee9;">
-      <li>모든 기기 동기화 또는 백업 확인</li>
-      <li>기존 덱을 지우지 않고 v1.1.1 APKG 가져오기</li>
-      <li><strong>학습 진행 상태 가져오기: 끄기</strong></li>
-      <li><strong>기존 노트 업데이트: 항상</strong></li>
-      <li><strong>노트 유형 병합: 켜기</strong></li>
-    </ol>
-    <p style="margin:0 0 24px;color:#ffcf8a;">직접 고친 뜻·예문 필드가 있으면 <strong>항상</strong> 가져오기가 그 내용도 덮어쓸 수 있으니 먼저 백업 권장. 기존 한자 확장은 다시 만들 필요 없음.</p>
-
-    <a href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v1.1.1" target="_blank" rel="noopener noreferrer" style="display:block;padding:15px 18px;border-radius:12px;background:#d8ff62;color:#17200f;font-weight:900;text-align:center;text-decoration:none;">v1.1.1 GitHub Release →</a>
+  <div style="margin-top:40px;padding:32px 20px;text-align:center;color:#fff;background:#101512;border-top:8px solid #d8ff62;border-bottom:1px solid #2f3933;">
+    <div style="font-size:25px;font-weight:900;letter-spacing:-.04em;">v1.1.0에서 업데이트하기</div>
+    <p style="max-width:590px;margin:12px auto 18px;color:#d9dedb;">
+      먼저 모든 기기를 동기화하거나 백업한 뒤 v1.1.1 기본 덱을 기존 덱을 지우지 않고 가져오면 됨. 아래 세 옵션을 확인해야 카드 템플릿까지 새 버전으로 바뀜.
+    </p>
+    <div style="max-width:590px;margin:0 auto 18px;padding:18px 20px;text-align:left;color:#1b211d;background:#f4f7f5;border-left:8px solid #d8ff62;">
+      <strong>학습 진행 상태 가져오기: 끄기</strong><br>
+      <strong>기존 노트 업데이트: 항상</strong><br>
+      <strong>노트 유형 병합: 켜기</strong>
+    </div>
+    <div style="max-width:590px;margin:0 auto 18px;padding:18px 20px;text-align:left;color:#1b211d;background:#fff3cd;border-left:8px solid #ffbf47;">
+      <strong style="font-size:19px;">직접 고친 뜻·예문이 있다면 먼저 백업</strong><br>
+      <span style="color:#5f5436;"><strong>기존 노트 업데이트 → 항상</strong>은 기존 노트 필드를 패키지 내용으로 교체하므로, 직접 수정한 뜻·예문도 덮어쓸 수 있음.</span>
+    </div>
+    <div style="max-width:590px;margin:0 auto 22px;padding:18px 20px;color:#101512;background:#d8ff62;border-left:8px solid #8ee6b1;">
+      <strong style="font-size:19px;">써보고 괜찮았다면 개추 + GitHub Star 부탁함</strong><br>
+      <span style="color:#354039;">글 아래 개추 한 번과 GitHub Star가 다음 모바일 호환성 점검과 업데이트를 이어가는 데 큰 도움이 됨.</span>
+    </div>
+    <div style="max-width:360px;margin:0 auto;">
+      <div style="margin:10px 0;padding:14px 18px;background:#d8ff62;border:1px solid #d8ff62;">
+        <a href="https://truthyblue.github.io/jlpt-max-deck/update.html" target="_blank" rel="noopener noreferrer" style="color:#101512;font-weight:900;line-height:1.5;text-decoration:none;">업데이트 방법 보기 →</a>
+      </div>
+      <div style="margin:10px 0;padding:14px 18px;background:#101512;border:1px solid #d8ff62;">
+        <a href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v1.1.1" target="_blank" rel="noopener noreferrer" style="color:#d8ff62;font-weight:900;line-height:1.5;text-decoration:none;">v1.1.1 GitHub Release →</a>
+      </div>
+      <div style="margin:10px 0;padding:14px 18px;background:#d8ff62;border:1px solid #d8ff62;">
+        <a href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer" style="color:#101512;font-weight:900;line-height:1.5;text-decoration:none;">★ GitHub에서 Star →</a>
+      </div>
+    </div>
   </div>
 </div>
