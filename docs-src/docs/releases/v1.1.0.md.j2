@@ -8,7 +8,7 @@
 ## 1.0.3 사용자의 업데이트 절차
 
 1. 모든 기기의 Anki 동기화를 끝내거나 컬렉션 백업을 확인합니다.
-2. `{{ release.artifacts.core.filename }}`를 기존 덱을 삭제하지 않고 가져옵니다.
+2. `JLPT-MAX-Deck-1.1.0.apkg`를 기존 덱을 삭제하지 않고 가져옵니다.
 3. **학습 진행 상태 가져오기**는 끄고, **기존 노트 업데이트**는 반드시
    **항상**, **노트 유형 병합**은 **켜기**를 선택합니다.
 
@@ -122,18 +122,18 @@ AIVIS 음성 입력에서 장음 표기가 의도한 발음으로 유지되도�
 
 ## 학습자가 받는 것
 
-- `{{ release.artifacts.core.filename }}`: 어휘·음성·실전 문제·참조표가 들어 있는 완성 APKG
-- `{{ release.artifacts.kanji_builder.filename }}`: 지원 PDF 2개로 개인용 한자 확장을 만드는 선택형 빌더
-- `{{ release.artifacts.checksums.filename }}`: 위 Release 자산의 SHA-256 목록
+- `JLPT-MAX-Deck-1.1.0.apkg`: 어휘·음성·실전 문제·참조표가 들어 있는 완성 APKG
+- `JLPT-MAX-kanji-builder-1.1.0.zip`: 지원 PDF 2개로 개인용 한자 확장을 만드는 선택형 빌더
+- `SHA256SUMS`: 위 Release 자산의 SHA-256 목록
 - `public-release.json`: 릴리스 수량·해시·정책을 묶은 검증 pin
 
 ## 검증 결과
 
 | 가져온 구성 | 노트 | 카드 | 미디어 |
 | --- | ---: | ---: | ---: |
-| 기본 덱 | {{ product.deck.core_notes | number }} | {{ product.deck.core_cards | number }} | {{ product.deck.core_media | number }} |
-| 선택형 한자 확장 | {{ product.deck.kanji_notes | number }} | {{ product.deck.kanji_notes | number }} | {{ product.deck.static_media }} |
-| 두 APKG 합산 | {{ product.deck.total_notes | number }} | {{ product.deck.total_cards | number }} | {{ product.deck.total_media | number }} |
+| 기본 덱 | 13,903 | 20,065 | 18,153 |
+| 선택형 한자 확장 | 2,337 | 2,337 | 14 |
+| 두 APKG 합산 | 16,240 | 22,402 | 18,167 |
 
 공개 1.0.3과 비교해 기본 덱의 13,903개 노트와 20,065개 카드는 그대로입니다.
 어휘 뜻 386개를 교정하고 예문이 102개 늘었지만 덱 이름과 안정 ID는 유지하므로
@@ -143,9 +143,9 @@ AIVIS 음성 입력에서 장음 표기가 의도한 발음으로 유지되도�
 
 | 파일 | 크기 | SHA-256 |
 | --- | ---: | --- |
-| `{{ release.artifacts.core.filename }}` | {{ release.artifacts.core.bytes | number }} bytes | `{{ release.artifacts.core.sha256 }}` |
-| `{{ release.artifacts.kanji_builder.filename }}` | {{ release.artifacts.kanji_builder.bytes | number }} bytes | `{{ release.artifacts.kanji_builder.sha256 }}` |
-| `{{ release.artifacts.checksums.filename }}` | {{ release.artifacts.checksums.bytes | number }} bytes | `{{ release.artifacts.checksums.sha256 }}` |
+| `JLPT-MAX-Deck-1.1.0.apkg` | 868,064,124 bytes | `1a6f17b0141fc53766f01ccfd7a712ec766d3e5b81c94625de3d1fb960e31911` |
+| `JLPT-MAX-kanji-builder-1.1.0.zip` | 795,364 bytes | `e20c60f76a24b6990ac44063d760b7ff1158ddf5e70c518b5dcf0dfb4032055d` |
+| `SHA256SUMS` | 190 bytes | `c4f6ea1b7b8988c8b999f05cffff18ddd3778786056209a292d959371240456c` |
 
 기본 덱 가져오기는 Anki Desktop·AnkiMobile·AnkiDroid에서 사용할 수 있습니다.
 한자 빌더 Release 검증 범위는 macOS {{ product.requirements.macos_minimum }}+와

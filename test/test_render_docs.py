@@ -40,6 +40,9 @@ class DocumentationRenderTest(unittest.TestCase):
         PurePosixPath("docs/releases/v1.1.0.md.j2"): PurePosixPath(
             "docs/releases/v1.1.0.md"
         ),
+        PurePosixPath("docs/releases/v1.1.1.md.j2"): PurePosixPath(
+            "docs/releases/v1.1.1.md"
+        ),
         PurePosixPath("docs/troubleshooting.md.j2"): PurePosixPath(
             "docs/troubleshooting.md"
         ),
@@ -172,6 +175,17 @@ class DocumentationRenderTest(unittest.TestCase):
         self.assertNotIn("18,153", content)
         self.assertNotIn("JLPT-MAX-Deck-1.1.0.apkg", content)
 
+    def test_historical_v110_release_evidence_is_immutable(self) -> None:
+        content = (ROOT / "docs" / "releases" / "v1.1.0.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("JLPT-MAX-Deck-1.1.0.apkg", content)
+        self.assertIn(
+            "1a6f17b0141fc53766f01ccfd7a712ec766d3e5b81c94625de3d1fb960e31911",
+            content,
+        )
+        self.assertNotIn("JLPT-MAX-Deck-1.1.1.apkg", content)
+
     def test_final_newline_normalization_is_deterministic(self) -> None:
         for source in ("value", "value\n", "value\n\n", "value\r\n"):
             with self.subTest(source=repr(source)):
@@ -280,6 +294,7 @@ class DocumentationRenderTest(unittest.TestCase):
         sources = (
             ROOT / "docs-src/docs/anki.md.j2",
             ROOT / "docs-src/docs/releases/v1.1.0.md.j2",
+            ROOT / "docs-src/docs/releases/v1.1.1.md.j2",
             ROOT / "docs-src/site/update.html.j2",
         )
         for path in sources:
@@ -290,7 +305,7 @@ class DocumentationRenderTest(unittest.TestCase):
                 self.assertIn("덮어쓸 수", content)
 
         anki_guide = sources[0].read_text(encoding="utf-8")
-        update_page = sources[2].read_text(encoding="utf-8")
+        update_page = sources[3].read_text(encoding="utf-8")
         self.assertIn("기존 노트 업데이트: 항상", anki_guide)
         self.assertNotIn("기존 노트 업데이트: 새 버전일 때", anki_guide)
         self.assertIn(">항상</span>", update_page)

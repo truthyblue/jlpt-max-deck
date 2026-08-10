@@ -6,6 +6,9 @@ ROOT = Path(__file__).resolve().parents[1]
 UPDATE = (
     ROOT / "docs" / "jlpt-gallery-updates" / "v1.1.0.html"
 ).read_text(encoding="utf-8")
+HOTFIX_UPDATE = (
+    ROOT / "docs" / "jlpt-gallery-updates" / "v1.1.1.html"
+).read_text(encoding="utf-8")
 RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.1.0.md").read_text(
     encoding="utf-8"
 )
@@ -16,6 +19,54 @@ SCREENSHOTS = {
 
 
 class GalleryUpdateTests(unittest.TestCase):
+    def test_hotfix_announcement_preserves_the_established_gallery_format(
+        self,
+    ) -> None:
+        for copy in (
+            '<meta charset="utf-8">',
+            "<!-- 상태:",
+            "<!-- 게시글 제목:",
+            "디시인사이드가 저장 후 제거하는 스타일이나 표 레이아웃에 의존하지 않는 본문",
+            "color:#1b211d;background:#fff",
+            "border-top:8px solid #d8ff62",
+            "border-left:8px solid #8ee6b1",
+            "업데이트 방법 보기 →",
+            "★ GitHub에서 Star →",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, HOTFIX_UPDATE)
+
+        self.assertNotIn("border-radius:22px", HOTFIX_UPDATE)
+        self.assertNotIn("linear-gradient(135deg", HOTFIX_UPDATE)
+
+    def test_hotfix_announcement_matches_the_closed_v111_scope(self) -> None:
+        for copy in (
+            "뜻 묶음과 예문의 연결을 더 또렷하게",
+            "가운데점(·)",
+            "슬래시(/)",
+            "예문 1·2 대신 각 문장 위에 대응하는 뜻 칩",
+            "兄 — 형 · 오빠",
+            "私は妹で、兄は私より三歳上です。",
+            "弟は兄と毎朝一緒に学校へ行く。",
+            "보충 예문 100개",
+            "6,883개",
+            "쿠키 + localStorage 이중 저장",
+            "아이폰·아이패드 음성 재생 수정",
+            "HTML 오디오 요소를 직접 재생",
+            "새 버전 안내 보강",
+            "7일간 숨기기",
+            "알림 다시 보지 않기",
+            "설정 → 고급 → 학습 화면 로컬 스토리지",
+            "기존 노트 업데이트: 항상",
+            "노트 유형 병합: 켜기",
+            "18,267개",
+            "v1.1.1 GitHub Release",
+        ):
+            self.assertIn(copy, HOTFIX_UPDATE)
+        self.assertNotIn("음성 재생은 그대로", HOTFIX_UPDATE)
+        self.assertNotIn("카드 내용과 학습 기록은 그대로", HOTFIX_UPDATE)
+        self.assertNotIn("미디어 18,167개", HOTFIX_UPDATE)
+
     def test_announcement_leads_with_new_feature_value(self) -> None:
         settings_heading = "1. 카드 설정 통합 + 4단계 재생 배속"
         meaning_heading = "2. 어휘 뜻 386개와 의미별 예문 교정"

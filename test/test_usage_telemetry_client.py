@@ -32,17 +32,22 @@ class UsageTelemetryClientSourceTests(unittest.TestCase):
 
     def test_opt_out_clears_installation_and_unsent_counters(self) -> None:
         self.assertIn("clearTransmittedUsageState();", CLIENT)
-        self.assertIn("removeCookie(INSTALLATION_COOKIE);", CLIENT)
-        self.assertIn("removeCookie(CURRENT_COUNTERS_COOKIE);", CLIENT)
-        self.assertIn("removeCookie(PREVIOUS_COUNTERS_COOKIE);", CLIENT)
+        self.assertIn("removePersistentValue(INSTALLATION_COOKIE);", CLIENT)
+        self.assertIn("removePersistentValue(CURRENT_COUNTERS_COOKIE);", CLIENT)
+        self.assertIn("removePersistentValue(PREVIOUS_COUNTERS_COOKIE);", CLIENT)
+        self.assertIn("removeCookie(name);", CLIENT)
+        self.assertIn("removeLocalStorage(name);", CLIENT)
 
-    def test_public_source_uses_only_cookie_persistence(self) -> None:
+    def test_public_source_uses_cookie_and_local_storage_persistence(self) -> None:
         self.assertIn("document.cookie", CLIENT)
+        self.assertIn("globalThis.localStorage.getItem(name)", CLIENT)
+        self.assertIn("globalThis.localStorage.setItem(name, value)", CLIENT)
+        self.assertIn("writePersistentValue", CLIENT)
+        self.assertIn("readPersistentValue", CLIENT)
         self.assertIn('var CONSENT_COOKIE = "jlpt_max_deck_usage_consent_v1";', CLIENT)
         self.assertIn('var CURRENT_COUNTERS_COOKIE = "jlpt_max_deck_usage_current_v1";', CLIENT)
         self.assertIn('var PREVIOUS_COUNTERS_COOKIE = "jlpt_max_deck_usage_previous_v1";', CLIENT)
         self.assertIn("retainCurrentAndPreviousDay(counters, today);", CLIENT)
-        self.assertNotIn("localStorage", CLIENT)
         self.assertNotIn("window.name", CLIENT)
 
 
