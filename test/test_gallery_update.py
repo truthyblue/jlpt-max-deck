@@ -9,6 +9,9 @@ UPDATE = (
 HOTFIX_UPDATE = (
     ROOT / "docs" / "jlpt-gallery-updates" / "v1.1.1.html"
 ).read_text(encoding="utf-8")
+V120_UPDATE = (
+    ROOT / "docs" / "jlpt-gallery-updates" / "v1.2.0.html"
+).read_text(encoding="utf-8")
 RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.1.0.md").read_text(
     encoding="utf-8"
 )
@@ -19,6 +22,48 @@ SCREENSHOTS = {
 
 
 class GalleryUpdateTests(unittest.TestCase):
+    def test_v120_announcement_is_publishable_html_with_bounded_release_scope(
+        self,
+    ) -> None:
+        for copy in (
+            '<meta charset="utf-8">',
+            "<!-- 상태:",
+            "<!-- 게시글 제목:",
+            "1. 어휘·예문 고저 악센트 + 일본어 글꼴 설정",
+            "2. 새 카드는 복습 사이에 섞어서",
+            "3. 학습자 뜻 249개와 예문 182개 보강",
+            "뜻·예문 상세 패치노트 전체 보기 →",
+            "docs/release-details/v1.2.0.md",
+            "기존 노트 업데이트: 항상",
+            "v1.1.x와 v1.0.x 모두",
+            "기존 한자 확장은 다시 만들 필요 없음",
+            "선택적으로 다시 만들면 됨",
+            "업데이트 뒤 남은 예전 음성은 미디어 검사로 정리",
+            "도구 → 미디어 검사",
+            "다른 덱의 미사용 파일도 함께 잡힐 수 있으니",
+            "운영체제 휴지통에서 복구할 수 있음",
+            "v1.2.0 GitHub Release →",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, V120_UPDATE)
+
+        self.assertFalse(
+            (ROOT / "docs" / "jlpt-gallery-updates" / "v1.2.0.md").exists()
+        )
+        self.assertNotIn("## 독립 뜻 분리·통합", V120_UPDATE)
+        self.assertNotIn("## 새 예문", V120_UPDATE)
+
+    def test_v120_announcement_uses_the_pages_hosted_comparison_screenshot(
+        self,
+    ) -> None:
+        screenshot = "gallery-v1.2.0-pitch-settings.webp"
+        self.assertTrue((ROOT / "site" / "assets" / screenshot).is_file())
+        self.assertIn(
+            "https://truthyblue.github.io/jlpt-max-deck/assets/" + screenshot,
+            V120_UPDATE,
+        )
+        self.assertIn('width="781" height="886"', V120_UPDATE)
+
     def test_hotfix_announcement_preserves_the_established_gallery_format(
         self,
     ) -> None:
