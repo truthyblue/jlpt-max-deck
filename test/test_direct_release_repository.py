@@ -117,7 +117,7 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         verifier = load_repository_verifier()
 
         verifier._verify_pin(pin)
-        self.assertEqual(pin["core"]["media_files"], 18_253)
+        self.assertEqual(pin["core"]["media_files"], 18_438)
 
     def test_runtime_is_only_the_optional_kanji_builder(self) -> None:
         self.assertEqual(
