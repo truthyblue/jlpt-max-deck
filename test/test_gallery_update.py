@@ -1,9 +1,18 @@
 from pathlib import Path
 import re
+import sys
+import tempfile
 import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from scripts.render_gallery_preview import (
+    GalleryPreviewError,
+    render_gallery_preview,
+)
+
 UPDATE = (
     ROOT / "docs" / "jlpt-gallery-updates" / "v1.1.0.html"
 ).read_text(encoding="utf-8")
@@ -20,15 +29,15 @@ V120_RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.2.0.md").read_text(
     encoding="utf-8"
 )
 SCREENSHOTS = {
-    "gallery-v1.1.0-card-settings.webp": (390, 500),
-    "gallery-v1.1.0-error-report.webp": (354, 644),
+    "releases/v1.1.0/gallery-v1.1.0-card-settings.webp": (390, 500),
+    "releases/v1.1.0/gallery-v1.1.0-error-report.webp": (354, 644),
 }
 V120_SCREENSHOTS = {
-    "gallery-v1.2.0-pitch.png": (781, 218),
-    "gallery-v1.2.0-card-settings.png": (781, 315),
-    "gallery-v1.2.0-context-hint.png": (780, 280),
-    "gallery-v1.2.0-error-dialog.png": (640, 604),
-    "gallery-v1.2.0-usage-dialog.png": (640, 604),
+    "releases/v1.2.0/gallery-v1.2.0-pitch.png": (781, 218),
+    "releases/v1.2.0/gallery-v1.2.0-card-settings.png": (781, 315),
+    "releases/v1.2.0/gallery-v1.2.0-context-hint.png": (780, 280),
+    "releases/v1.2.0/gallery-v1.2.0-error-dialog.png": (640, 604),
+    "releases/v1.2.0/gallery-v1.2.0-usage-dialog.png": (640, 604),
 }
 V120_FEATURES = (
     "pitch-accent",
@@ -122,6 +131,55 @@ class GalleryUpdateTests(unittest.TestCase):
             with self.subTest(copy=copy):
                 self.assertIn(copy, V120_UPDATE)
                 self.assertIn(copy, V120_RELEASE_NOTES)
+
+    def test_local_preview_resolves_every_versioned_release_image(self) -> None:
+        (ROOT / "build").mkdir(exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=ROOT / "build") as raw:
+            for version, expected_count in (("1.1.0", 2), ("1.2.0", 5)):
+                with self.subTest(version=version):
+                    output = Path(raw) / f"v{version}.html"
+                    receipt = render_gallery_preview(
+                        source=(
+                            ROOT
+                            / "docs/jlpt-gallery-updates"
+                            / f"v{version}.html"
+                        ),
+                        output=output,
+                    )
+                    preview = output.read_text(encoding="utf-8")
+                    self.assertEqual(expected_count, receipt["image_count"])
+                    self.assertEqual(expected_count, len(receipt["assets"]))
+                    self.assertNotIn(
+                        "truthyblue.github.io/jlpt-max-deck/assets/", preview
+                    )
+                    for asset in receipt["assets"]:
+                        resolved = (
+                            output.parent / asset["preview_src"]
+                        ).resolve()
+                        self.assertTrue(resolved.is_file())
+                        self.assertTrue(
+                            resolved.is_relative_to(
+                                ROOT / f"site/assets/releases/v{version}"
+                            )
+                        )
+
+    def test_local_preview_rejects_a_missing_public_image(self) -> None:
+        (ROOT / "build").mkdir(exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=ROOT / "build") as raw:
+            temp_root = Path(raw)
+            source = temp_root / "missing.html"
+            source.write_text(
+                '<img src="https://truthyblue.github.io/'
+                'jlpt-max-deck/assets/releases/v9.9.9/missing.png">',
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(
+                GalleryPreviewError, "preview asset does not exist"
+            ):
+                render_gallery_preview(
+                    source=source,
+                    output=temp_root / "preview.html",
+                )
 
     def test_hotfix_announcement_preserves_the_established_gallery_format(
         self,
