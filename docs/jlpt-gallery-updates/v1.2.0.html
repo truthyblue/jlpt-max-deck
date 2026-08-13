@@ -7,7 +7,7 @@
     <div style="margin-bottom:12px;color:#d8ff62;font-size:13px;font-weight:800;letter-spacing:.12em;">JLPT MAX Deck · v1.2.0</div>
     <div style="font-size:36px;font-weight:900;line-height:1.2;letter-spacing:-.05em;">소리의 높낮이는 눈에 보이게,<br>카드와 내용은 더 알아보기 쉽게.</div>
     <p style="max-width:620px;margin:18px auto 0;color:#d9dedb;font-size:18px;line-height:1.65;">
-      고저 악센트와 일본어 글꼴 설정부터 다의어 문맥 힌트, 새 카드 배치, 모바일 팝업과 한자 펼치기까지 학습 화면을 전반적으로 다듬었음. 뜻 249개와 예문 182개도 함께 보강했음.
+      모든 어휘·예문의 고저 악센트를 표시하고, 뜻 249개와 예문 182개를 보강했음. 일본어 글꼴·카드 설정, 다의어 문맥 힌트와 모바일 팝업도 함께 다듬었음.
     </p>
   </div>
 
@@ -23,8 +23,23 @@
     </div>
   </div>
 
+  <div data-release-feature="meanings-examples" style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
+    <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">MEANINGS &amp; EXAMPLES</div>
+    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">2. 학습자 뜻 249개와 예문 182개 보강</div>
+    <p style="margin:18px 0 0;color:#d9dedb;">
+      뜻 표시 249개를 실제 쓰임이 더 잘 드러나도록 다듬고, 새로 구분한 뜻을 대표하는 예문 182개를 추가해 전체 검토 예문은 6,883개에서 7,065개가 됐음. 기존 예문 3건도 교정했고, 신고된 실전 문제·문장과 <strong>変わる</strong>의 ‘특이하다’ 예문, <strong>持つ</strong>의 ‘오래가다’ 품사, <strong>六本</strong> 발음도 함께 바로잡았음.
+    </p>
+    <div style="margin-top:20px;padding:18px 20px;color:#1b211d;background:#f4f7f5;border-left:8px solid #d8ff62;">
+      <strong style="color:#173b26;">전체 목록은 GitHub에서 따로 확인</strong><br>
+      <span style="color:#4e5852;">공지에는 대표 변경만 적었음. 단어별 뜻 변경 전·후, 독립 뜻 분리·통합 23개, 문구 수정 226개와 새 예문 182개 전체는 아래 상세 패치노트에 정리했음.</span>
+      <div style="margin-top:14px;padding:13px 16px;background:#d8ff62;border:1px solid #c2eb51;">
+        <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/docs/release-details/v1.2.0.md" target="_blank" rel="noopener noreferrer" style="color:#101512;font-weight:900;text-decoration:none;">뜻·예문 상세 패치노트 전체 보기 →</a>
+      </div>
+    </div>
+  </div>
+
   <div data-release-feature="card-settings-fonts" style="padding:44px 8px 8px;">
-    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">2. 일본어 글꼴과 카드 설정을 한곳에서</div>
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">3. 일본어 글꼴과 카드 설정을 한곳에서</div>
     <p style="margin:16px 0 0;">
       카드에 일본어용 명조·고딕 글꼴을 함께 넣어 기기마다 자형이 달라지는 일을 줄였음. 일본어 본문 글꼴과 후리가나·해석·고저 악센트·자동재생 범위·배속을 같은 설정 패널에서 조절하고, 자주 쓰는 항목은 카드 상단에서도 바로 켜고 끌 수 있음.
     </p>
@@ -36,7 +51,7 @@
 
   <div data-release-feature="vocabulary-context-hints" style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
     <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">CONTEXT HINTS</div>
-    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">3. 같은 표기의 다른 뜻은 문맥으로 구분</div>
+    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">4. 같은 표기의 다른 뜻은 문맥으로 구분</div>
     <p style="margin:18px 0 0;color:#d9dedb;">
       앞면만 보고는 어떤 뜻을 묻는지 알기 어려웠던 <strong>そば·開く·避ける·紅葉·なる</strong> 5개 표제어의 10개 카드에 짧은 빈칸 문맥을 넣었음. 답을 노출하지 않으면서도 이번 카드가 묻는 읽기와 뜻을 구분할 수 있음.
     </p>
@@ -44,13 +59,6 @@
       <img src="https://truthyblue.github.io/jlpt-max-deck/assets/gallery-v1.2.0-context-hint.png" width="780" height="880" loading="lazy" alt="開く 카드의 전체 예문 앞면과 짧은 빈칸 문맥 앞면 비교" style="display:block;width:100%;max-width:620px;height:auto;margin:0 auto;background:#f5f1e8;border:1px solid #38433d;border-radius:12px;">
       <div style="margin-top:10px;color:#aeb8b2;font-size:13px;">전체 문장을 미리 보여 주는 대신 답이 드러나지 않는 짧은 문맥을 표시</div>
     </div>
-  </div>
-
-  <div data-release-feature="new-review-mix" style="padding:44px 8px 8px;">
-    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">4. 새 카드는 복습 사이에 섞어서</div>
-    <p style="margin:16px 0 0;">
-      새 카드가 복습 카드 뒤에 한꺼번에 몰리지 않고 복습 사이에 섞여 나오도록 기본 preset을 바꿨음. 기존 preset ID와 지금까지의 학습 기록·스케줄은 그대로 유지됨.
-    </p>
   </div>
 
   <div data-release-feature="mobile-support-dialogs" style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
@@ -69,26 +77,11 @@
     </div>
   </div>
 
-  <div data-release-feature="kanji-disclosure" style="padding:44px 8px 8px;">
-    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">6. 한자 정보 펼치기가 모든 모바일 앱에서 같은 방식으로</div>
+  <div data-release-feature="new-review-mix" style="padding:44px 8px 8px;">
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">6. 새 카드는 복습 사이에 섞어서</div>
     <p style="margin:16px 0 0;">
-      한자 정보 영역을 명시적인 열림·닫힘 상태를 가진 버튼으로 바꿨음. iPhone·iPad와 Android에서 같은 버튼을 눌러 열고 닫을 수 있고, 열린 상태와 접근성 정보도 카드가 정확히 기억함.
+      새 카드가 복습 카드 뒤에 한꺼번에 몰리지 않고 복습 사이에 섞여 나오도록 기본 preset을 바꿨음. 기존 preset ID와 지금까지의 학습 기록·스케줄은 그대로 유지됨.
     </p>
-  </div>
-
-  <div data-release-feature="meanings-examples" style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
-    <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">MEANINGS &amp; EXAMPLES</div>
-    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">7. 학습자 뜻 249개와 예문 182개 보강</div>
-    <p style="margin:18px 0 0;color:#d9dedb;">
-      뜻 표시 249개를 실제 쓰임이 더 잘 드러나도록 다듬고, 새로 구분한 뜻을 대표하는 예문 182개를 추가해 전체 검토 예문은 6,883개에서 7,065개가 됐음. 기존 예문 3건도 교정했고, 신고된 실전 문제·문장과 <strong>変わる</strong>의 ‘특이하다’ 예문, <strong>持つ</strong>의 ‘오래가다’ 품사, <strong>六本</strong> 발음도 함께 바로잡았음.
-    </p>
-    <div style="margin-top:20px;padding:18px 20px;color:#1b211d;background:#f4f7f5;border-left:8px solid #d8ff62;">
-      <strong style="color:#173b26;">전체 목록은 GitHub에서 따로 확인</strong><br>
-      <span style="color:#4e5852;">공지에는 대표 변경만 적었음. 단어별 뜻 변경 전·후, 독립 뜻 분리·통합 23개, 문구 수정 226개와 새 예문 182개 전체는 아래 상세 패치노트에 정리했음.</span>
-      <div style="margin-top:14px;padding:13px 16px;background:#d8ff62;border:1px solid #c2eb51;">
-        <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/docs/release-details/v1.2.0.md" target="_blank" rel="noopener noreferrer" style="color:#101512;font-weight:900;text-decoration:none;">뜻·예문 상세 패치노트 전체 보기 →</a>
-      </div>
-    </div>
   </div>
 
   <div style="margin-top:40px;padding:32px 20px;text-align:center;color:#fff;background:#101512;border-top:8px solid #d8ff62;border-bottom:1px solid #2f3933;">

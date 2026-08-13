@@ -29,15 +29,14 @@ V120_SCREENSHOTS = {
     "gallery-v1.2.0-error-dialog.png": (640, 604),
     "gallery-v1.2.0-usage-dialog.png": (640, 604),
 }
-V120_FEATURES = {
+V120_FEATURES = (
     "pitch-accent",
+    "meanings-examples",
     "card-settings-fonts",
     "vocabulary-context-hints",
-    "new-review-mix",
     "mobile-support-dialogs",
-    "kanji-disclosure",
-    "meanings-examples",
-}
+    "new-review-mix",
+)
 
 
 class GalleryUpdateTests(unittest.TestCase):
@@ -45,8 +44,7 @@ class GalleryUpdateTests(unittest.TestCase):
         self,
     ) -> None:
         features = re.findall(r'data-release-feature="([^"]+)"', V120_UPDATE)
-        self.assertEqual(set(features), V120_FEATURES)
-        self.assertEqual(len(features), len(V120_FEATURES))
+        self.assertEqual(tuple(features), V120_FEATURES)
         for copy in (
             '<meta charset="utf-8">',
             "<!-- 상태:",
@@ -56,7 +54,6 @@ class GalleryUpdateTests(unittest.TestCase):
             "5개 표제어의 10개 카드",
             "기존 preset ID와 지금까지의 학습 기록·스케줄은 그대로",
             "오류 제보·익명 통계 팝업",
-            "iPhone·iPad와 Android",
             "학습자 뜻 249개와 예문 182개",
             "変わる",
             "持つ",
