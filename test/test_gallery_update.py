@@ -28,6 +28,9 @@ RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.1.0.md").read_text(
 V120_RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.2.0.md").read_text(
     encoding="utf-8"
 )
+V120_USAGE_FOLLOWUP = (
+    ROOT / "docs" / "release-drafts" / "v1.2.0-usage-details.md"
+).read_text(encoding="utf-8")
 SCREENSHOTS = {
     "releases/v1.1.0/gallery-v1.1.0-card-settings.webp": (390, 500),
     "releases/v1.1.0/gallery-v1.1.0-error-report.webp": (354, 644),
@@ -38,6 +41,7 @@ V120_SCREENSHOTS = {
     "releases/v1.2.0/gallery-v1.2.0-context-hint.png": (780, 280),
     "releases/v1.2.0/gallery-v1.2.0-error-dialog.png": (640, 604),
     "releases/v1.2.0/gallery-v1.2.0-usage-dialog.png": (640, 604),
+    "releases/v1.2.0/gallery-v1.2.0-usage-summary.png": (1174, 620),
 }
 V120_FEATURES = (
     "pitch-accent",
@@ -79,6 +83,25 @@ class GalleryUpdateTests(unittest.TestCase):
             "다른 덱의 미사용 파일도 함께 잡힐 수 있으니",
             "운영체제 휴지통에서 복구할 수 있음",
             "v1.2.0 GitHub Release →",
+            "제보해 준 내용은 이렇게 처리했음",
+            "8월 13일까지 접수된 실제 제보 25건",
+            "v1.2.0 반영 · 11건",
+            "이전 버전 반영 · 4건",
+            "다음 패치 후보·추가 확인 · 9건",
+            "현재 표기 · 1건",
+            "六本",
+            "十つ",
+            "敬語·録画",
+            "iOS 스피커",
+            "한자 보이기·감추기 버튼",
+            "다크 모드 한자 이미지 보정은 v1.1.0 한자 빌더부터 반영됐음",
+            "중복 1건을 포함해 제보된 3개 카드",
+            "好調",
+            "익명 통계로 보는 현재 이용 현황",
+            "익명 통계 → 사용 통계 공유하기",
+            "활성 설치는 업데이트 이후 학습한 무작위 설치 ID 수",
+            "플랫폼·덱 버전·학습 영역·JLPT 급수별 집계를 함께 보여 줌",
+            "별도 통계 글로 공유할 예정임",
         ):
             with self.subTest(copy=copy):
                 self.assertIn(copy, V120_UPDATE)
@@ -88,6 +111,7 @@ class GalleryUpdateTests(unittest.TestCase):
         )
         self.assertNotIn("## 독립 뜻 분리·통합", V120_UPDATE)
         self.assertNotIn("## 새 예문", V120_UPDATE)
+        self.assertNotIn("테스트 제보", V120_UPDATE)
 
     def test_v120_announcement_and_release_notes_use_all_ui_evidence(
         self,
@@ -132,10 +156,42 @@ class GalleryUpdateTests(unittest.TestCase):
                 self.assertIn(copy, V120_UPDATE)
                 self.assertIn(copy, V120_RELEASE_NOTES)
 
+    def test_v120_usage_followup_is_ready_for_a_seven_day_capture(self) -> None:
+        followup_compact = " ".join(V120_USAGE_FOLLOWUP.split())
+        for copy in (
+            "v1.2.0 익명 이용 현황",
+            "업데이트 이후 이용 현황",
+            "게시 직전 Grafana에서 새로 고침",
+            "Last 7 days",
+            "버전별 설치 수와 전환 추이",
+            "설치별 학습 횟수와 이용 추이",
+            "학습 구성",
+            "설치별 학습 횟수와 활동일을 구간별 분포로 공개함",
+            "집계 항목은 무작위 설치 ID, 플랫폼, 덱 버전, 학습 영역",
+            "익명 통계 → 사용 통계 공유하기",
+            "오류 제보는 모바일 카드의 **오류 제보** 버튼",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, followup_compact)
+
+        for stale_copy in (
+            "배포 7일 뒤",
+            "배포 뒤 7일",
+            "최근 30일 활성 설치",
+            "최근 30일 총 학습 횟수",
+            "추이 그래프는 최근 7일",
+            "사람 수나 전체 이용자 수가 아니고",
+            "개별 설치 ID는 표시하지 않고",
+            "수집하지 않음",
+            "동의 여부와 무관함",
+        ):
+            with self.subTest(stale_copy=stale_copy):
+                self.assertNotIn(stale_copy, followup_compact)
+
     def test_local_preview_resolves_every_versioned_release_image(self) -> None:
         (ROOT / "build").mkdir(exist_ok=True)
         with tempfile.TemporaryDirectory(dir=ROOT / "build") as raw:
-            for version, expected_count in (("1.1.0", 2), ("1.2.0", 5)):
+            for version, expected_count in (("1.1.0", 2), ("1.2.0", 6)):
                 with self.subTest(version=version):
                     output = Path(raw) / f"v{version}.html"
                     receipt = render_gallery_preview(
