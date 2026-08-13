@@ -24,8 +24,9 @@ SCREENSHOTS = {
     "gallery-v1.1.0-error-report.webp": (354, 644),
 }
 V120_SCREENSHOTS = {
-    "gallery-v1.2.0-pitch-settings.webp": (781, 886),
-    "gallery-v1.2.0-context-hint.png": (780, 880),
+    "gallery-v1.2.0-pitch.png": (781, 218),
+    "gallery-v1.2.0-card-settings.png": (781, 315),
+    "gallery-v1.2.0-context-hint.png": (780, 280),
     "gallery-v1.2.0-error-dialog.png": (640, 604),
     "gallery-v1.2.0-usage-dialog.png": (640, 604),
 }
@@ -98,6 +99,29 @@ class GalleryUpdateTests(unittest.TestCase):
                     "jlpt-max-deck/main/site/assets/" + screenshot,
                     V120_RELEASE_NOTES,
                 )
+
+    def test_v120_meaning_section_shows_one_example_per_change_type(self) -> None:
+        change_types = re.findall(
+            r'data-change-example="([^"]+)"', V120_UPDATE
+        )
+        self.assertEqual(
+            tuple(change_types),
+            (
+                "meaning-split",
+                "meaning-wording",
+                "new-example",
+                "example-correction",
+            ),
+        )
+        for copy in (
+            "濃い",
+            "取り上げる",
+            "職人は長年かけて技を磨いた。",
+            "矢印は駅の方向を示す。",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, V120_UPDATE)
+                self.assertIn(copy, V120_RELEASE_NOTES)
 
     def test_hotfix_announcement_preserves_the_established_gallery_format(
         self,
