@@ -44,6 +44,21 @@ uv run --locked python scripts/render-docs.py --check
 release-bound source입니다. 이 파일을 바꾸면 builder source hash와 Release 자산을
 함께 갱신해야 하므로 일반 문서 수정에 포함하지 않습니다.
 
+### 갤러리 공지 미리보기
+
+릴리스별 갤러리 이미지는 `site/assets/releases/vX.Y.Z/` 아래에 보관합니다.
+갤러리 공지 원본은 게시 후에도 동작하는 Pages 절대 URL을 사용하므로, 배포 전에는
+원본 HTML을 `file://`로 직접 열지 말고 로컬 미리보기를 생성합니다.
+
+```console
+uv run --locked python scripts/render_gallery_preview.py 1.2.0
+```
+
+생성된 `build/gallery-preview/v1.2.0.html`은 같은 저장소의 로컬 이미지를 사용합니다.
+함께 생성되는 receipt에는 공지 원본과 미리보기, 사용한 모든 이미지의 SHA-256이
+기록됩니다. 릴리스 승인 전에는 이 미리보기를 실제 브라우저에서 열어 모든 이미지가
+로드되는지 확인합니다.
+
 ## 넣을 수 없는 것
 
 다음 자료는 pull request로 받지 않습니다.
