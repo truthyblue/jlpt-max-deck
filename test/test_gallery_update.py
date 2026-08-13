@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 import unittest
 
 
@@ -15,23 +16,51 @@ V120_UPDATE = (
 RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.1.0.md").read_text(
     encoding="utf-8"
 )
+V120_RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.2.0.md").read_text(
+    encoding="utf-8"
+)
 SCREENSHOTS = {
     "gallery-v1.1.0-card-settings.webp": (390, 500),
     "gallery-v1.1.0-error-report.webp": (354, 644),
 }
+V120_SCREENSHOTS = {
+    "gallery-v1.2.0-pitch-settings.webp": (781, 886),
+    "gallery-v1.2.0-context-hint.png": (780, 880),
+    "gallery-v1.2.0-error-dialog.png": (640, 604),
+    "gallery-v1.2.0-usage-dialog.png": (640, 604),
+}
+V120_FEATURES = {
+    "pitch-accent",
+    "card-settings-fonts",
+    "vocabulary-context-hints",
+    "new-review-mix",
+    "mobile-support-dialogs",
+    "kanji-disclosure",
+    "meanings-examples",
+}
 
 
 class GalleryUpdateTests(unittest.TestCase):
-    def test_v120_announcement_is_publishable_html_with_bounded_release_scope(
+    def test_v120_announcement_covers_every_important_learner_feature_once(
         self,
     ) -> None:
+        features = re.findall(r'data-release-feature="([^"]+)"', V120_UPDATE)
+        self.assertEqual(set(features), V120_FEATURES)
+        self.assertEqual(len(features), len(V120_FEATURES))
         for copy in (
             '<meta charset="utf-8">',
             "<!-- 상태:",
             "<!-- 게시글 제목:",
-            "1. 어휘·예문 고저 악센트 + 일본어 글꼴 설정",
-            "2. 새 카드는 복습 사이에 섞어서",
-            "3. 학습자 뜻 249개와 예문 182개 보강",
+            "어휘 6,018개와 예문 7,065개",
+            "そば·開く·避ける·紅葉·なる",
+            "5개 표제어의 10개 카드",
+            "기존 preset ID와 지금까지의 학습 기록·스케줄은 그대로",
+            "오류 제보·익명 통계 팝업",
+            "iPhone·iPad와 Android",
+            "학습자 뜻 249개와 예문 182개",
+            "変わる",
+            "持つ",
+            "六本",
             "뜻·예문 상세 패치노트 전체 보기 →",
             "docs/release-details/v1.2.0.md",
             "기존 노트 업데이트: 항상",
@@ -53,16 +82,25 @@ class GalleryUpdateTests(unittest.TestCase):
         self.assertNotIn("## 독립 뜻 분리·통합", V120_UPDATE)
         self.assertNotIn("## 새 예문", V120_UPDATE)
 
-    def test_v120_announcement_uses_the_pages_hosted_comparison_screenshot(
+    def test_v120_announcement_and_release_notes_use_all_ui_evidence(
         self,
     ) -> None:
-        screenshot = "gallery-v1.2.0-pitch-settings.webp"
-        self.assertTrue((ROOT / "site" / "assets" / screenshot).is_file())
-        self.assertIn(
-            "https://truthyblue.github.io/jlpt-max-deck/assets/" + screenshot,
-            V120_UPDATE,
-        )
-        self.assertIn('width="781" height="886"', V120_UPDATE)
+        for screenshot, (width, height) in V120_SCREENSHOTS.items():
+            with self.subTest(screenshot=screenshot):
+                self.assertTrue((ROOT / "site" / "assets" / screenshot).is_file())
+                self.assertIn(
+                    "https://truthyblue.github.io/jlpt-max-deck/assets/"
+                    + screenshot,
+                    V120_UPDATE,
+                )
+                self.assertIn(
+                    f'width="{width}" height="{height}"', V120_UPDATE
+                )
+                self.assertIn(
+                    "https://raw.githubusercontent.com/truthyblue/"
+                    "jlpt-max-deck/main/site/assets/" + screenshot,
+                    V120_RELEASE_NOTES,
+                )
 
     def test_hotfix_announcement_preserves_the_established_gallery_format(
         self,
