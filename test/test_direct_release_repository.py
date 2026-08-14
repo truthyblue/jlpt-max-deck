@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import io
 import json
@@ -14,7 +15,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from direct_release_contract import (  # noqa: E402
+    EXPECTED_KANJI_NOTES,
+    EXPECTED_KANJI_VECTOR_GLYPHS,
     KANJI_BUILDER_FILES,
+    POLICY_VERSION,
+    SCHEMA_VERSION,
     kanji_builder_archive_path,
     release_filenames,
     sha256_file,
@@ -50,16 +55,52 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         )
         version = str(pin["product_version"])
         names = release_filenames(version)
-        builder = ROOT / "public-release" / f"v{version}" / names["kanji_builder"]
-        with zipfile.ZipFile(builder) as archive:
-            manifest = json.loads(
-                archive.read(
-                    "JLPT-MAX-kanji-builder/assets/kanji-skeleton-manifest.json"
-                )
-            )
-        records = list(manifest["notes"])
+        records = [
+            {
+                "guid": f"synthetic-kanji-{sequence:04d}",
+                "note_hash": f"{sequence:064x}",
+                "sequence": sequence,
+                "sort_key": f"K{sequence:06d}",
+                "unit": str(((sequence - 1) // 100) + 1),
+                "vector_glyph": sequence <= EXPECTED_KANJI_VECTOR_GLYPHS,
+                "volume": "상권" if sequence <= 1_200 else "하권",
+            }
+            for sequence in range(1, EXPECTED_KANJI_NOTES + 1)
+        ]
         with tempfile.TemporaryDirectory() as raw_tmp:
-            output = Path(raw_tmp) / names["kanji_builder"]
+            tmp = Path(raw_tmp)
+            skeleton_payload = b"synthetic kanji skeleton"
+            skeleton = tmp / names["kanji_skeleton"]
+            skeleton.write_bytes(skeleton_payload)
+            manifest = tmp / names["skeleton_manifest"]
+            manifest.write_text(
+                json.dumps(
+                    {
+                        "kanji_note_count": EXPECTED_KANJI_NOTES,
+                        "notes": records,
+                        "policy_version": POLICY_VERSION,
+                        "product_version": version,
+                        "schema_version": SCHEMA_VERSION,
+                        "skeleton_apkg": names["kanji_skeleton"],
+                        "skeleton_apkg_sha256": hashlib.sha256(
+                            skeleton_payload
+                        ).hexdigest(),
+                        "vector_glyph_count": EXPECTED_KANJI_VECTOR_GLYPHS,
+                    },
+                    ensure_ascii=False,
+                    sort_keys=True,
+                ),
+                encoding="utf-8",
+            )
+            builder = tmp / names["kanji_builder"]
+            _package_kanji_builder(
+                output=builder,
+                skeleton_apkg=skeleton,
+                skeleton_manifest=manifest,
+            )
+            copied = tmp / "copied"
+            copied.mkdir()
+            output = copied / names["kanji_builder"]
             _reuse_kanji_builder(
                 source=builder,
                 output=output,
