@@ -69,13 +69,25 @@
     </div>
     <div style="margin-top:20px;padding:18px 20px;color:#1b211d;background:#eef8f2;border-left:8px solid #d8ff62;">
       <strong style="color:#173b26;">기본 덱과 선택형 한자 확장에 같은 설정</strong><br>
-      <span style="color:#4e5852;">어휘·음성·실전 문제·참조표·한자 카드에서 같은 일본어 글꼴 설정을 공유함. 기존 한자 확장은 그대로 쓸 수 있고, 새 글꼴을 적용하고 싶을 때만 다시 만들면 됨.</span>
+      <span style="color:#4e5852;">어휘·음성·실전 문제·참조표·한자 카드에서 같은 일본어 글꼴 설정을 공유함. 기존 한자 확장은 그대로 쓸 수 있고, v1.2.0 빌더로 다시 만들면 새 글꼴과 최신 연결 어휘가 함께 적용됨.</span>
+    </div>
+  </div>
+
+  <div data-release-feature="kanji-display-fixes" style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
+    <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">KANJI DISPLAY</div>
+    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">4. 한자 펼침과 이미지 표시 수정</div>
+    <p style="margin:18px 0 0;color:#d9dedb;">
+      어휘 카드의 <strong>한자</strong> 버튼을 Anki WebView에서 직접 제어하는 방식으로 바꿔 모바일에서도 펼침·접힘 상태가 정확히 동작함. 다크 모드 대비 보정은 v1.1.0 한자 빌더부터 적용됐으며, v1.2.0은 Windows Anki의 이미지 표시 경로에 맞춰 한자 14자를 원본부터 빌더 출력까지 투명한 path-only SVG로 통일했음.
+    </p>
+    <div style="margin-top:20px;padding:18px 20px;color:#1b211d;background:#f4f7f5;border-left:8px solid #d8ff62;">
+      <strong style="color:#173b26;">오류 제보 반영</strong><br>
+      <span style="color:#4e5852;">한자 보이기·감추기 버튼은 v1.2.0 카드에 반영했고, 한자 이미지 제보는 Windows 동작까지 다시 확인해 SVG 경로를 보강했음. 투명 SVG는 v1.2.0 한자 빌더로 다시 만들면 적용됨.</span>
     </div>
   </div>
 
   <div data-release-feature="vocabulary-context-hints" style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
     <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">CONTEXT HINTS</div>
-    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">4. 같은 표기의 다른 뜻은 문맥으로 구분</div>
+    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">5. 같은 표기의 다른 뜻은 문맥으로 구분</div>
     <p style="margin:18px 0 0;color:#d9dedb;">
       앞면만 보고는 어떤 뜻을 묻는지 알기 어려웠던 <strong>そば·開く·避ける·紅葉·なる</strong> 5개 표제어의 10개 카드에 짧은 빈칸 문맥을 넣었음. 답을 노출하지 않으면서도 이번 카드가 묻는 읽기와 뜻을 구분할 수 있음.
     </p>
@@ -87,7 +99,7 @@
 
   <div data-release-feature="mobile-support-dialogs" style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
     <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">MOBILE DIALOGS</div>
-    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">5. 오류 제보·익명 통계 팝업을 작은 화면에서도 온전히</div>
+    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">6. 오류 제보·익명 통계 팝업을 작은 화면에서도 온전히</div>
     <p style="margin:18px 0 0;color:#d9dedb;">
       좁은 모바일 화면에서도 팝업의 제목과 닫기 버튼, 아래쪽 동작 버튼이 잘리지 않도록 safe-area와 시작 위치를 보정했음. 익명 사용 통계는 지금처럼 모바일에서 직접 동의한 경우에만 전송하며, 업데이트 안내 표시·선택 이벤트가 포함된다는 설명도 투명하게 추가했음.
     </p>
@@ -101,8 +113,16 @@
     </div>
   </div>
 
+  <div data-release-feature="update-notice-persistence" style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
+    <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">UPDATE NOTICE</div>
+    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">7. 업데이트 알림 닫기 상태 저장 수정</div>
+    <p style="margin:18px 0 0;color:#d9dedb;">
+      <strong>7일간 숨기기</strong>와 <strong>이 버전 알림 다시 보지 않기</strong>는 v1.1.1부터 제공됐음. 일부 Anki 환경에서는 쿠키와 localStorage가 서로 다른 상태를 읽어 닫은 알림이 다시 나타났음. v1.2.0은 두 저장소를 동기화하고, <strong>×</strong>는 이번 학습, <strong>7일간 숨기기</strong>는 7일, <strong>이 버전 알림 다시 보지 않기</strong>는 해당 버전 전체에 각각 적용되도록 고쳤음.
+    </p>
+  </div>
+
   <div data-release-feature="new-review-mix" style="padding:44px 8px 8px;">
-    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">6. 새 카드는 복습 사이에 섞어서</div>
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">8. 새 카드는 복습 사이에 섞어서</div>
     <p style="margin:16px 0 0;">
       새 카드가 복습 카드 뒤에 한꺼번에 몰리지 않고 복습 사이에 섞여 나오도록 기본 preset을 바꿨음. 기존 preset ID와 지금까지의 학습 기록·스케줄은 그대로 유지됨.
     </p>
@@ -124,8 +144,8 @@
       <span style="color:#5f5436;"><strong>항상</strong>을 선택하면 직접 고친 뜻·예문도 v1.2.0 공식 내용으로 바뀔 수 있음. v1.1.x에서는 고저 악센트 필드와 새 카드 템플릿을, v1.0.x에서는 그 사이의 뜻·예문 변경까지 함께 적용하기 위해 이번에는 모두 <strong>항상</strong>을 사용함.</span>
     </div>
     <div style="max-width:590px;margin:0 auto 22px;padding:18px 20px;text-align:left;color:#101512;background:#d8ff62;border-left:8px solid #8ee6b1;">
-      <strong style="font-size:19px;">기존 한자 확장은 다시 만들 필요 없음</strong><br>
-      <span style="color:#354039;">그대로 계속 사용할 수 있음. 한자 카드에도 새 일본어 글꼴 설정과 최신 연결 어휘 표시를 반영하고 싶을 때만 v1.2.0 빌더로 선택적으로 다시 만들면 됨.</span>
+      <strong style="font-size:19px;">기존 한자 확장은 그대로 사용</strong><br>
+      <span style="color:#354039;">Windows Anki 야간 모드용 투명 SVG 렌더링과 새 일본어 글꼴, 최신 연결 어휘 표시는 v1.2.0 빌더로 다시 만들면 함께 적용됨.</span>
     </div>
     <div style="max-width:590px;margin:0 auto 22px;padding:18px 20px;text-align:left;color:#1b211d;background:#eef8f2;border-left:8px solid #8ee6b1;">
       <strong style="font-size:19px;">업데이트 뒤 남은 예전 음성은 미디어 검사로 정리</strong><br>
