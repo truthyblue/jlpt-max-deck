@@ -28,6 +28,12 @@ RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.1.0.md").read_text(
 V120_RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.2.0.md").read_text(
     encoding="utf-8"
 )
+V120_RELEASE_TEMPLATE = (
+    ROOT / "docs-src" / "docs" / "releases" / "v1.2.0.md.j2"
+).read_text(encoding="utf-8")
+V120_RELEASE_DRAFT = (
+    ROOT / "docs" / "release-drafts" / "v1.2.0-github-release.md"
+).read_text(encoding="utf-8")
 V120_USAGE_FOLLOWUP = (
     ROOT / "docs" / "release-drafts" / "v1.2.0-usage-details.md"
 ).read_text(encoding="utf-8")
@@ -100,16 +106,26 @@ class GalleryUpdateTests(unittest.TestCase):
             "운영체제 휴지통에서 복구할 수 있음",
             "v1.2.0 GitHub Release →",
             "제보해 준 내용은 이렇게 처리했음",
-            "8월 13일까지 접수된 실제 제보 25건",
-            "v1.2.0 반영 · 11건",
+            "8월 14일까지 접수된 실제 제보 27건",
+            "v1.2.0 반영 · 18건",
             "이전 반영·v1.2.0 보강 · 4건",
-            "다음 패치 후보·추가 확인 · 9건",
+            "추가 확인·검토 · 4건",
             "현재 표기 · 1건",
             "六本",
             "十つ",
             "敬語·録画",
+            "上がる",
+            "最小限",
+            "売買",
+            "郊外",
+            "검토한 발음·모라 근거",
+            "고저선과 음성 합성 입력에 함께 반영",
+            "생성 APKG에서 교정된 음성을 확인했음",
             "iOS 스피커",
+            "定員",
+            "규정 인원 / 수용 인원",
             "한자 보이기·감추기 버튼",
+            "상단 후리가나 바로 켜기·끄기",
             "다크 모드 대비 보정은 v1.1.0 한자 빌더부터 반영됐음",
             "중복 1건을 포함해 제보된 3개 카드",
             "이미지 한자 14자를 투명한 path-only SVG로 통일했음",
@@ -129,6 +145,56 @@ class GalleryUpdateTests(unittest.TestCase):
         self.assertNotIn("## 독립 뜻 분리·통합", V120_UPDATE)
         self.assertNotIn("## 새 예문", V120_UPDATE)
         self.assertNotIn("테스트 제보", V120_UPDATE)
+
+    def test_v120_report_feedback_and_audio_scope_stay_synchronized(
+        self,
+    ) -> None:
+        public_copies = {
+            "gallery": re.sub(r"<[^>]+>", " ", V120_UPDATE),
+            "github-release": V120_RELEASE_DRAFT,
+            "release-template": V120_RELEASE_TEMPLATE,
+            "release-notes": V120_RELEASE_NOTES,
+        }
+        required_copy = (
+            "8월 14일까지 접수된 실제 제보 27건",
+            "발음·모라 근거",
+            "음성 합성 입력",
+            "敬語",
+            "録画",
+            "上がる",
+            "最小限",
+            "売買",
+            "郊外",
+            "상단 후리가나 바로 켜기·끄기",
+            "iOS 스피커",
+            "定員",
+            "규정 인원 / 수용 인원",
+            "현재 표기",
+        )
+        stale_copy = (
+            "8월 13일까지 접수된 실제 제보 25건",
+            "v1.2.0 반영 · 11건",
+            "다음 패치 후보·추가 확인",
+            "발음 6건은 새 악센트선과 함께 전수검사한 뒤 결정",
+        )
+        report_rows = (
+            (r"v1\.2\.0 반영.{0,40}18건", "v1.2.0 reflected"),
+            (r"이전 반영·v1\.2\.0 보강.{0,40}4건", "previous reflected"),
+            (r"추가 확인·검토.{0,40}4건", "reviewing"),
+            (r"현재 표기.{0,40}1건", "current display"),
+        )
+
+        for label, raw_copy in public_copies.items():
+            compact = " ".join(raw_copy.split())
+            for copy in required_copy:
+                with self.subTest(source=label, copy=copy):
+                    self.assertIn(copy, compact)
+            for copy in stale_copy:
+                with self.subTest(source=label, stale_copy=copy):
+                    self.assertNotIn(copy, compact)
+            for pattern, row in report_rows:
+                with self.subTest(source=label, row=row):
+                    self.assertRegex(compact, pattern)
 
     def test_v120_announcement_and_release_notes_use_all_ui_evidence(
         self,
