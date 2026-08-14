@@ -1,24 +1,325 @@
 from pathlib import Path
+import re
+import sys
+import tempfile
 import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from scripts.render_gallery_preview import (
+    GalleryPreviewError,
+    render_gallery_preview,
+)
+
 UPDATE = (
     ROOT / "docs" / "jlpt-gallery-updates" / "v1.1.0.html"
 ).read_text(encoding="utf-8")
 HOTFIX_UPDATE = (
     ROOT / "docs" / "jlpt-gallery-updates" / "v1.1.1.html"
 ).read_text(encoding="utf-8")
+V120_UPDATE = (
+    ROOT / "docs" / "jlpt-gallery-updates" / "v1.2.0.html"
+).read_text(encoding="utf-8")
 RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.1.0.md").read_text(
     encoding="utf-8"
 )
+V120_RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.2.0.md").read_text(
+    encoding="utf-8"
+)
+V120_RELEASE_TEMPLATE = (
+    ROOT / "docs-src" / "docs" / "releases" / "v1.2.0.md.j2"
+).read_text(encoding="utf-8")
+V120_RELEASE_DRAFT = (
+    ROOT / "docs" / "release-drafts" / "v1.2.0-github-release.md"
+).read_text(encoding="utf-8")
+V120_USAGE_FOLLOWUP = (
+    ROOT / "docs" / "release-drafts" / "v1.2.0-usage-details.md"
+).read_text(encoding="utf-8")
 SCREENSHOTS = {
-    "gallery-v1.1.0-card-settings.webp": (390, 500),
-    "gallery-v1.1.0-error-report.webp": (354, 644),
+    "releases/v1.1.0/gallery-v1.1.0-card-settings.webp": (390, 500),
+    "releases/v1.1.0/gallery-v1.1.0-error-report.webp": (354, 644),
 }
+V120_SCREENSHOTS = {
+    "releases/v1.2.0/gallery-v1.2.0-pitch.png": (781, 218),
+    "releases/v1.2.0/gallery-v1.2.0-card-settings.png": (781, 315),
+    "releases/v1.2.0/gallery-v1.2.0-context-hint.png": (780, 280),
+    "releases/v1.2.0/gallery-v1.2.0-error-dialog.png": (640, 604),
+    "releases/v1.2.0/gallery-v1.2.0-usage-dialog.png": (640, 604),
+    "releases/v1.2.0/gallery-v1.2.0-update-notice.png": (390, 178),
+    "releases/v1.2.0/gallery-v1.2.0-usage-summary.png": (2348, 1240),
+}
+V120_FEATURES = (
+    "pitch-accent",
+    "meanings-examples",
+    "card-settings-fonts",
+    "kanji-display-fixes",
+    "vocabulary-context-hints",
+    "mobile-support-dialogs",
+    "update-notice-persistence",
+    "new-review-mix",
+)
 
 
 class GalleryUpdateTests(unittest.TestCase):
+    def test_v120_announcement_covers_every_important_learner_feature_once(
+        self,
+    ) -> None:
+        features = re.findall(r'data-release-feature="([^"]+)"', V120_UPDATE)
+        self.assertEqual(tuple(features), V120_FEATURES)
+        for copy in (
+            '<meta charset="utf-8">',
+            "<!-- 상태:",
+            "<!-- 게시글 제목:",
+            "어휘 6,018개와 예문 7,065개",
+            "そば·開く·避ける·紅葉·なる",
+            "5개 표제어의 10개 카드",
+            "기존 preset ID와 지금까지의 학습 기록·스케줄은 그대로",
+            "오류 제보·익명 통계 팝업",
+            "학습자 뜻 249개와 예문 182개",
+            "変わる",
+            "持つ",
+            "六本",
+            "뜻·예문 상세 패치노트 전체 보기 →",
+            "docs/release-details/v1.2.0.md",
+            "기존 노트 업데이트: 항상",
+            "v1.1.x와 v1.0.x 모두",
+            "한자 확장도 v1.2.0 빌더로 다시 만들기",
+            "Windows Anki 야간 모드용 투명 SVG 렌더링",
+            "한자 펼침과 이미지 표시 수정",
+            "원본부터 빌더 출력까지 투명한 path-only SVG로 통일",
+            "다크 모드 대비 보정은 v1.1.0 한자 빌더부터 적용됐으며",
+            "한자 보이기·감추기 버튼은 v1.2.0 카드에 반영했고",
+            "업데이트 알림 닫기 상태 저장 수정",
+            "<strong>7일간 숨기기</strong>와",
+            "v1.1.1부터 제공됐음",
+            "쿠키와 localStorage가 서로 다른 상태를 읽어",
+            "×</strong>는 이번 학습",
+            "설정 패널은 어휘·음성·실전 문제의 답안에서 열 수 있음",
+            "참조표와 한자 카드를 포함한 전체 덱에 공통 적용됨",
+            "오른쪽 위 ×는 이번 학습에서만 알림을 닫음",
+            "기존 덱에서 v1.2.0 출시 응답을 재현한 실제 생성 카드 화면",
+            "업데이트 뒤 남은 예전 음성은 미디어 검사로 정리",
+            "도구 → 미디어 검사",
+            "다른 덱의 미사용 파일도 함께 잡힐 수 있으니",
+            "운영체제 휴지통에서 복구할 수 있음",
+            "v1.2.0 GitHub Release →",
+            "제보해 준 내용은 이렇게 처리했음",
+            "8월 14일까지 접수된 실제 제보 27건",
+            "v1.2.0 반영 · 18건",
+            "이전 반영·v1.2.0 보강 · 4건",
+            "추가 확인·검토 · 4건",
+            "현재 표기 · 1건",
+            "六本",
+            "十つ",
+            "敬語·録画",
+            "上がる",
+            "最小限",
+            "売買",
+            "郊外",
+            "검토한 발음·모라 근거",
+            "고저선과 음성 합성 입력에 함께 반영",
+            "생성 APKG에서 교정된 음성을 확인했음",
+            "iOS 스피커",
+            "定員",
+            "규정 인원 / 수용 인원",
+            "한자 보이기·감추기 버튼",
+            "상단 후리가나 바로 켜기·끄기",
+            "다크 모드 대비 보정은 v1.1.0 한자 빌더부터 반영됐음",
+            "중복 1건을 포함해 제보된 3개 카드",
+            "이미지 한자 14자를 투명한 path-only SVG로 통일했음",
+            "好調",
+            "익명 통계로 보는 현재 이용 현황",
+            "익명 통계 → 사용 통계 공유하기",
+    "활성 설치는 최근 30일 동안 학습한 무작위 설치 ID 수",
+            "플랫폼·덱 버전·학습 영역·JLPT 급수별 집계를 함께 보여 줌",
+            "별도 통계 글로 공유할 예정임",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, V120_UPDATE)
+
+        self.assertFalse(
+            (ROOT / "docs" / "jlpt-gallery-updates" / "v1.2.0.md").exists()
+        )
+        self.assertNotIn("## 독립 뜻 분리·통합", V120_UPDATE)
+        self.assertNotIn("## 새 예문", V120_UPDATE)
+        self.assertNotIn("테스트 제보", V120_UPDATE)
+
+    def test_v120_report_feedback_and_audio_scope_stay_synchronized(
+        self,
+    ) -> None:
+        public_copies = {
+            "gallery": re.sub(r"<[^>]+>", " ", V120_UPDATE),
+            "github-release": V120_RELEASE_DRAFT,
+            "release-template": V120_RELEASE_TEMPLATE,
+            "release-notes": V120_RELEASE_NOTES,
+        }
+        required_copy = (
+            "8월 14일까지 접수된 실제 제보 27건",
+            "발음·모라 근거",
+            "음성 합성 입력",
+            "敬語",
+            "録画",
+            "上がる",
+            "最小限",
+            "売買",
+            "郊外",
+            "상단 후리가나 바로 켜기·끄기",
+            "iOS 스피커",
+            "定員",
+            "규정 인원 / 수용 인원",
+            "현재 표기",
+        )
+        stale_copy = (
+            "8월 13일까지 접수된 실제 제보 25건",
+            "v1.2.0 반영 · 11건",
+            "다음 패치 후보·추가 확인",
+            "발음 6건은 새 악센트선과 함께 전수검사한 뒤 결정",
+        )
+        report_rows = (
+            (r"v1\.2\.0 반영.{0,40}18건", "v1.2.0 reflected"),
+            (r"이전 반영·v1\.2\.0 보강.{0,40}4건", "previous reflected"),
+            (r"추가 확인·검토.{0,40}4건", "reviewing"),
+            (r"현재 표기.{0,40}1건", "current display"),
+        )
+
+        for label, raw_copy in public_copies.items():
+            compact = " ".join(raw_copy.split())
+            for copy in required_copy:
+                with self.subTest(source=label, copy=copy):
+                    self.assertIn(copy, compact)
+            for copy in stale_copy:
+                with self.subTest(source=label, stale_copy=copy):
+                    self.assertNotIn(copy, compact)
+            for pattern, row in report_rows:
+                with self.subTest(source=label, row=row):
+                    self.assertRegex(compact, pattern)
+
+    def test_v120_announcement_and_release_notes_use_all_ui_evidence(
+        self,
+    ) -> None:
+        for screenshot, (width, height) in V120_SCREENSHOTS.items():
+            with self.subTest(screenshot=screenshot):
+                self.assertTrue((ROOT / "site" / "assets" / screenshot).is_file())
+                self.assertIn(
+                    "https://truthyblue.github.io/jlpt-max-deck/assets/"
+                    + screenshot,
+                    V120_UPDATE,
+                )
+                self.assertIn(
+                    f'width="{width}" height="{height}"', V120_UPDATE
+                )
+                self.assertIn(
+                    "https://raw.githubusercontent.com/truthyblue/"
+                    "jlpt-max-deck/main/site/assets/" + screenshot,
+                    V120_RELEASE_NOTES,
+                )
+
+    def test_v120_meaning_section_shows_one_example_per_change_type(self) -> None:
+        change_types = re.findall(
+            r'data-change-example="([^"]+)"', V120_UPDATE
+        )
+        self.assertEqual(
+            tuple(change_types),
+            (
+                "meaning-split",
+                "meaning-wording",
+                "new-example",
+                "example-correction",
+            ),
+        )
+        for copy in (
+            "濃い",
+            "取り上げる",
+            "職人は長年かけて技を磨いた。",
+            "矢印は駅の方向を示す。",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, V120_UPDATE)
+                self.assertIn(copy, V120_RELEASE_NOTES)
+
+    def test_v120_usage_followup_is_ready_for_a_seven_day_capture(self) -> None:
+        followup_compact = " ".join(V120_USAGE_FOLLOWUP.split())
+        for copy in (
+            "v1.2.0 익명 이용 현황",
+            "업데이트 이후 이용 현황",
+            "게시 직전 Grafana에서 새로 고침",
+            "Last 7 days",
+            "버전별 설치 수와 전환 추이",
+            "설치별 학습 횟수와 이용 추이",
+            "학습 구성",
+            "설치별 학습 횟수와 활동일을 구간별 분포로 공개함",
+            "집계 항목은 무작위 설치 ID, 플랫폼, 덱 버전, 학습 영역",
+            "익명 통계 → 사용 통계 공유하기",
+            "오류 제보는 모바일 카드의 **오류 제보** 버튼",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, followup_compact)
+
+        for stale_copy in (
+            "배포 7일 뒤",
+            "배포 뒤 7일",
+            "최근 30일 활성 설치",
+            "최근 30일 총 학습 횟수",
+            "추이 그래프는 최근 7일",
+            "사람 수나 전체 이용자 수가 아니고",
+            "개별 설치 ID는 표시하지 않고",
+            "수집하지 않음",
+            "동의 여부와 무관함",
+        ):
+            with self.subTest(stale_copy=stale_copy):
+                self.assertNotIn(stale_copy, followup_compact)
+
+    def test_local_preview_resolves_every_versioned_release_image(self) -> None:
+        (ROOT / "build").mkdir(exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=ROOT / "build") as raw:
+            for version, expected_count in (("1.1.0", 2), ("1.2.0", 7)):
+                with self.subTest(version=version):
+                    output = Path(raw) / f"v{version}.html"
+                    receipt = render_gallery_preview(
+                        source=(
+                            ROOT
+                            / "docs/jlpt-gallery-updates"
+                            / f"v{version}.html"
+                        ),
+                        output=output,
+                    )
+                    preview = output.read_text(encoding="utf-8")
+                    self.assertEqual(expected_count, receipt["image_count"])
+                    self.assertEqual(expected_count, len(receipt["assets"]))
+                    self.assertNotIn(
+                        "truthyblue.github.io/jlpt-max-deck/assets/", preview
+                    )
+                    for asset in receipt["assets"]:
+                        resolved = (
+                            output.parent / asset["preview_src"]
+                        ).resolve()
+                        self.assertTrue(resolved.is_file())
+                        self.assertTrue(
+                            resolved.is_relative_to(
+                                ROOT / f"site/assets/releases/v{version}"
+                            )
+                        )
+
+    def test_local_preview_rejects_a_missing_public_image(self) -> None:
+        (ROOT / "build").mkdir(exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=ROOT / "build") as raw:
+            temp_root = Path(raw)
+            source = temp_root / "missing.html"
+            source.write_text(
+                '<img src="https://truthyblue.github.io/'
+                'jlpt-max-deck/assets/releases/v9.9.9/missing.png">',
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(
+                GalleryPreviewError, "preview asset does not exist"
+            ):
+                render_gallery_preview(
+                    source=source,
+                    output=temp_root / "preview.html",
+                )
+
     def test_hotfix_announcement_preserves_the_established_gallery_format(
         self,
     ) -> None:

@@ -10,12 +10,12 @@
     "reference_notes": 9,
     "total_notes": 16240,
     "total_cards": 22402,
-    "total_media": 18267,
+    "total_media": 18452,
     "static_media": 14,
     "core_notes": 13903,
     "core_cards": 20065,
-    "core_media": 18253,
-    "example_count": 6883,
+    "core_media": 18438,
+    "example_count": 7065,
     "coverage": {
       "vocabulary_with_examples": 6018,
       "conjugation_notes": 3026,
@@ -47,8 +47,8 @@
     "python": "3.13",
     "macos_minimum": "12",
     "windows_architecture": "x64",
-    "approximate_apkg_size_mb": 873,
-    "approximate_apkg_size_gb": "0.87"
+    "approximate_apkg_size_mb": 902,
+    "approximate_apkg_size_gb": "0.90"
   },
   "study_defaults": {
     "desired_retention": "0.90",

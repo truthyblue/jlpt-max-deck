@@ -85,7 +85,7 @@
         <p class="v2-kicker"><span></span>업데이트 가이드</p>
         <h1>학습 기록은 그대로,<br><em>덱만 새 버전으로.</em></h1>
         <p class="v2-hero-lead">먼저 모든 기기를 동기화한 뒤, 지금 쓰는 버전에 맞는 방법으로 덱을 다시 가져오세요.</p>
-        <div class="v2-page-badges"><span>현재 v1.1.1</span><span>기록 유지</span><span>개인 설정 보존</span></div>
+        <div class="v2-page-badges"><span>현재 v1.2.0</span><span>기록 유지</span><span>개인 설정 보존</span></div>
       </div>
     </section>
 
@@ -113,8 +113,8 @@
           <span class="v2-step-label">01 · 일반 업데이트</span>
           <h2>기존 덱을 지우지 말고 새 파일을 가져오세요.</h2>
           <div class="v2-download-card">
-            <div><small>현재 기본 덱</small><h3>JLPT-MAX-Deck-1.1.1.apkg</h3><p>v1.1.1 · 약 0.87GB</p></div>
-            <a class="v2-button" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.1.1/JLPT-MAX-Deck-1.1.1.apkg">다시 받기 <span aria-hidden="true">↓</span></a>
+            <div><small>현재 기본 덱</small><h3>JLPT-MAX-Deck-1.2.0.apkg</h3><p>v1.2.0 · 약 0.90GB</p></div>
+            <a class="v2-button" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.2.0/JLPT-MAX-Deck-1.2.0.apkg">다시 받기 <span aria-hidden="true">↓</span></a>
           </div>
           <p>새 덱 파일을 가져오면 기존 학습 기록과 일정은 유지되고, 새 노트와 바뀐 카드 내용만 반영됩니다. 새 버전에서 없어진 카드가 있다면 해당 릴리스의 추가 안내를 따르세요.</p>
         </section>
@@ -124,11 +124,18 @@
           <h2>복습 기록은 유지하고 카드 내용만 새로 바꿉니다.</h2>
           <div class="v2-option-grid">
             <article class="v2-option"><div class="v2-option-head"><h3>학습 진행 상태</h3><span class="v2-state off">끄기</span></div><p>기존 복습 기록과 일정을 그대로 둡니다.</p></article>
-            <article class="v2-option"><div class="v2-option-head"><h3>기존 노트 업데이트</h3><span class="v2-state on">새 버전일 때</span></div><p>패치 버전에서 새로 바뀐 카드 내용과 템플릿을 적용합니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>기존 노트 업데이트</h3><span class="v2-state on">항상</span></div><p>v1.2.0의 고저 악센트 필드와 새 카드 템플릿을 기존 노트에 적용합니다.</p></article>
             <article class="v2-option"><div class="v2-option-head"><h3>노트 유형 병합</h3><span class="v2-state on">켜기</span></div><p>기존 노트 유형을 새 버전과 연결합니다.</p></article>
             <article class="v2-option"><div class="v2-option-head"><h3>개인 덱 옵션</h3><span class="v2-state">보존</span></div><p>직접 바꾼 새 카드 수와 FSRS 설정을 그대로 둡니다.</p></article>
           </div>
-          <div class="v2-callout warning"><strong>패치와 마이너 업데이트를 구분하세요.</strong><p>1.1.0 → 1.1.1처럼 마지막 숫자만 바뀌는 패치 버전 업데이트는 <code>새 버전일 때</code>를 선택합니다. <code>항상</code>은 1.0.x → 1.1.x처럼 가운데 숫자가 바뀌는 마이너 버전 업데이트에서만 선택합니다. 직접 수정한 뜻·예문까지 공식 덱 내용으로 교체하려고 <code>항상</code>을 선택한다면 먼저 백업하거나 별도 프로필에서 확인하세요.</p></div>
+          <table class="v2-release-facts">
+            <thead><tr><th scope="col">지금 사용하는 버전</th><th scope="col">기존 노트 업데이트</th><th scope="col">이유</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">v1.1.x</th><td><strong>항상</strong></td><td>고저 악센트 필드와 새 카드 템플릿을 적용합니다.</td></tr>
+              <tr><th scope="row">v1.0.x</th><td><strong>항상</strong></td><td>v1.1.x의 뜻·예문 변경과 v1.2.0의 새 필드를 함께 적용합니다.</td></tr>
+            </tbody>
+          </table>
+          <div class="v2-callout warning"><strong>v1.2.0은 어느 기존 버전에서 오더라도 <code>항상</code>을 선택하세요.</strong><p><code>항상</code>은 직접 수정한 공식 노트 필드도 덮어쓸 수 있으므로 먼저 동기화하거나 백업하세요. 다음 업데이트에서는 출발 버전에 따라 옵션이 달라질 수 있으므로 그 버전의 릴리스 노트에 적힌 표를 따릅니다.</p></div>
         </section>
 
         <section class="v2-guide-section" id="recommended-settings">
@@ -147,7 +154,9 @@
             <li><div><strong>전에 공부한 어휘 몇 장의 복습 일정이 그대로인지 확인합니다.</strong></div></li>
             <li><div><strong>새 카드 내용과 템플릿이 반영됐는지 확인합니다.</strong></div></li>
             <li><div><strong>실전의 신규 카드 수집이 무작위 노트인지 확인합니다.</strong></div></li>
-            <li><div><strong>이번 버전에서 한자 빌더가 바뀌었다면 한자 덱도 다시 만듭니다.</strong></div></li>
+            <li><div><strong>한자 확장도 v1.2.0 빌더로 다시 만듭니다.</strong><p>다시 만들면 Windows Anki 야간 모드용 투명 SVG 렌더링과 새 일본어 글꼴, 최신 연결 어휘 표시가 함께 적용됩니다.</p></div></li>
+            <li><div><strong>가져오기가 끝나면 모든 기기에서 다시 전체 동기화합니다.</strong></div></li>
+            <li><div><strong>교체된 예전 음성이 남으면 데스크톱 Anki의 도구 → 미디어 검사에서 정리합니다.</strong><p>새 카드와 음성이 정상인지 확인하고 모든 기기의 미디어 동기화를 끝낸 뒤, 미사용 파일 목록을 확인해 삭제하고 다시 동기화합니다. 다른 덱의 미사용 파일도 함께 표시될 수 있으므로 목록을 먼저 확인하세요. 삭제한 파일은 운영체제 휴지통에서 복구할 수 있습니다.</p></div></li>
           </ol>
           <div class="v2-hero-actions"><a class="v2-button" href="study-guide.html">덱 학습법 보기 <span aria-hidden="true">→</span></a><a class="v2-button v2-button-ghost" href="support.html#import">업데이트 문제 해결 <span aria-hidden="true">→</span></a></div>
         </section>
@@ -173,7 +182,7 @@
       </nav>
     </div>
     <div class="v2-footer-legal">
-      <span>v1.1.1 · Code AGPL-3.0-or-later</span>
+      <span>v1.2.0 · Code AGPL-3.0-or-later</span>
       <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/NOTICE">NOTICE</a>
       <span>Anki·JLPT·출판사의 공식 제품 또는 후원 프로젝트가 아닙니다.</span>
     </div>

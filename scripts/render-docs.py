@@ -54,6 +54,10 @@ TEMPLATE_OUTPUTS: tuple[tuple[PurePosixPath, PurePosixPath], ...] = (
         PurePosixPath("docs/releases/v1.1.1.md"),
     ),
     (
+        PurePosixPath("docs/releases/v1.2.0.md.j2"),
+        PurePosixPath("docs/releases/v1.2.0.md"),
+    ),
+    (
         PurePosixPath("docs/troubleshooting.md.j2"),
         PurePosixPath("docs/troubleshooting.md"),
     ),

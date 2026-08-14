@@ -20,7 +20,12 @@ from direct_release_contract import (  # noqa: E402
     sha256_file,
     sha256_json,
 )
-from public_release import _package_kanji_builder, _zip_write  # noqa: E402
+from public_release import (  # noqa: E402
+    PublicReleaseError,
+    _package_kanji_builder,
+    _reuse_kanji_builder,
+    _zip_write,
+)
 
 
 def load_repository_verifier() -> Any:
@@ -37,6 +42,41 @@ def load_repository_verifier() -> Any:
 
 
 class DirectReleaseRepositoryTest(unittest.TestCase):
+    def test_current_kanji_builder_is_reused_only_for_exact_note_projection(
+        self,
+    ) -> None:
+        pin = json.loads(
+            (ROOT / "config/public-release.json").read_text(encoding="utf-8")
+        )
+        version = str(pin["product_version"])
+        names = release_filenames(version)
+        builder = ROOT / "public-release" / f"v{version}" / names["kanji_builder"]
+        with zipfile.ZipFile(builder) as archive:
+            manifest = json.loads(
+                archive.read(
+                    "JLPT-MAX-kanji-builder/assets/kanji-skeleton-manifest.json"
+                )
+            )
+        records = list(manifest["notes"])
+        with tempfile.TemporaryDirectory() as raw_tmp:
+            output = Path(raw_tmp) / names["kanji_builder"]
+            _reuse_kanji_builder(
+                source=builder,
+                output=output,
+                product_version=version,
+                current_records=records,
+            )
+            self.assertEqual(sha256_file(output), sha256_file(builder))
+            changed = [dict(record) for record in records]
+            changed[0]["note_hash"] = "0" * 64
+            with self.assertRaisesRegex(PublicReleaseError, "kanji notes changed"):
+                _reuse_kanji_builder(
+                    source=builder,
+                    output=output,
+                    product_version=version,
+                    current_records=changed,
+                )
+
     def test_release_zip_preserves_shell_launcher_execute_bit(self) -> None:
         payload = io.BytesIO()
         with zipfile.ZipFile(payload, "w") as archive:
@@ -117,7 +157,7 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         verifier = load_repository_verifier()
 
         verifier._verify_pin(pin)
-        self.assertEqual(pin["core"]["media_files"], 18_253)
+        self.assertEqual(pin["core"]["media_files"], 18_438)
 
     def test_runtime_is_only_the_optional_kanji_builder(self) -> None:
         self.assertEqual(
