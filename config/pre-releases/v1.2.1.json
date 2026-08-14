@@ -1,0 +1,53 @@
+{
+  "artifacts": {
+    "JLPT-MAX-Deck-1.2.1.apkg": {
+      "bytes": 901836801,
+      "sha256": "37d91742773a00c6389d338fa2f5e35090bd9bb48ddaae0fa4ddae79bf385482"
+    },
+    "JLPT-MAX-kanji-builder-1.2.1.zip": {
+      "bytes": 823713,
+      "sha256": "a5c9762c9344d1519308766f13bd0f2c2b15b2a5f2266c5a23980ce70ba6d7b3"
+    },
+    "SHA256SUMS": {
+      "bytes": 190,
+      "sha256": "e6737072d6498cadabf332068bbe733483ffbb67f9eda41ea511d747b0f3e65f"
+    }
+  },
+  "core": {
+    "cards": 20065,
+    "custom_notetype_note_counts": {
+      "JLPT MAX덱 어휘": 6018,
+      "JLPT MAX덱 어휘문제": 7876,
+      "JLPT MAX덱 참조표": 9
+    },
+    "deck_names": [
+      "JLPT MAX덱",
+      "JLPT MAX덱::어휘",
+      "JLPT MAX덱::음성",
+      "JLPT MAX덱::종합 실전",
+      "JLPT MAX덱::참조표"
+    ],
+    "media_files": 18438,
+    "media_hash": "30eabaad96b2980b0b8c89a7d21cbb001a76b11a045f3bbd1f929e8e43333378",
+    "notes": 13903
+  },
+  "full_source": {
+    "cards": 22402,
+    "notes": 16240,
+    "sha256": "98cec151eaed4156114c6da39c9cf615c84f06f390603d908ba1e81109b66728"
+  },
+  "kanji_builder": {
+    "expected_kanji_notes": 2337,
+    "expected_pdf_count": 2,
+    "expected_vector_glyphs": 14,
+    "output_apkg": "JLPT-MAX-kanji-addon-1.2.1.apkg",
+    "reused": false,
+    "source_hash": "e693793ec16b3bc63f22526a0c74eea795434b872b14a99095d3112270d18854"
+  },
+  "payload_hash": "3a859964dce911c248f73bb7f19a7b0750201a2cd32fcca3d184932700e3743c",
+  "policy_version": "direct-core-plus-kanji-addon-v1",
+  "product_version": "1.2.1",
+  "schema_version": 2,
+  "status": "passed",
+  "unresolved": 0
+}
