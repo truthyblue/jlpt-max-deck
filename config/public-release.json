@@ -1,8 +1,8 @@
 {
   "artifacts": {
     "JLPT-MAX-Deck-1.2.0.apkg": {
-      "bytes": 901815532,
-      "sha256": "be2a4b6d4741d53224f6bc48bd2b45c532b62db63edc78bfe2f76c23975074e8"
+      "bytes": 901813560,
+      "sha256": "792fdc21fe6f8b8593ea977bb818b87fe7cc3141e1eec60c269407f0eae718cd"
     },
     "JLPT-MAX-kanji-builder-1.2.0.zip": {
       "bytes": 824519,
@@ -10,7 +10,7 @@
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "22a4401388e723e61b8a5546789436d0cdfbd739609573bb036e90b73bcdaa1f"
+      "sha256": "74ce464a0bf38f281aece2b617c7f7b34a8b0c9139e305314ba024b59c854d8c"
     }
   },
   "core": {
@@ -34,7 +34,7 @@
   "full_source": {
     "cards": 22402,
     "notes": 16240,
-    "sha256": "27952ee3a0e28c2f39854b5478615cfc39378a66b0ca4f289ef1fb88e921d057"
+    "sha256": "ad6fd194f463d1bda309f90a8fcc478662a7215ef874bb128b82911f4365f01c"
   },
   "kanji_builder": {
     "expected_kanji_notes": 2337,
@@ -44,7 +44,7 @@
     "reused": true,
     "source_hash": "e693793ec16b3bc63f22526a0c74eea795434b872b14a99095d3112270d18854"
   },
-  "payload_hash": "904ee09a48f3a89b69260aad77d65fbcda06a524bbbd1a38fa673b2550d24c46",
+  "payload_hash": "737f67e6e50f809113b0a36b3f8a726e4c24a1751b656c5fbdfc6d3aefded613",
   "policy_version": "direct-core-plus-kanji-addon-v1",
   "product_version": "1.2.0",
   "schema_version": 2,
