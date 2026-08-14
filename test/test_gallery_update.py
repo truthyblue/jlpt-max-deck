@@ -41,7 +41,7 @@ V120_SCREENSHOTS = {
     "releases/v1.2.0/gallery-v1.2.0-context-hint.png": (780, 280),
     "releases/v1.2.0/gallery-v1.2.0-error-dialog.png": (640, 604),
     "releases/v1.2.0/gallery-v1.2.0-usage-dialog.png": (640, 604),
-    "releases/v1.2.0/gallery-v1.2.0-update-notice.png": (300, 190),
+    "releases/v1.2.0/gallery-v1.2.0-update-notice.png": (390, 178),
     "releases/v1.2.0/gallery-v1.2.0-usage-summary.png": (1174, 620),
 }
 V120_FEATURES = (
@@ -90,6 +90,7 @@ class GalleryUpdateTests(unittest.TestCase):
             "v1.1.1부터 제공됐음",
             "쿠키와 localStorage가 서로 다른 상태를 읽어",
             "×</strong>는 이번 학습",
+            "기존 덱에서 v1.2.0 출시 응답을 재현한 실제 생성 카드 화면",
             "업데이트 뒤 남은 예전 음성은 미디어 검사로 정리",
             "도구 → 미디어 검사",
             "다른 덱의 미사용 파일도 함께 잡힐 수 있으니",
