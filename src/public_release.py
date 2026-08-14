@@ -43,7 +43,7 @@ from direct_release_contract import (
 ROOT = Path(__file__).resolve().parents[1]
 BUILDER_ARCHIVE_ROOT = "JLPT-MAX-kanji-builder"
 _VECTOR_GLYPH_RE = re.compile(
-    r'<img class="kanji-glyph-image" src="([^"]+)"[^>]*>'
+    r'<img class="[^"]*\bkanji-glyph-image\b[^"]*" src="([^"]+)"[^>]*>'
 )
 
 
@@ -201,7 +201,34 @@ def _package_snapshot(path: Path) -> dict[str, Any]:
     }
 
 
-def _build_core(full_apkg: Path, output: Path) -> tuple[dict[str, Any], dict[str, Any]]:
+def _kanji_skeleton_records(
+    collection: Collection, kanji_ids: Iterable[int]
+) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    for note_id in kanji_ids:
+        note = collection.get_note(note_id)
+        if tuple(note.keys()) != KANJI_FIELDS:
+            raise PublicReleaseError("kanji notetype fields changed")
+        projected = {field: note[field] for field in KANJI_FIELDS}
+        projected["Meaning"] = ""
+        if _VECTOR_GLYPH_RE.fullmatch(projected["GlyphHTML"]):
+            projected["GlyphHTML"] = ""
+        records.append(skeleton_note_record(projected))
+    records.sort(key=lambda value: int(value["sequence"]))
+    if [record["sequence"] for record in records] != list(
+        range(1, EXPECTED_KANJI_NOTES + 1)
+    ):
+        raise PublicReleaseError("kanji skeleton sequence changed")
+    if sum(bool(record["vector_glyph"]) for record in records) != (
+        EXPECTED_KANJI_VECTOR_GLYPHS
+    ):
+        raise PublicReleaseError("kanji skeleton vector count changed")
+    return records
+
+
+def _build_core(
+    full_apkg: Path, output: Path
+) -> tuple[dict[str, Any], dict[str, Any], list[dict[str, Any]]]:
     with tempfile.TemporaryDirectory(prefix="jlpt-core-release-") as directory:
         collection = _import_package(full_apkg, Path(directory) / "core.anki2")
         try:
@@ -214,6 +241,7 @@ def _build_core(full_apkg: Path, output: Path) -> tuple[dict[str, Any], dict[str
                 raise PublicReleaseError(
                     f"full APKG kanji count changed: {len(kanji_ids)}"
                 )
+            kanji_records = _kanji_skeleton_records(collection, kanji_ids)
             collection.remove_notes(kanji_ids)
             _remove_matching_decks(collection, keep_kanji=False)
             kanji_model = collection.models.by_name(KANJI_NOTETYPE_NAME)
@@ -237,7 +265,7 @@ def _build_core(full_apkg: Path, output: Path) -> tuple[dict[str, Any], dict[str
         or any(name.startswith("jlpt-public-kanji-") for name in _package_media(output))
     ):
         raise PublicReleaseError("core APKG still contains the optional kanji deck")
-    return full_snapshot, snapshot
+    return full_snapshot, snapshot, kanji_records
 
 
 def _build_skeleton(
@@ -259,27 +287,13 @@ def _build_skeleton(
             if other_ids:
                 collection.remove_notes(other_ids)
             _remove_matching_decks(collection, keep_kanji=True)
-            records: list[dict[str, Any]] = []
+            records = _kanji_skeleton_records(collection, kanji_ids)
             for note_id in kanji_ids:
                 note = collection.get_note(note_id)
-                if tuple(note.keys()) != KANJI_FIELDS:
-                    raise PublicReleaseError("kanji notetype fields changed")
                 note["Meaning"] = ""
                 if _VECTOR_GLYPH_RE.fullmatch(note["GlyphHTML"]):
                     note["GlyphHTML"] = ""
                 collection.update_note(note)
-                records.append(
-                    skeleton_note_record({field: note[field] for field in KANJI_FIELDS})
-                )
-            records.sort(key=lambda value: int(value["sequence"]))
-            if [record["sequence"] for record in records] != list(
-                range(1, EXPECTED_KANJI_NOTES + 1)
-            ):
-                raise PublicReleaseError("kanji skeleton sequence changed")
-            if sum(bool(record["vector_glyph"]) for record in records) != (
-                EXPECTED_KANJI_VECTOR_GLYPHS
-            ):
-                raise PublicReleaseError("kanji skeleton vector count changed")
             _clear_collection_media(collection)
             export_output = output.with_suffix(".apkg")
             exported = _export_root(collection, export_output)
@@ -358,11 +372,75 @@ def _package_kanji_builder(
     return dict(sorted(source_hashes.items()))
 
 
+def _reuse_kanji_builder(
+    *,
+    source: Path,
+    output: Path,
+    product_version: str,
+    current_records: list[dict[str, Any]],
+) -> dict[str, str]:
+    """Reuse builder bytes only when its skeleton and source files are exact."""
+
+    names = release_filenames(product_version)
+    if source.name != names["kanji_builder"] or source.is_symlink():
+        raise PublicReleaseError("reusable kanji builder identity changed")
+    try:
+        archive = zipfile.ZipFile(source)
+    except (OSError, zipfile.BadZipFile) as exc:
+        raise PublicReleaseError("reusable kanji builder is invalid") from exc
+    prefix = f"{BUILDER_ARCHIVE_ROOT}/"
+    manifest_name = f"{prefix}assets/{names['skeleton_manifest']}"
+    with archive:
+        try:
+            manifest = json.loads(archive.read(manifest_name))
+        except (KeyError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise PublicReleaseError(
+                "reusable kanji builder lacks its skeleton manifest"
+            ) from exc
+        if not isinstance(manifest, dict):
+            raise PublicReleaseError("reusable kanji skeleton manifest is invalid")
+        try:
+            validated_records = list(validate_skeleton_manifest(manifest))
+        except ValueError as exc:
+            raise PublicReleaseError(str(exc)) from exc
+        if validated_records != current_records:
+            raise PublicReleaseError(
+                "kanji notes changed; the existing builder cannot be reused"
+            )
+        skeleton_name = str(manifest["skeleton_apkg"])
+        try:
+            skeleton = archive.read(f"{prefix}assets/{skeleton_name}")
+        except KeyError as exc:
+            raise PublicReleaseError(
+                "reusable kanji builder lacks its skeleton asset"
+            ) from exc
+        if hashlib.sha256(skeleton).hexdigest() != manifest["skeleton_apkg_sha256"]:
+            raise PublicReleaseError("reusable kanji skeleton asset changed")
+        source_hashes: dict[str, str] = {}
+        for relative in KANJI_BUILDER_FILES:
+            local = ROOT / relative
+            target = kanji_builder_archive_path(relative)
+            try:
+                packaged = archive.read(f"{prefix}{target}")
+            except KeyError as exc:
+                raise PublicReleaseError(
+                    f"reusable kanji builder source is missing: {target}"
+                ) from exc
+            if local.is_symlink() or not local.is_file() or packaged != local.read_bytes():
+                raise PublicReleaseError(
+                    f"reusable kanji builder source changed: {relative}"
+                )
+            source_hashes[target] = sha256_file(local)
+    shutil.copy2(source, output)
+    return dict(sorted(source_hashes.items()))
+
+
 def prepare_direct_release(
     *,
     full_apkg: Path,
     output_root: Path,
     product_version: str,
+    reuse_kanji_builder: Path | None = None,
 ) -> dict[str, Any]:
     """Create a direct core APKG and a small optional kanji builder bundle."""
     _ensure_empty_or_absent(output_root)
@@ -378,21 +456,31 @@ def prepare_direct_release(
         core_apkg = staged / names["core_apkg"]
         skeleton_apkg = staged / names["kanji_skeleton"]
         skeleton_manifest_path = staged / names["skeleton_manifest"]
-        full_snapshot, core_snapshot = _build_core(full_apkg, core_apkg)
-        skeleton_manifest = _build_skeleton(
-            full_apkg,
-            skeleton_apkg,
-            product_version=product_version,
+        full_snapshot, core_snapshot, kanji_records = _build_core(
+            full_apkg, core_apkg
         )
-        _write_json(skeleton_manifest_path, skeleton_manifest)
         builder_archive = staged / names["kanji_builder"]
-        builder_source_hashes = _package_kanji_builder(
-            output=builder_archive,
-            skeleton_apkg=skeleton_apkg,
-            skeleton_manifest=skeleton_manifest_path,
-        )
-        skeleton_apkg.unlink()
-        skeleton_manifest_path.unlink()
+        if reuse_kanji_builder is None:
+            skeleton_manifest = _build_skeleton(
+                full_apkg,
+                skeleton_apkg,
+                product_version=product_version,
+            )
+            _write_json(skeleton_manifest_path, skeleton_manifest)
+            builder_source_hashes = _package_kanji_builder(
+                output=builder_archive,
+                skeleton_apkg=skeleton_apkg,
+                skeleton_manifest=skeleton_manifest_path,
+            )
+            skeleton_apkg.unlink()
+            skeleton_manifest_path.unlink()
+        else:
+            builder_source_hashes = _reuse_kanji_builder(
+                source=reuse_kanji_builder.resolve(),
+                output=builder_archive,
+                product_version=product_version,
+                current_records=kanji_records,
+            )
 
         distributed = [core_apkg, builder_archive]
         checksums = staged / names["checksums"]
@@ -430,6 +518,7 @@ def prepare_direct_release(
                 "expected_pdf_count": 2,
                 "expected_vector_glyphs": EXPECTED_KANJI_VECTOR_GLYPHS,
                 "output_apkg": names["kanji_addon"],
+                "reused": reuse_kanji_builder is not None,
                 "source_hash": sha256_json(builder_source_hashes),
             },
             "policy_version": POLICY_VERSION,
@@ -454,6 +543,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--full-apkg", type=Path, required=True)
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--product-version", required=True)
+    parser.add_argument("--reuse-kanji-builder", type=Path)
     return parser
 
 
@@ -463,6 +553,7 @@ def main() -> None:
         full_apkg=args.full_apkg.resolve(),
         output_root=args.output_root.resolve(),
         product_version=args.product_version,
+        reuse_kanji_builder=args.reuse_kanji_builder,
     )
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
 
