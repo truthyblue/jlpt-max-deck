@@ -4,6 +4,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -100,6 +101,51 @@ class KanjiAddonTest(unittest.TestCase):
                 )
             )
         self.assertEqual(note["Meaning"], "하나 일")
+
+    def test_vector_slot_marks_transparent_media_without_blending(self) -> None:
+        note = FakeNote(
+            SortKey="K000432",
+            Volume="상권",
+            Unit="0432",
+            Meaning="",
+            GlyphHTML="",
+        )
+        slot = GilbutKanjiSlot(
+            sequence=432,
+            source_id="ilsang-muutta-upper",
+            source_sha256="0" * 64,
+            volume_code="upper",
+            page=1,
+            row=1,
+            column=1,
+            source_label="0432",
+            glyph_kind="vector",
+            glyph_text="",
+            glyph_bbox=(0.0, 0.0, 1.0, 1.0),
+            meaning="크게 보일 관",
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "upper.pdf"
+            source.write_bytes(b"fixture")
+            with patch(
+                "build_kanji_addon.gilbut_vector_glyph_svg",
+                return_value=b"<svg/>",
+            ):
+                media_record = _fill_note(
+                    note,
+                    slot,
+                    source_paths={"ilsang-muutta-upper": source},
+                    media_root=root,
+                )
+        self.assertIsNotNone(media_record)
+        assert media_record is not None
+        self.assertIn(
+            'class="kanji-glyph-image kanji-glyph-transparent"',
+            note["GlyphHTML"],
+        )
+        self.assertTrue(note["GlyphHTML"].endswith('alt="원본 한자 자형">'))
+        self.assertEqual(note["Meaning"], "크게 보일 관")
 
     def test_prepopulated_meaning_is_rejected(self) -> None:
         note = FakeNote(

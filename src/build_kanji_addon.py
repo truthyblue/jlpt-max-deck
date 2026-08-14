@@ -248,7 +248,8 @@ def _fill_note(
         target = media_root / filename
         target.write_bytes(payload)
         note["GlyphHTML"] = (
-            f'<img class="kanji-glyph-image" src="{filename}" '
+            f'<img class="kanji-glyph-image kanji-glyph-transparent" '
+            f'src="{filename}" '
             'alt="원본 한자 자형">'
         )
         media_record = filename, hashlib.sha256(payload).hexdigest()
