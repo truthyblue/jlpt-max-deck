@@ -298,6 +298,26 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
             sha256_json(dict(sorted(source_hashes.items()))),
         )
 
+    def test_release_draft_matches_current_artifact_pin(self) -> None:
+        pin = json.loads(
+            (ROOT / "config" / "public-release.json").read_text(encoding="utf-8")
+        )
+        version = str(pin["product_version"])
+        draft = (
+            ROOT / "docs" / "release-drafts" / f"v{version}-github-release.md"
+        ).read_text(encoding="utf-8")
+        for name, artifact in pin["artifacts"].items():
+            with self.subTest(name=name):
+                self.assertIn(
+                    f"`{name}` — {artifact['bytes']:,} bytes — "
+                    f"`{artifact['sha256']}`",
+                    draft,
+                )
+        self.assertIn(
+            f"전체 private APKG SHA-256: `{pin['full_source']['sha256']}`",
+            draft,
+        )
+
     def test_repository_has_no_companion_autoplay_addon(self) -> None:
         self.assertFalse((ROOT / "src" / "autoplay_addon.py").exists())
         self.assertFalse((ROOT / "addons" / "jlpt_max_deck_autoplay").exists())
