@@ -78,7 +78,7 @@ class GalleryUpdateTests(unittest.TestCase):
             "docs/release-details/v1.2.0.md",
             "기존 노트 업데이트: 항상",
             "v1.1.x와 v1.0.x 모두",
-            "기존 한자 확장은 그대로 사용",
+            "한자 확장도 v1.2.0 빌더로 다시 만들기",
             "Windows Anki 야간 모드용 투명 SVG 렌더링",
             "한자 펼침과 이미지 표시 수정",
             "원본부터 빌더 출력까지 투명한 path-only SVG로 통일",

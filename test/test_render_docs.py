@@ -322,7 +322,7 @@ class DocumentationRenderTest(unittest.TestCase):
         update_page = current_sources[2].read_text(encoding="utf-8")
         self.assertIn("기존 노트 업데이트: 항상", anki_guide)
         self.assertIn(">항상</span>", update_page)
-        self.assertIn("v1.2.0 빌더로 다시 만들어", update_page)
+        self.assertIn("한자 확장도 v1.2.0 빌더로 다시 만듭니다", update_page)
 
         historical_patch_release = (
             ROOT / "docs-src/docs/releases/v1.1.1.md.j2"
