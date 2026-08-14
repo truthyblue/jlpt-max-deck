@@ -42,7 +42,7 @@ V120_SCREENSHOTS = {
     "releases/v1.2.0/gallery-v1.2.0-error-dialog.png": (640, 604),
     "releases/v1.2.0/gallery-v1.2.0-usage-dialog.png": (640, 604),
     "releases/v1.2.0/gallery-v1.2.0-update-notice.png": (390, 178),
-    "releases/v1.2.0/gallery-v1.2.0-usage-summary.png": (1174, 620),
+    "releases/v1.2.0/gallery-v1.2.0-usage-summary.png": (2348, 1240),
 }
 V120_FEATURES = (
     "pitch-accent",
@@ -116,7 +116,7 @@ class GalleryUpdateTests(unittest.TestCase):
             "好調",
             "익명 통계로 보는 현재 이용 현황",
             "익명 통계 → 사용 통계 공유하기",
-            "활성 설치는 업데이트 이후 학습한 무작위 설치 ID 수",
+    "활성 설치는 최근 30일 동안 학습한 무작위 설치 ID 수",
             "플랫폼·덱 버전·학습 영역·JLPT 급수별 집계를 함께 보여 줌",
             "별도 통계 글로 공유할 예정임",
         ):
