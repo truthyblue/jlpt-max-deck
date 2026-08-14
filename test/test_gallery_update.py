@@ -41,6 +41,7 @@ V120_SCREENSHOTS = {
     "releases/v1.2.0/gallery-v1.2.0-context-hint.png": (780, 280),
     "releases/v1.2.0/gallery-v1.2.0-error-dialog.png": (640, 604),
     "releases/v1.2.0/gallery-v1.2.0-usage-dialog.png": (640, 604),
+    "releases/v1.2.0/gallery-v1.2.0-update-notice.png": (300, 190),
     "releases/v1.2.0/gallery-v1.2.0-usage-summary.png": (1174, 620),
 }
 V120_FEATURES = (
@@ -203,7 +204,7 @@ class GalleryUpdateTests(unittest.TestCase):
     def test_local_preview_resolves_every_versioned_release_image(self) -> None:
         (ROOT / "build").mkdir(exist_ok=True)
         with tempfile.TemporaryDirectory(dir=ROOT / "build") as raw:
-            for version, expected_count in (("1.1.0", 2), ("1.2.0", 6)):
+            for version, expected_count in (("1.1.0", 2), ("1.2.0", 7)):
                 with self.subTest(version=version):
                     output = Path(raw) / f"v{version}.html"
                     receipt = render_gallery_preview(
