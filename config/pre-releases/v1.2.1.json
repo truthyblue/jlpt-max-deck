@@ -1,8 +1,8 @@
 {
   "artifacts": {
     "JLPT-MAX-Deck-1.2.1.apkg": {
-      "bytes": 901838144,
-      "sha256": "14f33f88e8e56bccf0585a941705483c9c4c436eeec07556de958f68e1729fe6"
+      "bytes": 901839552,
+      "sha256": "2908dad1aba582157e9a698e94bfc1a9faf479b35fff5e56abb30f254e599bb3"
     },
     "JLPT-MAX-kanji-builder-1.2.1.zip": {
       "bytes": 823713,
@@ -10,7 +10,7 @@
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "58b97ff37b8bec1f7b67342f6403fc4010b176819f0a6ca30585e73120c58ad4"
+      "sha256": "23ee8e08621377162ea5ca50dce69d2856e838c4d28969b5947351b43cc206e2"
     }
   },
   "core": {
@@ -44,7 +44,7 @@
     "reused": true,
     "source_hash": "e693793ec16b3bc63f22526a0c74eea795434b872b14a99095d3112270d18854"
   },
-  "payload_hash": "03a24bab41cabdbec796123dd341c19f4991cdc34f225da5f8211bdfd1f703e7",
+  "payload_hash": "e8ba1f0db659fa379dfb6b6c40ffe3287b29e77ce5dc7998665b1eb4841ddcff",
   "policy_version": "direct-core-plus-kanji-addon-v1",
   "product_version": "1.2.1",
   "schema_version": 2,
