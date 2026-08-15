@@ -10,6 +10,7 @@ import unittest
 import zipfile
 from pathlib import Path
 from typing import Any
+from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -30,6 +31,7 @@ from public_release import (  # noqa: E402
     _package_kanji_builder,
     _reuse_kanji_builder,
     _zip_write,
+    prepare_direct_release,
 )
 
 
@@ -47,6 +49,91 @@ def load_repository_verifier() -> Any:
 
 
 class DirectReleaseRepositoryTest(unittest.TestCase):
+    def test_same_release_inputs_restore_exact_public_bytes_without_rebuild(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as raw_tmp:
+            tmp = Path(raw_tmp)
+            full = tmp / "full.apkg"
+            full.write_bytes(b"stable full package")
+            cache = tmp / "cache"
+            output_one = tmp / "one"
+            output_two = tmp / "two"
+            build_core = Mock()
+
+            def fake_core(_full: Path, output: Path) -> tuple[dict[str, int], dict[str, Any], list[dict[str, Any]]]:
+                build_core()
+                output.write_bytes(b"one nondeterministic build captured once")
+                return (
+                    {"cards": 2, "notes": 2},
+                    {
+                        "cards": 1,
+                        "custom_notetype_note_counts": {},
+                        "deck_names": [],
+                        "media_files": 0,
+                        "media_hash": "0" * 64,
+                        "notes": 1,
+                    },
+                    [],
+                )
+
+            def fake_skeleton(
+                _full: Path, output: Path, *, product_version: str
+            ) -> dict[str, Any]:
+                output.write_bytes(b"skeleton")
+                return {"product_version": product_version}
+
+            def fake_builder(**kwargs: Any) -> dict[str, str]:
+                Path(kwargs["output"]).write_bytes(b"builder")
+                return {"source": "1" * 64}
+
+            with patch("public_release._build_core", side_effect=fake_core), patch(
+                "public_release._build_skeleton", side_effect=fake_skeleton
+            ), patch(
+                "public_release._package_kanji_builder", side_effect=fake_builder
+            ):
+                first = prepare_direct_release(
+                    full_apkg=full,
+                    output_root=output_one,
+                    product_version="1.2.0",
+                    artifact_cache_root=cache,
+                )
+                second = prepare_direct_release(
+                    full_apkg=full,
+                    output_root=output_two,
+                    product_version="1.2.0",
+                    artifact_cache_root=cache,
+                )
+
+                self.assertEqual(first["builds_run"], 1)
+                self.assertEqual(second["builds_run"], 0)
+                self.assertTrue(second["reused"])
+                self.assertEqual(build_core.call_count, 1)
+                self.assertEqual(
+                    {
+                        path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+                        for path in output_one.iterdir()
+                    },
+                    {
+                        path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+                        for path in output_two.iterdir()
+                    },
+                )
+
+                (output_one / release_filenames("1.2.0")["core_apkg"]).write_bytes(
+                    b"tampered"
+                )
+                with self.assertRaisesRegex(
+                    PublicReleaseError, "cached public release artifact changed"
+                ):
+                    prepare_direct_release(
+                        full_apkg=full,
+                        output_root=output_one,
+                        product_version="1.2.0",
+                        artifact_cache_root=cache,
+                    )
+                self.assertEqual(build_core.call_count, 1)
+
     def test_current_kanji_builder_is_reused_only_for_exact_note_projection(
         self,
     ) -> None:
@@ -315,6 +402,13 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                 )
         self.assertIn(
             f"전체 private APKG SHA-256: `{pin['full_source']['sha256']}`",
+            draft,
+        )
+        self.assertNotIn("user-attachments/assets", draft)
+        self.assertNotIn("/main/site/assets/releases/", draft)
+        self.assertIn(
+            f"raw.githubusercontent.com/truthyblue/jlpt-max-deck/v{version}/"
+            f"site/assets/releases/v{version}/",
             draft,
         )
 

@@ -9,6 +9,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import tempfile
 import zipfile
 from collections.abc import Iterable, Mapping
@@ -42,6 +43,11 @@ from direct_release_contract import (
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILDER_ARCHIVE_ROOT = "JLPT-MAX-kanji-builder"
+PUBLIC_RELEASE_CODE_PATHS = (
+    "src/direct_release_contract.py",
+    "src/public_release.py",
+    "src/public_kanji.py",
+)
 _VECTOR_GLYPH_RE = re.compile(
     r'<img class="[^"]*\bkanji-glyph-image\b[^"]*" src="([^"]+)"[^>]*>'
 )
@@ -61,6 +67,167 @@ def _write_json(path: Path, value: Mapping[str, Any]) -> None:
 def _ensure_empty_or_absent(path: Path) -> None:
     if path.exists() and (not path.is_dir() or any(path.iterdir())):
         raise PublicReleaseError(f"output root must be absent or empty: {path}")
+
+
+def _default_artifact_cache_root() -> Path:
+    completed = subprocess.run(
+        ("git", "rev-parse", "--path-format=absolute", "--git-common-dir"),
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if completed.returncode != 0:
+        raise PublicReleaseError("cannot resolve the shared public release cache")
+    return Path(completed.stdout.strip()) / "jlpt-public-release-cache"
+
+
+def _public_release_input_fingerprint(
+    *,
+    full_apkg: Path,
+    product_version: str,
+    reuse_kanji_builder: Path | None,
+) -> dict[str, Any]:
+    names = release_filenames(product_version)
+    if not full_apkg.is_file() or full_apkg.is_symlink():
+        raise PublicReleaseError(f"APKG is missing or unsafe: {full_apkg}")
+    code = {
+        relative: sha256_file(ROOT / relative)
+        for relative in PUBLIC_RELEASE_CODE_PATHS
+    }
+    builder_sources = {
+        relative: sha256_file(ROOT / relative)
+        for relative in KANJI_BUILDER_FILES
+    }
+    reusable: dict[str, Any] | None = None
+    if reuse_kanji_builder is not None:
+        reusable_path = reuse_kanji_builder.resolve()
+        if (
+            not reusable_path.is_file()
+            or reusable_path.is_symlink()
+            or reusable_path.name != names["kanji_builder"]
+        ):
+            raise PublicReleaseError("reusable kanji builder identity changed")
+        reusable = {
+            "name": reusable_path.name,
+            "sha256": sha256_file(reusable_path),
+        }
+    return {
+        "contract": "public-release-artifact-cache-v1",
+        "full_apkg_sha256": sha256_file(full_apkg),
+        "product_version": product_version,
+        "reuse_kanji_builder": reusable,
+        "release_code": code,
+        "builder_sources": builder_sources,
+    }
+
+
+def _validate_release_output(
+    *, output_root: Path, input_fingerprint_sha256: str
+) -> dict[str, Any]:
+    pins = list(output_root.glob("public-release.json"))
+    if len(pins) != 1 or pins[0].is_symlink():
+        raise PublicReleaseError("cached public release pin is missing or unsafe")
+    try:
+        pin = json.loads(pins[0].read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise PublicReleaseError("cached public release pin is invalid") from exc
+    if not isinstance(pin, dict):
+        raise PublicReleaseError("cached public release pin is invalid")
+    payload = {key: value for key, value in pin.items() if key != "payload_hash"}
+    artifacts = pin.get("artifacts")
+    if (
+        pin.get("status") != "passed"
+        or pin.get("unresolved") != 0
+        or pin.get("build_input_fingerprint_sha256")
+        != input_fingerprint_sha256
+        or pin.get("payload_hash") != sha256_json(payload)
+        or not isinstance(artifacts, Mapping)
+        or not artifacts
+    ):
+        raise PublicReleaseError("cached public release pin is not closed")
+    expected_names = {"public-release.json", *artifacts.keys()}
+    actual_names = {
+        path.name
+        for path in output_root.iterdir()
+        if path.is_file() and not path.is_symlink()
+    }
+    if actual_names != expected_names or any(
+        path.is_dir() or path.is_symlink() for path in output_root.iterdir()
+    ):
+        raise PublicReleaseError("cached public release file inventory changed")
+    for name, record in artifacts.items():
+        if not isinstance(name, str) or not isinstance(record, Mapping):
+            raise PublicReleaseError("cached public release artifact record is invalid")
+        path = output_root / name
+        if (
+            not path.is_file()
+            or path.stat().st_size != record.get("bytes")
+            or sha256_file(path) != record.get("sha256")
+        ):
+            raise PublicReleaseError(f"cached public release artifact changed: {name}")
+    return pin
+
+
+def _install_cached_release(
+    *, cache_tree: Path, output_root: Path, input_fingerprint_sha256: str
+) -> dict[str, Any]:
+    _ensure_empty_or_absent(output_root)
+    pin = _validate_release_output(
+        output_root=cache_tree,
+        input_fingerprint_sha256=input_fingerprint_sha256,
+    )
+    output_root.parent.mkdir(parents=True, exist_ok=True)
+    staged = Path(
+        tempfile.mkdtemp(prefix=f".{output_root.name}.cache-", dir=output_root.parent)
+    )
+    try:
+        shutil.copytree(cache_tree, staged, dirs_exist_ok=True, copy_function=shutil.copy2)
+        _validate_release_output(
+            output_root=staged,
+            input_fingerprint_sha256=input_fingerprint_sha256,
+        )
+        if output_root.exists():
+            output_root.rmdir()
+        os.replace(staged, output_root)
+    finally:
+        if staged.exists():
+            shutil.rmtree(staged)
+    return pin
+
+
+def _archive_release_output(
+    *, output_root: Path, cache_entry: Path, input_fingerprint_sha256: str
+) -> None:
+    _validate_release_output(
+        output_root=output_root,
+        input_fingerprint_sha256=input_fingerprint_sha256,
+    )
+    if cache_entry.exists():
+        _validate_release_output(
+            output_root=cache_entry / "tree",
+            input_fingerprint_sha256=input_fingerprint_sha256,
+        )
+        return
+    cache_entry.parent.mkdir(parents=True, exist_ok=True)
+    staged = Path(
+        tempfile.mkdtemp(prefix=f".{cache_entry.name}.", dir=cache_entry.parent)
+    )
+    try:
+        tree = staged / "tree"
+        shutil.copytree(output_root, tree, copy_function=shutil.copy2)
+        _write_json(
+            staged / "cache-receipt.json",
+            {
+                "schema_version": 1,
+                "status": "passed",
+                "input_fingerprint_sha256": input_fingerprint_sha256,
+            },
+        )
+        os.replace(staged, cache_entry)
+    finally:
+        if staged.exists():
+            shutil.rmtree(staged)
 
 
 def _import_package(path: Path, collection_path: Path) -> Collection:
@@ -441,8 +608,52 @@ def prepare_direct_release(
     output_root: Path,
     product_version: str,
     reuse_kanji_builder: Path | None = None,
+    artifact_cache_root: Path | None = None,
 ) -> dict[str, Any]:
     """Create a direct core APKG and a small optional kanji builder bundle."""
+    input_fingerprint = _public_release_input_fingerprint(
+        full_apkg=full_apkg,
+        product_version=product_version,
+        reuse_kanji_builder=reuse_kanji_builder,
+    )
+    input_fingerprint_sha256 = sha256_json(input_fingerprint)
+    cache_root = (
+        artifact_cache_root.resolve()
+        if artifact_cache_root is not None
+        else _default_artifact_cache_root()
+    )
+    cache_entry = cache_root / input_fingerprint_sha256
+    if output_root.exists() and not output_root.is_dir():
+        raise PublicReleaseError(f"output root must be a directory: {output_root}")
+    if output_root.exists() and any(output_root.iterdir()):
+        pin = _validate_release_output(
+            output_root=output_root,
+            input_fingerprint_sha256=input_fingerprint_sha256,
+        )
+        _archive_release_output(
+            output_root=output_root,
+            cache_entry=cache_entry,
+            input_fingerprint_sha256=input_fingerprint_sha256,
+        )
+        return {
+            **pin,
+            "artifact_cache_key": input_fingerprint_sha256,
+            "builds_run": 0,
+            "reused": True,
+        }
+    cache_tree = cache_entry / "tree"
+    if cache_tree.is_dir() and not cache_tree.is_symlink():
+        pin = _install_cached_release(
+            cache_tree=cache_tree,
+            output_root=output_root,
+            input_fingerprint_sha256=input_fingerprint_sha256,
+        )
+        return {
+            **pin,
+            "artifact_cache_key": input_fingerprint_sha256,
+            "builds_run": 0,
+            "reused": True,
+        }
     _ensure_empty_or_absent(output_root)
     names = release_filenames(product_version)
     output_root.parent.mkdir(parents=True, exist_ok=True)
@@ -523,6 +734,7 @@ def prepare_direct_release(
             },
             "policy_version": POLICY_VERSION,
             "product_version": product_version,
+            "build_input_fingerprint_sha256": input_fingerprint_sha256,
             "schema_version": SCHEMA_VERSION,
             "status": "passed",
             "unresolved": 0,
@@ -532,7 +744,17 @@ def prepare_direct_release(
         if output_root.exists():
             output_root.rmdir()
         os.replace(staged, output_root)
-        return pin
+        _archive_release_output(
+            output_root=output_root,
+            cache_entry=cache_entry,
+            input_fingerprint_sha256=input_fingerprint_sha256,
+        )
+        return {
+            **pin,
+            "artifact_cache_key": input_fingerprint_sha256,
+            "builds_run": 1,
+            "reused": False,
+        }
     finally:
         if staged.exists():
             shutil.rmtree(staged)
@@ -544,6 +766,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--product-version", required=True)
     parser.add_argument("--reuse-kanji-builder", type=Path)
+    parser.add_argument("--artifact-cache-root", type=Path)
     return parser
 
 
@@ -554,6 +777,7 @@ def main() -> None:
         output_root=args.output_root.resolve(),
         product_version=args.product_version,
         reuse_kanji_builder=args.reuse_kanji_builder,
+        artifact_cache_root=args.artifact_cache_root,
     )
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
 
