@@ -1,8 +1,8 @@
 {
   "artifacts": {
     "JLPT-MAX-Deck-1.2.1.apkg": {
-      "bytes": 901836801,
-      "sha256": "37d91742773a00c6389d338fa2f5e35090bd9bb48ddaae0fa4ddae79bf385482"
+      "bytes": 901837015,
+      "sha256": "bf6552cd0df472785d51ae82d301f36b6e8d1b28e2f3639971e35dc26ae19652"
     },
     "JLPT-MAX-kanji-builder-1.2.1.zip": {
       "bytes": 823713,
@@ -10,7 +10,7 @@
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "e6737072d6498cadabf332068bbe733483ffbb67f9eda41ea511d747b0f3e65f"
+      "sha256": "64b5a292b62f4c472616e7fed02f0d730431940f1bb43b4deec85cda6b35b169"
     }
   },
   "core": {
@@ -34,17 +34,17 @@
   "full_source": {
     "cards": 22402,
     "notes": 16240,
-    "sha256": "98cec151eaed4156114c6da39c9cf615c84f06f390603d908ba1e81109b66728"
+    "sha256": "1d440a013907577eaeab773c8455051e1d4a9a106a7fb619a1f6685bc6a582ab"
   },
   "kanji_builder": {
     "expected_kanji_notes": 2337,
     "expected_pdf_count": 2,
     "expected_vector_glyphs": 14,
     "output_apkg": "JLPT-MAX-kanji-addon-1.2.1.apkg",
-    "reused": false,
+    "reused": true,
     "source_hash": "e693793ec16b3bc63f22526a0c74eea795434b872b14a99095d3112270d18854"
   },
-  "payload_hash": "3a859964dce911c248f73bb7f19a7b0750201a2cd32fcca3d184932700e3743c",
+  "payload_hash": "3ae9810c11e1777b886628d6ea44b250731802faa2563d9800d0a63653c802db",
   "policy_version": "direct-core-plus-kanji-addon-v1",
   "product_version": "1.2.1",
   "schema_version": 2,
