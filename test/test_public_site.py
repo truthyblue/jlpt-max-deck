@@ -892,15 +892,16 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("업데이트한 뒤에는 실전 설정만 확인하세요", html)
         self.assertIn("음성 덱의 새 카드 수를 포함한 나머지 옵션은 지금 설정을 그대로 두세요", html)
         self.assertIn(
-            "기존 노트 업데이트</h3><span class=\"v2-state on\">항상",
+            "기존 노트 업데이트</h3><span class=\"v2-state on\">표에 따라",
             html,
         )
-        self.assertIn("어느 기존 버전에서 오더라도", html)
+        self.assertIn("v1.2.0</th><td><strong>새 버전일 때", html)
+        self.assertIn("v1.1.x</th><td><strong>항상", html)
         self.assertIn("직접 수정한 공식 노트 필드도 덮어쓸 수 있으므로", html)
         self.assertIn("v1.1.x", html)
         self.assertIn("v1.0.x", html)
         self.assertIn("v1.1.x의 뜻·예문 변경", html)
-        self.assertIn("한자 확장도 v1.2.0 빌더로 다시 만듭니다", html)
+        self.assertIn("v1.2.0 한자 확장은 그대로 쓸 수 있습니다", html)
         self.assertIn("투명 SVG 렌더링과 새 일본어 글꼴", html)
         self.assertIn("모든 기기에서 다시 전체 동기화합니다", html)
         self.assertNotIn("JLPT MAX덱 · 음성", html)

@@ -46,6 +46,9 @@ class DocumentationRenderTest(unittest.TestCase):
         PurePosixPath("docs/releases/v1.2.0.md.j2"): PurePosixPath(
             "docs/releases/v1.2.0.md"
         ),
+        PurePosixPath("docs/releases/v1.2.1.md.j2"): PurePosixPath(
+            "docs/releases/v1.2.1.md"
+        ),
         PurePosixPath("docs/troubleshooting.md.j2"): PurePosixPath(
             "docs/troubleshooting.md"
         ),
@@ -200,6 +203,16 @@ class DocumentationRenderTest(unittest.TestCase):
         self.assertIn("| 기본 덱 | 13,903 | 20,065 | 18,253 |", v111)
         self.assertNotIn("JLPT-MAX-Deck-1.2.0.apkg", v111)
 
+        v120 = (ROOT / "docs" / "releases" / "v1.2.0.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("JLPT-MAX-Deck-1.2.0.apkg", v120)
+        self.assertIn(
+            "18694172b1e4a45bebda096069ef7102221abeb2aeabec185c5de051d4ec1dcc",
+            v120,
+        )
+        self.assertNotIn("JLPT-MAX-Deck-1.2.1.apkg", v120)
+
     def test_final_newline_normalization_is_deterministic(self) -> None:
         for source in ("value", "value\n", "value\n\n", "value\r\n"):
             with self.subTest(source=repr(source)):
@@ -307,12 +320,14 @@ class DocumentationRenderTest(unittest.TestCase):
     ) -> None:
         current_sources = (
             ROOT / "docs-src/docs/anki.md.j2",
-            ROOT / "docs-src/docs/releases/v1.2.0.md.j2",
+            ROOT / "docs-src/docs/releases/v1.2.1.md.j2",
             ROOT / "docs-src/site/update.html.j2",
         )
         for path in current_sources:
             content = path.read_text(encoding="utf-8")
             with self.subTest(source=path.relative_to(ROOT).as_posix()):
+                self.assertIn("새 버전일 때", content)
+                self.assertIn("v1.2.0", content)
                 self.assertIn("항상", content)
                 self.assertIn("v1.1.x", content)
                 self.assertIn("v1.0.x", content)
@@ -320,9 +335,14 @@ class DocumentationRenderTest(unittest.TestCase):
 
         anki_guide = current_sources[0].read_text(encoding="utf-8")
         update_page = current_sources[2].read_text(encoding="utf-8")
-        self.assertIn("기존 노트 업데이트: 항상", anki_guide)
-        self.assertIn(">항상</span>", update_page)
-        self.assertIn("한자 확장도 v1.2.0 빌더로 다시 만듭니다", update_page)
+        self.assertIn("기존 노트 업데이트: 아래 표에 따라 선택", anki_guide)
+        self.assertIn(">새 버전일 때</strong>", update_page)
+        self.assertIn("v1.2.0 한자 확장은 그대로 쓸 수 있습니다", update_page)
+
+        historical_minor_release = (
+            ROOT / "docs-src/docs/releases/v1.2.0.md.j2"
+        ).read_text(encoding="utf-8")
+        self.assertIn("이번 버전은 어느 기존 버전에서 오더라도 **항상**", historical_minor_release)
 
         historical_patch_release = (
             ROOT / "docs-src/docs/releases/v1.1.1.md.j2"
@@ -330,14 +350,14 @@ class DocumentationRenderTest(unittest.TestCase):
         self.assertIn("1.1.0 → 1.1.1", historical_patch_release)
         self.assertIn("새 버전일 때", historical_patch_release)
 
-        historical_minor_release = (
+        older_minor_release = (
             ROOT / "docs-src/docs/releases/v1.1.0.md.j2"
         ).read_text(encoding="utf-8")
-        self.assertIn("1.0.3", historical_minor_release)
-        self.assertIn("**기존 노트 업데이트**는 반드시", historical_minor_release)
+        self.assertIn("1.0.3", older_minor_release)
+        self.assertIn("**기존 노트 업데이트**는 반드시", older_minor_release)
         self.assertIn("**항상**", historical_minor_release)
-        self.assertIn("새 버전일 때", historical_minor_release)
-        self.assertIn("덮어쓸 수", historical_minor_release)
+        self.assertNotIn("새 버전일 때", historical_minor_release)
+        self.assertIn("직접 편집한 공식 노트 필드", historical_minor_release)
 
 
 if __name__ == "__main__":
