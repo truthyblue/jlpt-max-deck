@@ -15,6 +15,8 @@ from unittest.mock import Mock, patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+import public_release as subject  # noqa: E402
+
 from direct_release_contract import (  # noqa: E402
     EXPECTED_KANJI_NOTES,
     EXPECTED_KANJI_VECTOR_GLYPHS,
@@ -49,7 +51,7 @@ def load_repository_verifier() -> Any:
 
 
 class DirectReleaseRepositoryTest(unittest.TestCase):
-    def test_same_release_inputs_restore_exact_public_bytes_without_rebuild(
+    def test_public_outputs_are_cached_reused_and_safely_replaced_by_fingerprint(
         self,
     ) -> None:
         with tempfile.TemporaryDirectory() as raw_tmp:
@@ -120,6 +122,40 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                     },
                 )
 
+                changed_full = tmp / "changed-full.apkg"
+                changed_full.write_bytes(b"new accepted full package")
+                replaced = prepare_direct_release(
+                    full_apkg=changed_full,
+                    output_root=output_two,
+                    product_version="1.2.0",
+                    artifact_cache_root=cache,
+                )
+                self.assertEqual(replaced["builds_run"], 1)
+                self.assertEqual(
+                    replaced["replaced_artifact_cache_key"],
+                    first["artifact_cache_key"],
+                )
+                self.assertEqual(build_core.call_count, 2)
+
+                restored = tmp / "restored-first"
+                restored_first = prepare_direct_release(
+                    full_apkg=full,
+                    output_root=restored,
+                    product_version="1.2.0",
+                    artifact_cache_root=cache,
+                )
+                self.assertEqual(restored_first["builds_run"], 0)
+                self.assertEqual(
+                    {
+                        path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+                        for path in output_one.iterdir()
+                    },
+                    {
+                        path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+                        for path in restored.iterdir()
+                    },
+                )
+
                 (output_one / release_filenames("1.2.0")["core_apkg"]).write_bytes(
                     b"tampered"
                 )
@@ -132,7 +168,37 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                         product_version="1.2.0",
                         artifact_cache_root=cache,
                     )
-                self.assertEqual(build_core.call_count, 1)
+                self.assertEqual(build_core.call_count, 2)
+
+    def test_cli_writes_machine_result_to_file(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_tmp:
+            tmp = Path(raw_tmp)
+            result_path = tmp / "result.json"
+            with patch.object(
+                subject,
+                "prepare_direct_release",
+                return_value={"status": "passed", "builds_run": 0},
+            ), patch.object(
+                sys,
+                "argv",
+                [
+                    "public_release.py",
+                    "--full-apkg",
+                    str(tmp / "full.apkg"),
+                    "--output-root",
+                    str(tmp / "output"),
+                    "--product-version",
+                    "1.2.0",
+                    "--result-json",
+                    str(result_path),
+                ],
+            ):
+                subject.main()
+
+            self.assertEqual(
+                json.loads(result_path.read_text(encoding="utf-8")),
+                {"status": "passed", "builds_run": 0},
+            )
 
     def test_current_kanji_builder_is_reused_only_for_exact_note_projection(
         self,

@@ -64,11 +64,6 @@ def _write_json(path: Path, value: Mapping[str, Any]) -> None:
     )
 
 
-def _ensure_empty_or_absent(path: Path) -> None:
-    if path.exists() and (not path.is_dir() or any(path.iterdir())):
-        raise PublicReleaseError(f"output root must be absent or empty: {path}")
-
-
 def _default_artifact_cache_root() -> Path:
     completed = subprocess.run(
         ("git", "rev-parse", "--path-format=absolute", "--git-common-dir"),
@@ -169,10 +164,59 @@ def _validate_release_output(
     return pin
 
 
+def _validate_declared_release_output(
+    output_root: Path,
+) -> tuple[str, dict[str, Any]]:
+    """Validate one closed output against the fingerprint recorded in its pin."""
+    pin_path = output_root / "public-release.json"
+    try:
+        pin = json.loads(pin_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise PublicReleaseError("cached public release pin is invalid") from exc
+    fingerprint = (
+        pin.get("build_input_fingerprint_sha256")
+        if isinstance(pin, dict)
+        else None
+    )
+    if (
+        not isinstance(fingerprint, str)
+        or re.fullmatch(r"[0-9a-f]{64}", fingerprint) is None
+    ):
+        raise PublicReleaseError("cached public release pin is invalid")
+    return fingerprint, _validate_release_output(
+        output_root=output_root,
+        input_fingerprint_sha256=fingerprint,
+    )
+
+
+def _replace_release_output(*, staged: Path, output_root: Path) -> None:
+    """Atomically install a staged tree while keeping the old tree recoverable."""
+    output_root.parent.mkdir(parents=True, exist_ok=True)
+    previous: Path | None = None
+    if output_root.exists():
+        if not output_root.is_dir() or output_root.is_symlink():
+            raise PublicReleaseError(f"output root must be a directory: {output_root}")
+        previous = Path(
+            tempfile.mkdtemp(
+                prefix=f".{output_root.name}.previous-",
+                dir=output_root.parent,
+            )
+        )
+        previous.rmdir()
+        os.replace(output_root, previous)
+    try:
+        os.replace(staged, output_root)
+    except BaseException:
+        if previous is not None and previous.exists() and not output_root.exists():
+            os.replace(previous, output_root)
+        raise
+    if previous is not None and previous.exists():
+        shutil.rmtree(previous)
+
+
 def _install_cached_release(
     *, cache_tree: Path, output_root: Path, input_fingerprint_sha256: str
 ) -> dict[str, Any]:
-    _ensure_empty_or_absent(output_root)
     pin = _validate_release_output(
         output_root=cache_tree,
         input_fingerprint_sha256=input_fingerprint_sha256,
@@ -187,9 +231,7 @@ def _install_cached_release(
             output_root=staged,
             input_fingerprint_sha256=input_fingerprint_sha256,
         )
-        if output_root.exists():
-            output_root.rmdir()
-        os.replace(staged, output_root)
+        _replace_release_output(staged=staged, output_root=output_root)
     finally:
         if staged.exists():
             shutil.rmtree(staged)
@@ -623,24 +665,32 @@ def prepare_direct_release(
         else _default_artifact_cache_root()
     )
     cache_entry = cache_root / input_fingerprint_sha256
-    if output_root.exists() and not output_root.is_dir():
+    if output_root.exists() and (
+        not output_root.is_dir() or output_root.is_symlink()
+    ):
         raise PublicReleaseError(f"output root must be a directory: {output_root}")
+    replaced_artifact_cache_key: str | None = None
     if output_root.exists() and any(output_root.iterdir()):
-        pin = _validate_release_output(
-            output_root=output_root,
-            input_fingerprint_sha256=input_fingerprint_sha256,
-        )
-        _archive_release_output(
-            output_root=output_root,
-            cache_entry=cache_entry,
-            input_fingerprint_sha256=input_fingerprint_sha256,
-        )
-        return {
-            **pin,
-            "artifact_cache_key": input_fingerprint_sha256,
-            "builds_run": 0,
-            "reused": True,
-        }
+        existing_fingerprint, pin = _validate_declared_release_output(output_root)
+        if existing_fingerprint != input_fingerprint_sha256:
+            _archive_release_output(
+                output_root=output_root,
+                cache_entry=cache_root / existing_fingerprint,
+                input_fingerprint_sha256=existing_fingerprint,
+            )
+            replaced_artifact_cache_key = existing_fingerprint
+        else:
+            _archive_release_output(
+                output_root=output_root,
+                cache_entry=cache_entry,
+                input_fingerprint_sha256=input_fingerprint_sha256,
+            )
+            return {
+                **pin,
+                "artifact_cache_key": input_fingerprint_sha256,
+                "builds_run": 0,
+                "reused": True,
+            }
     cache_tree = cache_entry / "tree"
     if cache_tree.is_dir() and not cache_tree.is_symlink():
         pin = _install_cached_release(
@@ -652,9 +702,9 @@ def prepare_direct_release(
             **pin,
             "artifact_cache_key": input_fingerprint_sha256,
             "builds_run": 0,
+            "replaced_artifact_cache_key": replaced_artifact_cache_key,
             "reused": True,
         }
-    _ensure_empty_or_absent(output_root)
     names = release_filenames(product_version)
     output_root.parent.mkdir(parents=True, exist_ok=True)
     staged = Path(
@@ -741,9 +791,7 @@ def prepare_direct_release(
         }
         pin = {**payload, "payload_hash": sha256_json(payload)}
         _write_json(staged / names["release_pin"], pin)
-        if output_root.exists():
-            output_root.rmdir()
-        os.replace(staged, output_root)
+        _replace_release_output(staged=staged, output_root=output_root)
         _archive_release_output(
             output_root=output_root,
             cache_entry=cache_entry,
@@ -753,6 +801,7 @@ def prepare_direct_release(
             **pin,
             "artifact_cache_key": input_fingerprint_sha256,
             "builds_run": 1,
+            "replaced_artifact_cache_key": replaced_artifact_cache_key,
             "reused": False,
         }
     finally:
@@ -767,6 +816,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--product-version", required=True)
     parser.add_argument("--reuse-kanji-builder", type=Path)
     parser.add_argument("--artifact-cache-root", type=Path)
+    parser.add_argument("--result-json", type=Path)
     return parser
 
 
@@ -779,7 +829,10 @@ def main() -> None:
         reuse_kanji_builder=args.reuse_kanji_builder,
         artifact_cache_root=args.artifact_cache_root,
     )
-    print(json.dumps(result, ensure_ascii=False, sort_keys=True))
+    if args.result_json is None:
+        print(json.dumps(result, ensure_ascii=False, sort_keys=True))
+    else:
+        _write_json(args.result_json.resolve(), result)
 
 
 if __name__ == "__main__":
