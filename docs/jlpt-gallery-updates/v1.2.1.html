@@ -1,12 +1,12 @@
 <meta charset="utf-8">
 <!-- 상태: v1.2.1 릴리스 후보 검증 완료. 갤러리 게시 전 최종 검토용 초안. -->
-<!-- 게시글 제목: [Anki] JLPT MAX 덱 v1.2.1 - 폰트 깜빡임·뜻 순서 교정 -->
+<!-- 게시글 제목: [Anki] JLPT MAX 덱 v1.2.1 - 악센트 끝 방향·폰트 깜빡임·뜻 순서 교정 -->
 <div style="max-width:760px;margin:0 auto;color:#1b211d;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;font-size:16px;line-height:1.8;word-break:keep-all;">
   <div style="padding:38px 28px 34px;text-align:center;color:#fff;background:#101512;border-top:8px solid #d8ff62;border-bottom:1px solid #2f3933;">
     <div style="margin-bottom:12px;color:#d8ff62;font-size:13px;font-weight:800;letter-spacing:.12em;">JLPT MAX Deck · v1.2.1</div>
-    <div style="font-size:36px;font-weight:900;line-height:1.2;letter-spacing:-.05em;">카드는 덜 깜빡이고,<br>뜻과 예문은 제자리로.</div>
+    <div style="font-size:36px;font-weight:900;line-height:1.2;letter-spacing:-.05em;">악센트 끝까지 또렷하게,<br>뜻과 예문은 제자리로.</div>
     <p style="max-width:620px;margin:18px auto 0;color:#d9dedb;font-size:18px;line-height:1.65;">
-      카드를 넘길 때 글꼴과 글자가 움직이는 현상을 줄이고, 뜻과 예문을 같은 순서로 맞춘 안정화 업데이트.
+      단어 뒤의 높낮이 방향을 화살표로 보여 주고, 카드를 넘길 때 글꼴과 글자가 움직이는 현상을 줄였음. 뜻과 예문도 같은 순서로 맞춘 안정화 업데이트.
     </p>
   </div>
 
@@ -27,6 +27,16 @@
   </div>
 
   <div style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
+    <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">PITCH ACCENT</div>
+    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">단어가 끝난 뒤의 높낮이도 화살표로</div>
+    <p style="margin:18px 0 0;color:#d9dedb;">단어 고저 악센트 선 끝에 화살표를 추가했음. 단어 뒤에서도 높게 이어지는지, 낮게 떨어지는지 바로 구분할 수 있음. 단어 안의 선 모양이 같아 보여도 끝 화살표로 차이를 알 수 있음.</p>
+    <p style="margin:12px 0 0;color:#d9dedb;">긴 단어는 좁은 악센트 칸 안에서 히라가나 폭을 필요한 만큼 조정해 선과 글자가 덜 겹침.</p>
+    <div style="margin-top:22px;text-align:center;">
+      <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v1.2.1/gallery-v1.2.1-pitch-boundary-before-after.png" width="1280" height="720" loading="lazy" alt="v1.2.0과 v1.2.1의 단어 고저 악센트 끝 방향을 비교한 화면" style="display:block;width:100%;max-width:620px;height:auto;margin:0 auto;background:#f5f1e8;border:1px solid #38433d;border-radius:12px;">
+    </div>
+  </div>
+
+  <div style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
     <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">CARD VIEW</div>
     <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">카드를 넘길 때 덜 깜빡이게</div>
     <p style="margin:18px 0 0;color:#d9dedb;">Mac Anki에서 새 카드로 넘어갈 때 일본어가 굵게 보였다가 선택한 글꼴로 바뀌는 순간을 줄였음. 설정에서 명조체와 고딕체를 바꿀 때도 카드가 잠깐 사라지지 않고 글꼴만 바뀜.</p>
@@ -36,6 +46,7 @@
   <div style="padding:44px 8px 8px;">
     <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">한자 버튼을 열어도 글자가 밀리지 않게</div>
     <p style="margin:16px 0 0;">한자 버튼과 사전 버튼의 크기를 맞췄음. 한자 내용을 열고 닫아도 화살표와 ‘한자’ 글자가 옆으로 움직이지 않음.</p>
+    <p style="margin:12px 0 0;">활용·학습·익명 통계처럼 펼쳐 보는 항목의 화살표도 같은 모양과 움직임으로 맞췄음.</p>
     <div style="margin-top:22px;text-align:center;">
       <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v1.2.1/gallery-v1.2.1-kanji-disclosure-closed.png" width="1280" height="720" loading="lazy" alt="Mac Anki에서 한자 버튼과 사전 버튼을 나란히 표시한 화면" style="display:block;width:100%;max-width:620px;height:auto;margin:0 auto;background:#f5f1e8;border:1px solid #38433d;border-radius:12px;">
       <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v1.2.1/gallery-v1.2.1-kanji-disclosure-open.png" width="1280" height="720" loading="lazy" alt="한자 버튼을 연 뒤의 상세 내용" style="display:block;width:100%;max-width:620px;height:auto;margin:16px auto 0;background:#f5f1e8;border:1px solid #38433d;border-radius:12px;">
@@ -45,7 +56,13 @@
   <div style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
     <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">MOBILE SETTINGS</div>
     <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">익명 통계 설정도 모바일에서 정상 작동</div>
-    <p style="margin:18px 0 0;color:#d9dedb;">iPhone·iPad와 Android 카드에서도 익명 통계 설정과 동의 창이 정상적으로 열림. 공유를 껐다 다시 켜거나 덱을 업데이트해도 같은 기기를 새 설치로 중복 집계하지 않음.</p>
+    <p style="margin:18px 0 0;color:#d9dedb;">iPhone·iPad와 Android 카드에서도 익명 통계 설정과 동의 창이 정상적으로 열림. 카드 아래 버전과 익명 통계·오류 제보에는 v1.2.1이 정확히 표시됨. 공유를 껐다 다시 켜거나 덱을 업데이트해도 같은 기기를 새 설치로 중복 집계하지 않음.</p>
+    <p style="margin:12px 0 0;color:#d9dedb;">좁은 화면에서도 통계 창이 옆으로 밀리지 않아 좌우로 움직이지 않고 읽을 수 있음.</p>
+  </div>
+
+  <div style="padding:44px 8px 8px;">
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">시험판에서도 정식판 안내를 정확히</div>
+    <p style="margin:16px 0 0;">v1.2.1 시험판을 미리 쓰던 경우에도 정식 v1.2.1 업데이트 안내가 정확히 표시됨.</p>
   </div>
 
   <div style="padding:44px 8px 44px;">
