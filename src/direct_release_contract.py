@@ -40,8 +40,10 @@ KANJI_FIELDS = (
     "Theme",
     "GlyphHTML",
     "Meaning",
+    "KanjiFacts",
     "KanjiReference",
     "LinkedVocabulary",
+    "StrokeOrder",
     "SortKey",
 )
 KANJI_BUILDER_FILES = (

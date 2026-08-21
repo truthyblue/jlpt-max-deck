@@ -59,6 +59,22 @@ class DirectReleaseContractTest(unittest.TestCase):
         )
         self.assertEqual(EXPECTED_KANJI_ADDON_NOTES, 4_674)
         self.assertEqual(EXPECTED_KANJI_ADDON_CARDS, 4_674)
+        self.assertEqual(
+            KANJI_FIELDS,
+            (
+                "KanjiID",
+                "Volume",
+                "Unit",
+                "Theme",
+                "GlyphHTML",
+                "Meaning",
+                "KanjiFacts",
+                "KanjiReference",
+                "LinkedVocabulary",
+                "StrokeOrder",
+                "SortKey",
+            ),
+        )
 
     def test_release_names_separate_core_and_optional_kanji(self) -> None:
         names = release_filenames("1.0.1")

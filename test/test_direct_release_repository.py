@@ -23,6 +23,7 @@ from direct_release_contract import (  # noqa: E402
     EXPECTED_KANJI_VECTOR_GLYPHS,
     KANJI_BUILDER_FILES,
     KANJI_DECK_ROOT,
+    KANJI_FIELDS,
     KANJI_NOTETYPE_NAME,
     PRIVATE_KANJI_NOTETYPE_NAMES,
     POLICY_VERSION,
@@ -46,6 +47,14 @@ from build_kanji_addon import _kanji_note_families  # noqa: E402
 
 TEST_LIFECYCLE = {
     "test_contracts": {
+        "DirectReleaseRepositoryTest.test_current_kanji_fields_close_skeleton_semantics": {
+            "protected_contract": (
+                "the public builder accepts the approved 11-field kanji models and binds facts and stroke-order content into the skeleton proof"
+            ),
+            "not_subsumed_by": (
+                "family-count tests can pass while an older field list rejects the accepted private APKG before public artifacts are prepared"
+            ),
+        },
         "DirectReleaseRepositoryTest.test_v130_private_kanji_families_leave_core_vocabulary_only": {
             "protected_contract": (
                 "a private vocabulary plus reading and writing package produces a vocabulary-only public core and a two-family personal addon"
@@ -149,13 +158,18 @@ class _SyntheticPrivateCollection:
         for model_id in (1, 2):
             for sequence in range(1, notes_per_kanji_model + 1):
                 self.notes[next_id] = model_id
-                self.note_payloads[next_id] = {
-                    "KanjiID": f"kanji-{sequence}",
-                    "Volume": "상권" if sequence == 1 else "하권",
-                    "Unit": str(sequence),
-                    "SortKey": f"K{sequence:06d}",
-                    "Meaning": "",
-                }
+                note: dict[str, str] = dict.fromkeys(KANJI_FIELDS, "")
+                note.update(
+                    {
+                        "KanjiID": f"kanji-{sequence}",
+                        "Volume": "상권" if sequence == 1 else "하권",
+                        "Unit": str(sequence),
+                        "KanjiFacts": f"fact-{sequence}",
+                        "StrokeOrder": f"stroke-{sequence}",
+                        "SortKey": f"K{sequence:06d}",
+                    }
+                )
+                self.note_payloads[next_id] = note
                 next_id += 1
         self.vocabulary_note_id = next_id
         self.notes[self.vocabulary_note_id] = 3
@@ -200,6 +214,32 @@ def load_repository_verifier() -> Any:
 
 
 class DirectReleaseRepositoryTest(unittest.TestCase):
+    def test_current_kanji_fields_close_skeleton_semantics(self) -> None:
+        note = dict.fromkeys(KANJI_FIELDS, "")
+        note.update(
+            {
+                "KanjiID": "kanji-1",
+                "Volume": "상권",
+                "Unit": "1",
+                "Meaning": "private meaning",
+                "KanjiFacts": "public-safe fact projection",
+                "StrokeOrder": "deterministic stroke projection",
+                "SortKey": "K000001",
+            }
+        )
+        collection = Mock()
+        collection.get_note.return_value = note
+        with patch.object(subject, "EXPECTED_KANJI_NOTES", 1), patch.object(
+            subject, "EXPECTED_KANJI_VECTOR_GLYPHS", 1
+        ):
+            records = subject._kanji_skeleton_records(collection, [1])
+
+        expected_projection = dict(note)
+        expected_projection["Meaning"] = ""
+        self.assertEqual(len(records), 1)
+        self.assertEqual(records[0]["note_hash"], sha256_json(expected_projection))
+        self.assertEqual(note["Meaning"], "private meaning")
+
     def test_v130_private_kanji_families_leave_core_vocabulary_only(self) -> None:
         with patch.object(subject, "EXPECTED_KANJI_NOTES", 2), patch.object(
             builder_subject, "EXPECTED_KANJI_NOTES", 2
@@ -207,7 +247,7 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
             builder_subject, "EXPECTED_KANJI_ADDON_CARDS", 4
         ):
             full = _SyntheticPrivateCollection(notes_per_kanji_model=2)
-            reading_ids, private_ids = _private_kanji_note_ids(full)
+            reading_ids, private_ids = _private_kanji_note_ids(full)  # type: ignore[arg-type]
 
             self.assertEqual(len(reading_ids), 2)
             self.assertEqual(len(private_ids), 4)
@@ -279,7 +319,7 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                 notes_per_kanji_model=2,
                 include_legacy_kanji_root=False,
             )
-            families = _kanji_note_families(skeleton)
+            families = _kanji_note_families(skeleton)  # type: ignore[arg-type]
             self.assertEqual(
                 tuple(families),
                 PRIVATE_KANJI_NOTETYPE_NAMES,
@@ -288,7 +328,7 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                 sum(len(notes) for notes in families.values()),
                 2 * len(PRIVATE_KANJI_NOTETYPE_NAMES),
             )
-            _canonicalize_kanji_root(skeleton)
+            _canonicalize_kanji_root(skeleton)  # type: ignore[arg-type]
             skeleton_deck_names = {
                 deck.name for deck in skeleton.decks.all_names_and_ids()
             }
@@ -306,7 +346,7 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
             addon.remove_notes([addon.vocabulary_note_id])
             for note_id in addon.notes:
                 addon.note_payloads[note_id]["Meaning"] = "합성 뜻"
-            _canonicalize_kanji_root(addon)
+            _canonicalize_kanji_root(addon)  # type: ignore[arg-type]
             addon.decks.remove(
                 [
                     deck.id
