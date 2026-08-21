@@ -1,19 +1,19 @@
 {
   "artifacts": {
-    "JLPT-MAX-Deck-1.2.1.apkg": {
-      "bytes": 901932089,
-      "sha256": "ab7e97f1677c0e182c6c3dca19d19607816479c1ff0e2c0bfd42e517213d3ec2"
+    "JLPT-MAX-Deck-1.3.0.apkg": {
+      "bytes": 902087025,
+      "sha256": "b28d2533dc7a70c54ac93df5f334504845691d3d168b118caceb9cff005b7d26"
     },
-    "JLPT-MAX-kanji-builder-1.2.1.zip": {
-      "bytes": 840514,
-      "sha256": "f50838a6d24afa902eef7a0cfce81d4da339e5e50fe70fbf142dd9060d9fb795"
+    "JLPT-MAX-kanji-builder-1.3.0.zip": {
+      "bytes": 6070760,
+      "sha256": "9c076afa7259e375c60138a4be5222b074924924ca0d5c12a4037e9f0950a1b0"
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "e2022c576a4f113ac0e126f441b480706685de3737033e3e2efd2ac3f1a96daf"
+      "sha256": "cd27b071f01af42678e90b43dd04c7720eda250f221fa2a69f7d15f51edc7135"
     }
   },
-  "build_input_fingerprint_sha256": "9754231476af6c2f4133adfacd79d798b259b3bc1aa5b8e8e095fed9442d1583",
+  "build_input_fingerprint_sha256": "118205fe862f6fbe051e283e0ca4288355125bc52004051d497a613ff0141804",
   "core": {
     "cards": 20065,
     "custom_notetype_note_counts": {
@@ -28,26 +28,28 @@
       "JLPT MAX덱::종합 실전",
       "JLPT MAX덱::참조표"
     ],
-    "media_files": 18438,
-    "media_hash": "30eabaad96b2980b0b8c89a7d21cbb001a76b11a045f3bbd1f929e8e43333378",
+    "media_files": 18437,
+    "media_hash": "d886a1e01524e6f97f46e78ef5da5bf29650ab082f14eb53e9c7365cd9269be8",
     "notes": 13903
   },
   "full_source": {
-    "cards": 22402,
-    "notes": 16240,
-    "sha256": "409bd3139bedc5085a44e07179333c031b84bc76472cd8cf12717b115a7c7ffc"
+    "cards": 24739,
+    "notes": 18577,
+    "sha256": "322b538d9bbfb4fca0254ef71be8e609184cc5b7650de327cb36dfc20b7126ee"
   },
   "kanji_builder": {
+    "expected_kanji_addon_cards": 4674,
+    "expected_kanji_addon_notes": 4674,
     "expected_kanji_notes": 2337,
     "expected_pdf_count": 2,
     "expected_vector_glyphs": 14,
-    "output_apkg": "JLPT-MAX-kanji-addon-1.2.1.apkg",
+    "output_apkg": "JLPT-MAX-kanji-addon-1.3.0.apkg",
     "reused": false,
-    "source_hash": "e693793ec16b3bc63f22526a0c74eea795434b872b14a99095d3112270d18854"
+    "source_hash": "cf1acf91c6f08cf665a727bd2abea12c0cc650a4171813d4809ae17ef30c9a5a"
   },
-  "payload_hash": "5252926b8a4bd07f34a33daddb779931e321f681f05976223e626b5218595a83",
+  "payload_hash": "77f2b73953fbd214be4815ee988cb0a617c8463923a077522b3ec0dfa8e05b95",
   "policy_version": "direct-core-plus-kanji-addon-v1",
-  "product_version": "1.2.1",
+  "product_version": "1.3.0",
   "schema_version": 2,
   "status": "passed",
   "unresolved": 0

@@ -1,7 +1,8 @@
 # 선택형 일상무따 한자 확장 만들기
 
 이 가이드는 `JLPT MAX덱::일상무따` 한자
-2,337개를 별도 선택 확장으로 추가하는 과정을
+2,337개의 읽기·쓰기 카드
+4,674장을 별도 선택 확장으로 추가하는 과정을
 설명합니다.
 
 [초심자용 웹 가이드](https://truthyblue.github.io/jlpt-max-deck/kanji.html) · [README](../README.md) ·
@@ -14,7 +15,7 @@
 
 필요한 것은 다음과 같습니다.
 
-- 같은 v1.2.1의 [JLPT-MAX-kanji-builder-1.2.1.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.2.1/JLPT-MAX-kanji-builder-1.2.1.zip)
+- 같은 v1.3.0의 [JLPT-MAX-kanji-builder-1.3.0.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.3.0/JLPT-MAX-kanji-builder-1.3.0.zip)
 - 길벗 《일본어 상용한자 무작정 따라하기》 1·2권의 지원 소책자 PDF 2개
   - [1권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003617)
   - [2권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003669)
@@ -73,21 +74,22 @@ macOS:
 
 성공하면 `build/kanji-addon` 폴더가 자동으로 열리고 다음 두 파일이 생깁니다.
 
-- `build/kanji-addon/JLPT-MAX-kanji-addon-1.2.1.apkg`
+- `build/kanji-addon/JLPT-MAX-kanji-addon-1.3.0.apkg`
 - `build/kanji-addon/kanji-addon-build-report.json`
 
 Anki에 넣을 파일은 이름이 `.apkg`로 끝나는 첫 번째 파일입니다. 리포트의
 `status`가 `passed`, `unresolved`가 `0`인지 확인하세요. 빌더는 한자
-2,337개와 이미지로 복원하는 자형
+2,337개의 읽기·쓰기 노트
+4,674개와 이미지로 복원하는 자형
 14개를 모두 검증한 뒤에만 APKG를 냅니다.
 
 ## 4. Anki에 추가
 
-1. `JLPT-MAX-Deck-1.2.1.apkg`를 먼저 가져옵니다.
-2. 생성된 `JLPT-MAX-kanji-addon-1.2.1.apkg`를 같은 컬렉션에 가져옵니다.
-3. `JLPT MAX덱::일상무따::상권`과 `JLPT MAX덱::일상무따::하권`을 확인합니다.
-4. 합산 수량이 노트 16,240개, 카드
-   22,402개, 미디어 18,452개인지 확인합니다.
+1. `JLPT-MAX-Deck-1.3.0.apkg`를 먼저 가져옵니다.
+2. 생성된 `JLPT-MAX-kanji-addon-1.3.0.apkg`를 같은 컬렉션에 가져옵니다.
+3. `JLPT MAX덱::일상무따` 아래의 읽기·쓰기 덱을 확인합니다.
+4. 합산 수량이 노트 18,577개, 카드
+   24,739개, 미디어 18,451개인지 확인합니다.
 
 PDF 선택을 취소했다면 아무 파일도 바뀌지 않으므로 실행 파일을 다시 열면 됩니다.
 다시 실행하면 기존 결과를 지우고 새로 만들지 먼저 묻습니다. 오류가 나면 빌더
