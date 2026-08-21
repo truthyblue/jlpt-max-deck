@@ -1,79 +1,127 @@
 <meta charset="utf-8">
 <!-- 상태: v1.3.0 게시 전 검토 원문. publication approval 전에는 게시하지 않음. -->
-<!-- 게시글 제목: [Anki] JLPT MAX 덱 v1.3.0 - 한자 읽기·쓰기 학습 -->
+<!-- 게시글 제목: [Anki] JLPT MAX 덱 v1.3.0 - 한자 학습·카드 정리 -->
 <div style="max-width:760px;margin:0 auto;color:#1b211d;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;font-size:16px;line-height:1.8;word-break:keep-all;">
-  <div style="padding:38px 28px 34px;text-align:center;color:#fff;background:#101512;border-top:8px solid #d8ff62;border-bottom:1px solid #2f3933;">
-    <div style="margin-bottom:12px;color:#d8ff62;font-size:13px;font-weight:800;letter-spacing:.12em;">JLPT MAX Deck · v1.3.0</div>
-    <div style="font-size:36px;font-weight:900;line-height:1.2;letter-spacing:-.05em;">한자를 읽고,<br>직접 쓰면서 외우게.</div>
-    <p style="max-width:620px;margin:18px auto 0;color:#d9dedb;font-size:18px;line-height:1.65;">한자 2,337자를 읽기와 쓰기로 나눠 공부하고 획순과 헷갈리는 한자를 함께 확인할 수 있음. 어휘 읽기·음성·예문과 오류 제보도 다듬은 마이너 업데이트.</p>
+  <div style="padding:48px 28px 40px;color:#fff;background:#101512;border-top:10px solid #d8ff62;">
+    <div style="color:#d8ff62;font-size:13px;font-weight:900;letter-spacing:.12em;">JLPT MAX DECK v1.3.0</div>
+    <div style="margin-top:10px;font-size:35px;font-weight:900;line-height:1.25;letter-spacing:-.055em;">한자를 읽고 쓰는 공부를<br>따로 할 수 있게 바꿨음</div>
+    <p style="margin:20px 0 0;color:#d9dedb;font-size:18px;">한자 2,337자를 읽기·쓰기로 나누고 획순 연습과 헷갈리는 한자 힌트를 넣었음. 중복되던 가나 보조 카드는 없앴고, 카드 화면·음성·예문·오류 제보도 함께 다듬었음.</p>
   </div>
 
-  <div style="margin-top:28px;padding:30px 28px;color:#101512;background:#d8ff62;border-left:8px solid #15201b;">
-    <div style="font-size:24px;font-weight:900;letter-spacing:-.04em;">업데이트할 때 ‘항상’을 선택</div>
-    <p style="margin:14px 0 0;">기존 덱을 삭제하지 말고 v1.3.0 기본 APKG를 가져오면 됨. <strong>학습 진행 상태 가져오기: 끄기</strong>, <strong>기존 노트 업데이트: 항상</strong>, <strong>노트 유형 병합: 켜기</strong>를 선택한 뒤 모든 기기에서 전체 동기화해야 함.</p>
-    <p style="margin:12px 0 0;">한자 확장을 쓰고 있다면 v1.3.0 빌더와 지원 PDF 2개로 한자 APKG를 다시 만들어 가져오면 됨.</p>
+  <div style="margin:28px 0 0;padding:30px 28px;background:#f3ffd1;border-left:9px solid #9fc90c;">
+    <div style="font-size:13px;font-weight:900;letter-spacing:.08em;">기존 사용자는 꼭 확인</div>
+    <div style="margin-top:6px;font-size:25px;font-weight:900;line-height:1.35;letter-spacing:-.04em;">덱을 지우지 말고, 기존 노트를 ‘항상’ 업데이트</div>
+    <ol style="margin:17px 0 0;padding-left:23px;">
+      <li>모든 기기 동기화와 컬렉션 백업을 먼저 확인</li>
+      <li>기존 덱을 삭제하지 않고 v1.3.0 APKG 가져오기</li>
+      <li><strong>학습 진행 상태 가져오기: 끄기</strong></li>
+      <li><strong>기존 노트 업데이트: 항상</strong></li>
+      <li><strong>노트 유형 병합: 켜기</strong></li>
+      <li>아래 가나 보조 카드 정리 후 모든 기기에서 전체 동기화</li>
+    </ol>
+    <p style="margin:14px 0 0;color:#4e5852;">한자 확장을 쓰던 사람은 새 빌더 ZIP과 지원 PDF 2개로 한자 APKG도 다시 만들어 가져와야 새 읽기·쓰기 카드와 획순이 들어감.</p>
   </div>
 
-  <div style="padding:44px 8px 8px;">
-    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">읽기 카드와 쓰기 카드를 따로</div>
-    <p style="margin:16px 0 0;">한자 하나마다 읽기 카드와 쓰기 카드를 따로 만들었음. 읽기에서는 음독·훈독별 실제 단어와 공식 읽기를 보고, 쓰기에서는 직접 따라 쓴 뒤 정답 자형과 획순을 확인할 수 있음.</p>
-    <p style="margin:12px 0 0;">모양이 비슷한 한자는 뜻과 읽기를 같이 보여 줘 어디가 헷갈리는지 비교할 수 있음.</p>
-    <div style="margin-top:22px;text-align:center;">
-      <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v1.3.0/gallery-v1.3.0-kanji-reading-before-after.png" width="780" height="1513" loading="lazy" alt="v1.2.1과 v1.3.0의 한자 읽기 카드 모바일 화면 비교" style="display:block;width:100%;max-width:620px;height:auto;margin:0 auto;background:#f5f1e8;border:1px solid #38433d;border-radius:12px;">
+  <div style="margin-top:24px;padding:32px 28px;color:#fff;background:#7b241c;border-left:9px solid #ffbf69;">
+    <div style="color:#ffdfae;font-size:13px;font-weight:900;letter-spacing:.08em;">한 번만 하는 카드 정리</div>
+    <div style="margin-top:6px;font-size:26px;font-weight:900;line-height:1.35;letter-spacing:-.04em;">가나 보조 카드는 ‘빈 카드’ 도구로만 삭제</div>
+    <p style="margin:17px 0 0;color:#fff6e8;">앞면에서 히라가나만 묻던 <strong>어휘(가나 보조)</strong> 카드는 v1.3.0부터 만들지 않음. APKG 업데이트만으로 예전 카드 행이 남을 수 있어서 아래 메뉴를 한 번 실행해야 함.</p>
+    <div style="margin:18px 0 0;padding:17px 19px;color:#1b211d;background:#fff6e8;">
+      <strong>Android·AnkiDroid</strong>: ⋮ → 확인 → 빈 카드<br>
+      <strong>iPhone·iPad</strong>: 설정 → 빈 카드<br>
+      <strong>PC Anki</strong>: 도구 → 빈 카드
     </div>
+    <p style="margin:16px 0 0;color:#fff6e8;"><strong>JLPT MAX덱 어휘 / 어휘(가나 보조)</strong>인지 확인하고 빈 카드 도구의 삭제를 누르면 됨. 144장 또는 6,018장으로 보일 수 있음.</p>
+    <p style="margin:12px 0 0;color:#ffdfae;font-weight:900;">카드 탐색기의 ‘노트 삭제’는 누르면 안 됨. 같은 노트의 어휘·음성 카드까지 같이 지워짐.</p>
+    <p style="margin:12px 0 0;color:#fff6e8;">가나 보조 카드의 별도 일정·복습 기록은 원래 한자 카드로 옮기지 않음. 원래 한자 카드의 급수, 카드 ID, 일정과 복습 기록은 그대로 유지함. 모바일에서는 대상 카드에 처음 들어갈 때 이 절차도 안내함.</p>
   </div>
 
-  <div style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
-    <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">PUBLIC DECK</div>
-    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">기본 덱은 가볍게, 한자는 빌더로 합치기</div>
-    <p style="margin:18px 0 0;color:#d9dedb;">public 기본 APKG는 어휘·음성·종합 실전·참조표 13,903노트·20,065카드만 포함함. 한자는 지원 PDF 원문을 배포하지 않고, 빌더가 개인용 읽기·쓰기 APKG 4,674노트·4,674카드를 만들어 합치는 구조임.</p>
-    <p style="margin:12px 0 0;color:#d9dedb;">두 APKG를 합치면 전체 18,577노트·24,739카드가 됨. 한자 확장을 쓰지 않으면 기본 APKG만 가져오면 됨.</p>
+  <div style="padding:46px 8px 8px;">
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:27px;font-weight:900;letter-spacing:-.045em;">읽기는 유지하고, 쓰기는 새로 시작</div>
+    <p style="margin:16px 0 0;">기존 한자 카드는 <strong>한자::읽기</strong>로 옮기지만 카드 ID와 학습 기록을 유지함. 새 <strong>한자::쓰기</strong> 2,337장은 새 학습 항목으로 시작해서 읽기 공부와 일정이 섞이지 않음.</p>
+    <ul style="margin:16px 0 0;padding-left:23px;">
+      <li>읽기: 실제 단어를 음독·훈독별로 묶고 공식 상용한자 읽기도 표시</li>
+      <li>쓰기: 첫 터치부터 쓰기, 전체 지우기, 정답 자형과 획순 재생</li>
+      <li>비슷한 한자: 뜻·음독·훈독을 한 화면에서 비교</li>
+      <li>획순 SVG 2,298개, SVG가 깨지는 환경용 PNG 자형 14개</li>
+    </ul>
   </div>
 
-  <div style="padding:44px 8px 8px;">
-    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">읽기·음성·예문도 더 자연스럽게</div>
-    <p style="margin:16px 0 0;">한자 읽기 정보와 단어 고저 악센트의 읽기 글자를 더 또렷하게 다듬었음. 음성은 앞쪽 무음을 건너뛰어 첫 소리가 늦게 들리는 느낌을 줄였고, 같은 뜻을 보여 주는 예문은 한 영역으로 묶었음.</p>
-    <p style="margin:12px 0 0;">검토가 끝난 뜻·읽기·예문·고저 악센트·문제 후리가나 교정도 함께 반영했음. 届ける 예문, 幾つ, 種, 通っている, 噛み癖, 条件·設定, 了承 예문 후리가나와 제보된 이미지 한자 4건을 고쳤음.</p>
+  <div style="margin:28px -8px 0;padding:18px;background:#f4f7f5;border:1px solid #dfe5e1;">
+    <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v1.3.0/gallery-v1.3.0-kanji-reading-before-after.png" alt="v1.2.1과 v1.3.0 한자 읽기 카드 비교" style="display:block;width:100%;height:auto;border:0;">
+    <div style="margin-top:10px;color:#59645e;font-size:13px;text-align:center;">v1.2.1과 v1.3.0의 한자 읽기 카드 비교</div>
   </div>
 
-  <div style="margin-top:28px;padding:34px 28px;color:#fff;background:#15201b;border-left:8px solid #8ee6b1;">
-    <div style="color:#8ee6b1;font-size:12px;font-weight:800;letter-spacing:.1em;">MOBILE SUPPORT</div>
-    <div style="margin-top:9px;font-size:25px;font-weight:900;line-height:1.3;letter-spacing:-.04em;">AnkiDroid 안내와 선택형 답장</div>
-    <p style="margin:18px 0 0;color:#d9dedb;">AnkiDroid 구형 학습 화면에서 일부 기능을 쓸 수 없으면 지원되는 새 학습 화면으로 옮기는 안내를 보여 줌.</p>
-    <p style="margin:12px 0 0;color:#d9dedb;">iOS는 무음 모드에서도 카드 음성이 나오도록 기본 재생 방식을 바꿨음. 같은 문제가 다시 들어오면 기기와 카드별로 다시 확인함.</p>
-    <p style="margin:12px 0 0;color:#d9dedb;">오류 제보는 계속 익명으로 보낼 수 있음. 답장을 원할 때만 연락처와 답장 동의를 선택해서 보낼 수 있음.</p>
+  <div style="margin-top:30px;padding:30px 28px;background:#101512;color:#fff;border-left:9px solid #8ee6b1;">
+    <div style="color:#8ee6b1;font-size:13px;font-weight:900;letter-spacing:.08em;">덱 구성</div>
+    <div style="margin-top:9px;font-size:24px;font-weight:900;line-height:1.35;">기본 덱과 한자 확장을 따로 배포함</div>
+    <p style="margin:16px 0 0;color:#d9dedb;">기본 APKG는 13,903노트·19,921카드임. 한자 빌더 결과는 4,674노트·4,674카드이고, 둘을 합치면 18,577노트·24,595카드가 됨.</p>
+    <p style="margin:12px 0 0;color:#d9dedb;">기본 덱에는 어휘·음성·종합 실전·참조표만 들어감. 한자는 빌더가 사용자가 고른 지원 PDF 2개로 개인용 APKG를 만듦. 출판사 PDF 원문·페이지 이미지·추출 원문은 공개 파일에 넣지 않음.</p>
   </div>
 
-  <div style="padding:44px 8px 8px;">
-    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">iPhone·iPad 카드 설정이 초기화됐다면</div>
-    <p style="margin:16px 0 0;">재생·후리가나 같은 카드 설정이 초기화됐다는 익명 제보 1건이 있었음. JLPT MAX가 설정을 한꺼번에 지우는 동작은 확인되지 않았고, 기기 저장 공간이 매우 부족할 때 iOS가 카드 화면의 저장값을 정리했을 가능성을 가장 높게 보고 있음. 당시 기기 상태를 추가로 확인할 수 없어 원인은 아직 확정하지 않았음.</p>
-    <p style="margin:12px 0 0;"><strong>설정 → 일반 → iPhone/iPad 저장 공간</strong>에서 여유 공간을 확인하고, 공간을 확보한 뒤 카드 설정을 다시 저장하면 됨. 문제가 반복되면 남은 용량, iOS·AnkiMobile 버전과 앱 재실행 전후 중 언제 발생했는지를 오류 제보에 함께 적어주면 됨.</p>
-    <p style="margin:12px 0 0;color:#4e5852;">카드 화면 설정은 Anki의 학습 기록·카드 데이터와 별도로 저장되므로 학습 기록이나 카드가 초기화되는 현상은 아님.</p>
+  <div style="padding:46px 8px 8px;">
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:27px;font-weight:900;letter-spacing:-.045em;">카드가 더 또렷하고, 음성은 더 빨리 시작</div>
+    <ul style="margin:17px 0 0;padding-left:23px;">
+      <li>한자 읽기·부수·획수, 발음별 단어와 비슷한 한자의 크기·간격을 모바일 폭에 맞게 정리</li>
+      <li>단어 고저 악센트의 읽기를 키우고 긴 루비·괄호 읽기의 간격 보정</li>
+      <li>글꼴과 표시 설정을 첫 화면 전에 적용하고 학습 중 글꼴을 고정해 깜빡임·글자 이동 감소</li>
+      <li>디코딩된 음성의 첫 유효 소리 직전부터 재생해 앞쪽 무음 건너뜀</li>
+      <li>같은 뜻의 예문은 한 영역에 모으고 다른 뜻의 예문과 분리</li>
+    </ul>
+    <p style="margin:16px 0 0;"><strong>iPhone·iPad</strong>는 무음 모드에서도 카드 음성을 재생함. 카드 설정의 <strong>다른 앱 음악과 함께 재생</strong>을 직접 켠 경우에만 다른 앱 음악과 섞어 재생하고, 선택값은 저장함.</p>
   </div>
 
-  <div style="padding:44px 8px 28px;">
-    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:25px;font-weight:900;letter-spacing:-.04em;">실제 배포 파일로 두 가지 업데이트 확인</div>
-    <p style="margin:16px 0 0;">빈 profile에 새로 가져오기 1회와 v1.2.1에서 v1.3.0으로 업데이트 가져오기 1회를 각각 확인했음. 기존 어휘·실전 문제·참조표의 학습 기록은 이어지고, 새 한자 쓰기 카드는 새 학습 항목으로 시작함.</p>
-    <p style="margin:20px 0 0;color:#4e5852;">실물 iPhone·iPad와 Android의 모든 조합은 이번 정식판에서 따로 전수 검증하지 않았음. 실제 APKG import와 모바일 폭 HTML 렌더링을 확인했음.</p>
+  <div style="margin-top:28px;padding:32px 28px;color:#fff;background:#15201b;border-left:9px solid #8ee6b1;">
+    <div style="color:#8ee6b1;font-size:13px;font-weight:900;letter-spacing:.08em;">모바일 지원·오류 제보</div>
+    <div style="margin-top:8px;font-size:25px;font-weight:900;line-height:1.35;">AnkiDroid 안내와 선택형 답장</div>
+    <p style="margin:17px 0 0;color:#d9dedb;">AnkiDroid 구형 학습 화면에서 카드 저장·오디오·입력이 제한되면 지원되는 새 학습 화면으로 옮기는 안내를 표시함.</p>
+    <p style="margin:12px 0 0;color:#d9dedb;">오류 제보는 계속 익명이 기본임. 답장을 원하는 경우에만 동의 뒤 연락처 입력란이 나타남. 연락처는 제보와 분리해 암호화하고 수동 답장에만 쓰며 최대 90일 뒤 삭제함. 공개 처리 기록에는 제보 원문·연락처·기기 식별값을 넣지 않음.</p>
   </div>
 
-  <div style="margin-top:40px;padding:32px 20px;text-align:center;color:#fff;background:#101512;border-top:8px solid #d8ff62;border-bottom:1px solid #2f3933;">
-    <div style="font-size:25px;font-weight:900;letter-spacing:-.04em;">기존 덱에서 v1.3.0으로 업데이트하기</div>
-    <p style="max-width:590px;margin:12px auto 18px;color:#d9dedb;">기존 덱을 삭제하지 말고 가져온 뒤, 아래 세 값을 확인하고 전체 동기화하면 됨.</p>
-    <div style="max-width:590px;margin:0 auto 22px;padding:18px 20px;text-align:left;color:#1b211d;background:#f4f7f5;border-left:8px solid #d8ff62;">
-      <strong>학습 진행 상태 가져오기: 끄기</strong><br>
-      <strong>기존 노트 업데이트: 항상</strong><br>
-      <strong>노트 유형 병합: 켜기</strong><br>
-      <span style="color:#4e5852;">가져오기가 끝나면 모든 기기에서 전체 동기화</span>
-    </div>
-    <div style="max-width:590px;margin:0 auto 22px;padding:18px 20px;text-align:left;color:#101512;background:#d8ff62;border-left:8px solid #8ee6b1;">
-      <strong style="font-size:19px;">써보고 괜찮았다면 개추 + GitHub Star 부탁함</strong><br>
+  <div style="padding:46px 8px 8px;">
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:27px;font-weight:900;letter-spacing:-.045em;">뜻·예문·읽기 오류도 함께 교정</div>
+    <p style="margin:16px 0 0;"><strong>掛かる, 沸騰, 細かい, 冷やす, 断る, 改札, 定員, 遠慮</strong>의 뜻과 예문 연결을 다시 검토했음.</p>
+    <p style="margin:12px 0 0;"><strong>長い, 直る, 改札, 帯, 合流, いらっしゃる, 積む, 負う, 遥か, 開拓, 食い込む, 連携, 丘陵, くまなく, 中毒</strong>의 겹치거나 부족한 예문도 정리했음.</p>
+    <p style="margin:12px 0 0;">届ける 루비 경계, 잘못 생성된 何つ→幾つ, 씨앗 種→たね, 通っている→かよっている, 噛み癖→かみぐせ, 条件·設定·了承의 읽기, 打診 예문 번역과 이미지 한자 4건을 고쳤음. iOS 재생 제보 6건도 새 기본 재생 방식으로 해결함.</p>
+    <p style="margin:12px 0 0;">현행 표기가 맞거나 공개본에서 재현되지 않은 이번 7건과 이전 25건은 이유를 공개함. 예전에 기각했던 가나 보조 카드 제보 81건은 이번에 카드 유형을 없애 해결했으므로 기각 합계에서 뺐음. 사전 버튼을 새 창으로 여는 요청 1건은 기능 변경이 필요해 다음 릴리스 검토로 남김.</p>
+  </div>
+
+  <div style="margin-top:28px;padding:30px 28px;background:#f4f7f5;border-left:9px solid #94a099;">
+    <div style="font-size:24px;font-weight:900;line-height:1.35;letter-spacing:-.04em;">iPhone·iPad 카드 설정이 초기화됐다면</div>
+    <p style="margin:16px 0 0;">재생·후리가나 설정이 초기화됐다는 익명 제보 1건이 있었음. JLPT MAX가 설정을 한꺼번에 지우는 동작은 확인되지 않았고, 저장 공간이 매우 부족할 때 iOS가 카드 화면 저장값을 정리했을 가능성을 보고 있음. 당시 상태를 추가 확인할 수 없어 원인은 확정하지 못했음.</p>
+    <p style="margin:12px 0 0;"><strong>설정 → 일반 → iPhone/iPad 저장 공간</strong>을 확인하고 카드 설정을 다시 저장하면 됨. 반복되면 남은 용량, iOS·AnkiMobile 버전과 앱 재실행 전후 중 언제 생겼는지를 제보해 주면 됨. 이 설정은 Anki 학습 기록과 별도라 학습 기록이 초기화되는 현상은 아님.</p>
+  </div>
+
+  <div style="padding:46px 8px 8px;">
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:27px;font-weight:900;letter-spacing:-.045em;">눈에 안 보이는 안정성 변경</div>
+    <p style="margin:16px 0 0;">사용 통계를 켠 경우 업데이트 공지 이벤트가 통신 실패 뒤 다시 전송되고, 대기 중인 같은 이벤트는 한 건으로 합쳐짐. 버전별 활동과 익명 설치 수 추정도 추가했음. 이 변경이 사용 통계를 새로 켜지는 않으며 기존 선택을 그대로 따름.</p>
+    <p style="margin:12px 0 0;">콘텐츠·미디어·APKG를 각각 해시로 묶고 중단된 릴리즈 준비를 같은 지점에서 이어가도록 바꿨음. 사용자가 받는 APKG는 새 설치와 업데이트 검사를 통과한 바로 그 파일임.</p>
+  </div>
+
+  <div style="margin-top:28px;padding:32px 28px;color:#fff;background:#101512;border-left:9px solid #d8ff62;">
+    <div style="color:#d8ff62;font-size:13px;font-weight:900;letter-spacing:.08em;">실제 후보 파일 검증</div>
+    <ul style="margin:16px 0 0;padding-left:23px;color:#d9dedb;">
+      <li>빈 profile 새 가져오기 1회 통과</li>
+      <li>v1.2.1 → v1.3.0 업데이트 가져오기 1회 통과</li>
+      <li>기존 공통 카드 22,258장의 ID·일정·복습 기록 유지 확인</li>
+      <li>기존 노트 16,240개 갱신, 새 한자 쓰기 2,337개 추가</li>
+      <li>가나 보조 카드 144개 제거 대상 확인</li>
+      <li>원본 음성 18,434개는 이전 승인본과 byte 단위로 동일, TTS 새 합성 0회</li>
+    </ul>
+    <p style="margin:16px 0 0;color:#aeb8b2;">실물 iPhone·iPad와 Android의 모든 기기·앱 버전 조합은 이번 정식판에서 따로 전수 검증하지 않았음. 실제 배포 APKG의 새 설치·업데이트, 공개 기본 덱과 한자 빌더 구조, 해시와 390×844 모바일 폭 렌더링을 확인했음.</p>
+  </div>
+
+  <div style="margin-top:42px;padding:34px 22px;text-align:center;color:#fff;background:#101512;border-top:9px solid #d8ff62;border-bottom:1px solid #2f3933;">
+    <div style="font-size:27px;font-weight:900;letter-spacing:-.045em;">기존 덱에서 v1.3.0으로 업데이트하기</div>
+    <p style="max-width:600px;margin:13px auto 20px;color:#d9dedb;">덱을 지우지 말고 ‘항상’으로 업데이트한 뒤, 가나 보조 카드를 빈 카드 도구로 정리하고 전체 동기화하면 됨.</p>
+    <div style="max-width:600px;margin:0 auto 23px;padding:19px 21px;text-align:left;color:#101512;background:#d8ff62;border-left:9px solid #8ee6b1;">
+      <strong style="font-size:20px;">써보고 괜찮았다면 개추 + GitHub Star 부탁함</strong><br>
       <span style="color:#354039;">글 아래 개추 한 번과 GitHub Star가 다음 오류 교정과 기기별 점검을 이어가는 데 큰 도움이 됨.</span>
     </div>
-    <div style="max-width:360px;margin:0 auto;">
-      <div style="margin:10px 0;padding:14px 18px;background:#d8ff62;border:1px solid #d8ff62;"><a href="https://truthyblue.github.io/jlpt-max-deck/update.html" target="_blank" rel="noopener noreferrer" style="color:#101512;font-weight:900;line-height:1.5;text-decoration:none;">업데이트 방법 자세히 보기 →</a></div>
-      <div style="margin:10px 0;padding:14px 18px;background:#101512;border:1px solid #d8ff62;"><a href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v1.3.0" target="_blank" rel="noopener noreferrer" style="color:#d8ff62;font-weight:900;line-height:1.5;text-decoration:none;">v1.3.0 다운로드 · GitHub Release →</a></div>
-      <div style="margin:10px 0;padding:14px 18px;background:#d8ff62;border:1px solid #d8ff62;"><a href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer" style="color:#101512;font-weight:900;line-height:1.5;text-decoration:none;">★ GitHub에서 Star →</a></div>
+    <div style="max-width:390px;margin:0 auto;">
+      <div style="margin:10px 0;padding:15px 18px;background:#d8ff62;border:1px solid #d8ff62;"><a href="https://truthyblue.github.io/jlpt-max-deck/update.html" target="_blank" rel="noopener noreferrer" style="color:#101512;font-weight:900;line-height:1.5;text-decoration:none;">업데이트 방법 자세히 보기 →</a></div>
+      <div style="margin:10px 0;padding:15px 18px;background:#101512;border:1px solid #d8ff62;"><a href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v1.3.0" target="_blank" rel="noopener noreferrer" style="color:#d8ff62;font-weight:900;line-height:1.5;text-decoration:none;">v1.3.0 다운로드 · GitHub Release →</a></div>
+      <div style="margin:10px 0;padding:15px 18px;background:#d8ff62;border:1px solid #d8ff62;"><a href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer" style="color:#101512;font-weight:900;line-height:1.5;text-decoration:none;">★ GitHub에서 Star →</a></div>
     </div>
   </div>
 </div>

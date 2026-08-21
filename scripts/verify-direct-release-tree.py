@@ -104,9 +104,11 @@ def _verify_pin(pin: dict[str, object]) -> None:
     kanji = pin.get("kanji_builder")
     if not isinstance(core, dict) or not isinstance(kanji, dict):
         _fail("direct-release logical metadata is missing")
+    parsed_version = tuple(int(part) for part in version.split("."))
+    expected_core_cards = 19_921 if parsed_version >= (1, 3, 0) else 20_065
     if (
         core.get("notes") != 13_903
-        or core.get("cards") != 20_065
+        or core.get("cards") != expected_core_cards
         or not isinstance(core.get("media_files"), int)
         or int(core["media_files"]) <= 0
         or kanji.get("expected_pdf_count") != 2
@@ -115,7 +117,7 @@ def _verify_pin(pin: dict[str, object]) -> None:
         or kanji.get("output_apkg") != names["kanji_addon"]
     ):
         _fail("direct-release logical counts changed")
-    if tuple(int(part) for part in version.split(".")) >= (1, 3, 0) and (
+    if parsed_version >= (1, 3, 0) and (
         kanji.get("expected_kanji_addon_notes") != EXPECTED_KANJI_ADDON_NOTES
         or kanji.get("expected_kanji_addon_cards") != EXPECTED_KANJI_ADDON_CARDS
     ):
