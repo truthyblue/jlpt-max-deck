@@ -55,6 +55,14 @@ TEST_LIFECYCLE = {
                 "family-count tests can pass while an older field list rejects the accepted private APKG before public artifacts are prepared"
             ),
         },
+        "DirectReleaseRepositoryTest.test_release_pin_matches_current_logical_counts": {
+            "protected_contract": (
+                "a self-bound public pin keeps stable deck counts while allowing the exact media inventory to change with a new release"
+            ),
+            "not_subsumed_by": (
+                "artifact filename and builder tests do not detect a verifier that freezes the previous release's media count"
+            ),
+        },
         "DirectReleaseRepositoryTest.test_v130_private_kanji_families_leave_core_vocabulary_only": {
             "protected_contract": (
                 "a private vocabulary plus reading and writing package produces a vocabulary-only public core and a two-family personal addon"
@@ -667,7 +675,15 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         verifier = load_repository_verifier()
 
         verifier._verify_pin(pin)
-        self.assertEqual(pin["core"]["media_files"], 18_438)
+        changed_media = json.loads(json.dumps(pin))
+        changed_media["core"]["media_files"] -= 1
+        changed_payload = {
+            key: value
+            for key, value in changed_media.items()
+            if key != "payload_hash"
+        }
+        changed_media["payload_hash"] = sha256_json(changed_payload)
+        verifier._verify_pin(changed_media)
 
     def test_runtime_is_only_the_optional_kanji_builder(self) -> None:
         self.assertEqual(

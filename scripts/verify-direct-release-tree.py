@@ -107,7 +107,8 @@ def _verify_pin(pin: dict[str, object]) -> None:
     if (
         core.get("notes") != 13_903
         or core.get("cards") != 20_065
-        or core.get("media_files") != 18_438
+        or not isinstance(core.get("media_files"), int)
+        or int(core["media_files"]) <= 0
         or kanji.get("expected_pdf_count") != 2
         or kanji.get("expected_kanji_notes") != 2_337
         or kanji.get("expected_vector_glyphs") != 14
