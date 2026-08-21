@@ -524,10 +524,10 @@
           <figcaption>실제 한자 답안면 · <span lang="ja">今</span> · 연결 어휘 3개</figcaption>
         </figure>
         <div class="kanji-details reveal">
-          <div class="kanji-total"><strong>{{ product.deck.kanji_notes | number }}</strong><span>일상무따 한자 확장 노트</span></div>
+          <div class="kanji-total"><strong>{{ product.deck.kanji_addon_notes | number }}</strong><span>일상무따 읽기·쓰기 노트</span></div>
           <ol class="kanji-feature-list">
             <li><span>01</span><div><h3>한국어 뜻과 일본어 읽기</h3><p><span lang="ja">今</span>을 ‘지금 금’으로 익히고 음독 <span lang="ja">コン·キン</span>, 훈독 <span lang="ja">いま</span>를 함께 봅니다.</p></div></li>
-            <li><span>02</span><div><h3>부수와 획수까지 한 번에</h3><p>글자 형태를 익힐 때 필요한 부수와 획수를 답안면에 함께 정리했습니다.</p></div></li>
+            <li><span>02</span><div><h3>읽고, 획순대로 직접 쓰기</h3><p>한자 {{ product.deck.kanji_characters | number }}개마다 읽기 카드와 쓰기 카드를 따로 제공해 뜻·읽기·부수·획수와 쓰기 순서를 함께 익힙니다.</p></div></li>
             <li><span>03</span><div><h3>아는 한자를 실제 단어로 연결</h3><p><span lang="ja">今月 · 今度 · 今週</span>처럼 기본 덱의 선별 어휘를 읽기·뜻·급수와 함께 이어서 복습하고, 단어를 눌러 음성도 들을 수 있습니다.</p></div></li>
           </ol>
           <div class="kanji-build-route">
@@ -551,7 +551,7 @@
     <section class="section deck-map-section" id="start">
       <div class="section-heading reveal">
         <h2>기본 덱으로<br>바로 시작하세요.</h2>
-        <p>기본 덱에는 어휘·음성·실전 문제·참조표가 모두 들어 있습니다. 일상무따 한자 {{ product.deck.kanji_notes | number }}개는 필요할 때만 별도 선택 확장으로 추가합니다.</p>
+        <p>기본 덱에는 어휘·음성·실전 문제·참조표가 모두 들어 있습니다. 일상무따 한자 {{ product.deck.kanji_characters | number }}개의 읽기·쓰기 카드는 필요할 때만 별도 선택 확장으로 추가합니다.</p>
       </div>
       <div class="content-grid basic-content-grid">
         <article class="content-card accent-lime reveal"><span class="card-index">01</span><p class="jp-label" lang="ja">語彙</p><strong>{{ product.deck.vocabulary_notes | number }}</strong><h3>선별 어휘</h3><p>예문과 학습 정보를 필요에 따라 붙인 어휘 노트.</p></article>
@@ -561,7 +561,7 @@
       <div class="media-ribbon reveal"><span>{{ product.deck.core_notes | number }} 기본 노트</span><div class="ribbon-track" aria-hidden="true"><i></i><i></i></div><span>{{ product.deck.core_cards | number }} 기본 카드</span><span>{{ product.deck.core_media | number }} 기본 미디어</span></div>
       <div class="optional-addon-row reveal">
         <span>별도 선택 확장</span>
-        <strong>{{ product.deck.kanji_notes | number }}개 일상무따 한자</strong>
+        <strong>{{ product.deck.kanji_characters | number }}개 · 읽기·쓰기 {{ product.deck.kanji_addon_cards | number }}장</strong>
         <p>공식 PDF 2개를 고르면 더블클릭 빌더가 개인용 덱을 완성합니다.</p>
         <a href="kanji.html">한자 확장 만들기 <span aria-hidden="true">→</span></a>
       </div>

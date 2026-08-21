@@ -7,7 +7,7 @@ v1.2.1은 단어 고저 악센트의 끝 방향을 표시하고, 카드를 넘�
 ## v1.2.0 사용자의 업데이트 절차
 
 1. 모든 기기의 Anki 동기화를 끝내거나 컬렉션 백업을 확인합니다.
-2. `{{ release.artifacts.core.filename }}`를 기존 덱을 삭제하지 않고 가져옵니다.
+2. `JLPT-MAX-Deck-1.2.1.apkg`를 기존 덱을 삭제하지 않고 가져옵니다.
 3. **학습 진행 상태 가져오기 → 끄기**, **기존 노트 업데이트 → 새 버전일 때**,
    **노트 유형 병합 → 켜기**를 선택합니다.
 
@@ -80,8 +80,8 @@ v1.2.1 시험판을 사용 중이면 정식판 알림을 받을 수 없으므로
 
 ## 유지되는 것과 검증
 
-- 기본 덱 노트 {{ product.deck.core_notes | number }}개, 카드 {{ product.deck.core_cards | number }}개, 미디어 {{ product.deck.core_media | number }}개
-- 전체 구성 노트 {{ product.deck.total_notes | number }}개, 카드 {{ product.deck.total_cards | number }}개
+- 기본 덱 노트 13,903개, 카드 20,065개, 미디어 18,438개
+- 전체 구성 노트 16,240개, 카드 22,402개
 - 기존 GUID, 노트 유형 ID, 학습 기록과 스케줄
 - 음성 18,435개 기존 바이트 재사용, 새 합성 0개
 - v1.2.0 컬렉션 업데이트 뒤 새 노트 0개·중복 0개·충돌 0개
@@ -93,10 +93,10 @@ v1.2.1 시험판을 사용 중이면 정식판 알림을 받을 수 없으므로
 
 | 파일 | 크기 | SHA-256 |
 | --- | ---: | --- |
-| `{{ release.artifacts.core.filename }}` | {{ release.artifacts.core.bytes | number }} bytes | `{{ release.artifacts.core.sha256 }}` |
-| `{{ release.artifacts.kanji_builder.filename }}` | {{ release.artifacts.kanji_builder.bytes | number }} bytes | `{{ release.artifacts.kanji_builder.sha256 }}` |
-| `{{ release.artifacts.checksums.filename }}` | {{ release.artifacts.checksums.bytes | number }} bytes | `{{ release.artifacts.checksums.sha256 }}` |
+| `JLPT-MAX-Deck-1.2.1.apkg` | 901,932,089 bytes | `ab7e97f1677c0e182c6c3dca19d19607816479c1ff0e2c0bfd42e517213d3ec2` |
+| `JLPT-MAX-kanji-builder-1.2.1.zip` | 840,514 bytes | `f50838a6d24afa902eef7a0cfce81d4da339e5e50fe70fbf142dd9060d9fb795` |
+| `SHA256SUMS` | 190 bytes | `e2022c576a4f113ac0e126f441b480706685de3737033e3e2efd2ac3f1a96daf` |
 
 전체 private APKG의 SHA-256은
-`{{ release_pin.full_source.sha256 }}`입니다.
+`409bd3139bedc5085a44e07179333c031b84bc76472cd8cf12717b115a7c7ffc`입니다.
 저장소와 Release에는 출판사 PDF·페이지 이미지·추출 원문을 넣지 않습니다.

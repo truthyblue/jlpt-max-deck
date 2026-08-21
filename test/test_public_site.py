@@ -613,6 +613,8 @@ class PublicSiteTests(unittest.TestCase):
             "일상무따 한자 확장",
             "초심자용 만들기 가이드",
             "한글 뜻이 든 완성본을 배포하지 않습니다",
+            "한자 2,337개의 읽기·쓰기 카드",
+            "읽기·쓰기 4,674장",
             "1권이 상권이고 2권이 하권입니다",
             "N3 어휘를 시작할 때 1권(상권)",
             "이미 N1을 공부하고 있다면 2권을 지금 시작하면 됩니다",
@@ -818,8 +820,9 @@ class PublicSiteTests(unittest.TestCase):
             "카드 일정 다시 잡기를 켜고",
             "하위 덱을 따로 누르지 않아도 됩니다",
             "1권이 상권이고 2권이 하권입니다",
-            "JLPT MAX덱::일상무따::상권",
-            "JLPT MAX덱::일상무따::하권",
+            "한자 2,337개마다 읽기 카드와 쓰기 카드",
+            "읽기 카드에서 뜻과 읽기를 익히고",
+            "쓰기 카드에서 획순을 따라 써 봅니다",
             "N3 어휘 + 일상무따 1권(상권)",
             "N2·N1 어휘 + 일상무따 2권(하권)",
             "이미 N1을 공부하고 있다면 2권 덱을 지금 시작하면 됩니다",
@@ -892,17 +895,18 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("업데이트한 뒤에는 실전 설정만 확인하세요", html)
         self.assertIn("음성 덱의 새 카드 수를 포함한 나머지 옵션은 지금 설정을 그대로 두세요", html)
         self.assertIn(
-            "기존 노트 업데이트</h3><span class=\"v2-state on\">표에 따라",
+            "기존 노트 업데이트</h3><span class=\"v2-state on\">항상",
             html,
         )
-        self.assertIn("v1.2.0</th><td><strong>새 버전일 때", html)
+        self.assertIn("v1.2.1</th><td><strong>항상", html)
+        self.assertIn("v1.2.0</th><td><strong>항상", html)
         self.assertIn("v1.1.x</th><td><strong>항상", html)
         self.assertIn("직접 수정한 공식 노트 필드도 덮어쓸 수 있으므로", html)
         self.assertIn("v1.1.x", html)
         self.assertIn("v1.0.x", html)
-        self.assertIn("v1.1.x의 뜻·예문 변경", html)
-        self.assertIn("v1.2.0 한자 확장은 그대로 쓸 수 있습니다", html)
-        self.assertIn("투명 SVG 렌더링과 새 일본어 글꼴", html)
+        self.assertIn("새 한자 읽기·쓰기 구조", html)
+        self.assertIn("기존 한자 확장은 v1.3.0 빌더로 다시 만듭니다", html)
+        self.assertIn("쓰기 순서가 포함된 카드 4,674장", html)
         self.assertIn("모든 기기에서 다시 전체 동기화합니다", html)
         self.assertNotIn("JLPT MAX덱 · 음성", html)
         self.assertNotIn("새 카드 0장", html)

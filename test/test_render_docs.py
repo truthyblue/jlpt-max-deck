@@ -1,7 +1,9 @@
 # pyright: reportMissingImports=false
 from __future__ import annotations
 
+import hashlib
 import importlib.util
+import json
 import re
 import unittest
 from pathlib import Path, PurePosixPath
@@ -18,6 +20,28 @@ if SPEC is None or SPEC.loader is None:
     raise RuntimeError("cannot load documentation renderer")
 RENDER = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(RENDER)
+
+
+TEST_LIFECYCLE = {
+    "test_contracts": {
+        "DocumentationRenderTest.test_current_kanji_counts_are_semantically_separate": {
+            "protected_contract": (
+                "current public copy distinguishes 2,337 source characters from the 4,674 reading and writing addon notes and cards in the v1.3.0 physical release"
+            ),
+            "not_subsumed_by": (
+                "package count tests can pass while learner documentation labels character count as note or card count"
+            ),
+        },
+        "DocumentationRenderTest.test_historical_v12_release_outputs_are_byte_identical": {
+            "protected_contract": (
+                "rendering current documentation data cannot rewrite the published v1.2.0 or v1.2.1 release evidence"
+            ),
+            "not_subsumed_by": (
+                "spot checks for old filenames and counts do not detect unrelated byte changes or a current release hash leaking into historical notes"
+            ),
+        },
+    }
+}
 
 
 class DocumentationRenderTest(unittest.TestCase):
@@ -48,6 +72,9 @@ class DocumentationRenderTest(unittest.TestCase):
         ),
         PurePosixPath("docs/releases/v1.2.1.md.j2"): PurePosixPath(
             "docs/releases/v1.2.1.md"
+        ),
+        PurePosixPath("docs/releases/v1.3.0.md.j2"): PurePosixPath(
+            "docs/releases/v1.3.0.md"
         ),
         PurePosixPath("docs/troubleshooting.md.j2"): PurePosixPath(
             "docs/troubleshooting.md"
@@ -213,6 +240,30 @@ class DocumentationRenderTest(unittest.TestCase):
         )
         self.assertNotIn("JLPT-MAX-Deck-1.2.1.apkg", v120)
 
+    def test_historical_v12_release_outputs_are_byte_identical(self) -> None:
+        environment = RENDER.create_environment(ROOT)
+        context = RENDER.load_context(ROOT)
+        expected = {
+            "docs/releases/v1.2.0.md.j2": (
+                ROOT / "docs/releases/v1.2.0.md",
+                "410ab3d987059bdd97422b474b91b76ea6e3d04b46e54b08820f524978d53e92",
+            ),
+            "docs/releases/v1.2.1.md.j2": (
+                ROOT / "docs/releases/v1.2.1.md",
+                "5b3070e28ba23f10d9e34f9221637da4c7c5affbb7c8eb70423456151de54f36",
+            ),
+        }
+        for template, (output, expected_sha256) in expected.items():
+            rendered = RENDER.normalize_final_newline(
+                environment.get_template(template).render(**context)
+            )
+            with self.subTest(template=template):
+                self.assertEqual(rendered, output.read_text(encoding="utf-8"))
+                self.assertEqual(
+                    hashlib.sha256(rendered.encode("utf-8")).hexdigest(),
+                    expected_sha256,
+                )
+
     def test_final_newline_normalization_is_deterministic(self) -> None:
         for source in ("value", "value\n", "value\n\n", "value\r\n"):
             with self.subTest(source=repr(source)):
@@ -285,6 +336,9 @@ class DocumentationRenderTest(unittest.TestCase):
                 self.assertNotIn(stale, sources)
         for reference in (
             "product.deck.vocabulary_notes",
+            "product.deck.kanji_characters",
+            "product.deck.kanji_addon_notes",
+            "product.deck.kanji_addon_cards",
             "product.deck.core_notes",
             "product.deck.core_cards",
             "product.deck.core_media",
@@ -299,6 +353,50 @@ class DocumentationRenderTest(unittest.TestCase):
         self.assertIn("덱 카드의 최신 버전 확인", privacy)
         self.assertIn("PDF·카드 내용·학습", privacy)
         self.assertIn("접속 IP와 브라우저", privacy)
+
+    def test_current_kanji_counts_are_semantically_separate(self) -> None:
+        product = json.loads(
+            (ROOT / "docs-src/data/product.json").read_text(encoding="utf-8")
+        )
+        deck = product["deck"]
+        self.assertNotIn("kanji_notes", deck)
+        self.assertEqual(deck["kanji_characters"], 2_337)
+        self.assertEqual(deck["kanji_addon_notes"], 4_674)
+        self.assertEqual(deck["kanji_addon_cards"], 4_674)
+        self.assertEqual(
+            deck["total_notes"],
+            deck["core_notes"] + deck["kanji_addon_notes"],
+        )
+        self.assertEqual(
+            deck["total_cards"],
+            deck["core_cards"] + deck["kanji_addon_cards"],
+        )
+        self.assertEqual(
+            deck["total_media"],
+            deck["core_media"] + deck["static_media"],
+        )
+
+        current_templates = (
+            "README.md.j2",
+            "docs/anki.md.j2",
+            "docs/build.md.j2",
+            "site/index.html.j2",
+            "site/kanji.html.j2",
+            "site/study-guide.html.j2",
+            "site/update.html.j2",
+        )
+        current_sources = "\n".join(
+            (ROOT / "docs-src" / template).read_text(encoding="utf-8")
+            for template in current_templates
+        )
+        self.assertNotIn("product.deck.kanji_notes", current_sources)
+        for reference in (
+            "product.deck.kanji_characters",
+            "product.deck.kanji_addon_notes",
+            "product.deck.kanji_addon_cards",
+        ):
+            with self.subTest(reference=reference):
+                self.assertIn(reference, current_sources)
 
     def test_current_entry_guides_do_not_repeat_retired_update_or_filter_flows(
         self,
@@ -320,24 +418,24 @@ class DocumentationRenderTest(unittest.TestCase):
     ) -> None:
         current_sources = (
             ROOT / "docs-src/docs/anki.md.j2",
-            ROOT / "docs-src/docs/releases/v1.2.1.md.j2",
             ROOT / "docs-src/site/update.html.j2",
         )
         for path in current_sources:
             content = path.read_text(encoding="utf-8")
             with self.subTest(source=path.relative_to(ROOT).as_posix()):
-                self.assertIn("새 버전일 때", content)
+                self.assertIn("v1.3.0", content)
+                self.assertIn("v1.2.1", content)
                 self.assertIn("v1.2.0", content)
                 self.assertIn("항상", content)
                 self.assertIn("v1.1.x", content)
                 self.assertIn("v1.0.x", content)
-                self.assertIn("v1.1.x의 뜻·예문 변경", content)
+                self.assertIn("전체 동기화", content)
 
         anki_guide = current_sources[0].read_text(encoding="utf-8")
-        update_page = current_sources[2].read_text(encoding="utf-8")
-        self.assertIn("기존 노트 업데이트: 아래 표에 따라 선택", anki_guide)
-        self.assertIn(">새 버전일 때</strong>", update_page)
-        self.assertIn("v1.2.0 한자 확장은 그대로 쓸 수 있습니다", update_page)
+        update_page = current_sources[1].read_text(encoding="utf-8")
+        self.assertIn("기존 노트 업데이트: 항상", anki_guide)
+        self.assertNotIn(">새 버전일 때</strong>", update_page)
+        self.assertIn("기존 한자 확장은 v1.3.0 빌더로 다시 만듭니다", update_page)
 
         historical_minor_release = (
             ROOT / "docs-src/docs/releases/v1.2.0.md.j2"

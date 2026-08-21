@@ -1,7 +1,8 @@
 # 선택형 일상무따 한자 확장 만들기
 
 이 가이드는 `JLPT MAX덱::일상무따` 한자
-{{ product.deck.kanji_notes | number }}개를 별도 선택 확장으로 추가하는 과정을
+{{ product.deck.kanji_characters | number }}개의 읽기·쓰기 카드
+{{ product.deck.kanji_addon_cards | number }}장을 별도 선택 확장으로 추가하는 과정을
 설명합니다.
 
 [초심자용 웹 가이드]({{ product.site_url }}/kanji.html) · [README](../README.md) ·
@@ -78,14 +79,15 @@ macOS:
 
 Anki에 넣을 파일은 이름이 `.apkg`로 끝나는 첫 번째 파일입니다. 리포트의
 `status`가 `passed`, `unresolved`가 `0`인지 확인하세요. 빌더는 한자
-{{ product.deck.kanji_notes | number }}개와 이미지로 복원하는 자형
+{{ product.deck.kanji_characters | number }}개의 읽기·쓰기 노트
+{{ product.deck.kanji_addon_notes | number }}개와 이미지로 복원하는 자형
 {{ product.deck.static_media }}개를 모두 검증한 뒤에만 APKG를 냅니다.
 
 ## 4. Anki에 추가
 
 1. `{{ release.artifacts.core.filename }}`를 먼저 가져옵니다.
 2. 생성된 `JLPT-MAX-kanji-addon-{{ release.version }}.apkg`를 같은 컬렉션에 가져옵니다.
-3. `JLPT MAX덱::일상무따::상권`과 `JLPT MAX덱::일상무따::하권`을 확인합니다.
+3. `JLPT MAX덱::일상무따` 아래의 읽기·쓰기 덱을 확인합니다.
 4. 합산 수량이 노트 {{ product.deck.total_notes | number }}개, 카드
    {{ product.deck.total_cards | number }}개, 미디어 {{ product.deck.total_media | number }}개인지 확인합니다.
 
