@@ -8,11 +8,15 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from direct_release_contract import (  # noqa: E402
+    EXPECTED_KANJI_ADDON_CARDS,
+    EXPECTED_KANJI_ADDON_NOTES,
     DirectReleaseContractError,
     EXPECTED_KANJI_NOTES,
     EXPECTED_KANJI_VECTOR_GLYPHS,
     KANJI_BUILDER_EXECUTABLES,
     KANJI_FIELDS,
+    PRIVATE_KANJI_DECK_ROOTS,
+    PRIVATE_KANJI_NOTETYPE_NAMES,
     POLICY_VERSION,
     SCHEMA_VERSION,
     kanji_builder_archive_path,
@@ -23,7 +27,39 @@ from direct_release_contract import (  # noqa: E402
 )
 
 
+TEST_LIFECYCLE = {
+    "test_contracts": {
+        "DirectReleaseContractTest.test_v130_private_families_and_personal_addon_counts_are_explicit": {
+            "protected_contract": (
+                "the public core excludes both private kanji families while the personal builder closes all 4,674 reading and writing cards"
+            ),
+            "not_subsumed_by": (
+                "release-name and skeleton-manifest tests cover one reading family and cannot detect writing cards leaking into the public core"
+            ),
+        },
+    }
+}
+
+
 class DirectReleaseContractTest(unittest.TestCase):
+    def test_v130_private_families_and_personal_addon_counts_are_explicit(self) -> None:
+        self.assertEqual(
+            PRIVATE_KANJI_NOTETYPE_NAMES,
+            (
+                "JLPT MAX덱 일상무따",
+                "JLPT MAX덱 일상무따 쓰기",
+            ),
+        )
+        self.assertEqual(
+            PRIVATE_KANJI_DECK_ROOTS,
+            (
+                "JLPT MAX덱::일상무따",
+                "JLPT MAX덱::한자",
+            ),
+        )
+        self.assertEqual(EXPECTED_KANJI_ADDON_NOTES, 4_674)
+        self.assertEqual(EXPECTED_KANJI_ADDON_CARDS, 4_674)
+
     def test_release_names_separate_core_and_optional_kanji(self) -> None:
         names = release_filenames("1.0.1")
         self.assertEqual(names["core_apkg"], "JLPT-MAX-Deck-1.0.1.apkg")

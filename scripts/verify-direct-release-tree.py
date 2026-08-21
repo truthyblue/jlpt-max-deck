@@ -14,6 +14,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from direct_release_contract import (  # noqa: E402
+    EXPECTED_KANJI_ADDON_CARDS,
+    EXPECTED_KANJI_ADDON_NOTES,
     KANJI_BUILDER_FILES,
     POLICY_VERSION,
     SCHEMA_VERSION,
@@ -112,6 +114,11 @@ def _verify_pin(pin: dict[str, object]) -> None:
         or kanji.get("output_apkg") != names["kanji_addon"]
     ):
         _fail("direct-release logical counts changed")
+    if tuple(int(part) for part in version.split(".")) >= (1, 3, 0) and (
+        kanji.get("expected_kanji_addon_notes") != EXPECTED_KANJI_ADDON_NOTES
+        or kanji.get("expected_kanji_addon_cards") != EXPECTED_KANJI_ADDON_CARDS
+    ):
+        _fail("v1.3.0 kanji addon counts are not closed")
 
 
 def _tracked_files() -> tuple[str, ...]:

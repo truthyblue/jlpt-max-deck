@@ -119,7 +119,7 @@ try {
     if (Test-Path -LiteralPath $LogPath) {
         Remove-Item -LiteralPath $LogPath -Force
     }
-    Write-Host "2/3 PDF를 확인하고 한자 카드 2,337개를 만듭니다."
+    Write-Host "2/3 PDF를 확인하고 한자 2,337개의 읽기·쓰기 카드 4,674개를 만듭니다."
     Write-Host "창을 닫지 말고 기다려 주세요."
     Write-Host ""
 

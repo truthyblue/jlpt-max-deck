@@ -13,9 +13,25 @@ from typing import Any
 SCHEMA_VERSION = 2
 POLICY_VERSION = "direct-core-plus-kanji-addon-v1"
 KANJI_NOTETYPE_NAME = "JLPT MAX덱 일상무따"
-KANJI_DECK_ROOT = "JLPT MAX덱::일상무따"
 ROOT_DECK_NAME = "JLPT MAX덱"
+KANJI_DECK_ROOT = f"{ROOT_DECK_NAME}::일상무따"
+KANJI_WRITING_NOTETYPE_NAME = f"{KANJI_NOTETYPE_NAME} 쓰기"
+# The v1.3.0 private package has separate reading and writing kanji models
+# under the ``::한자`` deck family.  Older private packages used the builder
+# contract root directly, so both roots are excluded from the public core.
+PRIVATE_KANJI_NOTETYPE_NAMES = (
+    KANJI_NOTETYPE_NAME,
+    KANJI_WRITING_NOTETYPE_NAME,
+)
+PRIVATE_KANJI_DECK_ROOTS = (
+    KANJI_DECK_ROOT,
+    f"{ROOT_DECK_NAME}::한자",
+)
 EXPECTED_KANJI_NOTES = 2_337
+EXPECTED_KANJI_ADDON_NOTES = EXPECTED_KANJI_NOTES * len(
+    PRIVATE_KANJI_NOTETYPE_NAMES
+)
+EXPECTED_KANJI_ADDON_CARDS = EXPECTED_KANJI_ADDON_NOTES
 EXPECTED_KANJI_VECTOR_GLYPHS = 14
 KANJI_FIELDS = (
     "KanjiID",

@@ -21,12 +21,17 @@ from anki.exporting import AnkiPackageExporter
 from anki.import_export_pb2 import ImportAnkiPackageRequest
 
 from direct_release_contract import (
+    EXPECTED_KANJI_ADDON_CARDS,
+    EXPECTED_KANJI_ADDON_NOTES,
     EXPECTED_KANJI_NOTES,
     EXPECTED_KANJI_VECTOR_GLYPHS,
     KANJI_BUILDER_FILES,
     KANJI_DECK_ROOT,
     KANJI_FIELDS,
     KANJI_NOTETYPE_NAME,
+    KANJI_WRITING_NOTETYPE_NAME,
+    PRIVATE_KANJI_DECK_ROOTS,
+    PRIVATE_KANJI_NOTETYPE_NAMES,
     POLICY_VERSION,
     ROOT_DECK_NAME,
     SCHEMA_VERSION,
@@ -302,6 +307,67 @@ def _note_ids_for_notetype(collection: Collection, name: str) -> list[int]:
     return [int(value) for value in collection.find_notes(f"mid:{int(model['id'])}")]
 
 
+def _private_kanji_note_ids(
+    collection: Collection,
+) -> tuple[list[int], list[int]]:
+    """Return reading IDs and all private kanji IDs for the v1.3.0 source shape."""
+    ids_by_name = {
+        name: _note_ids_for_notetype(collection, name)
+        for name in PRIVATE_KANJI_NOTETYPE_NAMES
+    }
+    reading_ids = ids_by_name[KANJI_NOTETYPE_NAME]
+    writing_ids = ids_by_name[KANJI_WRITING_NOTETYPE_NAME]
+    for name, ids in ids_by_name.items():
+        if len(ids) != EXPECTED_KANJI_NOTES:
+            raise PublicReleaseError(
+                f"full APKG {name} count changed: {len(ids)}"
+            )
+    private_ids = [*reading_ids, *writing_ids]
+    if len(set(private_ids)) != len(private_ids):
+        raise PublicReleaseError("private kanji note IDs overlap")
+    return reading_ids, sorted(private_ids)
+
+
+def _is_private_kanji_deck(name: str) -> bool:
+    return any(
+        name == root or name.startswith(f"{root}::")
+        for root in PRIVATE_KANJI_DECK_ROOTS
+    )
+
+
+def _remove_private_kanji_content(
+    collection: Collection,
+    private_note_ids: Iterable[int],
+) -> None:
+    """Remove both private kanji note/deck families from a public core."""
+    collection.remove_notes(list(private_note_ids))
+    _remove_matching_decks(collection, keep_kanji=False)
+    for name in PRIVATE_KANJI_NOTETYPE_NAMES:
+        model = collection.models.by_name(name)
+        if model is not None:
+            collection.models.remove(int(model["id"]))
+
+
+def _canonicalize_kanji_root(collection: Collection) -> None:
+    """Rename the private v1.3.0 kanji root to the builder's public root."""
+    target = collection.decks.by_name(KANJI_DECK_ROOT)
+    private_roots = []
+    for root in PRIVATE_KANJI_DECK_ROOTS:
+        if root == KANJI_DECK_ROOT:
+            continue
+        private_root = collection.decks.by_name(root)
+        if private_root is not None:
+            private_roots.append(private_root)
+    if len(private_roots) > 1 or (target is not None and private_roots):
+        raise PublicReleaseError("private kanji deck roots are ambiguous")
+    if target is None:
+        if not private_roots:
+            raise PublicReleaseError("private kanji deck root is missing")
+        collection.decks.rename(int(private_roots[0]["id"]), KANJI_DECK_ROOT)
+    if collection.decks.by_name(KANJI_DECK_ROOT) is None:
+        raise PublicReleaseError("builder kanji deck root is missing")
+
+
 def _export_root(collection: Collection, output: Path) -> int:
     deck = collection.decks.by_name(ROOT_DECK_NAME)
     if deck is None:
@@ -331,15 +397,10 @@ def _remove_matching_decks(collection: Collection, *, keep_kanji: bool) -> None:
             name
             for name in names
             if name != ROOT_DECK_NAME
-            and name != KANJI_DECK_ROOT
-            and not name.startswith(f"{KANJI_DECK_ROOT}::")
+            and not _is_private_kanji_deck(name)
         ]
     else:
-        remove = [
-            name
-            for name in names
-            if name == KANJI_DECK_ROOT or name.startswith(f"{KANJI_DECK_ROOT}::")
-        ]
+        remove = [name for name in names if _is_private_kanji_deck(name)]
     _remove_decks(collection, sorted(remove, key=lambda value: value.count("::"), reverse=True))
 
 
@@ -445,20 +506,12 @@ def _build_core(
                 "cards": collection.card_count(),
                 "notes": collection.note_count(),
             }
-            kanji_ids = _note_ids_for_notetype(collection, KANJI_NOTETYPE_NAME)
-            if len(kanji_ids) != EXPECTED_KANJI_NOTES:
-                raise PublicReleaseError(
-                    f"full APKG kanji count changed: {len(kanji_ids)}"
-                )
+            kanji_ids, private_kanji_ids = _private_kanji_note_ids(collection)
             kanji_records = _kanji_skeleton_records(collection, kanji_ids)
-            collection.remove_notes(kanji_ids)
-            _remove_matching_decks(collection, keep_kanji=False)
-            kanji_model = collection.models.by_name(KANJI_NOTETYPE_NAME)
-            if kanji_model is not None:
-                collection.models.remove(int(kanji_model["id"]))
+            _remove_private_kanji_content(collection, private_kanji_ids)
             exported = _export_root(collection, output)
-            expected_cards = full_snapshot["cards"] - EXPECTED_KANJI_NOTES
-            expected_notes = full_snapshot["notes"] - EXPECTED_KANJI_NOTES
+            expected_cards = full_snapshot["cards"] - len(private_kanji_ids)
+            expected_notes = full_snapshot["notes"] - len(private_kanji_ids)
             if exported != expected_cards:
                 raise PublicReleaseError(
                     f"core export card count changed: {exported} != {expected_cards}"
@@ -469,8 +522,11 @@ def _build_core(
     if (
         snapshot["notes"] != expected_notes
         or snapshot["cards"] != expected_cards
-        or KANJI_NOTETYPE_NAME in snapshot["custom_notetype_note_counts"]
-        or any(name.startswith(KANJI_DECK_ROOT) for name in snapshot["deck_names"])
+        or any(
+            name in snapshot["custom_notetype_note_counts"]
+            for name in PRIVATE_KANJI_NOTETYPE_NAMES
+        )
+        or any(_is_private_kanji_deck(name) for name in snapshot["deck_names"])
         or any(name.startswith("jlpt-public-kanji-") for name in _package_media(output))
     ):
         raise PublicReleaseError("core APKG still contains the optional kanji deck")
@@ -486,18 +542,16 @@ def _build_skeleton(
     with tempfile.TemporaryDirectory(prefix="jlpt-kanji-skeleton-") as directory:
         collection = _import_package(full_apkg, Path(directory) / "skeleton.anki2")
         try:
-            kanji_ids = set(_note_ids_for_notetype(collection, KANJI_NOTETYPE_NAME))
-            if len(kanji_ids) != EXPECTED_KANJI_NOTES:
-                raise PublicReleaseError(
-                    f"full APKG kanji count changed: {len(kanji_ids)}"
-                )
+            reading_ids, private_kanji_ids = _private_kanji_note_ids(collection)
+            kanji_ids = set(private_kanji_ids)
             all_ids = {int(value) for value in collection.find_notes("")}
             other_ids = sorted(all_ids - kanji_ids)
             if other_ids:
                 collection.remove_notes(other_ids)
             _remove_matching_decks(collection, keep_kanji=True)
-            records = _kanji_skeleton_records(collection, kanji_ids)
-            for note_id in kanji_ids:
+            _canonicalize_kanji_root(collection)
+            records = _kanji_skeleton_records(collection, reading_ids)
+            for note_id in private_kanji_ids:
                 note = collection.get_note(note_id)
                 note["Meaning"] = ""
                 if _VECTOR_GLYPH_RE.fullmatch(note["GlyphHTML"]):
@@ -506,7 +560,7 @@ def _build_skeleton(
             _clear_collection_media(collection)
             export_output = output.with_suffix(".apkg")
             exported = _export_root(collection, export_output)
-            if exported != EXPECTED_KANJI_NOTES:
+            if exported != EXPECTED_KANJI_ADDON_CARDS:
                 raise PublicReleaseError(
                     f"kanji skeleton card count changed: {exported}"
                 )
@@ -515,11 +569,18 @@ def _build_skeleton(
             collection.close(downgrade=False)
     snapshot = _package_snapshot(output)
     if (
-        snapshot["notes"] != EXPECTED_KANJI_NOTES
-        or snapshot["cards"] != EXPECTED_KANJI_NOTES
+        snapshot["notes"] != EXPECTED_KANJI_ADDON_NOTES
+        or snapshot["cards"] != EXPECTED_KANJI_ADDON_CARDS
         or snapshot["custom_notetype_note_counts"] != {
-            KANJI_NOTETYPE_NAME: EXPECTED_KANJI_NOTES
+            name: EXPECTED_KANJI_NOTES
+            for name in PRIVATE_KANJI_NOTETYPE_NAMES
         }
+        or any(
+            name != KANJI_DECK_ROOT
+            and not name.startswith(f"{KANJI_DECK_ROOT}::")
+            for name in snapshot["deck_names"]
+            if _is_private_kanji_deck(name)
+        )
         or snapshot["media_files"] != 0
     ):
         raise PublicReleaseError("kanji skeleton package is not closed")
@@ -775,6 +836,8 @@ def prepare_direct_release(
                 "sha256": sha256_file(full_apkg),
             },
             "kanji_builder": {
+                "expected_kanji_addon_cards": EXPECTED_KANJI_ADDON_CARDS,
+                "expected_kanji_addon_notes": EXPECTED_KANJI_ADDON_NOTES,
                 "expected_kanji_notes": EXPECTED_KANJI_NOTES,
                 "expected_pdf_count": 2,
                 "expected_vector_glyphs": EXPECTED_KANJI_VECTOR_GLYPHS,

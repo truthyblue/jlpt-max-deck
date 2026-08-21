@@ -16,11 +16,15 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 import public_release as subject  # noqa: E402
+import build_kanji_addon as builder_subject  # noqa: E402
 
 from direct_release_contract import (  # noqa: E402
     EXPECTED_KANJI_NOTES,
     EXPECTED_KANJI_VECTOR_GLYPHS,
     KANJI_BUILDER_FILES,
+    KANJI_DECK_ROOT,
+    KANJI_NOTETYPE_NAME,
+    PRIVATE_KANJI_NOTETYPE_NAMES,
     POLICY_VERSION,
     SCHEMA_VERSION,
     kanji_builder_archive_path,
@@ -30,11 +34,156 @@ from direct_release_contract import (  # noqa: E402
 )
 from public_release import (  # noqa: E402
     PublicReleaseError,
+    _canonicalize_kanji_root,
+    _private_kanji_note_ids,
     _package_kanji_builder,
     _reuse_kanji_builder,
     _zip_write,
     prepare_direct_release,
 )
+from build_kanji_addon import _kanji_note_families  # noqa: E402
+
+
+TEST_LIFECYCLE = {
+    "test_contracts": {
+        "DirectReleaseRepositoryTest.test_v130_private_kanji_families_leave_core_vocabulary_only": {
+            "protected_contract": (
+                "a private vocabulary plus reading and writing package produces a vocabulary-only public core and a two-family personal addon"
+            ),
+            "not_subsumed_by": (
+                "builder archive and cache tests do not inspect the learner-visible note and card families in either output"
+            ),
+        },
+    }
+}
+
+
+class _SyntheticDeck:
+    def __init__(self, deck_id: int, name: str) -> None:
+        self.id = deck_id
+        self.name = name
+
+    def __getitem__(self, key: str) -> int:
+        if key != "id":
+            raise KeyError(key)
+        return self.id
+
+
+class _SyntheticDecks:
+    def __init__(self, names: tuple[str, ...]) -> None:
+        self._decks = [
+            _SyntheticDeck(index, name)
+            for index, name in enumerate(names, start=1)
+        ]
+
+    def all_names_and_ids(self) -> tuple[_SyntheticDeck, ...]:
+        return tuple(self._decks)
+
+    def by_name(self, name: str) -> _SyntheticDeck | None:
+        return next((deck for deck in self._decks if deck.name == name), None)
+
+    def remove(self, deck_ids: list[int]) -> None:
+        self._decks = [deck for deck in self._decks if deck.id not in deck_ids]
+
+    def rename(self, deck_id: int, new_name: str) -> None:
+        source = next(deck for deck in self._decks if deck.id == deck_id).name
+        for deck in self._decks:
+            if deck.name == source or deck.name.startswith(f"{source}::"):
+                suffix = deck.name[len(source) :]
+                deck.name = f"{new_name}{suffix}"
+
+
+class _SyntheticModels:
+    def __init__(self, names: tuple[str, ...]) -> None:
+        self._models = {
+            name: {"id": index, "name": name}
+            for index, name in enumerate(names, start=1)
+        }
+
+    def by_name(self, name: str) -> dict[str, Any] | None:
+        return self._models.get(name)
+
+    def remove(self, model_id: int) -> None:
+        self._models = {
+            name: model
+            for name, model in self._models.items()
+            if model["id"] != model_id
+        }
+
+    def names(self) -> tuple[str, ...]:
+        return tuple(sorted(self._models))
+
+
+class _SyntheticPrivateCollection:
+    def __init__(
+        self,
+        *,
+        notes_per_kanji_model: int,
+        include_legacy_kanji_root: bool = True,
+    ) -> None:
+        names = (
+            KANJI_NOTETYPE_NAME,
+            PRIVATE_KANJI_NOTETYPE_NAMES[1],
+            "JLPT MAX덱 어휘",
+        )
+        self.models = _SyntheticModels(names)
+        deck_names = [
+            "JLPT MAX덱",
+            "JLPT MAX덱::한자",
+            "JLPT MAX덱::한자::읽기",
+            "JLPT MAX덱::한자::쓰기",
+            "JLPT MAX덱::종합 실전::어휘::N1::한자 읽기",
+            "JLPT MAX덱::어휘::N5",
+        ]
+        if include_legacy_kanji_root:
+            deck_names.extend(
+                (
+                    "JLPT MAX덱::일상무따",
+                    "JLPT MAX덱::일상무따::legacy",
+                )
+            )
+        self.decks = _SyntheticDecks(tuple(deck_names))
+        self.notes: dict[int, int] = {}
+        self.note_payloads: dict[int, dict[str, str]] = {}
+        next_id = 1
+        for model_id in (1, 2):
+            for sequence in range(1, notes_per_kanji_model + 1):
+                self.notes[next_id] = model_id
+                self.note_payloads[next_id] = {
+                    "KanjiID": f"kanji-{sequence}",
+                    "Volume": "상권" if sequence == 1 else "하권",
+                    "Unit": str(sequence),
+                    "SortKey": f"K{sequence:06d}",
+                    "Meaning": "",
+                }
+                next_id += 1
+        self.vocabulary_note_id = next_id
+        self.notes[self.vocabulary_note_id] = 3
+
+    def find_notes(self, query: str) -> list[int]:
+        if query == "":
+            return sorted(self.notes)
+        model_id = int(query.removeprefix("mid:"))
+        return sorted(
+            note_id for note_id, current_model_id in self.notes.items()
+            if current_model_id == model_id
+        )
+
+    def remove_notes(self, note_ids: list[int]) -> None:
+        for note_id in note_ids:
+            self.notes.pop(note_id, None)
+
+    def get_note(self, note_id: int) -> dict[str, str]:
+        return self.note_payloads[note_id]
+
+    def card_count(self) -> int:
+        return len(self.notes)
+
+    def note_count(self) -> int:
+        return len(self.notes)
+
+    def close(self, *, downgrade: bool) -> None:
+        del downgrade
 
 
 def load_repository_verifier() -> Any:
@@ -51,6 +200,133 @@ def load_repository_verifier() -> Any:
 
 
 class DirectReleaseRepositoryTest(unittest.TestCase):
+    def test_v130_private_kanji_families_leave_core_vocabulary_only(self) -> None:
+        with patch.object(subject, "EXPECTED_KANJI_NOTES", 2), patch.object(
+            builder_subject, "EXPECTED_KANJI_NOTES", 2
+        ), patch.object(builder_subject, "EXPECTED_KANJI_ADDON_NOTES", 4), patch.object(
+            builder_subject, "EXPECTED_KANJI_ADDON_CARDS", 4
+        ):
+            full = _SyntheticPrivateCollection(notes_per_kanji_model=2)
+            reading_ids, private_ids = _private_kanji_note_ids(full)
+
+            self.assertEqual(len(reading_ids), 2)
+            self.assertEqual(len(private_ids), 4)
+            with tempfile.TemporaryDirectory() as raw_tmp:
+                output = Path(raw_tmp) / "core.apkg"
+
+                def export_core(
+                    collection: _SyntheticPrivateCollection,
+                    target: Path,
+                ) -> int:
+                    target.write_bytes(b"synthetic vocabulary-only core")
+                    return collection.card_count()
+
+                def snapshot_core(_target: Path) -> dict[str, Any]:
+                    self.assertEqual(
+                        full.notes,
+                        {full.vocabulary_note_id: 3},
+                    )
+                    self.assertEqual(full.models.names(), ("JLPT MAX덱 어휘",))
+                    deck_names = {
+                        deck.name for deck in full.decks.all_names_and_ids()
+                    }
+                    self.assertNotIn("JLPT MAX덱::한자", deck_names)
+                    self.assertNotIn("JLPT MAX덱::한자::읽기", deck_names)
+                    self.assertNotIn("JLPT MAX덱::한자::쓰기", deck_names)
+                    self.assertNotIn("JLPT MAX덱::일상무따", deck_names)
+                    self.assertIn(
+                        "JLPT MAX덱::종합 실전::어휘::N1::한자 읽기",
+                        deck_names,
+                    )
+                    return {
+                        "cards": 1,
+                        "custom_notetype_note_counts": {
+                            "JLPT MAX덱 어휘": 1,
+                        },
+                        "deck_names": sorted(deck_names),
+                        "media_files": 0,
+                        "media_hash": "0" * 64,
+                        "notes": 1,
+                    }
+
+                with patch.object(
+                    subject,
+                    "_import_package",
+                    return_value=full,
+                ), patch.object(
+                    subject,
+                    "_kanji_skeleton_records",
+                    return_value=[],
+                ), patch.object(
+                    subject,
+                    "_export_root",
+                    side_effect=export_core,
+                ), patch.object(
+                    subject,
+                    "_package_snapshot",
+                    side_effect=snapshot_core,
+                ), patch.object(subject, "_package_media", return_value={}):
+                    full_snapshot, core_snapshot, records = subject._build_core(
+                        Path("synthetic-full.apkg"), output
+                    )
+
+            self.assertEqual(full_snapshot, {"cards": 5, "notes": 5})
+            self.assertEqual(core_snapshot["notes"], 1)
+            self.assertEqual(core_snapshot["cards"], 1)
+            self.assertEqual(records, [])
+
+            skeleton = _SyntheticPrivateCollection(
+                notes_per_kanji_model=2,
+                include_legacy_kanji_root=False,
+            )
+            families = _kanji_note_families(skeleton)
+            self.assertEqual(
+                tuple(families),
+                PRIVATE_KANJI_NOTETYPE_NAMES,
+            )
+            self.assertEqual(
+                sum(len(notes) for notes in families.values()),
+                2 * len(PRIVATE_KANJI_NOTETYPE_NAMES),
+            )
+            _canonicalize_kanji_root(skeleton)
+            skeleton_deck_names = {
+                deck.name for deck in skeleton.decks.all_names_and_ids()
+            }
+            self.assertIn(KANJI_DECK_ROOT, skeleton_deck_names)
+            self.assertIn(
+                f"{KANJI_DECK_ROOT}::읽기",
+                skeleton_deck_names,
+            )
+            self.assertNotIn("JLPT MAX덱::한자", skeleton_deck_names)
+
+            addon = _SyntheticPrivateCollection(
+                notes_per_kanji_model=2,
+                include_legacy_kanji_root=False,
+            )
+            addon.remove_notes([addon.vocabulary_note_id])
+            for note_id in addon.notes:
+                addon.note_payloads[note_id]["Meaning"] = "합성 뜻"
+            _canonicalize_kanji_root(addon)
+            addon.decks.remove(
+                [
+                    deck.id
+                    for deck in addon.decks.all_names_and_ids()
+                    if deck.name != KANJI_DECK_ROOT
+                    and not deck.name.startswith(f"{KANJI_DECK_ROOT}::")
+                ]
+            )
+            with tempfile.TemporaryDirectory() as raw_tmp:
+                package = Path(raw_tmp) / "synthetic-addon.apkg"
+                package.write_bytes(b"synthetic addon")
+                with patch.object(
+                    builder_subject, "_import_package", return_value=addon
+                ), patch.object(builder_subject, "_package_media", return_value={}):
+                    verification = builder_subject._verify_addon(package, {})
+            self.assertEqual(
+                verification,
+                {"cards": 4, "media_files": 0, "notes": 4},
+            )
+
     def test_public_outputs_are_cached_reused_and_safely_replaced_by_fingerprint(
         self,
     ) -> None:
@@ -407,6 +683,7 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                 self.assertIn("0.11.32", source)
                 self.assertIn("build/kanji-addon", source)
                 self.assertIn("kanji-addon-build-report.json", source)
+                self.assertIn("읽기·쓰기 카드 4,674개", source)
                 self.assertNotIn(
                     "JLPT-MAX-kanji-addon-1.0.1.apkg",
                     source,
@@ -442,6 +719,14 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         pin = json.loads(
             (ROOT / "config" / "public-release.json").read_text(encoding="utf-8")
         )
+        if tuple(int(part) for part in str(pin["product_version"]).split(".")) < (
+            1,
+            3,
+            0,
+        ):
+            self.skipTest(
+                "the checked-in v1.2.x pin predates the v1.3.0 two-family builder contract"
+            )
         source_hashes = {
             kanji_builder_archive_path(relative): sha256_file(ROOT / relative)
             for relative in KANJI_BUILDER_FILES

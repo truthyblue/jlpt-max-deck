@@ -22,11 +22,15 @@ from anki.exporting import AnkiPackageExporter
 from anki.import_export_pb2 import ImportAnkiPackageRequest
 
 from direct_release_contract import (
+    EXPECTED_KANJI_ADDON_CARDS,
+    EXPECTED_KANJI_ADDON_NOTES,
     EXPECTED_KANJI_NOTES,
     EXPECTED_KANJI_VECTOR_GLYPHS,
     KANJI_DECK_ROOT,
     KANJI_FIELDS,
     KANJI_NOTETYPE_NAME,
+    KANJI_WRITING_NOTETYPE_NAME,
+    PRIVATE_KANJI_NOTETYPE_NAMES,
     POLICY_VERSION,
     ROOT_DECK_NAME,
     SCHEMA_VERSION,
@@ -93,18 +97,28 @@ def _import_package(path: Path, collection_path: Path) -> Collection:
     return collection
 
 
+def _kanji_note_families(collection: Collection) -> dict[str, list[Any]]:
+    families: dict[str, list[Any]] = {}
+    for name in PRIVATE_KANJI_NOTETYPE_NAMES:
+        model = collection.models.by_name(name)
+        if model is None:
+            raise KanjiAddonBuildError(f"kanji skeleton notetype is missing: {name}")
+        notes = [
+            collection.get_note(int(note_id))
+            for note_id in collection.find_notes(f"mid:{int(model['id'])}")
+        ]
+        notes.sort(key=lambda note: note["SortKey"])
+        if len(notes) != EXPECTED_KANJI_NOTES:
+            raise KanjiAddonBuildError(
+                f"kanji skeleton {name} note count changed: {len(notes)}"
+            )
+        families[name] = notes
+    return families
+
+
 def _kanji_notes(collection: Collection) -> list[Any]:
-    model = collection.models.by_name(KANJI_NOTETYPE_NAME)
-    if model is None:
-        raise KanjiAddonBuildError("kanji skeleton notetype is missing")
-    notes = [
-        collection.get_note(int(note_id))
-        for note_id in collection.find_notes(f"mid:{int(model['id'])}")
-    ]
-    notes.sort(key=lambda note: note["SortKey"])
-    if len(notes) != EXPECTED_KANJI_NOTES:
-        raise KanjiAddonBuildError(f"kanji skeleton note count changed: {len(notes)}")
-    return notes
+    """Return the reading family used to align the PDF and manifest."""
+    return _kanji_note_families(collection)[KANJI_NOTETYPE_NAME]
 
 
 def _export_root(collection: Collection, output: Path) -> int:
@@ -261,11 +275,15 @@ def _verify_addon(path: Path, expected_media: Mapping[str, str]) -> dict[str, An
     with tempfile.TemporaryDirectory(prefix="jlpt-kanji-addon-verify-") as directory:
         collection = _import_package(path, Path(directory) / "verify.anki2")
         try:
-            notes = _kanji_notes(collection)
+            families = _kanji_note_families(collection)
             if (
-                collection.note_count() != EXPECTED_KANJI_NOTES
-                or collection.card_count() != EXPECTED_KANJI_NOTES
-                or any(not note["Meaning"] for note in notes)
+                collection.note_count() != EXPECTED_KANJI_ADDON_NOTES
+                or collection.card_count() != EXPECTED_KANJI_ADDON_CARDS
+                or any(
+                    not note["Meaning"]
+                    for family in families.values()
+                    for note in family
+                )
                 or any(
                     deck.name.startswith(ROOT_DECK_NAME)
                     and deck.name != ROOT_DECK_NAME
@@ -280,9 +298,9 @@ def _verify_addon(path: Path, expected_media: Mapping[str, str]) -> dict[str, An
     if packaged_media != dict(expected_media):
         raise KanjiAddonBuildError("kanji addon vector media changed")
     return {
-        "cards": EXPECTED_KANJI_NOTES,
+        "cards": EXPECTED_KANJI_ADDON_CARDS,
         "media_files": len(packaged_media),
-        "notes": EXPECTED_KANJI_NOTES,
+        "notes": EXPECTED_KANJI_ADDON_NOTES,
     }
 
 
@@ -317,8 +335,10 @@ def build_kanji_addon(
     try:
         collection = _import_package(skeleton, staged / "build.anki2")
         assert collection is not None
-        notes = _kanji_notes(collection)
+        families = _kanji_note_families(collection)
+        notes = families[KANJI_NOTETYPE_NAME]
         _verify_skeleton(notes, manifest_records)
+        _verify_skeleton(families[KANJI_WRITING_NOTETYPE_NAME], manifest_records)
         aligned_slots = _align_pdf_slots(notes, slots)
         media_root = Path(collection.media.dir())
         source_paths = {
@@ -326,24 +346,34 @@ def build_kanji_addon(
             "ilsang-muutta-lower": lower_pdf,
         }
         expected_media: dict[str, str] = {}
+        writing_by_sort_key = {
+            note["SortKey"]: note
+            for note in families[KANJI_WRITING_NOTETYPE_NAME]
+        }
         for note, slot in zip(notes, aligned_slots, strict=True):
-            record = _fill_note(
-                note,
-                slot,
-                source_paths=source_paths,
-                media_root=media_root,
-            )
-            collection.update_note(note)
-            if record is not None:
-                filename, digest = record
-                expected_media[filename] = digest
+            writing_note = writing_by_sort_key.get(note["SortKey"])
+            if writing_note is None:
+                raise KanjiAddonBuildError(
+                    f"kanji writing family is missing: {note['SortKey']}"
+                )
+            for family_note in (note, writing_note):
+                record = _fill_note(
+                    family_note,
+                    slot,
+                    source_paths=source_paths,
+                    media_root=media_root,
+                )
+                collection.update_note(family_note)
+                if record is not None:
+                    filename, digest = record
+                    expected_media[filename] = digest
         if len(expected_media) != EXPECTED_KANJI_VECTOR_GLYPHS:
             raise KanjiAddonBuildError("kanji vector glyph count changed")
         package = staged / names["kanji_addon"]
         exported = _export_root(collection, package)
         collection.close(downgrade=False)
         collection = None
-        if exported != EXPECTED_KANJI_NOTES:
+        if exported != EXPECTED_KANJI_ADDON_CARDS:
             raise KanjiAddonBuildError(f"kanji addon card count changed: {exported}")
         verification = _verify_addon(package, expected_media)
         report_payload = {
