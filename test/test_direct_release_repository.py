@@ -25,6 +25,7 @@ from direct_release_contract import (  # noqa: E402
     KANJI_DECK_ROOT,
     KANJI_FIELDS,
     KANJI_NOTETYPE_NAME,
+    KANJI_REQUIRED_STATIC_MEDIA,
     PRIVATE_KANJI_NOTETYPE_NAMES,
     POLICY_VERSION,
     SCHEMA_VERSION,
@@ -53,6 +54,14 @@ TEST_LIFECYCLE = {
             ),
             "not_subsumed_by": (
                 "family-count tests can pass while an older field list rejects the accepted private APKG before public artifacts are prepared"
+            ),
+        },
+        "DirectReleaseRepositoryTest.test_kanji_addon_requires_template_attribution_media": {
+            "protected_contract": (
+                "the generated reading and writing addon contains the exact AnimCJK license file referenced by both card templates"
+            ),
+            "not_subsumed_by": (
+                "note, card, and vector glyph counts can pass while AnkiMobile reports the missing static template file at the bottom of both decks"
             ),
         },
         "DirectReleaseRepositoryTest.test_release_pin_matches_current_logical_counts": {
@@ -368,12 +377,89 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                 package.write_bytes(b"synthetic addon")
                 with patch.object(
                     builder_subject, "_import_package", return_value=addon
-                ), patch.object(builder_subject, "_package_media", return_value={}):
-                    verification = builder_subject._verify_addon(package, {})
+                ), patch.object(
+                    builder_subject,
+                    "_package_media",
+                    return_value=KANJI_REQUIRED_STATIC_MEDIA,
+                ):
+                    verification = builder_subject._verify_addon(
+                        package,
+                        KANJI_REQUIRED_STATIC_MEDIA,
+                    )
             self.assertEqual(
                 verification,
-                {"cards": 4, "media_files": 0, "notes": 4},
+                {"cards": 4, "media_files": 1, "notes": 4},
             )
+
+    def test_kanji_addon_requires_template_attribution_media(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_media:
+            media_root = Path(raw_media)
+            required_name = next(iter(KANJI_REQUIRED_STATIC_MEDIA))
+            required_path = media_root / required_name
+            required_path.write_bytes(b"exact attribution fixture")
+            extra_path = media_root / "unused-media.bin"
+            extra_path.write_bytes(b"unused")
+            required_media = {
+                required_name: hashlib.sha256(required_path.read_bytes()).hexdigest()
+            }
+            collection = Mock()
+            collection.media.dir.return_value = str(media_root)
+            subject._clear_collection_media(collection, keep=required_media)
+            self.assertTrue(required_path.is_file())
+            self.assertFalse(extra_path.exists())
+
+        addon = _SyntheticPrivateCollection(
+            notes_per_kanji_model=1,
+            include_legacy_kanji_root=False,
+        )
+        addon.remove_notes([addon.vocabulary_note_id])
+        for note_id in addon.notes:
+            addon.note_payloads[note_id]["Meaning"] = "합성 뜻"
+        _canonicalize_kanji_root(addon)  # type: ignore[arg-type]
+        addon.decks.remove(
+            [
+                deck.id
+                for deck in addon.decks.all_names_and_ids()
+                if deck.name != KANJI_DECK_ROOT
+                and not deck.name.startswith(f"{KANJI_DECK_ROOT}::")
+            ]
+        )
+        with tempfile.TemporaryDirectory() as raw_tmp:
+            package = Path(raw_tmp) / "synthetic-addon.apkg"
+            package.write_bytes(b"synthetic addon")
+            expected_media = dict(KANJI_REQUIRED_STATIC_MEDIA)
+            with patch.object(
+                builder_subject, "EXPECTED_KANJI_NOTES", 1
+            ), patch.object(
+                builder_subject, "EXPECTED_KANJI_ADDON_NOTES", 2
+            ), patch.object(
+                builder_subject, "EXPECTED_KANJI_ADDON_CARDS", 2
+            ), patch.object(
+                builder_subject, "_import_package", return_value=addon
+            ), patch.object(
+                builder_subject, "_package_media", return_value=expected_media
+            ):
+                self.assertEqual(
+                    builder_subject._verify_addon(package, expected_media),
+                    {"cards": 2, "media_files": 1, "notes": 2},
+                )
+
+            with patch.object(
+                builder_subject, "EXPECTED_KANJI_NOTES", 1
+            ), patch.object(
+                builder_subject, "EXPECTED_KANJI_ADDON_NOTES", 2
+            ), patch.object(
+                builder_subject, "EXPECTED_KANJI_ADDON_CARDS", 2
+            ), patch.object(
+                builder_subject, "_import_package", return_value=addon
+            ), patch.object(
+                builder_subject, "_package_media", return_value={}
+            ):
+                with self.assertRaisesRegex(
+                    builder_subject.KanjiAddonBuildError,
+                    "required attribution media changed",
+                ):
+                    builder_subject._verify_addon(package, {})
 
     def test_public_outputs_are_cached_reused_and_safely_replaced_by_fingerprint(
         self,

@@ -29,6 +29,7 @@ from direct_release_contract import (
     KANJI_DECK_ROOT,
     KANJI_FIELDS,
     KANJI_NOTETYPE_NAME,
+    KANJI_REQUIRED_STATIC_MEDIA,
     KANJI_WRITING_NOTETYPE_NAME,
     PRIVATE_KANJI_NOTETYPE_NAMES,
     POLICY_VERSION,
@@ -295,8 +296,15 @@ def _verify_addon(path: Path, expected_media: Mapping[str, str]) -> dict[str, An
         finally:
             collection.close(downgrade=False)
     packaged_media = _package_media(path)
+    if any(
+        packaged_media.get(filename) != digest
+        for filename, digest in KANJI_REQUIRED_STATIC_MEDIA.items()
+    ):
+        raise KanjiAddonBuildError(
+            "kanji addon required attribution media changed"
+        )
     if packaged_media != dict(expected_media):
-        raise KanjiAddonBuildError("kanji addon vector media changed")
+        raise KanjiAddonBuildError("kanji addon media changed")
     return {
         "cards": EXPECTED_KANJI_ADDON_CARDS,
         "media_files": len(packaged_media),
@@ -318,6 +326,8 @@ def build_kanji_addon(
     skeleton = asset_root / str(manifest["skeleton_apkg"])
     if sha256_file(skeleton) != manifest["skeleton_apkg_sha256"]:
         raise KanjiAddonBuildError("kanji builder asset hash changed")
+    if _package_media(skeleton) != KANJI_REQUIRED_STATIC_MEDIA:
+        raise KanjiAddonBuildError("kanji builder static media changed")
     if output_root.exists() and (not output_root.is_dir() or any(output_root.iterdir())):
         raise KanjiAddonBuildError(
             f"output root must be absent or empty: {output_root}"
@@ -345,7 +355,7 @@ def build_kanji_addon(
             "ilsang-muutta-upper": upper_pdf,
             "ilsang-muutta-lower": lower_pdf,
         }
-        expected_media: dict[str, str] = {}
+        expected_media = dict(KANJI_REQUIRED_STATIC_MEDIA)
         writing_by_sort_key = {
             note["SortKey"]: note
             for note in families[KANJI_WRITING_NOTETYPE_NAME]
@@ -367,7 +377,9 @@ def build_kanji_addon(
                 if record is not None:
                     filename, digest = record
                     expected_media[filename] = digest
-        if len(expected_media) != EXPECTED_KANJI_VECTOR_GLYPHS:
+        if len(expected_media) != (
+            EXPECTED_KANJI_VECTOR_GLYPHS + len(KANJI_REQUIRED_STATIC_MEDIA)
+        ):
             raise KanjiAddonBuildError("kanji vector glyph count changed")
         package = staged / names["kanji_addon"]
         exported = _export_root(collection, package)
