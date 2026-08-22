@@ -29,6 +29,7 @@ from direct_release_contract import (
     KANJI_DECK_ROOT,
     KANJI_FIELDS,
     KANJI_NOTETYPE_NAME,
+    KANJI_REQUIRED_STATIC_MEDIA,
     KANJI_WRITING_NOTETYPE_NAME,
     PRIVATE_KANJI_DECK_ROOTS,
     PRIVATE_KANJI_NOTETYPE_NAMES,
@@ -404,9 +405,22 @@ def _remove_matching_decks(collection: Collection, *, keep_kanji: bool) -> None:
     _remove_decks(collection, sorted(remove, key=lambda value: value.count("::"), reverse=True))
 
 
-def _clear_collection_media(collection: Collection) -> None:
+def _clear_collection_media(
+    collection: Collection,
+    *,
+    keep: Mapping[str, str] | None = None,
+) -> None:
     media_root = Path(collection.media.dir())
+    required = dict(keep or {})
+    for filename, digest in required.items():
+        path = media_root / filename
+        if path.is_symlink() or not path.is_file() or sha256_file(path) != digest:
+            raise PublicReleaseError(
+                f"required kanji media is missing or changed: {filename}"
+            )
     for path in media_root.iterdir():
+        if path.name in required:
+            continue
         if path.is_file() or path.is_symlink():
             path.unlink()
         elif path.is_dir():
@@ -557,7 +571,10 @@ def _build_skeleton(
                 if _VECTOR_GLYPH_RE.fullmatch(note["GlyphHTML"]):
                     note["GlyphHTML"] = ""
                 collection.update_note(note)
-            _clear_collection_media(collection)
+            _clear_collection_media(
+                collection,
+                keep=KANJI_REQUIRED_STATIC_MEDIA,
+            )
             export_output = output.with_suffix(".apkg")
             exported = _export_root(collection, export_output)
             if exported != EXPECTED_KANJI_ADDON_CARDS:
@@ -581,7 +598,7 @@ def _build_skeleton(
             for name in snapshot["deck_names"]
             if _is_private_kanji_deck(name)
         )
-        or snapshot["media_files"] != 0
+        or _package_media(output) != KANJI_REQUIRED_STATIC_MEDIA
     ):
         raise PublicReleaseError("kanji skeleton package is not closed")
     manifest = {
