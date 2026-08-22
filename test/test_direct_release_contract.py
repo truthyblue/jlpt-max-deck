@@ -12,6 +12,8 @@ from direct_release_contract import (  # noqa: E402
     EXPECTED_KANJI_ADDON_NOTES,
     DirectReleaseContractError,
     EXPECTED_KANJI_NOTES,
+    EXPECTED_KANJI_STATIC_MEDIA,
+    EXPECTED_KANJI_STROKE_MEDIA,
     EXPECTED_KANJI_VECTOR_GLYPHS,
     KANJI_BUILDER_EXECUTABLES,
     KANJI_FIELDS,
@@ -22,7 +24,9 @@ from direct_release_contract import (  # noqa: E402
     kanji_builder_archive_path,
     kanji_builder_file_mode,
     release_filenames,
+    sha256_json,
     skeleton_note_record,
+    validate_kanji_static_media,
     validate_skeleton_manifest,
 )
 
@@ -35,6 +39,14 @@ TEST_LIFECYCLE = {
             ),
             "not_subsumed_by": (
                 "release-name and skeleton-manifest tests cover one reading family and cannot detect writing cards leaking into the public core"
+            ),
+        },
+        "DirectReleaseContractTest.test_kanji_static_media_closes_all_stroke_images": {
+            "protected_contract": (
+                "the kanji skeleton carries all 2,298 referenced stroke-order images plus the required attribution file"
+            ),
+            "not_subsumed_by": (
+                "note, card, and generated glyph counts can pass while both kanji card families still point to absent stroke-order SVG files"
             ),
         },
     }
@@ -90,6 +102,33 @@ class DirectReleaseContractTest(unittest.TestCase):
         )
         self.assertFalse(names["kanji_skeleton"].endswith(".apkg"))
         self.assertNotIn("autoplay_addon", names)
+
+    def test_kanji_static_media_closes_all_stroke_images(self) -> None:
+        media = {
+            f"jlpt-v2-stroke-{sequence:024x}.svg": f"{sequence + 1:064x}"
+            for sequence in range(EXPECTED_KANJI_STROKE_MEDIA)
+        }
+        media.update(
+            {
+                "_jlpt_max_animcjk_arphic_public_license.txt": (
+                    "3a5e90c0957524a89e48203febcd4492ca4393678abaa7e5b4d70f3ff32b386d"
+                )
+            }
+        )
+        self.assertEqual(len(media), EXPECTED_KANJI_STATIC_MEDIA)
+        self.assertEqual(
+            validate_kanji_static_media(
+                media,
+                expected_sha256=sha256_json(dict(sorted(media.items()))),
+            ),
+            dict(sorted(media.items())),
+        )
+        media.pop(f"jlpt-v2-stroke-{0:024x}.svg")
+        with self.assertRaisesRegex(
+            DirectReleaseContractError,
+            "stroke media inventory changed",
+        ):
+            validate_kanji_static_media(media)
 
     def test_beginner_launchers_are_prominent_in_the_builder_archive(self) -> None:
         self.assertEqual(
@@ -155,6 +194,8 @@ class DirectReleaseContractTest(unittest.TestCase):
             "schema_version": SCHEMA_VERSION,
             "skeleton_apkg": "JLPT-MAX-kanji-skeleton-1.0.1.asset",
             "skeleton_apkg_sha256": "0" * 64,
+            "static_media_count": EXPECTED_KANJI_STATIC_MEDIA,
+            "static_media_sha256": "1" * 64,
             "vector_glyph_count": EXPECTED_KANJI_VECTOR_GLYPHS,
         }
         self.assertEqual(len(validate_skeleton_manifest(manifest)), 2_337)

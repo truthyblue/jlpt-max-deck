@@ -16,6 +16,8 @@ sys.path.insert(0, str(ROOT / "src"))
 from direct_release_contract import (  # noqa: E402
     EXPECTED_KANJI_ADDON_CARDS,
     EXPECTED_KANJI_ADDON_NOTES,
+    EXPECTED_KANJI_STATIC_MEDIA,
+    EXPECTED_KANJI_STROKE_MEDIA,
     KANJI_BUILDER_FILES,
     POLICY_VERSION,
     SCHEMA_VERSION,
@@ -113,6 +115,8 @@ def _verify_pin(pin: dict[str, object]) -> None:
         or int(core["media_files"]) <= 0
         or kanji.get("expected_pdf_count") != 2
         or kanji.get("expected_kanji_notes") != 2_337
+        or kanji.get("expected_static_media") != EXPECTED_KANJI_STATIC_MEDIA
+        or kanji.get("expected_stroke_media") != EXPECTED_KANJI_STROKE_MEDIA
         or kanji.get("expected_vector_glyphs") != 14
         or kanji.get("output_apkg") != names["kanji_addon"]
     ):

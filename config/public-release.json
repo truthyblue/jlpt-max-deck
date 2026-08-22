@@ -5,15 +5,15 @@
       "sha256": "9d2667bac17f781603ba3f2a92e496ea6ba9dad607de4058470d35cb0e2c64d3"
     },
     "JLPT-MAX-kanji-builder-1.3.0.zip": {
-      "bytes": 6123567,
-      "sha256": "bf34bf3284f75760118513248b689dd49ea16ba0ebda49bb8eade9ce4d868877"
+      "bytes": 11436627,
+      "sha256": "8bb930d00e82a4e45ce78eb10c5bd667c89149bf9440565584137ee87e2eec8e"
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "b9df96b97ce4a0c899f5a1382ed1147ae7fb1294bfe6d32409dfcd612172c4f2"
+      "sha256": "03f2d5b83fdc330f1a15eaf7561940e516be484d014251ba1ac0c4bd8dd5e7e6"
     }
   },
-  "build_input_fingerprint_sha256": "8cfb80830ca6a5faad804e9bc2ee4467ae08be44191b34f40d927c2b6688034b",
+  "build_input_fingerprint_sha256": "15c28e49b5e0fa4bda3fe82ec912b00c69bc6bb640ce5e238d0d1cb9c33ca083",
   "core": {
     "cards": 19921,
     "custom_notetype_note_counts": {
@@ -30,7 +30,8 @@
     ],
     "media_files": 18437,
     "media_hash": "d886a1e01524e6f97f46e78ef5da5bf29650ab082f14eb53e9c7365cd9269be8",
-    "notes": 13903
+    "notes": 13903,
+    "reused": true
   },
   "full_source": {
     "cards": 24595,
@@ -42,15 +43,17 @@
     "expected_kanji_addon_notes": 4674,
     "expected_kanji_notes": 2337,
     "expected_pdf_count": 2,
+    "expected_static_media": 2299,
+    "expected_stroke_media": 2298,
     "expected_vector_glyphs": 14,
     "output_apkg": "JLPT-MAX-kanji-addon-1.3.0.apkg",
-    "reused": false,
-    "source_hash": "ba337c919985ca1820ec7041e6d890b10310e04ea5761171cb81208f4d7c6081"
+    "reused": true,
+    "source_hash": "a306fa91a275dec7796ef2da6467e0f50d2b4b7300857631813800b3ef525f43"
   },
-  "payload_hash": "3312d0c1ce8e5176128306870e6d97d3812d2e570b97bf200258f299cca072cb",
+  "payload_hash": "103405f1290b33ff902a20b5f6ee2aab8ee5ee5c456be1321c8e77807f93875e",
   "policy_version": "direct-core-plus-kanji-addon-v1",
   "product_version": "1.3.0",
-  "schema_version": 2,
+  "schema_version": 3,
   "status": "passed",
   "unresolved": 0
 }

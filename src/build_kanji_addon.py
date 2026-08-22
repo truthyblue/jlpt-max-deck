@@ -25,11 +25,14 @@ from direct_release_contract import (
     EXPECTED_KANJI_ADDON_CARDS,
     EXPECTED_KANJI_ADDON_NOTES,
     EXPECTED_KANJI_NOTES,
+    EXPECTED_KANJI_STATIC_MEDIA,
+    EXPECTED_KANJI_STROKE_MEDIA,
     EXPECTED_KANJI_VECTOR_GLYPHS,
     KANJI_DECK_ROOT,
     KANJI_FIELDS,
     KANJI_NOTETYPE_NAME,
     KANJI_REQUIRED_STATIC_MEDIA,
+    KANJI_STROKE_MEDIA_RE,
     KANJI_WRITING_NOTETYPE_NAME,
     PRIVATE_KANJI_NOTETYPE_NAMES,
     POLICY_VERSION,
@@ -39,6 +42,7 @@ from direct_release_contract import (
     sha256_file,
     sha256_json,
     skeleton_note_record,
+    validate_kanji_static_media,
     validate_skeleton_manifest,
 )
 from public_kanji import (
@@ -120,6 +124,17 @@ def _kanji_note_families(collection: Collection) -> dict[str, list[Any]]:
 def _kanji_notes(collection: Collection) -> list[Any]:
     """Return the reading family used to align the PDF and manifest."""
     return _kanji_note_families(collection)[KANJI_NOTETYPE_NAME]
+
+
+def _kanji_stroke_references(
+    families: Mapping[str, Sequence[Mapping[str, str]]],
+) -> set[str]:
+    return {
+        filename
+        for notes in families.values()
+        for note in notes
+        for filename in KANJI_STROKE_MEDIA_RE.findall(note["StrokeOrder"])
+    }
 
 
 def _export_root(collection: Collection, output: Path) -> int:
@@ -277,6 +292,7 @@ def _verify_addon(path: Path, expected_media: Mapping[str, str]) -> dict[str, An
         collection = _import_package(path, Path(directory) / "verify.anki2")
         try:
             families = _kanji_note_families(collection)
+            stroke_references = _kanji_stroke_references(families)
             if (
                 collection.note_count() != EXPECTED_KANJI_ADDON_NOTES
                 or collection.card_count() != EXPECTED_KANJI_ADDON_CARDS
@@ -303,6 +319,13 @@ def _verify_addon(path: Path, expected_media: Mapping[str, str]) -> dict[str, An
         raise KanjiAddonBuildError(
             "kanji addon required attribution media changed"
         )
+    packaged_strokes = {
+        filename
+        for filename in packaged_media
+        if KANJI_STROKE_MEDIA_RE.fullmatch(filename)
+    }
+    if stroke_references != packaged_strokes:
+        raise KanjiAddonBuildError("kanji addon stroke media is incomplete")
     if packaged_media != dict(expected_media):
         raise KanjiAddonBuildError("kanji addon media changed")
     return {
@@ -326,8 +349,14 @@ def build_kanji_addon(
     skeleton = asset_root / str(manifest["skeleton_apkg"])
     if sha256_file(skeleton) != manifest["skeleton_apkg_sha256"]:
         raise KanjiAddonBuildError("kanji builder asset hash changed")
-    if _package_media(skeleton) != KANJI_REQUIRED_STATIC_MEDIA:
-        raise KanjiAddonBuildError("kanji builder static media changed")
+    skeleton_media = _package_media(skeleton)
+    try:
+        validate_kanji_static_media(
+            skeleton_media,
+            expected_sha256=str(manifest["static_media_sha256"]),
+        )
+    except ValueError as exc:
+        raise KanjiAddonBuildError(str(exc)) from exc
     if output_root.exists() and (not output_root.is_dir() or any(output_root.iterdir())):
         raise KanjiAddonBuildError(
             f"output root must be absent or empty: {output_root}"
@@ -355,7 +384,7 @@ def build_kanji_addon(
             "ilsang-muutta-upper": upper_pdf,
             "ilsang-muutta-lower": lower_pdf,
         }
-        expected_media = dict(KANJI_REQUIRED_STATIC_MEDIA)
+        expected_media = dict(skeleton_media)
         writing_by_sort_key = {
             note["SortKey"]: note
             for note in families[KANJI_WRITING_NOTETYPE_NAME]
@@ -378,9 +407,11 @@ def build_kanji_addon(
                     filename, digest = record
                     expected_media[filename] = digest
         if len(expected_media) != (
-            EXPECTED_KANJI_VECTOR_GLYPHS + len(KANJI_REQUIRED_STATIC_MEDIA)
+            EXPECTED_KANJI_VECTOR_GLYPHS + EXPECTED_KANJI_STATIC_MEDIA
         ):
             raise KanjiAddonBuildError("kanji vector glyph count changed")
+        if len(_kanji_stroke_references(families)) != EXPECTED_KANJI_STROKE_MEDIA:
+            raise KanjiAddonBuildError("kanji stroke media reference count changed")
         package = staged / names["kanji_addon"]
         exported = _export_root(collection, package)
         collection.close(downgrade=False)

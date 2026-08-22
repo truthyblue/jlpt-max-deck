@@ -24,12 +24,15 @@ from direct_release_contract import (
     EXPECTED_KANJI_ADDON_CARDS,
     EXPECTED_KANJI_ADDON_NOTES,
     EXPECTED_KANJI_NOTES,
+    EXPECTED_KANJI_STATIC_MEDIA,
+    EXPECTED_KANJI_STROKE_MEDIA,
     EXPECTED_KANJI_VECTOR_GLYPHS,
     KANJI_BUILDER_FILES,
     KANJI_DECK_ROOT,
     KANJI_FIELDS,
     KANJI_NOTETYPE_NAME,
     KANJI_REQUIRED_STATIC_MEDIA,
+    KANJI_STROKE_MEDIA_RE,
     KANJI_WRITING_NOTETYPE_NAME,
     PRIVATE_KANJI_DECK_ROOTS,
     PRIVATE_KANJI_NOTETYPE_NAMES,
@@ -43,6 +46,7 @@ from direct_release_contract import (
     sha256_file,
     sha256_json,
     skeleton_note_record,
+    validate_kanji_static_media,
     validate_skeleton_manifest,
 )
 
@@ -87,6 +91,7 @@ def _public_release_input_fingerprint(
     *,
     full_apkg: Path,
     product_version: str,
+    reuse_core_apkg: Path | None,
     reuse_kanji_builder: Path | None,
 ) -> dict[str, Any]:
     names = release_filenames(product_version)
@@ -100,6 +105,19 @@ def _public_release_input_fingerprint(
         relative: sha256_file(ROOT / relative)
         for relative in KANJI_BUILDER_FILES
     }
+    reusable_core: dict[str, Any] | None = None
+    if reuse_core_apkg is not None:
+        reusable_core_path = reuse_core_apkg.resolve()
+        if (
+            not reusable_core_path.is_file()
+            or reusable_core_path.is_symlink()
+            or reusable_core_path.name != names["core_apkg"]
+        ):
+            raise PublicReleaseError("reusable core APKG identity changed")
+        reusable_core = {
+            "name": reusable_core_path.name,
+            "sha256": sha256_file(reusable_core_path),
+        }
     reusable: dict[str, Any] | None = None
     if reuse_kanji_builder is not None:
         reusable_path = reuse_kanji_builder.resolve()
@@ -117,6 +135,7 @@ def _public_release_input_fingerprint(
         "contract": "public-release-artifact-cache-v1",
         "full_apkg_sha256": sha256_file(full_apkg),
         "product_version": product_version,
+        "reuse_core_apkg": reusable_core,
         "reuse_kanji_builder": reusable,
         "release_code": code,
         "builder_sources": builder_sources,
@@ -510,8 +529,36 @@ def _kanji_skeleton_records(
     return records
 
 
+def _kanji_skeleton_static_media(
+    collection: Collection,
+    kanji_ids: Iterable[int],
+) -> dict[str, str]:
+    filenames: set[str] = set()
+    for note_id in kanji_ids:
+        note = collection.get_note(note_id)
+        filenames.update(KANJI_STROKE_MEDIA_RE.findall(note["StrokeOrder"]))
+    if len(filenames) != EXPECTED_KANJI_STROKE_MEDIA:
+        raise PublicReleaseError(
+            f"kanji stroke media references changed: {len(filenames)}"
+        )
+    media_root = Path(collection.media.dir())
+    required = dict(KANJI_REQUIRED_STATIC_MEDIA)
+    for filename in sorted(filenames):
+        path = media_root / filename
+        if path.is_symlink() or not path.is_file():
+            raise PublicReleaseError(f"kanji stroke media is missing: {filename}")
+        required[filename] = sha256_file(path)
+    try:
+        return validate_kanji_static_media(required)
+    except ValueError as exc:
+        raise PublicReleaseError(str(exc)) from exc
+
+
 def _build_core(
-    full_apkg: Path, output: Path
+    full_apkg: Path,
+    output: Path,
+    *,
+    reuse_core_apkg: Path | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any], list[dict[str, Any]]]:
     with tempfile.TemporaryDirectory(prefix="jlpt-core-release-") as directory:
         collection = _import_package(full_apkg, Path(directory) / "core.anki2")
@@ -522,16 +569,19 @@ def _build_core(
             }
             kanji_ids, private_kanji_ids = _private_kanji_note_ids(collection)
             kanji_records = _kanji_skeleton_records(collection, kanji_ids)
-            _remove_private_kanji_content(collection, private_kanji_ids)
-            exported = _export_root(collection, output)
             expected_cards = full_snapshot["cards"] - len(private_kanji_ids)
             expected_notes = full_snapshot["notes"] - len(private_kanji_ids)
-            if exported != expected_cards:
-                raise PublicReleaseError(
-                    f"core export card count changed: {exported} != {expected_cards}"
-                )
+            if reuse_core_apkg is None:
+                _remove_private_kanji_content(collection, private_kanji_ids)
+                exported = _export_root(collection, output)
+                if exported != expected_cards:
+                    raise PublicReleaseError(
+                        f"core export card count changed: {exported} != {expected_cards}"
+                    )
         finally:
             collection.close(downgrade=False)
+    if reuse_core_apkg is not None:
+        shutil.copy2(reuse_core_apkg, output)
     snapshot = _package_snapshot(output)
     if (
         snapshot["notes"] != expected_notes
@@ -541,7 +591,11 @@ def _build_core(
             for name in PRIVATE_KANJI_NOTETYPE_NAMES
         )
         or any(_is_private_kanji_deck(name) for name in snapshot["deck_names"])
-        or any(name.startswith("jlpt-public-kanji-") for name in _package_media(output))
+        or any(
+            name.startswith("jlpt-public-kanji-")
+            or KANJI_STROKE_MEDIA_RE.fullmatch(name)
+            for name in _package_media(output)
+        )
     ):
         raise PublicReleaseError("core APKG still contains the optional kanji deck")
     return full_snapshot, snapshot, kanji_records
@@ -565,6 +619,10 @@ def _build_skeleton(
             _remove_matching_decks(collection, keep_kanji=True)
             _canonicalize_kanji_root(collection)
             records = _kanji_skeleton_records(collection, reading_ids)
+            static_media = _kanji_skeleton_static_media(
+                collection,
+                private_kanji_ids,
+            )
             for note_id in private_kanji_ids:
                 note = collection.get_note(note_id)
                 note["Meaning"] = ""
@@ -573,7 +631,7 @@ def _build_skeleton(
                 collection.update_note(note)
             _clear_collection_media(
                 collection,
-                keep=KANJI_REQUIRED_STATIC_MEDIA,
+                keep=static_media,
             )
             export_output = output.with_suffix(".apkg")
             exported = _export_root(collection, export_output)
@@ -598,7 +656,7 @@ def _build_skeleton(
             for name in snapshot["deck_names"]
             if _is_private_kanji_deck(name)
         )
-        or _package_media(output) != KANJI_REQUIRED_STATIC_MEDIA
+        or _package_media(output) != static_media
     ):
         raise PublicReleaseError("kanji skeleton package is not closed")
     manifest = {
@@ -609,6 +667,8 @@ def _build_skeleton(
         "schema_version": SCHEMA_VERSION,
         "skeleton_apkg": output.name,
         "skeleton_apkg_sha256": sha256_file(output),
+        "static_media_count": EXPECTED_KANJI_STATIC_MEDIA,
+        "static_media_sha256": sha256_json(static_media),
         "vector_glyph_count": EXPECTED_KANJI_VECTOR_GLYPHS,
     }
     validate_skeleton_manifest(manifest)
@@ -727,6 +787,7 @@ def prepare_direct_release(
     full_apkg: Path,
     output_root: Path,
     product_version: str,
+    reuse_core_apkg: Path | None = None,
     reuse_kanji_builder: Path | None = None,
     artifact_cache_root: Path | None = None,
 ) -> dict[str, Any]:
@@ -734,6 +795,7 @@ def prepare_direct_release(
     input_fingerprint = _public_release_input_fingerprint(
         full_apkg=full_apkg,
         product_version=product_version,
+        reuse_core_apkg=reuse_core_apkg,
         reuse_kanji_builder=reuse_kanji_builder,
     )
     input_fingerprint_sha256 = sha256_json(input_fingerprint)
@@ -796,7 +858,13 @@ def prepare_direct_release(
         skeleton_apkg = staged / names["kanji_skeleton"]
         skeleton_manifest_path = staged / names["skeleton_manifest"]
         full_snapshot, core_snapshot, kanji_records = _build_core(
-            full_apkg, core_apkg
+            full_apkg,
+            core_apkg,
+            reuse_core_apkg=(
+                reuse_core_apkg.resolve()
+                if reuse_core_apkg is not None
+                else None
+            ),
         )
         builder_archive = staged / names["kanji_builder"]
         if reuse_kanji_builder is None:
@@ -847,6 +915,7 @@ def prepare_direct_release(
                 "media_files": core_snapshot["media_files"],
                 "media_hash": core_snapshot["media_hash"],
                 "notes": core_snapshot["notes"],
+                "reused": reuse_core_apkg is not None,
             },
             "full_source": {
                 **full_snapshot,
@@ -857,6 +926,8 @@ def prepare_direct_release(
                 "expected_kanji_addon_notes": EXPECTED_KANJI_ADDON_NOTES,
                 "expected_kanji_notes": EXPECTED_KANJI_NOTES,
                 "expected_pdf_count": 2,
+                "expected_static_media": EXPECTED_KANJI_STATIC_MEDIA,
+                "expected_stroke_media": EXPECTED_KANJI_STROKE_MEDIA,
                 "expected_vector_glyphs": EXPECTED_KANJI_VECTOR_GLYPHS,
                 "output_apkg": names["kanji_addon"],
                 "reused": reuse_kanji_builder is not None,
@@ -894,6 +965,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--full-apkg", type=Path, required=True)
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--product-version", required=True)
+    parser.add_argument("--reuse-core-apkg", type=Path)
     parser.add_argument("--reuse-kanji-builder", type=Path)
     parser.add_argument("--artifact-cache-root", type=Path)
     parser.add_argument("--result-json", type=Path)
@@ -906,6 +978,7 @@ def main() -> None:
         full_apkg=args.full_apkg.resolve(),
         output_root=args.output_root.resolve(),
         product_version=args.product_version,
+        reuse_core_apkg=args.reuse_core_apkg,
         reuse_kanji_builder=args.reuse_kanji_builder,
         artifact_cache_root=args.artifact_cache_root,
     )

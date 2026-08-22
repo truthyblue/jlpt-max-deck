@@ -20,6 +20,7 @@ import build_kanji_addon as builder_subject  # noqa: E402
 
 from direct_release_contract import (  # noqa: E402
     EXPECTED_KANJI_NOTES,
+    EXPECTED_KANJI_STATIC_MEDIA,
     EXPECTED_KANJI_VECTOR_GLYPHS,
     KANJI_BUILDER_FILES,
     KANJI_DECK_ROOT,
@@ -61,7 +62,23 @@ TEST_LIFECYCLE = {
                 "the generated reading and writing addon contains the exact AnimCJK license file referenced by both card templates"
             ),
             "not_subsumed_by": (
-                "note, card, and vector glyph counts can pass while AnkiMobile reports the missing static template file at the bottom of both decks"
+                "stroke-image closure and note counts do not prove that the separately licensed template asset is present with its approved bytes"
+            ),
+        },
+        "DirectReleaseRepositoryTest.test_kanji_addon_packages_every_referenced_stroke_image": {
+            "protected_contract": (
+                "the final addon contains every stroke-order SVG referenced by both kanji card families"
+            ),
+            "not_subsumed_by": (
+                "the skeleton media count can pass while an exported addon drops a referenced image and shows Anki's missing-image warning"
+            ),
+        },
+        "DirectReleaseRepositoryTest.test_builder_hotfix_reuses_exact_core_bytes": {
+            "protected_contract": (
+                "a builder-only hotfix preserves the already published core APKG bytes while producing a newly bound release receipt"
+            ),
+            "not_subsumed_by": (
+                "logical core counts can pass after a nondeterministic re-export changes the published core artifact bytes"
             ),
         },
         "DirectReleaseRepositoryTest.test_release_pin_matches_current_logical_counts": {
@@ -461,6 +478,63 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                 ):
                     builder_subject._verify_addon(package, {})
 
+    def test_kanji_addon_packages_every_referenced_stroke_image(self) -> None:
+        stroke_filename = "jlpt-v2-stroke-0123456789abcdef01234567.svg"
+        addon = _SyntheticPrivateCollection(
+            notes_per_kanji_model=1,
+            include_legacy_kanji_root=False,
+        )
+        addon.remove_notes([addon.vocabulary_note_id])
+        for note_id in addon.notes:
+            addon.note_payloads[note_id]["Meaning"] = "합성 뜻"
+            addon.note_payloads[note_id]["StrokeOrder"] = (
+                f'<img src="{stroke_filename}">'
+            )
+        _canonicalize_kanji_root(addon)  # type: ignore[arg-type]
+        addon.decks.remove(
+            [
+                deck.id
+                for deck in addon.decks.all_names_and_ids()
+                if deck.name != KANJI_DECK_ROOT
+                and not deck.name.startswith(f"{KANJI_DECK_ROOT}::")
+            ]
+        )
+        complete_media = {
+            **KANJI_REQUIRED_STATIC_MEDIA,
+            stroke_filename: "1" * 64,
+        }
+        with tempfile.TemporaryDirectory() as raw_tmp:
+            package = Path(raw_tmp) / "synthetic-addon.apkg"
+            package.write_bytes(b"synthetic addon")
+            common_patches = (
+                patch.object(builder_subject, "EXPECTED_KANJI_NOTES", 1),
+                patch.object(builder_subject, "EXPECTED_KANJI_ADDON_NOTES", 2),
+                patch.object(builder_subject, "EXPECTED_KANJI_ADDON_CARDS", 2),
+                patch.object(builder_subject, "_import_package", return_value=addon),
+            )
+            with common_patches[0], common_patches[1], common_patches[2], common_patches[3], patch.object(
+                builder_subject,
+                "_package_media",
+                return_value=complete_media,
+            ):
+                self.assertEqual(
+                    builder_subject._verify_addon(package, complete_media),
+                    {"cards": 2, "media_files": 2, "notes": 2},
+                )
+            with common_patches[0], common_patches[1], common_patches[2], common_patches[3], patch.object(
+                builder_subject,
+                "_package_media",
+                return_value=KANJI_REQUIRED_STATIC_MEDIA,
+            ):
+                with self.assertRaisesRegex(
+                    builder_subject.KanjiAddonBuildError,
+                    "stroke media is incomplete",
+                ):
+                    builder_subject._verify_addon(
+                        package,
+                        KANJI_REQUIRED_STATIC_MEDIA,
+                    )
+
     def test_public_outputs_are_cached_reused_and_safely_replaced_by_fingerprint(
         self,
     ) -> None:
@@ -473,8 +547,14 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
             output_two = tmp / "two"
             build_core = Mock()
 
-            def fake_core(_full: Path, output: Path) -> tuple[dict[str, int], dict[str, Any], list[dict[str, Any]]]:
+            def fake_core(
+                _full: Path,
+                output: Path,
+                *,
+                reuse_core_apkg: Path | None = None,
+            ) -> tuple[dict[str, int], dict[str, Any], list[dict[str, Any]]]:
                 build_core()
+                self.assertIsNone(reuse_core_apkg)
                 output.write_bytes(b"one nondeterministic build captured once")
                 return (
                     {"cards": 2, "notes": 2},
@@ -580,6 +660,70 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                     )
                 self.assertEqual(build_core.call_count, 2)
 
+    def test_builder_hotfix_reuses_exact_core_bytes(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_tmp:
+            tmp = Path(raw_tmp)
+            full = tmp / "full.apkg"
+            full.write_bytes(b"accepted full source")
+            names = release_filenames("1.3.0")
+            reusable_core = tmp / names["core_apkg"]
+            reusable_core.write_bytes(b"exact published core bytes")
+            output = tmp / "output"
+
+            def fake_core(
+                _full: Path,
+                target: Path,
+                *,
+                reuse_core_apkg: Path | None = None,
+            ) -> tuple[dict[str, int], dict[str, Any], list[dict[str, Any]]]:
+                self.assertEqual(reuse_core_apkg, reusable_core.resolve())
+                target.write_bytes(reusable_core.read_bytes())
+                return (
+                    {"cards": 2, "notes": 2},
+                    {
+                        "cards": 1,
+                        "custom_notetype_note_counts": {},
+                        "deck_names": [],
+                        "media_files": 0,
+                        "media_hash": "0" * 64,
+                        "notes": 1,
+                    },
+                    [],
+                )
+
+            def fake_skeleton(
+                _full: Path, target: Path, *, product_version: str
+            ) -> dict[str, Any]:
+                target.write_bytes(b"skeleton")
+                return {"product_version": product_version}
+
+            def fake_builder(**kwargs: Any) -> dict[str, str]:
+                Path(kwargs["output"]).write_bytes(b"corrected builder")
+                return {"source": "1" * 64}
+
+            with patch("public_release._build_core", side_effect=fake_core), patch(
+                "public_release._build_skeleton", side_effect=fake_skeleton
+            ), patch(
+                "public_release._package_kanji_builder", side_effect=fake_builder
+            ):
+                result = prepare_direct_release(
+                    full_apkg=full,
+                    output_root=output,
+                    product_version="1.3.0",
+                    reuse_core_apkg=reusable_core,
+                    artifact_cache_root=tmp / "cache",
+                )
+
+            self.assertEqual(
+                (output / names["core_apkg"]).read_bytes(),
+                reusable_core.read_bytes(),
+            )
+            self.assertTrue(result["core"]["reused"])
+            self.assertEqual(
+                result["artifacts"][names["core_apkg"]]["sha256"],
+                sha256_file(reusable_core),
+            )
+
     def test_cli_writes_machine_result_to_file(self) -> None:
         with tempfile.TemporaryDirectory() as raw_tmp:
             tmp = Path(raw_tmp)
@@ -648,6 +792,8 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                         "skeleton_apkg_sha256": hashlib.sha256(
                             skeleton_payload
                         ).hexdigest(),
+                        "static_media_count": EXPECTED_KANJI_STATIC_MEDIA,
+                        "static_media_sha256": "1" * 64,
                         "vector_glyph_count": EXPECTED_KANJI_VECTOR_GLYPHS,
                     },
                     ensure_ascii=False,

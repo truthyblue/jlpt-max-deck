@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 POLICY_VERSION = "direct-core-plus-kanji-addon-v1"
 KANJI_NOTETYPE_NAME = "JLPT MAX덱 일상무따"
 ROOT_DECK_NAME = "JLPT MAX덱"
@@ -33,11 +33,15 @@ EXPECTED_KANJI_ADDON_NOTES = EXPECTED_KANJI_NOTES * len(
 )
 EXPECTED_KANJI_ADDON_CARDS = EXPECTED_KANJI_ADDON_NOTES
 EXPECTED_KANJI_VECTOR_GLYPHS = 14
+EXPECTED_KANJI_STROKE_MEDIA = 2_298
 KANJI_REQUIRED_STATIC_MEDIA = {
     "_jlpt_max_animcjk_arphic_public_license.txt": (
         "3a5e90c0957524a89e48203febcd4492ca4393678abaa7e5b4d70f3ff32b386d"
     ),
 }
+EXPECTED_KANJI_STATIC_MEDIA = (
+    EXPECTED_KANJI_STROKE_MEDIA + len(KANJI_REQUIRED_STATIC_MEDIA)
+)
 KANJI_FIELDS = (
     "KanjiID",
     "Volume",
@@ -80,6 +84,7 @@ KANJI_BUILDER_ARCHIVE_PATHS = {
     "scripts/start-kanji-addon.command": "Mac에서 한자 확장 만들기.command",
 }
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
+KANJI_STROKE_MEDIA_RE = re.compile(r"jlpt-v2-stroke-[0-9a-f]{24}\.svg")
 
 
 class DirectReleaseContractError(ValueError):
@@ -165,6 +170,38 @@ def skeleton_note_record(note: Mapping[str, str]) -> dict[str, Any]:
     }
 
 
+def validate_kanji_static_media(
+    media: Mapping[str, str],
+    *,
+    expected_sha256: str | None = None,
+) -> dict[str, str]:
+    normalized = dict(sorted(media.items()))
+    if any(
+        Path(filename).name != filename or _SHA256_RE.fullmatch(digest) is None
+        for filename, digest in normalized.items()
+    ):
+        raise DirectReleaseContractError("kanji static media inventory is invalid")
+    if any(
+        normalized.get(filename) != digest
+        for filename, digest in KANJI_REQUIRED_STATIC_MEDIA.items()
+    ):
+        raise DirectReleaseContractError("kanji attribution media changed")
+    stroke_media = {
+        filename: digest
+        for filename, digest in normalized.items()
+        if KANJI_STROKE_MEDIA_RE.fullmatch(filename)
+    }
+    if (
+        len(normalized) != EXPECTED_KANJI_STATIC_MEDIA
+        or len(stroke_media) != EXPECTED_KANJI_STROKE_MEDIA
+        or set(normalized) != set(stroke_media) | set(KANJI_REQUIRED_STATIC_MEDIA)
+    ):
+        raise DirectReleaseContractError("kanji stroke media inventory changed")
+    if expected_sha256 is not None and sha256_json(normalized) != expected_sha256:
+        raise DirectReleaseContractError("kanji static media hash changed")
+    return normalized
+
+
 def validate_skeleton_manifest(value: Mapping[str, Any]) -> tuple[dict[str, Any], ...]:
     expected_keys = {
         "kanji_note_count",
@@ -174,6 +211,8 @@ def validate_skeleton_manifest(value: Mapping[str, Any]) -> tuple[dict[str, Any]
         "schema_version",
         "skeleton_apkg",
         "skeleton_apkg_sha256",
+        "static_media_count",
+        "static_media_sha256",
         "vector_glyph_count",
     }
     if set(value) != expected_keys:
@@ -189,6 +228,8 @@ def validate_skeleton_manifest(value: Mapping[str, Any]) -> tuple[dict[str, Any]
         or Path(skeleton_name).name != skeleton_name
         or not isinstance(skeleton_digest, str)
         or _SHA256_RE.fullmatch(skeleton_digest) is None
+        or value.get("static_media_count") != EXPECTED_KANJI_STATIC_MEDIA
+        or _SHA256_RE.fullmatch(str(value.get("static_media_sha256"))) is None
         or not isinstance(notes, list)
         or value.get("kanji_note_count") != EXPECTED_KANJI_NOTES
         or len(notes) != EXPECTED_KANJI_NOTES
