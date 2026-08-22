@@ -332,7 +332,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("명령어 없이 만드는 순서", html)
         self.assertIn("실행 파일 더블클릭", html)
         self.assertIn("13,903", html)
-        self.assertIn("20,065", html)
+        self.assertIn("19,921", html)
         self.assertIn(f"{RELEASE_PIN['core']['media_files']:,}", html)
         self.assertNotIn("<strong>1.0.0 사용자:</strong>", html)
         self.assertIn('id="cards"', html)
@@ -898,14 +898,12 @@ class PublicSiteTests(unittest.TestCase):
             "기존 노트 업데이트</h3><span class=\"v2-state on\">항상",
             html,
         )
-        self.assertIn("v1.2.1</th><td><strong>항상", html)
-        self.assertIn("v1.2.0</th><td><strong>항상", html)
-        self.assertIn("v1.1.x</th><td><strong>항상", html)
+        self.assertIn("언제나 <code>항상</code>", html)
+        self.assertIn("출발 버전에 따라 옵션을 다르게 고를 필요가 없습니다", html)
+        self.assertNotIn("지금 사용하는 버전", html)
         self.assertIn("직접 수정한 공식 노트 필드도 덮어쓸 수 있으므로", html)
-        self.assertIn("v1.1.x", html)
-        self.assertIn("v1.0.x", html)
-        self.assertIn("새 한자 읽기·쓰기 구조", html)
         self.assertIn("기존 한자 확장은 v1.3.0 빌더로 다시 만듭니다", html)
+        self.assertIn("기존 한자 읽기 카드는 현재 덱에 그대로 남습니다", html)
         self.assertIn("쓰기 순서가 포함된 카드 4,674장", html)
         self.assertIn("모든 기기에서 다시 전체 동기화합니다", html)
         self.assertNotIn("JLPT MAX덱 · 음성", html)
@@ -1019,7 +1017,7 @@ class PublicSiteTests(unittest.TestCase):
             "어휘·음성·실전 문제를 담은 한국어권 JLPT Anki 덱",
             "6,018",
             "7,876",
-            "20,065",
+            "19,921",
         ):
             self.assertIn(current, source)
         for stale in (

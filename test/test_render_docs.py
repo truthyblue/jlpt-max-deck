@@ -413,7 +413,7 @@ class DocumentationRenderTest(unittest.TestCase):
         self.assertIn("필터 덱은 선택 기능입니다", anki_guide)
         self.assertIn("study-guide.html#filtered", anki_guide)
 
-    def test_update_guides_publish_current_minor_import_policy(
+    def test_update_guides_publish_one_import_policy_for_all_updates(
         self,
     ) -> None:
         current_sources = (
@@ -423,19 +423,20 @@ class DocumentationRenderTest(unittest.TestCase):
         for path in current_sources:
             content = path.read_text(encoding="utf-8")
             with self.subTest(source=path.relative_to(ROOT).as_posix()):
-                self.assertIn("v1.3.0", content)
-                self.assertIn("v1.2.1", content)
-                self.assertIn("v1.2.0", content)
                 self.assertIn("항상", content)
-                self.assertIn("v1.1.x", content)
-                self.assertIn("v1.0.x", content)
                 self.assertIn("전체 동기화", content)
 
         anki_guide = current_sources[0].read_text(encoding="utf-8")
         update_page = current_sources[1].read_text(encoding="utf-8")
         self.assertIn("기존 노트 업데이트: 항상", anki_guide)
+        self.assertIn("모든 JLPT MAX 덱 업데이트", anki_guide)
+        self.assertNotIn("지금 사용하는 버전", anki_guide)
         self.assertNotIn(">새 버전일 때</strong>", update_page)
+        self.assertIn("언제나 <code>항상</code>", update_page)
+        self.assertNotIn("지금 사용하는 버전", update_page)
         self.assertIn("기존 한자 확장은 v1.3.0 빌더로 다시 만듭니다", update_page)
+        self.assertIn("기존 한자 읽기 카드는 현재 덱에 그대로 남습니다", update_page)
+        self.assertIn("한자::읽기::상권·하권", anki_guide)
 
         historical_minor_release = (
             ROOT / "docs-src/docs/releases/v1.2.0.md.j2"

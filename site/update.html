@@ -124,20 +124,11 @@
           <h2>복습 기록은 유지하고 카드 내용만 새로 바꿉니다.</h2>
           <div class="v2-option-grid">
             <article class="v2-option"><div class="v2-option-head"><h3>학습 진행 상태</h3><span class="v2-state off">끄기</span></div><p>기존 복습 기록과 일정을 그대로 둡니다.</p></article>
-            <article class="v2-option"><div class="v2-option-head"><h3>기존 노트 업데이트</h3><span class="v2-state on">항상</span></div><p>어느 지원 버전에서 오더라도 새 한자 읽기·쓰기 구조를 적용합니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>기존 노트 업데이트</h3><span class="v2-state on">항상</span></div><p>모든 JLPT MAX 덱 업데이트에 같은 옵션을 사용합니다.</p></article>
             <article class="v2-option"><div class="v2-option-head"><h3>노트 유형 병합</h3><span class="v2-state on">켜기</span></div><p>기존 노트 유형을 새 버전과 연결합니다.</p></article>
             <article class="v2-option"><div class="v2-option-head"><h3>개인 덱 옵션</h3><span class="v2-state">보존</span></div><p>직접 바꾼 새 카드 수와 FSRS 설정을 그대로 둡니다.</p></article>
           </div>
-          <table class="v2-release-facts">
-            <thead><tr><th scope="col">지금 사용하는 버전</th><th scope="col">기존 노트 업데이트</th><th scope="col">이유</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">v1.2.1</th><td><strong>항상</strong></td><td>한자 읽기·쓰기 노트 유형과 카드 템플릿을 적용합니다.</td></tr>
-              <tr><th scope="row">v1.2.0</th><td><strong>항상</strong></td><td>v1.2.1 변경과 새 한자 읽기·쓰기 구조를 함께 적용합니다.</td></tr>
-              <tr><th scope="row">v1.1.x</th><td><strong>항상</strong></td><td>고저 악센트 필드와 v1.3.0 카드 템플릿을 함께 적용합니다.</td></tr>
-              <tr><th scope="row">v1.0.x</th><td><strong>항상</strong></td><td>그동안 추가된 필드와 v1.3.0 카드 템플릿을 함께 적용합니다.</td></tr>
-            </tbody>
-          </table>
-          <div class="v2-callout warning"><strong>v1.3.0은 기존 노트 업데이트를 <code>항상</code>으로 선택하세요.</strong><p>한자 읽기·쓰기 노트 유형과 카드 템플릿을 새 구조로 맞춥니다. <code>항상</code>은 직접 수정한 공식 노트 필드도 덮어쓸 수 있으므로 먼저 동기화하거나 백업하세요.</p></div>
+          <div class="v2-callout warning"><strong>기존 노트 업데이트는 언제나 <code>항상</code>을 선택하세요.</strong><p>출발 버전에 따라 옵션을 다르게 고를 필요가 없습니다. <code>항상</code>은 직접 수정한 공식 노트 필드도 덮어쓸 수 있으므로 그런 수정이 있다면 먼저 동기화하거나 백업하세요.</p></div>
         </section>
 
         <section class="v2-guide-section" id="recommended-settings">
@@ -157,6 +148,7 @@
             <li><div><strong>새 카드 내용과 템플릿이 반영됐는지 확인합니다.</strong></div></li>
             <li><div><strong>실전의 신규 카드 수집이 무작위 노트인지 확인합니다.</strong></div></li>
             <li><div><strong>기존 한자 확장은 v1.3.0 빌더로 다시 만듭니다.</strong><p>한자 2,337개에 읽기와 쓰기 노트를 각각 만들고, 쓰기 순서가 포함된 카드 4,674장을 적용합니다.</p></div></li>
+            <li><div><strong>기존 한자 읽기 카드는 현재 덱에 그대로 남습니다.</strong><p>일반 APKG 가져오기는 덱 위치를 바꾸지 않으므로 한자::읽기::상권·하권은 비어 있을 수 있습니다. 새 폴더 구조를 쓰려면 카드 탐색기에서 기존 일상무따 상권·하권 카드를 읽기 상권·하권으로 직접 옮기세요.</p></div></li>
             <li><div><strong>가져오기가 끝나면 모든 기기에서 다시 전체 동기화합니다.</strong></div></li>
             <li><div><strong>교체된 예전 음성이 남으면 데스크톱 Anki의 도구 → 미디어 검사에서 정리합니다.</strong><p>새 카드와 음성이 정상인지 확인하고 모든 기기의 미디어 동기화를 끝낸 뒤, 미사용 파일 목록을 확인해 삭제하고 다시 동기화합니다. 다른 덱의 미사용 파일도 함께 표시될 수 있으므로 목록을 먼저 확인하세요. 삭제한 파일은 운영체제 휴지통에서 복구할 수 있습니다.</p></div></li>
           </ol>
