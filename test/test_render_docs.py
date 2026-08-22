@@ -32,6 +32,14 @@ TEST_LIFECYCLE = {
                 "package count tests can pass while learner documentation labels character count as note or card count"
             ),
         },
+        "DocumentationRenderTest.test_v130_copy_separates_new_writing_cards_from_manual_reading_move": {
+            "protected_contract": (
+                "every v1.3.0 publication copy says writing cards are added while existing reading cards remain in the old everyday deck until the learner moves them"
+            ),
+            "not_subsumed_by": (
+                "general update-guide checks can pass while the release announcement incorrectly implies that the old reading deck moves automatically"
+            ),
+        },
         "DocumentationRenderTest.test_historical_v12_release_outputs_are_byte_identical": {
             "protected_contract": (
                 "rendering current documentation data cannot rewrite the published v1.2.0 or v1.2.1 release evidence"
@@ -397,6 +405,24 @@ class DocumentationRenderTest(unittest.TestCase):
         ):
             with self.subTest(reference=reference):
                 self.assertIn(reference, current_sources)
+
+    def test_v130_copy_separates_new_writing_cards_from_manual_reading_move(
+        self,
+    ) -> None:
+        paths = (
+            ROOT / "docs-src/docs/releases/v1.3.0.md.j2",
+            ROOT / "docs/jlpt-gallery-updates/v1.3.0.html",
+            ROOT / "docs/release-details/v1.3.0.md",
+            ROOT / "docs/release-drafts/v1.3.0-github-release.md",
+        )
+        for path in paths:
+            copy = path.read_text(encoding="utf-8")
+            with self.subTest(path=path.relative_to(ROOT).as_posix()):
+                self.assertIn("새 쓰기 카드 2,337장이 추가", copy)
+                self.assertIn("일상무따::상권·하권", copy)
+                self.assertIn("한자::읽기::상권·하권", copy)
+                self.assertIn("직접 옮", copy)
+                self.assertNotIn("새 카드가 자동으로 생김", copy)
 
     def test_current_entry_guides_do_not_repeat_retired_update_or_filter_flows(
         self,
