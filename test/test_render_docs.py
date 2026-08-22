@@ -40,6 +40,14 @@ TEST_LIFECYCLE = {
                 "general update-guide checks can pass while the release announcement incorrectly implies that the old reading deck moves automatically"
             ),
         },
+        "DocumentationRenderTest.test_v130_copy_names_ios_default_change_and_example_edge_fix": {
+            "protected_contract": (
+                "v1.3.0 publication copy identifies the changed iPhone and iPad default, distinguishes the repaired example edge case from the v1.2.1 feature, and keeps package instructions in the update steps"
+            ),
+            "not_subsumed_by": (
+                "screenshot and asset-reference tests can pass while the surrounding learner explanation describes the wrong release history or repeats a confusing package section"
+            ),
+        },
         "DocumentationRenderTest.test_historical_v12_release_outputs_are_byte_identical": {
             "protected_contract": (
                 "rendering current documentation data cannot rewrite the published v1.2.0 or v1.2.1 release evidence"
@@ -423,6 +431,29 @@ class DocumentationRenderTest(unittest.TestCase):
                 self.assertIn("한자::읽기::상권·하권", copy)
                 self.assertIn("직접 옮", copy)
                 self.assertNotIn("새 카드가 자동으로 생김", copy)
+
+    def test_v130_copy_names_ios_default_change_and_example_edge_fix(
+        self,
+    ) -> None:
+        paths = (
+            ROOT / "docs-src/docs/releases/v1.3.0.md.j2",
+            ROOT / "docs/jlpt-gallery-updates/v1.3.0.html",
+            ROOT / "docs/release-details/v1.3.0.md",
+            ROOT / "docs/release-drafts/v1.3.0-github-release.md",
+        )
+        for path in paths:
+            copy = path.read_text(encoding="utf-8")
+            with self.subTest(path=path.relative_to(ROOT).as_posix()):
+                self.assertIn("무음 모드 재생을 기본값으로 변경", copy)
+                self.assertIn("v1.3.0부터", copy)
+                self.assertIn("다른 앱 음악과 함께 재생", copy)
+                self.assertIn("예문을 뜻 묶음별 흰 영역으로 나누는 기능은 v1.2.1", copy)
+                self.assertIn("뜻 묶음이 하나뿐", copy)
+                self.assertNotIn("고저 악센트와 예문 묶음 화면 개선", copy)
+
+        gallery = paths[1].read_text(encoding="utf-8")
+        self.assertIn("한자 APKG도 다시 만들어 가져와야 함", gallery)
+        self.assertNotIn("기본 덱과 한자 확장을 따로 배포", gallery)
 
     def test_current_entry_guides_do_not_repeat_retired_update_or_filter_flows(
         self,

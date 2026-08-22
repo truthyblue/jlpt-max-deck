@@ -73,27 +73,33 @@ v1.2.1에서 v1.3.0을 실제로 가져오면 기존 `어휘(가나 보조)` 카
 재생할 때는 찾은 위치를 재사용하도록 고쳤습니다. 원본 음성 파일 18,434개는
 이전 승인본과 byte 단위로 같습니다.
 
-## iPhone·iPad 무음 모드 재생 옵션 추가
+## iPhone·iPad 무음 모드 재생을 기본값으로 변경
 
-iPhone·iPad에서는 무음 모드에서도 카드 음성이 재생됩니다. 카드 설정에
-**다른 앱 음악과 함께 재생** 옵션을 추가했습니다. 이 옵션을 직접 켜면 다른 앱의
-음악과 카드 음성을 함께 재생하고, 대신 iPhone 무음 모드에서는 카드 음성이
-나오지 않을 수 있습니다. 선택값은 저장됩니다.
+v1.3.0부터 iPhone·iPad의 기본 재생 방식을 바꿨습니다. 이전 버전에서는 다른 앱
+음악과 카드 음성이 함께 재생되는 대신 무음 모드에서 카드 음성이 나오지 않을 수
+있었습니다. 이제 기본값은 무음 모드에서도 카드 음성을 재생합니다. 이전 방식이
+필요하면 카드 설정의 **다른 앱 음악과 함께 재생**을 켜면 됩니다. 이 옵션을 켜면
+무음 모드에서는 카드 음성이 나오지 않을 수 있으며 선택값은 저장됩니다.
 
 ![iPhone과 iPad의 다른 앱 음악과 함께 재생 옵션](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v1.3.0/site/assets/releases/v1.3.0/gallery-v1.3.0-ios-audio-setting.png)
 
-## 고저 악센트와 예문 묶음 화면 개선
+## 고저 악센트 읽기와 카드 배치 개선
 
 - 단어 고저 악센트의 읽기 글자를 키웠습니다. 예문 읽기 크기는 그대로입니다.
 - 긴 루비와 괄호 읽기가 서로 밀지 않도록 간격을 보정했습니다.
-- 같은 뜻을 보여 주는 여러 예문은 한 영역에 모으고, 다른 뜻의 예문과 분리했습니다.
 - 글꼴과 표시 설정을 첫 화면 전에 적용하고 학습 중 글꼴을 고정해 깜빡임과 글자
   이동을 줄였습니다.
 - 한자 카드 앞뒤의 머리글 위치와 모바일 폭의 간격을 안정화했습니다.
 
 ![더 크게 표시되는 단어 고저 악센트 읽기](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v1.3.0/site/assets/releases/v1.3.0/gallery-v1.3.0-word-pitch-reading.png)
 
-![같은 뜻끼리 모은 예문](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v1.3.0/site/assets/releases/v1.3.0/gallery-v1.3.0-example-groups.png)
+## v1.2.1 예문 묶음에서 빠진 경우 수정
+
+예문을 뜻 묶음별 흰 영역으로 나누는 기능은 v1.2.1에서 추가됐습니다. v1.3.0에서는
+단어 전체에 뜻 묶음이 하나뿐이고 그 안에 표현이 여러 개일 때 예문이 각각 떨어져
+보이던 경우도 한 영역으로 모이도록 고쳤습니다.
+
+![하나의 뜻 묶음에 모인 물고기와 생선 예문](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v1.3.0/site/assets/releases/v1.3.0/gallery-v1.3.0-example-groups.png)
 
 ## AnkiDroid 구형 학습 화면 안내 추가
 
