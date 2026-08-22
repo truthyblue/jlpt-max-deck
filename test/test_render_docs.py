@@ -48,6 +48,14 @@ TEST_LIFECYCLE = {
                 "screenshot and asset-reference tests can pass while the surrounding learner explanation describes the wrong release history or repeats a confusing package section"
             ),
         },
+        "DocumentationRenderTest.test_v130_gallery_puts_required_learner_actions_first": {
+            "protected_contract": (
+                "the v1.3.0 gallery announcement puts every required existing-user action in one ordered section and keeps internal release evidence out of learner-facing copy"
+            ),
+            "not_subsumed_by": (
+                "individual wording checks can pass while the learner must hunt through feature sections for the kana cleanup, kanji deck move, and final sync steps"
+            ),
+        },
         "DocumentationRenderTest.test_historical_v12_release_outputs_are_byte_identical": {
             "protected_contract": (
                 "rendering current documentation data cannot rewrite the published v1.2.0 or v1.2.1 release evidence"
@@ -454,6 +462,49 @@ class DocumentationRenderTest(unittest.TestCase):
         gallery = paths[1].read_text(encoding="utf-8")
         self.assertIn("한자 APKG도 다시 만들어 가져와야 함", gallery)
         self.assertNotIn("기본 덱과 한자 확장을 따로 배포", gallery)
+
+    def test_v130_gallery_puts_required_learner_actions_first(self) -> None:
+        gallery = (
+            ROOT / "docs/jlpt-gallery-updates/v1.3.0.html"
+        ).read_text(encoding="utf-8")
+
+        action_heading = gallery.index("기존 사용자 필수 작업")
+        feature_heading = gallery.index("한자 쓰기 카드 2,337장 추가", action_heading)
+        self.assertLess(action_heading, feature_heading)
+
+        for required_copy in (
+            "업데이트할 때 이 4단계를 직접 해주세요",
+            "기존 노트 업데이트: 항상",
+            "JLPT MAX덱::일상무따::상권",
+            "카드 → 덱 변경",
+            "JLPT MAX덱::한자::읽기::상권",
+            "JLPT MAX덱 어휘 / 어휘(가나 보조)",
+            "빈 카드 도구의 삭제",
+            "카드 탐색기의 ‘노트 삭제’는 누르면 안 됨",
+            "모든 기기에서 전체 동기화하기",
+        ):
+            with self.subTest(required_copy=required_copy):
+                self.assertIn(required_copy, gallery[action_heading:feature_heading])
+
+        for required_link in (
+            "업데이트 방법 자세히 보기",
+            "v1.3.0 다운로드 · GitHub Release",
+            "v1.3.0 상세 변경 내역 보기",
+        ):
+            with self.subTest(required_link=required_link):
+                self.assertIn(required_link, gallery)
+
+        for internal_copy in (
+            "실제로 업데이트해 보니",
+            "물리적으로 남",
+            "byte 단위",
+            "TTS 합성",
+            "실제 배포 후보 검증",
+            "빈 profile",
+            "해시로 묶",
+        ):
+            with self.subTest(internal_copy=internal_copy):
+                self.assertNotIn(internal_copy, gallery)
 
     def test_current_entry_guides_do_not_repeat_retired_update_or_filter_flows(
         self,
