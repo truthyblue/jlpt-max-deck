@@ -163,6 +163,7 @@ dependencies = [
     { name = "anki" },
     { name = "jinja2" },
     { name = "pdfplumber" },
+    { name = "pillow" },
 ]
 
 [package.metadata]
@@ -170,6 +171,7 @@ requires-dist = [
     { name = "anki", specifier = "==25.9.2" },
     { name = "jinja2", specifier = ">=3.1" },
     { name = "pdfplumber", specifier = ">=0.11" },
+    { name = "pillow", specifier = ">=12.3" },
 ]
 
 [[package]]
