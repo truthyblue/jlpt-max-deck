@@ -18,8 +18,10 @@ from pathlib import Path
 from typing import Any
 
 from anki.collection import Collection
+from anki.decks import DeckId
 from anki.exporting import AnkiPackageExporter
 from anki.import_export_pb2 import ImportAnkiPackageRequest
+from anki.notes import NoteId
 
 from direct_release_contract import (
     EXPECTED_KANJI_ADDON_CARDS,
@@ -50,7 +52,7 @@ from public_kanji import (
     GilbutKanjiSlot,
     extract_all_gilbut_kanji_slots,
     gilbut_glyph_media_filename,
-    gilbut_vector_glyph_svg,
+    gilbut_vector_glyph_png,
 )
 
 
@@ -109,7 +111,7 @@ def _kanji_note_families(collection: Collection) -> dict[str, list[Any]]:
         if model is None:
             raise KanjiAddonBuildError(f"kanji skeleton notetype is missing: {name}")
         notes = [
-            collection.get_note(int(note_id))
+            collection.get_note(NoteId(int(note_id)))
             for note_id in collection.find_notes(f"mid:{int(model['id'])}")
         ]
         notes.sort(key=lambda note: note["SortKey"])
@@ -142,7 +144,7 @@ def _export_root(collection: Collection, output: Path) -> int:
     if root is None:
         raise KanjiAddonBuildError("kanji skeleton root deck is missing")
     exporter = AnkiPackageExporter(collection)
-    exporter.did = int(root["id"])
+    exporter.did = DeckId(int(root["id"]))
     exporter.includeSched = True
     exporter.includeMedia = True
     exporter.exportInto(str(output))
@@ -274,7 +276,7 @@ def _fill_note(
                 f"kanji vector source is missing: {slot.source_id}"
             )
         filename = gilbut_glyph_media_filename(slot)
-        payload = gilbut_vector_glyph_svg(source, slot)
+        payload = gilbut_vector_glyph_png(source, slot)
         target = media_root / filename
         target.write_bytes(payload)
         note["GlyphHTML"] = (

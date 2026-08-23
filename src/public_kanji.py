@@ -9,17 +9,21 @@ import statistics
 import unicodedata
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+from io import BytesIO
 from pathlib import Path
 from types import MappingProxyType
 from typing import Any
 
 import pdfplumber
+from PIL import Image
 
 from direct_release_contract import sha256_file, sha256_json
 
 
 GILBUT_EXTRACTION_POLICY_VERSION = "public-gilbut-kanji-geometry-v1"
-GILBUT_GLYPH_POLICY_VERSION = "public-gilbut-vector-glyph-v1"
+GILBUT_GLYPH_POLICY_VERSION = "public-gilbut-vector-glyph-png-v2"
+GILBUT_GLYPH_PNG_RESOLUTION = 576
+GILBUT_GLYPH_PNG_PADDING_PIXELS = 16
 EXPECTED_GILBUT_SLOT_COUNT = 2_337
 GILBUT_GLYPH_EQUIVALENTS = MappingProxyType({"戶": ("戸",)})
 _NUMBERED_SLOT_RE = re.compile(r"[0-9]{4}")
@@ -389,89 +393,6 @@ def extract_all_gilbut_kanji_slots(
     return slots
 
 
-def _svg_number(value: float) -> str:
-    rendered = f"{value:.3f}".rstrip("0").rstrip(".")
-    return "0" if rendered in {"", "-0"} else rendered
-
-
-def _svg_point(
-    point: Sequence[Any], *, x0: float, top: float, padding: float
-) -> tuple[float, float]:
-    if len(point) != 2:
-        raise PublicKanjiError("Gilbut vector glyph path point is invalid")
-    x, y = point
-    if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
-        raise PublicKanjiError("Gilbut vector glyph path point is invalid")
-    return float(x) - x0 + padding, float(y) - top + padding
-
-
-def _svg_path_data(
-    raw_path: Sequence[Any],
-    *,
-    x0: float,
-    top: float,
-    padding: float,
-) -> str:
-    commands: list[str] = []
-    current: tuple[float, float] | None = None
-    start: tuple[float, float] | None = None
-    for raw in raw_path:
-        if not isinstance(raw, (tuple, list)) or not raw:
-            raise PublicKanjiError("Gilbut vector glyph path command is invalid")
-        operator = raw[0]
-        points = [
-            _svg_point(point, x0=x0, top=top, padding=padding)
-            for point in raw[1:]
-        ]
-        if operator == "m" and len(points) == 1:
-            current = start = points[0]
-            commands.append(f"M{_svg_number(current[0])} {_svg_number(current[1])}")
-        elif operator == "l" and len(points) == 1:
-            current = points[0]
-            commands.append(f"L{_svg_number(current[0])} {_svg_number(current[1])}")
-        elif operator == "c" and len(points) == 3:
-            current = points[2]
-            commands.append(
-                "C"
-                + " ".join(
-                    f"{_svg_number(point[0])} {_svg_number(point[1])}"
-                    for point in points
-                )
-            )
-        elif operator == "v" and len(points) == 2 and current is not None:
-            first_control = current
-            second_control, endpoint = points
-            commands.append(
-                f"C{_svg_number(first_control[0])} {_svg_number(first_control[1])} "
-                f"{_svg_number(second_control[0])} {_svg_number(second_control[1])} "
-                f"{_svg_number(endpoint[0])} {_svg_number(endpoint[1])}"
-            )
-            current = endpoint
-        elif operator == "y" and len(points) == 2:
-            control, endpoint = points
-            current = endpoint
-            commands.append(
-                f"C{_svg_number(control[0])} {_svg_number(control[1])} "
-                f"{_svg_number(endpoint[0])} {_svg_number(endpoint[1])} "
-                f"{_svg_number(endpoint[0])} {_svg_number(endpoint[1])}"
-            )
-        elif operator == "h" and not points:
-            commands.append("Z")
-            current = start
-        else:
-            raise PublicKanjiError(
-                f"unsupported Gilbut vector glyph path command: {operator!r}"
-            )
-    return "".join(commands)
-
-
-def _curve_path_payload(curve: Mapping[str, Any]) -> Any:
-    raw_path = curve.get("path")
-    if not isinstance(raw_path, list) or not raw_path:
-        raise PublicKanjiError("Gilbut vector glyph curve has no path")
-    return raw_path
-
-
 def gilbut_glyph_media_filename(slot: GilbutKanjiSlot) -> str:
     if slot.glyph_kind != "vector":
         raise PublicKanjiError("only vector Gilbut glyphs need static media")
@@ -482,14 +403,14 @@ def gilbut_glyph_media_filename(slot: GilbutKanjiSlot) -> str:
         "source_id": slot.source_id,
         "source_sha256": slot.source_sha256,
     }
-    return f"jlpt-public-kanji-{sha256_json(identity)[:24]}.svg"
+    return f"jlpt-public-kanji-{sha256_json(identity)[:24]}.png"
 
 
-def gilbut_vector_glyph_svg(
+def gilbut_vector_glyph_png(
     path: Path,
     slot: GilbutKanjiSlot,
 ) -> bytes:
-    """Serialize one outline-only PDF glyph as deterministic standalone SVG."""
+    """Render one outline-only PDF glyph as transparent black-ink PNG."""
     if slot.glyph_kind != "vector":
         raise PublicKanjiError("Gilbut slot is not a vector glyph")
     if sha256_file(path) != slot.source_sha256:
@@ -503,51 +424,46 @@ def gilbut_vector_glyph_svg(
         if not 1 <= slot.page <= len(document.pages):
             raise PublicKanjiError("Gilbut vector glyph page is invalid")
         page = document.pages[slot.page - 1]
-        curves = [
-            curve
-            for curve in page.curves
-            if bool(curve.get("fill"))
-            and left - 0.002 <= float(curve["x0"])
-            and float(curve["x1"]) <= right + 0.002
-            and top - 0.002 <= float(curve["top"])
-            and float(curve["bottom"]) <= bottom + 0.002
-        ]
-    if not curves:
-        raise PublicKanjiError("Gilbut vector glyph paths are missing")
+        page_left, page_top, page_right, page_bottom = map(float, page.bbox)
+        padding_points = 1.5
+        crop_box = (
+            max(page_left, left - padding_points),
+            max(page_top, top - padding_points),
+            min(page_right, right + padding_points),
+            min(page_bottom, bottom + padding_points),
+        )
+        try:
+            rendered = page.crop(crop_box).to_image(
+                resolution=GILBUT_GLYPH_PNG_RESOLUTION,
+                antialias=True,
+            ).original.convert("L")
+        except Exception as exc:
+            raise PublicKanjiError(
+                f"cannot render Gilbut vector glyph PDF: {exc}"
+            ) from exc
 
-    unique: dict[str, Mapping[str, Any]] = {}
-    for curve in curves:
-        payload = _curve_path_payload(curve)
-        unique.setdefault(sha256_json(payload), curve)
-    ordered = sorted(
-        unique.values(),
-        key=lambda value: (
-            float(value["top"]),
-            float(value["x0"]),
-            float(value["bottom"]),
-            float(value["x1"]),
-            sha256_json(_curve_path_payload(value)),
+    alpha = rendered.point(
+        [255 if value < 192 else 0 for value in range(256)],
+        mode="L",
+    )
+    ink_box = alpha.getbbox()
+    if ink_box is None:
+        raise PublicKanjiError("Gilbut vector glyph pixels are missing")
+    alpha = alpha.crop(ink_box)
+    canvas = Image.new(
+        "RGBA",
+        (
+            alpha.width + GILBUT_GLYPH_PNG_PADDING_PIXELS * 2,
+            alpha.height + GILBUT_GLYPH_PNG_PADDING_PIXELS * 2,
         ),
+        (17, 17, 17, 0),
     )
-    padding = 1.5
-    width = right - left + padding * 2
-    height = bottom - top + padding * 2
-    paths: list[str] = []
-    for curve in ordered:
-        data = _svg_path_data(
-            _curve_path_payload(curve),
-            x0=left,
-            top=top,
-            padding=padding,
-        )
-        fill_rule = "evenodd" if bool(curve.get("evenodd")) else "nonzero"
-        paths.append(
-            f'<path d="{data}" fill="#111111" fill-rule="{fill_rule}"/>'
-        )
-    svg = (
-        '<svg xmlns="http://www.w3.org/2000/svg" '
-        f'viewBox="0 0 {_svg_number(width)} {_svg_number(height)}">'
-        + "".join(paths)
-        + "</svg>\n"
+    ink = Image.new("RGBA", alpha.size, (17, 17, 17, 255))
+    ink.putalpha(alpha)
+    canvas.alpha_composite(
+        ink,
+        (GILBUT_GLYPH_PNG_PADDING_PIXELS, GILBUT_GLYPH_PNG_PADDING_PIXELS),
     )
-    return svg.encode("utf-8")
+    output = BytesIO()
+    canvas.save(output, format="PNG", compress_level=9, optimize=False)
+    return output.getvalue()
