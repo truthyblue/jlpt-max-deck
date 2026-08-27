@@ -68,9 +68,27 @@
       </div>
     </div>
     <div style="margin-top:18px;padding:16px 17px;color:#101512;background:#d8ff62;line-height:1.65;"><strong>기록은 먼저 기기에 저장함.</strong> 오프라인에서도 오늘 상태와 학습 흐름을 볼 수 있고, 연결이 돌아오면 Worker·Turso로 동기화함.</div>
-    <div style="margin:20px 0 0;padding:18px;background:#f4f7f5;border:1px solid #dfe5e1;">
-      <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v2.0.0/gallery-v2.0.0-study-records.png" alt="모바일 내 기록의 오늘 학습량·연속 학습·JLPT 100일 랭킹과 기간 분석 화면" width="390" height="754" style="display:block;width:100%;max-width:390px;height:auto;margin:0 auto;border:0;">
-      <div style="margin-top:10px;color:#59645e;font-size:13px;text-align:center;">모바일 내 기록 · 분석 화면</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:20px 0 0;">
+      <figure style="margin:0;padding:14px;background:#f4f7f5;border:1px solid #dfe5e1;">
+        <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v2.0.0/gallery-v2.0.0-study-records-overview.png" alt="오늘 학습량, 연속 학습, JLPT 100일 랭킹, 최근 학습 흐름을 한눈에 보여 주는 내 기록 최신 화면" width="390" height="844" style="display:block;width:100%;max-width:390px;height:auto;margin:0 auto;border:0;">
+        <figcaption style="margin-top:10px;color:#59645e;font-size:13px;text-align:center;">오늘 · 연속 학습 · 이번 주 흐름</figcaption>
+      </figure>
+      <figure style="margin:0;padding:14px;background:#f4f7f5;border:1px solid #dfe5e1;">
+        <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v2.0.0/gallery-v2.0.0-study-records-calendar.png" alt="최근 7일 학습량, 이번 달 순위와 완료·연속·보호·일부 학습일을 구분한 내 기록 달력 화면" width="390" height="844" style="display:block;width:100%;max-width:390px;height:auto;margin:0 auto;border:0;">
+        <figcaption style="margin-top:10px;color:#59645e;font-size:13px;text-align:center;">최근 7일 · 이번 달 순위 · 학습 달력</figcaption>
+      </figure>
+      <figure style="margin:0;padding:14px;background:#f4f7f5;border:1px solid #dfe5e1;">
+        <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v2.0.0/gallery-v2.0.0-study-records-analysis.png" alt="30일 총 답안 확인, 완료일, 학습일, 기간 흐름과 영역별 구성을 보여 주는 내 기록 분석 화면" width="390" height="844" style="display:block;width:100%;max-width:390px;height:auto;margin:0 auto;border:0;">
+        <figcaption style="margin-top:10px;color:#59645e;font-size:13px;text-align:center;">7일~전체 기간 · 흐름 · 영역별 분석</figcaption>
+      </figure>
+      <figure style="margin:0;padding:14px;background:#f4f7f5;border:1px solid #dfe5e1;">
+        <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v2.0.0/gallery-v2.0.0-study-records-jlpt-ranking.png" alt="JLPT N3 D-100 목표와 학습량·꾸준함 순위를 보여 주는 100일 랭킹 상세 화면" width="390" height="844" style="display:block;width:100%;max-width:390px;height:auto;margin:0 auto;border:0;">
+        <figcaption style="margin-top:10px;color:#59645e;font-size:13px;text-align:center;">JLPT 목표 · D-day · 100일 랭킹</figcaption>
+      </figure>
+      <figure style="margin:0;padding:14px;background:#f4f7f5;border:1px solid #dfe5e1;">
+        <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v2.0.0/gallery-v2.0.0-study-records-history.png" alt="일간·주간·월간 최고 기록과 최장 연속 학습, 100일 랭킹 이력을 보여 주는 내 기록 이력 화면" width="390" height="844" style="display:block;width:100%;max-width:390px;height:auto;margin:0 auto;border:0;">
+        <figcaption style="margin-top:10px;color:#59645e;font-size:13px;text-align:center;">개인 최고 · 최장 연속 · 랭킹 이력</figcaption>
+      </figure>
     </div>
     <p style="margin:14px 0 0;color:#d9dedb;font-size:13px;">처음 안내에서 <strong>내 기록 시작하기</strong>를 눌렀을 때만 기록을 시작함. <strong>사용하지 않기</strong>를 골라도 덱 학습은 계속되고 다시 자동으로 묻지 않음. 카드 내용·정답 여부·답 버튼 선택·복습 이력·학습 시간·실제 JLPT 결과·응시 여부·JLPT 계정 정보는 수집하지 않음. production Worker·Turso·D1 활성화와 실물 기기 검증은 별도 운영 rollout에서 진행함.</p>
   </div>
@@ -97,6 +115,7 @@
       <li>느리게·보통·빠르게 속도 변경</li>
       <li>전체 획 개요에서 원하는 구간 다시 재생</li>
       <li>한자 구성 요소 추가</li>
+      <li>iPad에서 Apple Pencil로 따라쓸 때 선택·복사 메뉴가 끼어들지 않도록 수정</li>
       <li>한자나 모양자를 누르면 <strong>nihongokanji.com</strong> 설명으로 바로 이동</li>
     </ul>
     <p style="margin:12px 0 0;">기존 한자 읽기·쓰기 카드 ID와 학습 기록은 유지됨.</p>
@@ -119,6 +138,7 @@
     <ul style="margin:17px 0 0;padding-left:23px;">
       <li>후리가나·해석·표시 설정과 음성 설정을 나누고 지원되는 모바일 카드에서 기억</li>
       <li>음성 카드가 처음 나왔을 때 자동재생이 빠지던 문제 수정</li>
+      <li>음성 카드에서도 내 기록 HUD를 다른 카드와 같은 왼쪽 위에 고정</li>
       <li>합성 한자 크기와 Android 답면 잘림 수정</li>
       <li>검은 배경의 투명 한자 이미지 수정</li>
       <li>사전 버튼 새 창 열기</li>
