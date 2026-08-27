@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <!-- 상태: v2.0.0 게시 전 검토 원문. publication approval 전에는 게시하지 않음. -->
-<!-- 게시글 제목: [Anki] JLPT MAX v2.0.0 - 어휘 9천개 -->
+<!-- 게시글 제목: [Anki] JLPT MAX v2.0.0 - 문법·어휘·내 기록 -->
 <div style="max-width:760px;margin:0 auto;color:#1b211d;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;font-size:16px;line-height:1.8;word-break:keep-all;">
   <div style="padding:48px 28px 40px;color:#fff;background:#101512;border-top:10px solid #d8ff62;">
     <div style="color:#d8ff62;font-size:13px;font-weight:900;letter-spacing:.12em;">JLPT MAX DECK v2.0.0</div>
@@ -45,6 +45,36 @@
   </div>
   <p style="margin:12px 8px 0;color:#59645e;font-size:13px;">기존판 → v2.0.0 기준. 카드에 표시되는 뜻도 7,051개에서 10,453개로 3,402개 늘었음. 뜻을 나누거나 합치고 기존 예문도 함께 정리해서 뜻과 예문의 증가 수는 조금 다름.</p>
 
+  <div style="margin-top:30px;padding:30px 28px;background:#101512;color:#fff;border-left:9px solid #8ee6b1;">
+    <div style="color:#8ee6b1;font-size:13px;font-weight:900;letter-spacing:.08em;">모바일 내 기록</div>
+    <div style="margin-top:8px;font-size:25px;font-weight:900;line-height:1.35;">오늘·습관·분석·JLPT를 한 화면에</div>
+    <p style="margin:16px 0 0;color:#d9dedb;">AnkiMobile·AnkiDroid 답안 화면에서 동의한 사용자라면 오늘 공부한 흐름을 이어서 확인할 수 있음. 오늘 숫자 하나만 보여 주는 기능이 아니라 최신·분석·이력, 목표 급수와 100일 랭킹까지 이어지는 개인 학습 기록임.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px;margin-top:22px;">
+      <div style="padding:16px;background:#1e2b24;border:1px solid #3a4a40;">
+        <div style="color:#d8ff62;font-size:17px;font-weight:900;">오늘 · 습관</div>
+        <p style="margin:8px 0 0;color:#d9dedb;font-size:14px;line-height:1.65;">답안 화면 확인 횟수를 세고 20회가 되면 오늘 학습 완료로 표시함. 20회는 20개 단어를 외웠다는 뜻이 아니라 하루 학습 세션을 진행했다는 기준임. 실제 완료일로 연속 학습을 이어 보여 주고, 7일 실제 완료마다 보호 1개를 충전함. 보호는 최대 2개까지 모을 수 있음.</p>
+      </div>
+      <div style="padding:16px;background:#1e2b24;border:1px solid #3a4a40;">
+        <div style="color:#d8ff62;font-size:17px;font-weight:900;">최신 · 분석</div>
+        <p style="margin:8px 0 0;color:#d9dedb;font-size:14px;line-height:1.65;"><strong>최신</strong>에서 이번 주 현황·최근 7일 흐름·이번 달 참고 순위·학습 달력을 확인함. <strong>분석</strong>에서는 최근 7일·30일·3개월·1년·전체 흐름과 영역·급수·학습 유형별 구성을 보고, 일간·주간·월간 개인 최고와 최장 연속 학습을 돌아봄.</p>
+      </div>
+      <div style="padding:16px;background:#1e2b24;border:1px solid #3a4a40;">
+        <div style="color:#d8ff62;font-size:17px;font-weight:900;">JLPT 목표 · 100일</div>
+        <p style="margin:8px 0 0;color:#d9dedb;font-size:14px;line-height:1.65;">목표 급수와 다음 공식 시험 D-day를 정함. D-100부터 같은 급수의 100일 랭킹에서 학습량과 꾸준함을 비교하고, D-50 중간 결산·시험일 종료·결과 확인·다음 목표까지 이어짐.</p>
+      </div>
+      <div style="padding:16px;background:#1e2b24;border:1px solid #3a4a40;">
+        <div style="color:#d8ff62;font-size:17px;font-weight:900;">이벤트 · 이력</div>
+        <p style="margin:8px 0 0;color:#d9dedb;font-size:14px;line-height:1.65;">오늘 학습 완료, 어제 기록 추월, 7·30·100·365일 연속 학습, 보호 사용·충전, 개인 최고, 100일 랭킹 시작·중간 결산을 한 번씩 알려 줌. 이력에서는 지난 랭킹과 개인 기록을 다시 확인함.</p>
+      </div>
+    </div>
+    <div style="margin-top:18px;padding:16px 17px;color:#101512;background:#d8ff62;line-height:1.65;"><strong>기록은 먼저 기기에 저장함.</strong> 오프라인에서도 오늘 상태와 학습 흐름을 볼 수 있고, 연결이 돌아오면 Worker·Turso로 동기화함.</div>
+    <div style="margin:20px 0 0;padding:18px;background:#f4f7f5;border:1px solid #dfe5e1;">
+      <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v2.0.0/gallery-v2.0.0-study-records.png" alt="모바일 내 기록의 오늘 학습량·연속 학습·JLPT 100일 랭킹과 기간 분석 화면" width="390" height="754" style="display:block;width:100%;max-width:390px;height:auto;margin:0 auto;border:0;">
+      <div style="margin-top:10px;color:#59645e;font-size:13px;text-align:center;">모바일 내 기록 · 분석 화면</div>
+    </div>
+    <p style="margin:14px 0 0;color:#d9dedb;font-size:13px;">처음 안내에서 <strong>내 기록 시작하기</strong>를 눌렀을 때만 기록을 시작함. <strong>사용하지 않기</strong>를 골라도 덱 학습은 계속되고 다시 자동으로 묻지 않음. 카드 내용·정답 여부·답 버튼 선택·복습 이력·학습 시간·실제 JLPT 결과·응시 여부·JLPT 계정 정보는 수집하지 않음. production Worker·Turso·D1 활성화와 실물 기기 검증은 별도 운영 rollout에서 진행함.</p>
+  </div>
+
   <div style="padding:46px 8px 8px;">
     <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:27px;font-weight:900;letter-spacing:-.045em;">한국어→일본어 카드 9,160장</div>
     <p style="margin:16px 0 0;">한국어 뜻과 예문을 보고 일본어 표기와 읽기를 떠올리는 카드가 모든 어휘에 하나씩 생김. 기존 어휘·음성 카드 일정은 그대로고 이 카드는 새 학습 항목으로 시작함.</p>
@@ -52,21 +82,10 @@
 
   <div style="margin:20px 0 0;padding:18px;background:#f4f7f5;border:1px solid #dfe5e1;">
     <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v2.0.0/gallery-v2.0.0-korean-recall.png" alt="힘들다·큰일이다·매우의 세 뜻과 예문을 보고 일본어를 떠올리는 실제 카드 앞면" width="390" height="380" style="display:block;width:100%;max-width:390px;height:auto;margin:0 auto;border:0;">
-   <div style="margin-top:10px;color:#59645e;font-size:13px;text-align:center;">실제 한국어→일본어 회상 앞면</div>
- </div>
-
-  <div style="margin-top:30px;padding:30px 28px;background:#101512;color:#fff;border-left:9px solid #8ee6b1;">
-    <div style="color:#8ee6b1;font-size:13px;font-weight:900;letter-spacing:.08em;">모바일 내 기록</div>
-    <div style="margin-top:8px;font-size:25px;font-weight:900;line-height:1.35;">오늘 공부한 흐름을 한눈에</div>
-    <p style="margin:16px 0 0;color:#d9dedb;">AnkiMobile·AnkiDroid에서 동의하면 오늘 학습량, 연속 학습, 최근 30일 기록, 목표 급수와 100일 랭킹을 확인할 수 있음. 기록은 모바일에 먼저 저장하고 연결이 돌아오면 동기화함.</p>
-    <div style="margin:20px 0 0;padding:18px;background:#f4f7f5;border:1px solid #dfe5e1;">
-      <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v2.0.0/gallery-v2.0.0-study-records.png" alt="모바일 내 기록의 오늘 학습량·연속 학습·JLPT 100일 랭킹과 기간 분석 화면" width="390" height="754" style="display:block;width:100%;max-width:390px;height:auto;margin:0 auto;border:0;">
-      <div style="margin-top:10px;color:#59645e;font-size:13px;text-align:center;">모바일 내 기록 · 분석 화면</div>
-    </div>
-    <p style="margin:14px 0 0;color:#d9dedb;font-size:13px;">카드 내용·정답 여부·복습 이력·학습 시간은 수집하지 않음. production Worker·Turso·D1 활성화와 실물 기기 검증은 별도 운영 rollout에서 진행함.</p>
+    <div style="margin-top:10px;color:#59645e;font-size:13px;text-align:center;">실제 한국어→일본어 회상 앞면</div>
   </div>
 
- <div style="margin-top:30px;padding:30px 28px;background:#f3ffd1;border-left:9px solid #9fc90c;">
+  <div style="margin-top:30px;padding:30px 28px;background:#f3ffd1;border-left:9px solid #9fc90c;">
     <div style="font-size:24px;font-weight:900;line-height:1.35;">각 급수 안에서 중요한 단어부터</div>
     <p style="margin:14px 0 0;color:#4e5852;">BCCWJ라는 일본어 균형 말뭉치의 사용 빈도를 새 카드 순서에 연결했음. 같은 표기로 바로 연결된 8,172개, 표기 변형·구성 요소 등을 검토해 연결한 934개, 말뭉치에서 찾지 못한 54개까지 전부 포함함.</p>
   </div>
