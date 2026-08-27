@@ -324,11 +324,11 @@ class PublicSiteTests(unittest.TestCase):
         html = (SITE / "index.html").read_text(encoding="utf-8")
         self.assertIn(f"JLPT-MAX-Deck-{RELEASE_VERSION}.apkg", html)
         self.assertNotIn("JLPT-MAX-core", html)
-        self.assertIn(
+        self.assertNotIn(
             f"JLPT-MAX-kanji-builder-{RELEASE_VERSION}.zip",
             html,
         )
-        self.assertIn('id="kanji-builder-download-link"', html)
+        self.assertNotIn('id="kanji-builder-download-link"', html)
         self.assertNotIn('id="materials-doc-link"', html)
         self.assertIn('id="kanji-guide-link"', html)
         self.assertIn("한자 확장 만들기", html)
@@ -380,6 +380,19 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("‘괜찮다’에만", html)
         self.assertIn("기본 덱은 바로 받을 수 있습니다.", html)
         self.assertIn("한국어권 학습자용 Anki 덱입니다.", html)
+        self.assertIn("음성 · AivisSpeech 1.2.0 ·", html)
+        self.assertIn("비공식 합성 음성 · AivisSpeech 1.2.0 ·", html)
+        self.assertIn("한자 2,337자", html)
+        self.assertIn("읽기와 쓰기 4,674장", html)
+        self.assertIn("선택형 한자 확장", html)
+        self.assertIn("card-kanji-read-front-v2.webp", html)
+        self.assertIn("card-kanji-write-front-v2.webp", html)
+        self.assertIn("card-kanji-writing-v2.webp", html)
+        self.assertIn("뜻·음독·훈독·연결 단어", html)
+        self.assertIn("획순을 한 획씩", html)
+        self.assertIn("화면에 직접 쓰고 비교", html)
+        self.assertIn("헷갈리는 한자 비교", html)
+        self.assertNotIn("NEW", html[html.index('id="kanji"') :])
         self.assertIn("한국어→일본어 회상", html)
         self.assertIn("GPT‑5.6 Sol로 작성하고", html)
         self.assertIn("이중 검토했습니다.", html)
@@ -483,7 +496,9 @@ class PublicSiteTests(unittest.TestCase):
             html,
             r'<a class="button button-primary" id="release-cta"[^>]*>.*?</a>\s*'
             r'<a class="button button-quiet" id="hero-beginner-guide-link" '
-            r'href="getting-started\.html">시작 가이드 보기',
+            r'href="getting-started\.html">시작 가이드 보기.*?</a>\s*'
+            r'<a class="button button-quiet" id="hero-kanji-guide-link" '
+            r'href="kanji\.html">한자 확장 만들기',
         )
         self.assertIn(
             'class="button button-secondary" id="beginner-guide-link"',
