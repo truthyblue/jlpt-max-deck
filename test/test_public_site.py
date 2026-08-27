@@ -283,10 +283,10 @@ class PublicSiteTests(unittest.TestCase):
         if word_rule is None:
             self.fail("missing word hotspot rule")
         for declaration in (
-            "top: 4.589372%;",
+            "top: 5.934718%;",
             "left: 37.5%;",
             "width: 25%;",
-            "height: 8.21256%;",
+            "height: 9.333272%;",
         ):
             self.assertIn(declaration, word_rule.group(1))
 
@@ -296,17 +296,17 @@ class PublicSiteTests(unittest.TestCase):
         if settings_rule is None:
             self.fail("missing settings callout rule")
         for declaration in (
-            "top: 1.288245%;",
-            "left: 91.09375%;",
-            "width: 6.71875%;",
-            "height: 2.093398%;",
+            "top: 1.582591%;",
+            "left: 89.995117%;",
+            "width: 7.817383%;",
+            "height: 2.571711%;",
         ):
             self.assertIn(declaration, settings_rule.group(1))
 
         expected_tops = {
-            "example-1-audio-hotspot": "30.193237%",
-            "example-2-audio-hotspot": "39.774557%",
-            "example-3-audio-hotspot": "49.436393%",
+            "example-1-audio-hotspot": "53.294016%",
+            "example-2-audio-hotspot": "66.554956%",
+            "example-3-audio-hotspot": "79.815896%",
         }
         for selector, expected_top in expected_tops.items():
             rule = re.search(rf"\.{selector}\s*\{{([^}}]+)\}}", css)
@@ -318,7 +318,7 @@ class PublicSiteTests(unittest.TestCase):
         shared_rule = re.search(r"\.example-audio-hotspot\s*\{([^}]+)\}", css)
         if shared_rule is None:
             self.fail("missing shared example hotspot rule")
-        self.assertIn("height: 9.017713%;", shared_rule.group(1))
+        self.assertIn("height: 12.46736%;", shared_rule.group(1))
 
     def test_home_explains_direct_core_and_optional_kanji(self) -> None:
         html = (SITE / "index.html").read_text(encoding="utf-8")
