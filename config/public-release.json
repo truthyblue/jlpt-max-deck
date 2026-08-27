@@ -1,22 +1,23 @@
 {
   "artifacts": {
     "JLPT-MAX-Deck-2.0.0.apkg": {
-      "bytes": 1117638849,
-      "sha256": "d91fa0674f6671316aaf82124b6e8ce2b71324e8b185bb982881ac6034dbef51"
+      "bytes": 1158449092,
+      "sha256": "d0c1a56710f20c763a017024a1f8bc93a249f979cc328e3c6ad6721cac7fc564"
     },
     "JLPT-MAX-kanji-builder-2.0.0.zip": {
-      "bytes": 12165469,
-      "sha256": "fb2d49dc60c0d0b43da03c4c35c044f81e8bbb57087e6bda35b335c8b5663f78"
+      "bytes": 12981235,
+      "sha256": "c63c2f39969f17d88808f23bc75e9cce073550da98c232c5689a18ac054b6068"
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "d1b4a80f9b638aebb283e79f9f6bb9c10cd877064431de79e9001c8ecdc3a3fd"
+      "sha256": "d71379ef915363232d40e53139c6c8cfeb526f231121b44ce491bbc298a42807"
     }
   },
-  "build_input_fingerprint_sha256": "4703bcbe896d720e15799b70065ff24f54cdddd284efef6413841f5f62d05736",
+  "build_input_fingerprint_sha256": "eb33fc57b731aad7b2bc23c8fca8410576c3912cdd2327f17f8abe35a2acde46",
   "core": {
-    "cards": 35365,
+    "cards": 39004,
     "custom_notetype_note_counts": {
+      "JLPT MAX덱 문법": 3639,
       "JLPT MAX덱 어휘": 9160,
       "JLPT MAX덱 어휘문제": 7876,
       "JLPT MAX덱 참조표": 9
@@ -30,13 +31,13 @@
     ],
     "media_files": 24978,
     "media_hash": "c99320e6234302930b11991bed60ad5a7e64b6a38443e15864a6be1c1394a093",
-    "notes": 17045,
+    "notes": 20684,
     "reused": false
   },
   "full_source": {
-    "cards": 40039,
-    "notes": 21719,
-    "sha256": "0b99676027c0cf1fd8d028e14619606971b4dcf5ab2f2ee4860f460636f609b9"
+    "cards": 43678,
+    "notes": 25358,
+    "sha256": "4471466b8c5c701d7502d9ea397b72c1bb8a820cda4bf500b9a06e0ed071b9ce"
   },
   "kanji_builder": {
     "expected_kanji_addon_cards": 4674,
@@ -50,7 +51,7 @@
     "reused": false,
     "source_hash": "2456140dc89108df8c32ad64f8726b02f0209300a15e47fe7c38d0606547732b"
   },
-  "payload_hash": "b54a34cf0dd7b29a2697c0c05f6cb3b8829fdf933f4fce4ad1a558d45632f223",
+  "payload_hash": "cd509bf9c883df919d03d9c29609f66d89859b3871e1737ef3a7b8debdd15b3c",
   "policy_version": "direct-core-plus-kanji-addon-v1",
   "product_version": "2.0.0",
   "schema_version": 3,

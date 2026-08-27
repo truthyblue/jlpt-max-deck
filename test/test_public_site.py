@@ -1040,10 +1040,10 @@ class PublicSiteTests(unittest.TestCase):
         for current in (
             "단어는 더 깊이,",
             "실전 문제까지.",
-            "어휘·음성·한국어 회상·실전 문제를 담은 한국어권 JLPT Anki 덱",
+            "문법·어휘·음성·한국어 회상·실전 문제를 담은 한국어권 JLPT Anki 덱",
             "9,160",
             "7,876",
-            "35,365",
+            "39,004",
         ):
             self.assertIn(current, source)
         for stale in (
