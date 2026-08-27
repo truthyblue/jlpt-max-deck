@@ -25,7 +25,7 @@
   <link rel="canonical" href="https://truthyblue.github.io/jlpt-max-deck">
   <title>JLPT MAX Deck — 단어는 더 깊이, 실전 문제까지</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/showcase.css?v=acde9a6bccd9">
+  <link rel="stylesheet" href="assets/showcase.css?v=bd34c66f62fd">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -127,8 +127,9 @@
         <div class="hero-actions">
           <a class="button button-primary" id="release-cta" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.0.0/JLPT-MAX-Deck-2.0.0.apkg"><span>기본 덱 다운로드</span><svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a>
           <a class="button button-quiet" id="hero-beginner-guide-link" href="getting-started.html">시작 가이드 보기 <span class="button-arrow-icon" aria-hidden="true">→</span></a>
+          <a class="button button-quiet" id="hero-kanji-guide-link" href="kanji.html">한자 확장 만들기 <span class="button-arrow-icon" aria-hidden="true">→</span></a>
         </div>
-        <p class="microcopy">N5–N1 · 기본 덱 노트 17,045개 · 카드 35,365개<br><a class="hero-install-link" href="install-anki.html">Anki가 없다면 설치 안내 보기 <span aria-hidden="true">→</span></a></p>
+        <p class="microcopy">N5–N1 · 기본 덱 노트 17,045개 · 카드 35,365개<br><span class="hero-voice-credit">음성 · AivisSpeech 1.2.0 · <span lang="ja">まい</span></span><br><a class="hero-install-link" href="install-anki.html">Anki가 없다면 설치 안내 보기 <span aria-hidden="true">→</span></a></p>
       </div>
 
       <figure class="hero-card-sample reveal">
@@ -566,25 +567,41 @@
     </section>
 
     <section class="section kanji-section" id="kanji">
-      <div class="section-heading reveal">
-        <h2>기본 덱은 바로 받고,<br>한자 확장은 직접 완성합니다.</h2>
-        <p>한글 뜻이 든 완성본은 저작권 때문에 배포하지 않습니다. 필요한 학습자만 길벗 공식 PDF 2개를 고르면 빌더가 사용자 컴퓨터에서 개인용 APKG를 완성합니다.</p>
+      <div class="section-heading kanji-section-heading reveal">
+        <div>
+          <span class="kanji-section-label">선택형 한자 확장</span>
+          <h2>한자 2,337자<br>읽기와 쓰기 4,674장</h2>
+        </div>
+        <p>한자 하나마다 읽기 앞면과 쓰기 앞면을 따로 제공합니다. 답안면의 뜻·읽기·연결 단어·획순 정보는 대부분 함께 사용해, 읽기와 쓰기가 따로 놀지 않습니다.</p>
       </div>
       <div class="kanji-showcase">
-        <figure class="anki-frame kanji-card-sample reveal">
-          <div class="anki-frame-bar"><i></i><span>일상무따 · 상권</span><b>한자</b></div>
-          <a class="kanji-card-window" href="assets/card-kanji-ima-answer.webp" target="_blank" rel="noopener noreferrer" aria-label="今 한자 카드 이미지를 원본 크기로 보기 (새 탭)">
-            <img src="assets/card-kanji-ima-answer.webp" width="640" height="744" loading="lazy" decoding="async" alt="今의 한국어 뜻 지금 금, 음독과 훈독, 부수와 획수, 今月·今度·今週 연결 어휘를 보여주는 실제 한자 답안 카드 샘플">
-            <span class="sample-zoom-hint" aria-hidden="true">크게 보기 ↗</span>
-          </a>
-          <figcaption>실제 한자 답안면 · <span lang="ja">今</span> · 연결 어휘 3개</figcaption>
-        </figure>
+        <div class="kanji-card-suite reveal">
+          <div class="kanji-front-grid" aria-label="같은 蛍 한자의 읽기와 쓰기 앞면 비교">
+            <figure class="kanji-front-sample">
+              <figcaption><strong>읽기 앞면</strong><span lang="ja">蛍</span></figcaption>
+              <a href="assets/card-kanji-read-front-v2.webp" target="_blank" rel="noopener noreferrer" aria-label="蛍 한자 읽기 카드 앞면을 원본 크기로 보기 (새 탭)"><img src="assets/card-kanji-read-front-v2.webp" width="390" height="844" loading="lazy" decoding="async" alt="蛍 글자를 먼저 보고 뜻과 읽기를 떠올리는 실제 한자 읽기 카드 앞면"></a>
+            </figure>
+            <figure class="kanji-front-sample">
+              <figcaption><strong>쓰기 앞면</strong><span lang="ja">蛍</span></figcaption>
+              <a href="assets/card-kanji-write-front-v2.webp" target="_blank" rel="noopener noreferrer" aria-label="蛍 한자 쓰기 카드 앞면을 원본 크기로 보기 (새 탭)"><img src="assets/card-kanji-write-front-v2.webp" width="390" height="844" loading="lazy" decoding="async" alt="반딧불이 형이라는 뜻을 보고 화면에 蛍을 직접 쓰는 실제 한자 쓰기 카드 앞면"></a>
+            </figure>
+          </div>
+          <figure class="anki-frame kanji-card-sample kanji-shared-back">
+            <div class="anki-frame-bar"><i></i><span>일상무따 · 하권</span><b>공통 학습 정보</b></div>
+            <a class="kanji-card-window" href="assets/card-kanji-writing-v2.webp" target="_blank" rel="noopener noreferrer" aria-label="蛍 한자 쓰기 카드 답안면을 원본 크기로 보기 (새 탭)">
+              <img src="assets/card-kanji-writing-v2.webp" width="390" height="1309" loading="lazy" decoding="async" alt="蛍의 뜻과 모양, 획순 애니메이션, 따라쓰기 연습장, 발음별 단어와 헷갈리기 쉬운 한자를 보여주는 실제 한자 쓰기 카드 답안면">
+              <span class="sample-zoom-hint" aria-hidden="true">크게 보기 ↗</span>
+            </a>
+            <figcaption>쓰기 답안면 · <span lang="ja">蛍</span> · 읽기 카드와 대부분의 학습 정보를 함께 사용</figcaption>
+          </figure>
+        </div>
         <div class="kanji-details reveal">
-          <div class="kanji-total"><strong>4,674</strong><span>일상무따 읽기·쓰기 노트</span></div>
+          <div class="kanji-total"><strong>4,674</strong><span>읽기와 쓰기 카드</span></div>
           <ol class="kanji-feature-list">
-            <li><span>01</span><div><h3>한국어 뜻과 일본어 읽기</h3><p><span lang="ja">今</span>을 ‘지금 금’으로 익히고 음독 <span lang="ja">コン·キン</span>, 훈독 <span lang="ja">いま</span>를 함께 봅니다.</p></div></li>
-            <li><span>02</span><div><h3>읽고, 획순대로 직접 쓰기</h3><p>한자 2,337개마다 읽기 카드와 쓰기 카드를 따로 제공해 뜻·읽기·부수·획수와 쓰기 순서를 함께 익힙니다.</p></div></li>
-            <li><span>03</span><div><h3>아는 한자를 실제 단어로 연결</h3><p><span lang="ja">今月 · 今度 · 今週</span>처럼 기본 덱의 선별 어휘를 읽기·뜻·급수와 함께 이어서 복습하고, 단어를 눌러 음성도 들을 수 있습니다.</p></div></li>
+            <li><span>01</span><div><h3>뜻·음독·훈독·연결 단어</h3><p>한국어 뜻과 일본어 읽기를 함께 보고, <span lang="ja">蛍光灯</span>처럼 기본 덱에 있는 단어까지 이어서 익힙니다.</p></div></li>
+            <li><span>02</span><div><h3>획순을 한 획씩</h3><p>획순 애니메이션을 재생하고, 이전 획·다음 획·처음부터 보기와 속도 조절로 쓰는 순서를 천천히 확인합니다.</p></div></li>
+            <li><span>03</span><div><h3>화면에 직접 쓰고 비교</h3><p>카드 앞면의 연습장에 직접 쓴 뒤, 답안면에서 내가 쓴 글씨와 올바른 자형을 나란히 비교합니다.</p></div></li>
+            <li><span>04</span><div><h3>헷갈리는 한자 비교</h3><p><span lang="ja">営·常·蚕</span>처럼 모양이 비슷한 한자를 뜻과 읽기까지 함께 놓고 차이를 확인합니다.</p></div></li>
           </ol>
           <div class="kanji-build-route">
             <strong>명령어 없이 만드는 순서</strong>
@@ -598,7 +615,6 @@
           </div>
           <div class="kanji-actions">
             <a class="button button-primary kanji-guide-cta" id="kanji-guide-link" href="kanji.html"><span>한자 확장 만들기</span><span class="button-arrow-icon" aria-hidden="true">→</span></a>
-            <a class="text-link" id="kanji-builder-download-link" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.0.0/JLPT-MAX-kanji-builder-2.0.0.zip">빌더 ZIP 바로 받기 <span aria-hidden="true">↓</span></a>
           </div>
         </div>
       </div>
