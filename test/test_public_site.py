@@ -16,6 +16,9 @@ SITE = ROOT / "site"
 RELEASE_PIN = json.loads(
     (ROOT / "config" / "public-release.json").read_text(encoding="utf-8")
 )
+PRODUCT = json.loads(
+    (ROOT / "docs-src" / "data" / "product.json").read_text(encoding="utf-8")
+)
 RELEASE_VERSION = RELEASE_PIN["product_version"]
 PAGES = (
     "index.html",
@@ -331,8 +334,8 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("한자 확장 만들기", html)
         self.assertIn("명령어 없이 만드는 순서", html)
         self.assertIn("실행 파일 더블클릭", html)
-        self.assertIn("13,903", html)
-        self.assertIn("19,921", html)
+        self.assertIn(f"{RELEASE_PIN['core']['notes']:,}", html)
+        self.assertIn(f"{RELEASE_PIN['core']['cards']:,}", html)
         self.assertIn(f"{RELEASE_PIN['core']['media_files']:,}", html)
         self.assertNotIn("<strong>1.0.0 사용자:</strong>", html)
         self.assertIn('id="cards"', html)
@@ -370,13 +373,14 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn('class="deck-support-features reveal"', html)
         self.assertNotIn("BEYOND THIS CARD", html)
         self.assertIn("덱 안내와 업데이트", html)
-        self.assertIn("가나·부분 한자 표기 144개는 별도 보조 카드로", html)
+        self.assertIn("모든 어휘에는 한국어 뜻을 보고 일본어를 떠올리는 회상 카드", html)
+        self.assertIn("한국어→일본어 회상", html)
         self.assertIn("card-hannichi-formation.webp", html)
         self.assertIn("구어(일부 뜻)", html)
         self.assertIn("‘괜찮다’에만", html)
         self.assertIn("기본 덱은 바로 받을 수 있습니다.", html)
         self.assertIn("한국어권 학습자용 Anki 덱입니다.", html)
-        self.assertIn("저급수 표기 카드", html)
+        self.assertIn("한국어→일본어 회상", html)
         self.assertIn("GPT‑5.6 Sol로 작성하고", html)
         self.assertIn("이중 검토했습니다.", html)
         self.assertIn("GPT‑5.6 Sol을 사용했습니다.", html)
@@ -455,19 +459,18 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("별도 선택 확장", html)
         self.assertIn("optional-addon-row", html)
         self.assertIn("JMdict·KANJIDIC2 EDRDG", html)
-        self.assertIn("처음에는", html)
-        self.assertIn("필수 단어부터", html)
-        self.assertIn("필수 → 표준 → 확장", html)
-        self.assertIn("공개 일본어 사전인 JMdict의 우선순위 정보를 참고해", html)
-        self.assertIn("자주 쓰이는 단어부터 새 카드가 나오도록", html)
+        self.assertIn("각 급수 안에서", html)
+        self.assertIn("급수별 BCCWJ 중요도 순", html)
+        self.assertIn("일본어 균형 말뭉치인 BCCWJ의 사용 빈도를 기준으로", html)
+        self.assertIn("말뭉치에서 찾지 못한 54개도", html)
         self.assertNotIn("priority::", html)
         self.assertNotIn("jlpt::", html)
         self.assertIn('class="essential"', html)
         self.assertIn('class="standard"', html)
         self.assertIn('class="extended"', html)
-        self.assertIn('<i class="legend-essential"></i>필수</dt><dd>2,006', html)
-        self.assertIn('<i class="legend-standard"></i>표준</dt><dd>1,124', html)
-        self.assertIn('<i class="legend-extended"></i>확장</dt><dd>2,888', html)
+        self.assertIn('<i class="legend-essential"></i>같은 표기</dt><dd>8,172', html)
+        self.assertIn('<i class="legend-standard"></i>검토 연결</dt><dd>934', html)
+        self.assertIn('<i class="legend-extended"></i>말뭉치 미관측</dt><dd>54', html)
         release_cta = re.search(r'<a [^>]*id="release-cta"[^>]*>.*?</a>', html)
         if release_cta is None:
             self.fail("release CTA is missing")
@@ -580,7 +583,10 @@ class PublicSiteTests(unittest.TestCase):
         self.assertLess(html.index('id="verify"'), html.index('id="fsrs"'))
         self.assertLess(html.index('id="fsrs"'), html.index('id="first-review"'))
         self.assertLess(html.index('id="verify"'), html.index('id="sync"'))
-        self.assertIn("약 0.90GB", html)
+        self.assertIn(
+            f"약 {PRODUCT['requirements']['approximate_apkg_size_gb']}GB",
+            html,
+        )
         self.assertNotIn("QUICK START", html)
         css = (SITE / "assets" / "site.css").read_text(encoding="utf-8")
         self.assertNotIn(".v2-optional-section", css)
@@ -880,6 +886,8 @@ class PublicSiteTests(unittest.TestCase):
             "before",
             "ordinary",
             "import-options",
+            "new-order",
+            "empty-cards",
             "recommended-settings",
             "verify",
         ):
@@ -902,7 +910,10 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("출발 버전에 따라 옵션을 다르게 고를 필요가 없습니다", html)
         self.assertNotIn("지금 사용하는 버전", html)
         self.assertIn("직접 수정한 공식 노트 필드도 덮어쓸 수 있으므로", html)
-        self.assertIn("기존 한자 확장은 v1.3.0 빌더로 다시 만듭니다", html)
+        self.assertIn(f"기존 한자 확장은 v{RELEASE_VERSION} 빌더로 다시 만듭니다", html)
+        self.assertIn("완전히 미학습 상태인 급수", html)
+        self.assertIn("五万", html)
+        self.assertIn("～キロ", html)
         self.assertIn("기존 한자 읽기 카드는 현재 덱에 그대로 남습니다", html)
         self.assertIn("쓰기 순서가 포함된 카드 4,674장", html)
         self.assertIn("모든 기기에서 다시 전체 동기화합니다", html)
@@ -1014,10 +1025,10 @@ class PublicSiteTests(unittest.TestCase):
         for current in (
             "단어는 더 깊이,",
             "실전 문제까지.",
-            "어휘·음성·실전 문제를 담은 한국어권 JLPT Anki 덱",
-            "6,018",
+            "어휘·음성·한국어 회상·실전 문제를 담은 한국어권 JLPT Anki 덱",
+            "9,160",
             "7,876",
-            "19,921",
+            "35,365",
         ):
             self.assertIn(current, source)
         for stale in (

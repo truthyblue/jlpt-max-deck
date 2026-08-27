@@ -1,23 +1,23 @@
 {
   "artifacts": {
-    "JLPT-MAX-Deck-1.3.0.apkg": {
-      "bytes": 902062727,
-      "sha256": "9d2667bac17f781603ba3f2a92e496ea6ba9dad607de4058470d35cb0e2c64d3"
+    "JLPT-MAX-Deck-2.0.0.apkg": {
+      "bytes": 1117638849,
+      "sha256": "d91fa0674f6671316aaf82124b6e8ce2b71324e8b185bb982881ac6034dbef51"
     },
-    "JLPT-MAX-kanji-builder-1.3.0.zip": {
-      "bytes": 11436627,
-      "sha256": "8bb930d00e82a4e45ce78eb10c5bd667c89149bf9440565584137ee87e2eec8e"
+    "JLPT-MAX-kanji-builder-2.0.0.zip": {
+      "bytes": 12165469,
+      "sha256": "fb2d49dc60c0d0b43da03c4c35c044f81e8bbb57087e6bda35b335c8b5663f78"
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "03f2d5b83fdc330f1a15eaf7561940e516be484d014251ba1ac0c4bd8dd5e7e6"
+      "sha256": "d1b4a80f9b638aebb283e79f9f6bb9c10cd877064431de79e9001c8ecdc3a3fd"
     }
   },
-  "build_input_fingerprint_sha256": "15c28e49b5e0fa4bda3fe82ec912b00c69bc6bb640ce5e238d0d1cb9c33ca083",
+  "build_input_fingerprint_sha256": "4703bcbe896d720e15799b70065ff24f54cdddd284efef6413841f5f62d05736",
   "core": {
-    "cards": 19921,
+    "cards": 35365,
     "custom_notetype_note_counts": {
-      "JLPT MAX덱 어휘": 6018,
+      "JLPT MAX덱 어휘": 9160,
       "JLPT MAX덱 어휘문제": 7876,
       "JLPT MAX덱 참조표": 9
     },
@@ -28,15 +28,15 @@
       "JLPT MAX덱::종합 실전",
       "JLPT MAX덱::참조표"
     ],
-    "media_files": 18437,
-    "media_hash": "d886a1e01524e6f97f46e78ef5da5bf29650ab082f14eb53e9c7365cd9269be8",
-    "notes": 13903,
-    "reused": true
+    "media_files": 24978,
+    "media_hash": "c99320e6234302930b11991bed60ad5a7e64b6a38443e15864a6be1c1394a093",
+    "notes": 17045,
+    "reused": false
   },
   "full_source": {
-    "cards": 24595,
-    "notes": 18577,
-    "sha256": "2d0aacde9e45e9de3d39d63d5538f284640ea8d910f4488393b4ca58b120692d"
+    "cards": 40039,
+    "notes": 21719,
+    "sha256": "0b99676027c0cf1fd8d028e14619606971b4dcf5ab2f2ee4860f460636f609b9"
   },
   "kanji_builder": {
     "expected_kanji_addon_cards": 4674,
@@ -46,13 +46,13 @@
     "expected_static_media": 2299,
     "expected_stroke_media": 2298,
     "expected_vector_glyphs": 14,
-    "output_apkg": "JLPT-MAX-kanji-addon-1.3.0.apkg",
-    "reused": true,
-    "source_hash": "a306fa91a275dec7796ef2da6467e0f50d2b4b7300857631813800b3ef525f43"
+    "output_apkg": "JLPT-MAX-kanji-addon-2.0.0.apkg",
+    "reused": false,
+    "source_hash": "2456140dc89108df8c32ad64f8726b02f0209300a15e47fe7c38d0606547732b"
   },
-  "payload_hash": "103405f1290b33ff902a20b5f6ee2aab8ee5ee5c456be1321c8e77807f93875e",
+  "payload_hash": "b54a34cf0dd7b29a2697c0c05f6cb3b8829fdf933f4fce4ad1a558d45632f223",
   "policy_version": "direct-core-plus-kanji-addon-v1",
-  "product_version": "1.3.0",
+  "product_version": "2.0.0",
   "schema_version": 3,
   "status": "passed",
   "unresolved": 0

@@ -107,9 +107,16 @@ def _verify_pin(pin: dict[str, object]) -> None:
     if not isinstance(core, dict) or not isinstance(kanji, dict):
         _fail("direct-release logical metadata is missing")
     parsed_version = tuple(int(part) for part in version.split("."))
-    expected_core_cards = 19_921 if parsed_version >= (1, 3, 0) else 20_065
+    expected_core_notes = 17_045 if parsed_version >= (2, 0, 0) else 13_903
+    expected_core_cards = (
+        35_365
+        if parsed_version >= (2, 0, 0)
+        else 19_921
+        if parsed_version >= (1, 3, 0)
+        else 20_065
+    )
     if (
-        core.get("notes") != 13_903
+        core.get("notes") != expected_core_notes
         or core.get("cards") != expected_core_cards
         or not isinstance(core.get("media_files"), int)
         or int(core["media_files"]) <= 0

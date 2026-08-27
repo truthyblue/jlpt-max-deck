@@ -115,13 +115,13 @@
           <p>공식 배포 페이지에서 받은 APKG의 파일명과 SHA-256을 아래 값과 대조하세요.</p>
           <table class="v2-release-facts">
             <tbody>
-              <tr><th scope="row">버전</th><td>v1.3.0</td></tr>
-              <tr><th scope="row">파일</th><td><code>JLPT-MAX-Deck-1.3.0.apkg</code></td></tr>
-              <tr><th scope="row">크기</th><td>약 0.90GB</td></tr>
-              <tr><th scope="row">SHA-256</th><td><code>9d2667bac17f781603ba3f2a92e496ea6ba9dad607de4058470d35cb0e2c64d3</code></td></tr>
+              <tr><th scope="row">버전</th><td>v2.0.0</td></tr>
+              <tr><th scope="row">파일</th><td><code>JLPT-MAX-Deck-2.0.0.apkg</code></td></tr>
+              <tr><th scope="row">크기</th><td>약 1.12GB</td></tr>
+              <tr><th scope="row">SHA-256</th><td><code>d91fa0674f6671316aaf82124b6e8ce2b71324e8b185bb982881ac6034dbef51</code></td></tr>
             </tbody>
           </table>
-          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.3.0/JLPT-MAX-Deck-1.3.0.apkg">기본 덱 다시 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a><a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.3.0/SHA256SUMS">SHA256SUMS</a></div>
+          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.0.0/JLPT-MAX-Deck-2.0.0.apkg">기본 덱 다시 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a><a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.0.0/SHA256SUMS">SHA256SUMS</a></div>
         </section>
 
         <section class="v2-guide-section" id="import">
@@ -132,7 +132,7 @@
             <li><div><strong>미사용 미디어를 삭제해 저장 공간을 확보합니다.</strong><p>앱을 최신 안정 버전으로 업데이트하고, 여러 기기를 쓴다면 미디어 동기화를 먼저 끝내세요. 데스크톱 Anki에서 <strong>도구 → 미디어 검사</strong>를 열어 미사용 파일 목록을 확인한 뒤 삭제합니다. 삭제된 파일은 휴지통으로 이동하므로 필요한 파일이 없는지 확인한 뒤 휴지통을 비워야 실제 여유 공간이 생깁니다.</p></div></li>
             <li><div><strong>손상된 파일을 다시 받습니다.</strong><p>SHA-256이 다르면 기존 다운로드를 버리고 안정적인 네트워크에서 다시 받습니다.</p></div></li>
           </ol>
-          <div class="v2-callout warning"><strong>처리 중 강제 종료하지 마세요.</strong><p>18,437개 미디어를 처리하므로 환경에 따라 시간이 걸립니다. 완료 메시지가 나오기 전까지 앱을 유지하세요.</p></div>
+          <div class="v2-callout warning"><strong>처리 중 강제 종료하지 마세요.</strong><p>24,978개 미디어를 처리하므로 환경에 따라 시간이 걸립니다. 완료 메시지가 나오기 전까지 앱을 유지하세요.</p></div>
         </section>
 
         <section class="v2-guide-section" id="kanji-build">
@@ -142,7 +142,7 @@
             <li><div><strong>더블클릭할 실행 파일이 보이지 않아요.</strong><p>ZIP 미리보기 안이 아니라 압축을 푼 새 폴더를 여세요. Windows에는 <code>Windows에서 한자 확장 만들기.cmd</code>, macOS에는 <code>Mac에서 한자 확장 만들기.command</code>가 있습니다.</p></div></li>
             <li><div><strong>필요한 프로그램을 받지 못했다고 나와요.</strong><p>처음 실행할 때만 빌드 도구와 Python을 자동으로 받습니다. 인터넷 연결을 확인한 뒤 ZIP을 새 폴더에 다시 풀고 더블클릭 실행 파일을 다시 여세요.</p></div></li>
             <li><div><strong><code>PDF hash</code> 또는 <code>page count</code> 오류가 나요.</strong><p>공식 자료 페이지에서 정상적으로 받은 상·하권 소책자 PDF 2개와 순서를 확인하세요. 다시 저장·병합·최적화한 PDF나 미리보기 파일은 지원되지 않습니다.</p></div></li>
-            <li><div><strong><code>alignment</code> 오류가 나요.</strong><p>같은 v1.3.0의 빌더와 지원 PDF가 맞지 않거나 1권·2권 선택 순서가 바뀌었을 수 있습니다. 현재 빌더 ZIP을 새 폴더에 다시 풀고 실행하세요.</p></div></li>
+            <li><div><strong><code>alignment</code> 오류가 나요.</strong><p>같은 v2.0.0의 빌더와 지원 PDF가 맞지 않거나 1권·2권 선택 순서가 바뀌었을 수 있습니다. 현재 빌더 ZIP을 새 폴더에 다시 풀고 실행하세요.</p></div></li>
             <li><div><strong>PDF 선택창을 취소했어요.</strong><p>아무 파일도 바뀌지 않습니다. 실행 파일을 다시 더블클릭하고 처음부터 선택하면 됩니다.</p></div></li>
             <li><div><strong>완성 파일을 다시 만들고 싶어요.</strong><p>더블클릭 실행 파일을 다시 열면 기존 결과를 지우고 새로 만들지 묻습니다. <strong>다시 만들기</strong>를 선택한 뒤 PDF 두 개를 다시 고르세요.</p></div></li>
           </ol>
@@ -156,7 +156,34 @@
           <ol class="v2-release-history">
             <li class="v2-release-entry is-current">
               <header>
-                <div><strong>v1.3.0</strong><span>최신</span></div>
+                <div><strong>v2.0.0</strong><span>최신</span></div>
+                <time datetime="2026-08-27">2026-08-27</time>
+              </header>
+              <h3>어휘를 9,160개로 늘리고 한국어→일본어 회상과 BCCWJ 중요도 순서를 추가했으며, 한자 학습 조작과 오류 제보 49건을 정리했습니다.</h3>
+              <ul>
+                <li>검토된 어휘를 6,018개에서 9,160개로 늘리고 모든 어휘에 대표 예문과 음성을 연결했습니다. 예문은 10,463개입니다.</li>
+                <li>모든 어휘에 한국어 뜻을 보고 일본어 표기와 읽기를 떠올리는 회상 카드 9,160장을 추가했습니다. 기존 학습 일정은 가져오지 않고 새 카드로 시작합니다.</li>
+                <li>각 급수 안의 새 카드 순서를 BCCWJ 사용 빈도와 검토된 표기 연결에 맞췄습니다. 이미 학습 중인 덱의 순서와 일정은 가져오기만으로 다시 배열하지 않습니다.</li>
+                <li>새 중요도 순서를 처음부터 쓰고 싶은 급수가 하나도 학습되지 않았다면 그 급수의 어휘 덱과 음성 덱만 삭제한 뒤 다시 가져옵니다. 학습한 급수는 정렬만을 위해 삭제하지 않습니다.</li>
+                <li>독립 어휘로 두지 않는 五万과 중복된 ～キロ 노트를 정리했습니다. 기존 사용자는 업데이트 뒤 Anki의 빈 카드 도구에서 남은 카드 4장을 삭제해야 합니다.</li>
+                <li>한자 쓰기 화면에 일시정지·이전 획·다음 획·처음부터·속도·구간 개요를 넣고, 한자 구성 요소와 외부 참고 링크를 읽기·쓰기 카드에 추가했습니다.</li>
+                <li>후리가나·해석·표시와 음성 설정을 나눠 저장하고, 음성 카드가 처음 나타났을 때도 자동재생이 빠지지 않도록 고쳤습니다.</li>
+                <li>오류 제보 49건을 다시 확인해 35건을 수정으로 해결하고 14건은 현행 내용 유지 이유를 기록했습니다. 처리 결과 알림 버전은 모두 2.0.0으로 맞췄습니다.</li>
+                <li>뜻·예문·품사·읽기·고저 악센트·음성·한자 자형·모바일 표시와 실전 문제 해설을 고쳤습니다. 断る처럼 한 뜻에 섞여 있던 예문도 뜻별로 나눴습니다.</li>
+                <li>지원하지 않는 AnkiDroid 구형 학습 화면에서는 새 학습 화면을 켜야 하는 이유와 경로를 더 분명하게 안내합니다.</li>
+                <li>public 기본 APKG는 17,045노트·35,365카드이고, 한자 빌더가 읽기·쓰기 합계 4,674노트·4,674카드를 별도로 만듭니다. 두 APKG를 합친 전체는 21,719노트·40,039카드입니다.</li>
+              </ul>
+              <p class="v2-release-migration"><strong>업데이트 안내</strong>기존 사용자는 모든 기기를 동기화하고 백업한 뒤 v2.0.0 기본 덱을 기존 덱 위에 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트 업데이트와 노트 유형 업데이트는 항상, 노트 유형 병합은 켜기를 선택합니다. 기존 덱 전체나 학습한 급수는 삭제하지 마세요. BCCWJ 중요도 순서를 처음부터 적용하고 싶은 급수가 완전히 미학습 상태라면 그 급수의 JLPT MAX덱::어휘::N○와 JLPT MAX덱::음성::N○만 함께 삭제한 뒤 같은 옵션으로 다시 가져옵니다. 업데이트가 끝나면 Anki의 빈 카드 도구에서 五万과 ～キロ의 남은 어휘·음성 카드 4장을 삭제하고 모든 기기에서 전체 동기화하세요. 카드 탐색기의 노트 삭제는 사용하지 마세요.</p>
+
+              <div class="v2-hero-actions">
+                <a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.0.0/JLPT-MAX-Deck-2.0.0.apkg">v2.0.0 기본 덱 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a>
+                <a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v2.0.0" target="_blank" rel="noopener noreferrer">v2.0.0 GitHub Release <span aria-hidden="true">↗</span></a>
+              </div>
+
+            </li>
+            <li class="v2-release-entry">
+              <header>
+                <div><strong>v1.3.0</strong></div>
                 <time datetime="2026-08-22">2026-08-22</time>
               </header>
               <h3>한자 읽기·쓰기와 획순 연습을 추가하고 가나 보조 카드를 정리했으며, 카드 읽기·음성·예문·오류 제보를 다듬었습니다.</h3>
@@ -176,7 +203,6 @@
               <p class="v2-release-migration"><strong>업데이트 안내</strong>기존 사용자는 모든 기기를 동기화하거나 백업한 뒤 v1.3.0 기본 덱을 기존 덱 위에 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트 업데이트는 항상, 노트 유형 병합은 켜기를 선택합니다. 한자 확장을 사용한다면 v1.3.0 빌더와 지원 PDF 2개로 한자 APKG를 다시 만들어 가져오세요. 일반 APKG 가져오기는 기존 한자 카드의 덱 위치를 바꾸지 않으므로 한자::읽기::상권·하권은 비어 있을 수 있습니다. 새 폴더 구조를 쓰려면 카드 탐색기에서 기존 일상무따 상권·하권 카드를 읽기 상권·하권으로 직접 옮기세요. 이어서 Anki의 빈 카드 도구에서 JLPT MAX덱 어휘 / 어휘(가나 보조)만 골라 삭제하고 모든 기기에서 전체 동기화하세요. 카드 탐색기의 노트 삭제는 사용하지 마세요.</p>
 
               <div class="v2-hero-actions">
-                <a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.3.0/JLPT-MAX-Deck-1.3.0.apkg">v1.3.0 기본 덱 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a>
                 <a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v1.3.0" target="_blank" rel="noopener noreferrer">v1.3.0 GitHub Release <span aria-hidden="true">↗</span></a>
               </div>
 
@@ -394,7 +420,7 @@
       </nav>
     </div>
     <div class="v2-footer-legal">
-      <span>v1.3.0 · Code AGPL-3.0-or-later</span>
+      <span>v2.0.0 · Code AGPL-3.0-or-later</span>
       <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/NOTICE">NOTICE</a>
       <span>Anki·JLPT·출판사의 공식 제품 또는 후원 프로젝트가 아닙니다.</span>
     </div>

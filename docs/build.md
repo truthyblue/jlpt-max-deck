@@ -15,7 +15,7 @@
 
 필요한 것은 다음과 같습니다.
 
-- 같은 v1.3.0의 [JLPT-MAX-kanji-builder-1.3.0.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.3.0/JLPT-MAX-kanji-builder-1.3.0.zip)
+- 같은 v2.0.0의 [JLPT-MAX-kanji-builder-2.0.0.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.0.0/JLPT-MAX-kanji-builder-2.0.0.zip)
 - 길벗 《일본어 상용한자 무작정 따라하기》 1·2권의 지원 소책자 PDF 2개
   - [1권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003617)
   - [2권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003669)
@@ -74,7 +74,7 @@ macOS:
 
 성공하면 `build/kanji-addon` 폴더가 자동으로 열리고 다음 두 파일이 생깁니다.
 
-- `build/kanji-addon/JLPT-MAX-kanji-addon-1.3.0.apkg`
+- `build/kanji-addon/JLPT-MAX-kanji-addon-2.0.0.apkg`
 - `build/kanji-addon/kanji-addon-build-report.json`
 
 Anki에 넣을 파일은 이름이 `.apkg`로 끝나는 첫 번째 파일입니다. 리포트의
@@ -85,11 +85,11 @@ Anki에 넣을 파일은 이름이 `.apkg`로 끝나는 첫 번째 파일입니�
 
 ## 4. Anki에 추가
 
-1. `JLPT-MAX-Deck-1.3.0.apkg`를 먼저 가져옵니다.
-2. 생성된 `JLPT-MAX-kanji-addon-1.3.0.apkg`를 같은 컬렉션에 가져옵니다.
+1. `JLPT-MAX-Deck-2.0.0.apkg`를 먼저 가져옵니다.
+2. 생성된 `JLPT-MAX-kanji-addon-2.0.0.apkg`를 같은 컬렉션에 가져옵니다.
 3. `JLPT MAX덱::일상무따` 아래의 읽기·쓰기 덱을 확인합니다.
-4. 합산 수량이 노트 18,577개, 카드
-   24,595개, 미디어 18,451개인지 확인합니다.
+4. 합산 수량이 노트 21,719개, 카드
+   40,039개, 미디어 24,992개인지 확인합니다.
 
 PDF 선택을 취소했다면 아무 파일도 바뀌지 않으므로 실행 파일을 다시 열면 됩니다.
 다시 실행하면 기존 결과를 지우고 새로 만들지 먼저 묻습니다. 오류가 나면 빌더

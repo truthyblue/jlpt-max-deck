@@ -64,6 +64,14 @@ TEST_LIFECYCLE = {
                 "spot checks for old filenames and counts do not detect unrelated byte changes or a current release hash leaking into historical notes"
             ),
         },
+        "DocumentationRenderTest.test_historical_v13_release_output_is_byte_identical": {
+            "protected_contract": (
+                "rendering a later release cannot rewrite the published v1.3.0 filenames, counts, or artifact hashes"
+            ),
+            "not_subsumed_by": (
+                "current-release documentation tests can pass while global template data silently leaks into the historical v1.3.0 release note"
+            ),
+        },
     }
 }
 
@@ -99,6 +107,9 @@ class DocumentationRenderTest(unittest.TestCase):
         ),
         PurePosixPath("docs/releases/v1.3.0.md.j2"): PurePosixPath(
             "docs/releases/v1.3.0.md"
+        ),
+        PurePosixPath("docs/releases/v2.0.0.md.j2"): PurePosixPath(
+            "docs/releases/v2.0.0.md"
         ),
         PurePosixPath("docs/troubleshooting.md.j2"): PurePosixPath(
             "docs/troubleshooting.md"
@@ -287,6 +298,21 @@ class DocumentationRenderTest(unittest.TestCase):
                     hashlib.sha256(rendered.encode("utf-8")).hexdigest(),
                     expected_sha256,
                 )
+
+    def test_historical_v13_release_output_is_byte_identical(self) -> None:
+        environment = RENDER.create_environment(ROOT)
+        context = RENDER.load_context(ROOT)
+        rendered = RENDER.normalize_final_newline(
+            environment.get_template("docs/releases/v1.3.0.md.j2").render(
+                **context
+            )
+        )
+        output = ROOT / "docs/releases/v1.3.0.md"
+        self.assertEqual(rendered, output.read_text(encoding="utf-8"))
+        self.assertEqual(
+            hashlib.sha256(rendered.encode("utf-8")).hexdigest(),
+            "432947c1e9239db3b9024d564a2bab6429c7f73ec1c7cb2e3bd97159cc265809",
+        )
 
     def test_final_newline_normalization_is_deterministic(self) -> None:
         for source in ("value", "value\n", "value\n\n", "value\r\n"):
@@ -542,7 +568,10 @@ class DocumentationRenderTest(unittest.TestCase):
         self.assertNotIn(">새 버전일 때</strong>", update_page)
         self.assertIn("언제나 <code>항상</code>", update_page)
         self.assertNotIn("지금 사용하는 버전", update_page)
-        self.assertIn("기존 한자 확장은 v1.3.0 빌더로 다시 만듭니다", update_page)
+        self.assertIn("기존 한자 확장은 {{ release.tag }} 빌더로 다시 만듭니다", update_page)
+        self.assertIn("완전히 미학습 상태인 급수", update_page)
+        self.assertIn("五万", update_page)
+        self.assertIn("～キロ", update_page)
         self.assertIn("기존 한자 읽기 카드는 현재 덱에 그대로 남습니다", update_page)
         self.assertIn("한자::읽기::상권·하권", anki_guide)
 

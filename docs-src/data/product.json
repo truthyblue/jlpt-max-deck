@@ -4,23 +4,23 @@
   "repository_url": "https://github.com/truthyblue/jlpt-max-deck",
   "site_url": "https://truthyblue.github.io/jlpt-max-deck",
   "deck": {
-    "vocabulary_notes": 6018,
+    "vocabulary_notes": 9160,
     "practice_notes": 7876,
     "kanji_characters": 2337,
     "kanji_addon_notes": 4674,
     "kanji_addon_cards": 4674,
     "reference_notes": 9,
-    "total_notes": 18577,
-    "total_cards": 24595,
-    "total_media": 18451,
+    "total_notes": 21719,
+    "total_cards": 40039,
+    "total_media": 24992,
     "static_media": 14,
-    "core_notes": 13903,
-    "core_cards": 19921,
-    "core_media": 18437,
-    "example_count": 7065,
+    "core_notes": 17045,
+    "core_cards": 35365,
+    "core_media": 24978,
+    "example_count": 10463,
     "coverage": {
-      "vocabulary_with_examples": 6018,
-      "conjugation_notes": 3026,
+      "vocabulary_with_examples": 9160,
+      "conjugation_notes": 1843,
       "related_word_notes": 1224,
       "related_word_links": 1519,
       "word_formation_notes": 28,
@@ -28,12 +28,12 @@
       "usage_register_items": 99,
       "usage_detail_notes": 89,
       "usage_detail_items": 90,
-      "auxiliary_form_cards": 144
+      "korean_recall_cards": 9160
     },
-    "study_priority": {
-      "essential_notes": 2006,
-      "standard_notes": 1124,
-      "extended_notes": 2888
+    "importance_match": {
+      "exact_notes": 8172,
+      "reviewed_variant_notes": 934,
+      "unobserved_notes": 54
     },
     "practice": {
       "kanji_reading": 1748,
@@ -49,8 +49,8 @@
     "python": "3.13",
     "macos_minimum": "12",
     "windows_architecture": "x64",
-    "approximate_apkg_size_mb": 902,
-    "approximate_apkg_size_gb": "0.90"
+    "approximate_apkg_size_mb": 1118,
+    "approximate_apkg_size_gb": "1.12"
   },
   "study_defaults": {
     "desired_retention": "0.90",
