@@ -134,6 +134,10 @@ class GalleryUpdateTests(unittest.TestCase):
         self.assert_dcinside_safe_v2_tables(V201_UPDATE)
 
     def test_v202_announcement_covers_patch_scope(self) -> None:
+        title_match = re.search(r"<!-- 게시글 제목: (.+?) -->", V202_UPDATE)
+        self.assertIsNotNone(title_match)
+        self.assertLessEqual(len(title_match.group(1)), 40)
+
         for copy in (
             "문법 4종 답면에 후리가나",
             "첫 복원 뒤에는 기기에서 바로 계산",
