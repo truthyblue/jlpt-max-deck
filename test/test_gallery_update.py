@@ -87,7 +87,8 @@ TEST_LIFECYCLE = {
         "GalleryUpdateTests.test_v202_announcement_covers_patch_scope": (
             "The saved v2.0.2 gallery post covers the released grammar "
             "furigana, local-first records, Android storage migration, "
-            "touch feedback, and composite kanji builder fixes. Earlier "
+            "touch feedback, composite kanji builder fixes, and the "
+            "established feedback and GitHub Star calls to action. Earlier "
             "gallery tests do not cover this patch announcement."
         ),
     },
@@ -149,6 +150,9 @@ class GalleryUpdateTests(unittest.TestCase):
             "버튼을 눌렀다는 느낌도 보강",
             "v2.0.2 한자 빌더 ZIP",
             "v2.0.2 다운로드 · GitHub Release",
+            "써보고 괜찮았다면 개추 + GitHub Star 부탁함",
+            "뜻이나 예문이 이상한 부분은 카드의 오류 제보로 보내 주면",
+            "★ GitHub에서 Star →",
         ):
             with self.subTest(copy=copy):
                 self.assertIn(copy, V202_UPDATE)
@@ -157,6 +161,14 @@ class GalleryUpdateTests(unittest.TestCase):
             "https://truthyblue.github.io/jlpt-max-deck/assets/releases/"
             "v2.0.2/gallery-v2.0.2-study-records-analysis.png",
             V202_UPDATE,
+        )
+        self.assertLess(
+            V202_UPDATE.index("확인한 범위"),
+            V202_UPDATE.index("v2.0.1 사용자"),
+        )
+        self.assertLess(
+            V202_UPDATE.index("v2.0.1 사용자"),
+            V202_UPDATE.index("v2.0.2 다운로드"),
         )
 
     def test_v120_announcement_covers_every_important_learner_feature_once(
