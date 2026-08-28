@@ -1,19 +1,19 @@
 {
   "artifacts": {
-    "JLPT-MAX-Deck-2.0.1.apkg": {
-      "bytes": 1122763395,
-      "sha256": "fa1096e78d2675c6cf60e7078bbf9683482d2a0ec07a5659fb2bf0cb8d0ff7c1"
+    "JLPT-MAX-Deck-2.0.2.apkg": {
+      "bytes": 1123861671,
+      "sha256": "a20f0e897ad6ca1699ba6515454965e03ec6dd7744193315124dd834fbd6b063"
     },
-    "JLPT-MAX-kanji-builder-2.0.1.zip": {
-      "bytes": 13040101,
-      "sha256": "cc93014c61c47da42b910eb7d5a48e54bf72022439779393e5a8b8afaeb84f20"
+    "JLPT-MAX-kanji-builder-2.0.2.zip": {
+      "bytes": 13165792,
+      "sha256": "7b026ad65fca361174d3ab55d1be79e5e67f0d82fed3b63c384fd2420f94fe73"
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "ccb3eb194e66a2f37f94ffbb3dcd863d90168060e171e9adf97e1ed3e5fc6434"
+      "sha256": "4f7839412253cef7a2866e4dcfd536a95f4a4e0f10421f71048dd5efbe455e1e"
     }
   },
-  "build_input_fingerprint_sha256": "67fea4c8111fa70797ff2c8c79a7b375cf2802b2f60ea06c1948e6a4e5f37b65",
+  "build_input_fingerprint_sha256": "db69b4ba911ef0dee74a8114fe0c35c88715695b869bb25e7c6370fd4b8104f5",
   "core": {
     "cards": 38970,
     "custom_notetype_note_counts": {
@@ -37,7 +37,7 @@
   "full_source": {
     "cards": 43644,
     "notes": 25324,
-    "sha256": "b9b24c1e8c8e7eab23d571c44e2852dbc83922845f083f419062ae432911609c"
+    "sha256": "7502fa9313f87d23861fee5f5c26083322930e8072d2b362a2dae0ac7caa4d28"
   },
   "kanji_builder": {
     "expected_kanji_addon_cards": 4674,
@@ -47,13 +47,13 @@
     "expected_static_media": 2299,
     "expected_stroke_media": 2298,
     "expected_vector_glyphs": 14,
-    "output_apkg": "JLPT-MAX-kanji-addon-2.0.1.apkg",
+    "output_apkg": "JLPT-MAX-kanji-addon-2.0.2.apkg",
     "reused": false,
     "source_hash": "2456140dc89108df8c32ad64f8726b02f0209300a15e47fe7c38d0606547732b"
   },
-  "payload_hash": "57bdeeb0eccc9e40cc5cb1134189d4e7f7b36ae306bb0300cee8fe36ee82071c",
+  "payload_hash": "301974703c89ae976a5c43f655b4b2347a236e091d78d7b3bf5a9a07f1d3070c",
   "policy_version": "direct-core-plus-kanji-addon-v1",
-  "product_version": "2.0.1",
+  "product_version": "2.0.2",
   "schema_version": 3,
   "status": "passed",
   "unresolved": 0
