@@ -64,9 +64,23 @@ V120_FEATURES = (
     "new-review-mix",
 )
 
+TEST_LIFECYCLE = {
+    "test_contracts": {
+        "GalleryUpdateTests.test_v201_uses_tables_for_dcinside_layouts": (
+            "The saved DCInside v2.0.1 gallery post keeps its two-column "
+            "tables without fixed-width card images overflowing their cells. "
+            "Existing gallery tests do not cover DCInside's image-style "
+            "sanitization."
+        ),
+    },
+}
+
 
 class GalleryUpdateTests(unittest.TestCase):
     def test_v201_uses_tables_for_dcinside_layouts(self) -> None:
+        table_markup = "\n".join(
+            re.findall(r"<table\b.*?</table>", V201_UPDATE, flags=re.DOTALL)
+        )
         self.assertEqual(V201_UPDATE.count("<table"), 3)
         self.assertIn('width="16%"', V201_UPDATE)
         self.assertIn('width="42%"', V201_UPDATE)
@@ -82,6 +96,11 @@ class GalleryUpdateTests(unittest.TestCase):
         self.assertNotIn(
             "grid-template-columns:repeat(auto-fit,minmax(260px,1fr))",
             V201_UPDATE,
+        )
+        self.assertEqual(table_markup.count("max-width:100%"), 9)
+        self.assertNotIn(
+            "width:100%;max-width:390px",
+            table_markup,
         )
 
     def test_v120_announcement_covers_every_important_learner_feature_once(
