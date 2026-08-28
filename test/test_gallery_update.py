@@ -28,6 +28,9 @@ V200_UPDATE = (
 V201_UPDATE = (
     ROOT / "docs" / "jlpt-gallery-updates" / "v2.0.1.html"
 ).read_text(encoding="utf-8")
+V202_UPDATE = (
+    ROOT / "docs" / "jlpt-gallery-updates" / "v2.0.2.html"
+).read_text(encoding="utf-8")
 RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.1.0.md").read_text(
     encoding="utf-8"
 )
@@ -81,6 +84,12 @@ TEST_LIFECYCLE = {
             "Existing gallery tests do not cover DCInside's image-style "
             "sanitization."
         ),
+        "GalleryUpdateTests.test_v202_announcement_covers_patch_scope": (
+            "The saved v2.0.2 gallery post covers the released grammar "
+            "furigana, local-first records, Android storage migration, "
+            "touch feedback, and composite kanji builder fixes. Earlier "
+            "gallery tests do not cover this patch announcement."
+        ),
     },
 }
 
@@ -122,6 +131,33 @@ class GalleryUpdateTests(unittest.TestCase):
 
     def test_v201_uses_tables_for_dcinside_layouts(self) -> None:
         self.assert_dcinside_safe_v2_tables(V201_UPDATE)
+
+    def test_v202_announcement_covers_patch_scope(self) -> None:
+        for copy in (
+            "문법 4종 답면에 후리가나",
+            "첫 복원 뒤에는 기기에서 바로 계산",
+            "최근 90일은 일별, 최근 1년은 월별",
+            "7일·30일·이번 달·3개월·1년·전체의 기간 합계 유지",
+            "영역별·급수별 합계",
+            "최대 1시간에 한 번",
+            "월별 기록을 더 작게 압축",
+            "전체 합계를 없앤 게 아님",
+            "한자 빌더 복합 자형 수정",
+            "艹/䒑",
+            "巴/巳",
+            "兎(兔)",
+            "버튼을 눌렀다는 느낌도 보강",
+            "v2.0.2 한자 빌더 ZIP",
+            "v2.0.2 다운로드 · GitHub Release",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, V202_UPDATE)
+
+        self.assertIn(
+            "https://truthyblue.github.io/jlpt-max-deck/assets/releases/"
+            "v2.0.2/gallery-v2.0.2-study-records-analysis.png",
+            V202_UPDATE,
+        )
 
     def test_v120_announcement_covers_every_important_learner_feature_once(
         self,
