@@ -5,19 +5,19 @@
   "site_url": "https://truthyblue.github.io/jlpt-max-deck",
   "deck": {
     "vocabulary_notes": 9160,
-    "grammar_notes": 3639,
-    "grammar_cards": 3639,
+    "grammar_notes": 3605,
+    "grammar_cards": 3605,
     "practice_notes": 7876,
     "kanji_characters": 2337,
     "kanji_addon_notes": 4674,
     "kanji_addon_cards": 4674,
     "reference_notes": 9,
-    "total_notes": 25358,
-    "total_cards": 43678,
+    "total_notes": 25324,
+    "total_cards": 43644,
     "total_media": 24992,
     "static_media": 14,
-    "core_notes": 20684,
-    "core_cards": 39004,
+    "core_notes": 20650,
+    "core_cards": 38970,
     "core_media": 24978,
     "example_count": 10463,
     "coverage": {
@@ -51,8 +51,8 @@
     "python": "3.13",
     "macos_minimum": "12",
     "windows_architecture": "x64",
-    "approximate_apkg_size_mb": 1158,
-    "approximate_apkg_size_gb": "1.16"
+    "approximate_apkg_size_mb": 1123,
+    "approximate_apkg_size_gb": "1.12"
   },
   "study_defaults": {
     "desired_retention": "0.90",

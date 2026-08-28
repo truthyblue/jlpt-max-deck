@@ -1043,7 +1043,7 @@ class PublicSiteTests(unittest.TestCase):
             "문법·어휘·음성·한국어 회상·실전 문제를 담은 한국어권 JLPT Anki 덱",
             "9,160",
             "7,876",
-            "39,004",
+            "38,970",
         ):
             self.assertIn(current, source)
         for stale in (
