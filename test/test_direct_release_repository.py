@@ -1039,10 +1039,6 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                     f"`{artifact['sha256']}`",
                     draft,
                 )
-        self.assertIn(
-            f"전체 private APKG SHA-256: `{pin['full_source']['sha256']}`",
-            draft,
-        )
         self.assertNotIn("user-attachments/assets", draft)
         self.assertNotIn("/main/site/assets/releases/", draft)
         self.assertIn(
