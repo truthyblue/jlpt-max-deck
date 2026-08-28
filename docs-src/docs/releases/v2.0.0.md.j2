@@ -23,7 +23,7 @@ N5부터 N1까지 문법을 하나의 노트 유형으로 묶지 않고, 학습 
 
 1. 모든 기기의 Anki 동기화를 끝내고 컬렉션 백업을 확인합니다.
 2. **기존 덱이나 학습한 급수를 삭제하지 않고**
-   `{{ release.artifacts.core.filename }}`를 가져옵니다.
+   `JLPT-MAX-Deck-2.0.0.apkg`를 가져옵니다.
 3. **학습 진행 상태 가져오기 → 끄기**를 선택합니다.
 4. **기존 노트 업데이트 → 항상**, **노트 유형 업데이트 → 항상**,
    **노트 유형 병합 → 켜기**를 선택합니다.
@@ -31,7 +31,7 @@ N5부터 N1까지 문법을 하나의 노트 유형으로 묶지 않고, 학습 
 
 직접 고친 공식 노트 필드는 `항상` 업데이트로 덮어쓸 수 있습니다. 그런 수정이
 있다면 먼저 백업하세요. 한자 확장을 사용한다면
-`{{ release.artifacts.kanji_builder.filename }}`과 지원 PDF 2개로 한자 APKG도 다시
+`JLPT-MAX-kanji-builder-2.0.0.zip`과 지원 PDF 2개로 한자 APKG도 다시
 만들어 가져오세요.
 
 ## 새 어휘 순서를 쓰고 싶을 때
@@ -177,9 +177,9 @@ HTML의 모바일 폭 화면을 확인했습니다.
 
 | 파일 | 크기 | SHA-256 |
 | --- | ---: | --- |
-| `{{ release.artifacts.core.filename }}` | {{ release.artifacts.core.bytes | number }} bytes | `{{ release.artifacts.core.sha256 }}` |
-| `{{ release.artifacts.kanji_builder.filename }}` | {{ release.artifacts.kanji_builder.bytes | number }} bytes | `{{ release.artifacts.kanji_builder.sha256 }}` |
-| `{{ release.artifacts.checksums.filename }}` | {{ release.artifacts.checksums.bytes | number }} bytes | `{{ release.artifacts.checksums.sha256 }}` |
+| `JLPT-MAX-Deck-2.0.0.apkg` | 1,122,734,920 bytes | `d367a15fb9b1124534ebea78f245c36ac586015619ef18cb057e3d6eb947dce5` |
+| `JLPT-MAX-kanji-builder-2.0.0.zip` | 13,041,989 bytes | `c2e3d4e374ccd92b22a32cb4b95900de57be0b1df3881119e592afd0825c6c88` |
+| `SHA256SUMS` | 190 bytes | `d913a9de3ccbeed0aaee2a4c6256ec069ead412251bb5f5414549d033f9ba3ba` |
 
 전체 private APKG SHA-256:
 `bac3dd2618142632a01ed325d2ecc52478fef3a9ca993ed4fde8d6d13dfae603`

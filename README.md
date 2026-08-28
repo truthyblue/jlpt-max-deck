@@ -36,8 +36,8 @@
 
 | 원하는 구성 | 받을 파일 | 추가 준비물 |
 | --- | --- | --- |
-| 문법·어휘·음성·실전 문제·참조표 | `JLPT-MAX-Deck-2.0.0.apkg` | Anki·AnkiMobile·AnkiDroid |
-| 위 구성 + 일상무따 한자 | 기본 덱 + `JLPT-MAX-kanji-builder-2.0.0.zip` | 지원 PDF 2개, macOS 또는 Windows 컴퓨터 |
+| 문법·어휘·음성·실전 문제·참조표 | `JLPT-MAX-Deck-2.0.1.apkg` | Anki·AnkiMobile·AnkiDroid |
+| 위 구성 + 일상무따 한자 | 기본 덱 + `JLPT-MAX-kanji-builder-2.0.1.zip` | 지원 PDF 2개, macOS 또는 Windows 컴퓨터 |
 
 ## 덱 구성
 
@@ -82,12 +82,19 @@ v1.3.0은 일상무따 한자마다 읽기 카드와 쓰기 카드를 따로 제
 끝나면 모든 기기에서 다시 전체 동기화하세요. 한자 확장은 현재 버전 빌더로 다시
 만들어 가져와야 새 읽기·쓰기 구조와 쓰기 순서가 모두 적용됩니다.
 
-v2.0.0은 N5부터 N1까지 검토된 문법 3,605개를 더하고, 어휘를 9,160개로 늘리고 모든 어휘에 한국어→일본어 회상 카드를
-추가했습니다. 기존 사용자는 학습 진행 상태를 끄고 기존 노트·노트 유형 업데이트를
+v2.0.1은 v2.0.0의 문법 3,605개·어휘 9,160개·한국어→일본어 회상 카드와 모바일 내 기록을 그대로 담고,
+AnkiDroid에서 기록 데이터가 커졌을 때 가져오기나 카드 표시가 실패할 수 있던
+문제를 고쳤습니다. 기존 사용자는 학습 진행 상태를 끄고 기존 노트·노트 유형 업데이트를
 항상, 노트 유형 병합을 켜서 가져옵니다. 새 BCCWJ 중요도 순서를 쓰기 위해 이미
 학습한 급수를 삭제하면 안 됩니다. 완전히 미학습 상태인 급수만 어휘·음성 덱을
 함께 삭제한 뒤 다시 가져올 수 있습니다. 업데이트 뒤에는 Anki의 빈 카드 도구에서
 `五万`과 `～キロ`의 남은 카드를 정리합니다.
+
+AnkiDroid v2.0.0에서 카드가 열리면 동기화·백업 뒤 v2.0.1을 기존 덱 위에
+가져오면 기록 저장 구조가 자동으로 바뀝니다. 이미 `500` 또는
+`Protocol message contained an invalid tag` 오류가 뜬다면 먼저 AnkiWeb과
+완전히 동기화하고 백업한 뒤 앱 데이터를 지우거나 앱을 다시 설치하고 v2.0.1을
+가져오세요. 동기화하지 않은 기록은 앱 데이터 삭제·재설치 때 사라질 수 있습니다.
 
 처음에는 FSRS 기억 유지율을 90%,
 어휘 새 카드를 하루 10~20장으로 두는 것을 권합니다.
@@ -106,13 +113,13 @@ v2.0.0은 N5부터 N1까지 검토된 문법 3,605개를 더하고, 어휘를 9,
 1. [1권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003617)와
    [2권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003669)에서
    지원 소책자 PDF를 각각 받습니다.
-2. 같은 v2.0.0의
-   [JLPT-MAX-kanji-builder-2.0.0.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.0.0/JLPT-MAX-kanji-builder-2.0.0.zip)을
+2. 같은 v2.0.1의
+   [JLPT-MAX-kanji-builder-2.0.1.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.0.1/JLPT-MAX-kanji-builder-2.0.1.zip)을
    받아 압축을 완전히 풉니다.
 3. Windows는 `Windows에서 한자 확장 만들기.cmd`, macOS는
    `Mac에서 한자 확장 만들기.command`를 더블클릭합니다.
 4. 첫 번째 PDF 선택창에 1권, 두 번째 선택창에 2권을 고르고 완료될 때까지 기다립니다.
-5. 자동으로 열린 폴더의 `JLPT-MAX-kanji-addon-2.0.0.apkg`를
+5. 자동으로 열린 폴더의 `JLPT-MAX-kanji-addon-2.0.1.apkg`를
    기본 덱과 같은 Anki 컬렉션에 가져옵니다.
 
 PowerShell·터미널 명령이나 Python 설치는 필요하지 않습니다. 빌더는 처음 한 번
@@ -124,7 +131,7 @@ PowerShell·터미널 명령이나 Python 설치는 필요하지 않습니다. �
 
 - 기존 학습 기록을 유지하는 업데이트: [웹 업데이트 가이드](https://truthyblue.github.io/jlpt-max-deck/update.html)
 - 다운로드, 음성, PDF 또는 빌더 오류: [문제 해결](docs/troubleshooting.md)
-- 현재 자산과 검증 결과: [v2.0.0 릴리스 노트](docs/releases/v2.0.0.md)
+- 현재 자산과 검증 결과: [v2.0.1 릴리스 노트](docs/releases/v2.0.1.md)
 - 개인정보와 재배포 범위: [개인정보·저작권·라이선스](docs/privacy-and-licensing.md)
 
 공식 기본 덱 파일을 다시 올리는 대신 이 저장소나 공식 Release 링크를 공유해

@@ -72,6 +72,14 @@ TEST_LIFECYCLE = {
                 "current-release documentation tests can pass while global template data silently leaks into the historical v1.3.0 release note"
             ),
         },
+        "DocumentationRenderTest.test_historical_v200_release_output_is_byte_identical": {
+            "protected_contract": (
+                "rendering a hotfix cannot rewrite the published v2.0.0 filenames, sizes, or artifact hashes"
+            ),
+            "not_subsumed_by": (
+                "current-release documentation tests can pass while global artifact data silently leaks into the historical v2.0.0 release note"
+            ),
+        },
     }
 }
 
@@ -110,6 +118,9 @@ class DocumentationRenderTest(unittest.TestCase):
         ),
         PurePosixPath("docs/releases/v2.0.0.md.j2"): PurePosixPath(
             "docs/releases/v2.0.0.md"
+        ),
+        PurePosixPath("docs/releases/v2.0.1.md.j2"): PurePosixPath(
+            "docs/releases/v2.0.1.md"
         ),
         PurePosixPath("docs/troubleshooting.md.j2"): PurePosixPath(
             "docs/troubleshooting.md"
@@ -312,6 +323,21 @@ class DocumentationRenderTest(unittest.TestCase):
         self.assertEqual(
             hashlib.sha256(rendered.encode("utf-8")).hexdigest(),
             "432947c1e9239db3b9024d564a2bab6429c7f73ec1c7cb2e3bd97159cc265809",
+        )
+
+    def test_historical_v200_release_output_is_byte_identical(self) -> None:
+        environment = RENDER.create_environment(ROOT)
+        context = RENDER.load_context(ROOT)
+        rendered = RENDER.normalize_final_newline(
+            environment.get_template("docs/releases/v2.0.0.md.j2").render(
+                **context
+            )
+        )
+        output = ROOT / "docs/releases/v2.0.0.md"
+        self.assertEqual(rendered, output.read_text(encoding="utf-8"))
+        self.assertEqual(
+            hashlib.sha256(rendered.encode("utf-8")).hexdigest(),
+            "825880a67f7ae1a8f15502ba5165e5efed7ae0b93eb1002488562216266429dc",
         )
 
     def test_final_newline_normalization_is_deterministic(self) -> None:
