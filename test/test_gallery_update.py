@@ -22,6 +22,9 @@ HOTFIX_UPDATE = (
 V120_UPDATE = (
     ROOT / "docs" / "jlpt-gallery-updates" / "v1.2.0.html"
 ).read_text(encoding="utf-8")
+V200_UPDATE = (
+    ROOT / "docs" / "jlpt-gallery-updates" / "v2.0.0.html"
+).read_text(encoding="utf-8")
 V201_UPDATE = (
     ROOT / "docs" / "jlpt-gallery-updates" / "v2.0.1.html"
 ).read_text(encoding="utf-8")
@@ -66,9 +69,15 @@ V120_FEATURES = (
 
 TEST_LIFECYCLE = {
     "test_contracts": {
+        "GalleryUpdateTests.test_v200_uses_tables_for_dcinside_layouts": (
+            "The saved DCInside v2.0.0 gallery post keeps its two-column "
+            "tables and puts every caption below its image after DCInside "
+            "sanitizes styles. Existing gallery tests do not cover this post."
+        ),
         "GalleryUpdateTests.test_v201_uses_tables_for_dcinside_layouts": (
             "The saved DCInside v2.0.1 gallery post keeps its two-column "
-            "tables without fixed-width card images overflowing their cells. "
+            "tables, keeps captions below images, and prevents fixed-width "
+            "card images from overflowing their cells. "
             "Existing gallery tests do not cover DCInside's image-style "
             "sanitization."
         ),
@@ -77,31 +86,42 @@ TEST_LIFECYCLE = {
 
 
 class GalleryUpdateTests(unittest.TestCase):
-    def test_v201_uses_tables_for_dcinside_layouts(self) -> None:
+    def assert_dcinside_safe_v2_tables(self, update: str) -> None:
         table_markup = "\n".join(
-            re.findall(r"<table\b.*?</table>", V201_UPDATE, flags=re.DOTALL)
+            re.findall(r"<table\b.*?</table>", update, flags=re.DOTALL)
         )
-        self.assertEqual(V201_UPDATE.count("<table"), 3)
-        self.assertIn('width="16%"', V201_UPDATE)
-        self.assertIn('width="42%"', V201_UPDATE)
-        self.assertIn('colspan="2"', V201_UPDATE)
+        self.assertEqual(update.count("<table"), 3)
+        self.assertIn('width="16%"', update)
+        self.assertIn('width="42%"', update)
+        self.assertIn('colspan="2"', update)
         self.assertNotIn(
             "grid-template-columns:repeat(2,minmax(0,1fr))",
-            V201_UPDATE,
+            update,
         )
         self.assertNotIn(
             "grid-template-columns:52px minmax(0,1fr) minmax(0,1fr)",
-            V201_UPDATE,
+            update,
         )
         self.assertNotIn(
             "grid-template-columns:repeat(auto-fit,minmax(260px,1fr))",
-            V201_UPDATE,
+            update,
         )
         self.assertEqual(table_markup.count("max-width:100%"), 9)
+        self.assertEqual(table_markup.count('align="center"'), 9)
+        self.assertEqual(
+            len(re.findall(r"<img\b[^>]*>\s*<br>", table_markup)),
+            9,
+        )
         self.assertNotIn(
             "width:100%;max-width:390px",
             table_markup,
         )
+
+    def test_v200_uses_tables_for_dcinside_layouts(self) -> None:
+        self.assert_dcinside_safe_v2_tables(V200_UPDATE)
+
+    def test_v201_uses_tables_for_dcinside_layouts(self) -> None:
+        self.assert_dcinside_safe_v2_tables(V201_UPDATE)
 
     def test_v120_announcement_covers_every_important_learner_feature_once(
         self,
