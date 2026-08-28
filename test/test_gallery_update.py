@@ -22,6 +22,9 @@ HOTFIX_UPDATE = (
 V120_UPDATE = (
     ROOT / "docs" / "jlpt-gallery-updates" / "v1.2.0.html"
 ).read_text(encoding="utf-8")
+V201_UPDATE = (
+    ROOT / "docs" / "jlpt-gallery-updates" / "v2.0.1.html"
+).read_text(encoding="utf-8")
 RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.1.0.md").read_text(
     encoding="utf-8"
 )
@@ -63,6 +66,24 @@ V120_FEATURES = (
 
 
 class GalleryUpdateTests(unittest.TestCase):
+    def test_v201_uses_tables_for_dcinside_layouts(self) -> None:
+        self.assertEqual(V201_UPDATE.count("<table"), 3)
+        self.assertIn('width="16%"', V201_UPDATE)
+        self.assertIn('width="42%"', V201_UPDATE)
+        self.assertIn('colspan="2"', V201_UPDATE)
+        self.assertNotIn(
+            "grid-template-columns:repeat(2,minmax(0,1fr))",
+            V201_UPDATE,
+        )
+        self.assertNotIn(
+            "grid-template-columns:52px minmax(0,1fr) minmax(0,1fr)",
+            V201_UPDATE,
+        )
+        self.assertNotIn(
+            "grid-template-columns:repeat(auto-fit,minmax(260px,1fr))",
+            V201_UPDATE,
+        )
+
     def test_v120_announcement_covers_every_important_learner_feature_once(
         self,
     ) -> None:
