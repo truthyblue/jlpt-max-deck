@@ -59,7 +59,7 @@ from public_kanji import (
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ASSET_ROOT = ROOT / "assets"
 _TEXT_GLYPH_RE = re.compile(
-    r'<span class="kanji-card-glyph" lang="ja">([^<]+)</span>'
+    r'<span class="[^"]*\bkanji-card-glyph\b[^"]*" lang="ja">([^<]+)</span>'
 )
 _ADDITIONAL_SLOT_RE = re.compile(r"추가자\s*([0-9]+)")
 
