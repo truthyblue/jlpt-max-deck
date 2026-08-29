@@ -36,8 +36,8 @@
 
 | 원하는 구성 | 받을 파일 | 추가 준비물 |
 | --- | --- | --- |
-| 문법·어휘·음성·실전 문제·참조표 | `JLPT-MAX-Deck-2.0.2.apkg` | Anki·AnkiMobile·AnkiDroid |
-| 위 구성 + 일상무따 한자 | 기본 덱 + `JLPT-MAX-kanji-builder-2.0.2.zip` | 지원 PDF 2개, macOS 또는 Windows 컴퓨터 |
+| 문법·어휘·음성·실전 문제·참조표 | `JLPT-MAX-Deck-2.0.3.apkg` | Anki·AnkiMobile·AnkiDroid |
+| 위 구성 + 일상무따 한자 | 기본 덱 + `JLPT-MAX-kanji-builder-2.0.3.zip` | 지원 PDF 2개, macOS 또는 Windows 컴퓨터 |
 
 ## 덱 구성
 
@@ -96,6 +96,10 @@ AnkiDroid v2.0.0에서 카드가 열리면 동기화·백업 뒤 v2.0.1을 기�
 완전히 동기화하고 백업한 뒤 앱 데이터를 지우거나 앱을 다시 설치하고 v2.0.1을
 가져오세요. 동기화하지 않은 기록은 앱 데이터 삭제·재설치 때 사라질 수 있습니다.
 
+v2.0.3은 기기에 남은 내 기록과 JLPT 목표를 서버에서 자동으로 다시 확인하고,
+잠깐의 연결 실패를 한 번 더 시도합니다. 개인 최고 기록 알림은 하루 한 번 카드
+가운데에 표시되며, 문법 카드의 업데이트 공지도 다른 카드와 같은 모양으로 보입니다.
+
 처음에는 FSRS 기억 유지율을 90%,
 어휘 새 카드를 하루 10~20장으로 두는 것을 권합니다.
 독립 음성 카드는 필요할 때만 공부하고, 이미 공부 중이라면 지금 설정을 유지하세요.
@@ -113,13 +117,13 @@ AnkiDroid v2.0.0에서 카드가 열리면 동기화·백업 뒤 v2.0.1을 기�
 1. [1권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003617)와
    [2권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003669)에서
    지원 소책자 PDF를 각각 받습니다.
-2. 같은 v2.0.2의
-   [JLPT-MAX-kanji-builder-2.0.2.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.0.2/JLPT-MAX-kanji-builder-2.0.2.zip)을
+2. 같은 v2.0.3의
+   [JLPT-MAX-kanji-builder-2.0.3.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.0.3/JLPT-MAX-kanji-builder-2.0.3.zip)을
    받아 압축을 완전히 풉니다.
 3. Windows는 `Windows에서 한자 확장 만들기.cmd`, macOS는
    `Mac에서 한자 확장 만들기.command`를 더블클릭합니다.
 4. 첫 번째 PDF 선택창에 1권, 두 번째 선택창에 2권을 고르고 완료될 때까지 기다립니다.
-5. 자동으로 열린 폴더의 `JLPT-MAX-kanji-addon-2.0.2.apkg`를
+5. 자동으로 열린 폴더의 `JLPT-MAX-kanji-addon-2.0.3.apkg`를
    기본 덱과 같은 Anki 컬렉션에 가져옵니다.
 
 PowerShell·터미널 명령이나 Python 설치는 필요하지 않습니다. 빌더는 처음 한 번
@@ -131,7 +135,7 @@ PowerShell·터미널 명령이나 Python 설치는 필요하지 않습니다. �
 
 - 기존 학습 기록을 유지하는 업데이트: [웹 업데이트 가이드](https://truthyblue.github.io/jlpt-max-deck/update.html)
 - 다운로드, 음성, PDF 또는 빌더 오류: [문제 해결](docs/troubleshooting.md)
-- 현재 자산과 검증 결과: [v2.0.2 릴리스 노트](docs/releases/v2.0.2.md)
+- 현재 자산과 검증 결과: [v2.0.3 릴리스 노트](docs/releases/v2.0.3.md)
 - 개인정보와 재배포 범위: [개인정보·저작권·라이선스](docs/privacy-and-licensing.md)
 
 공식 기본 덱 파일을 다시 올리는 대신 이 저장소나 공식 Release 링크를 공유해
