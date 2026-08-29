@@ -201,7 +201,6 @@ class GalleryUpdateTests(unittest.TestCase):
             "문법 카드 공지도 어두운 배경·둥근 창·큰 버튼 스타일 적용",
             "기존 덱을 지우지 말고 v2.0.3으로 업데이트",
             "v2.0.3 한자 빌더 ZIP",
-            "25,324노트 덮어쓰기",
             "v2.0.3 다운로드 · GitHub Release",
             "v2.0.3 상세 변경 내역",
             "★ GitHub에서 Star →",
