@@ -1,19 +1,19 @@
 {
   "artifacts": {
-    "JLPT-MAX-Deck-2.0.2.apkg": {
-      "bytes": 1123861671,
-      "sha256": "a20f0e897ad6ca1699ba6515454965e03ec6dd7744193315124dd834fbd6b063"
+    "JLPT-MAX-Deck-2.0.3.apkg": {
+      "bytes": 1123886057,
+      "sha256": "0d00085925655371b873f1f33cf2b71b63762065e6a661e4019ef358c3929ac1"
     },
-    "JLPT-MAX-kanji-builder-2.0.2.zip": {
-      "bytes": 13165031,
-      "sha256": "1b0e5b443f5c235971336585082d171dfa1f49a37bcd22a5648314629f7ac0e8"
+    "JLPT-MAX-kanji-builder-2.0.3.zip": {
+      "bytes": 13175510,
+      "sha256": "30b6314fd82cf986246b5f8c2e875772245431e662a535f1f2ab11daa6bfdf01"
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "7d372bc5caf1dab7493f7238f07e3302ef1f41112a84e33cfa880cf78b33d040"
+      "sha256": "5ff593c1da7bdf25e87d1462bd43dd2d2cf39f1328ce6bc28752bcaa021a086e"
     }
   },
-  "build_input_fingerprint_sha256": "d179754ffb673954685f93154a75374d79de921968b3693bb292bf11cdb187b6",
+  "build_input_fingerprint_sha256": "30414c6d7380c8497157ded0df8b41c32ab52527000abd532de195bb74ead0ad",
   "core": {
     "cards": 38970,
     "custom_notetype_note_counts": {
@@ -32,12 +32,12 @@
     "media_files": 24978,
     "media_hash": "c99320e6234302930b11991bed60ad5a7e64b6a38443e15864a6be1c1394a093",
     "notes": 20650,
-    "reused": false
+    "reused": true
   },
   "full_source": {
     "cards": 43644,
     "notes": 25324,
-    "sha256": "7502fa9313f87d23861fee5f5c26083322930e8072d2b362a2dae0ac7caa4d28"
+    "sha256": "cb7be24cd8fe4372253329b6a3990b6242089a4957988406bac2182c92e34b11"
   },
   "kanji_builder": {
     "expected_kanji_addon_cards": 4674,
@@ -47,13 +47,13 @@
     "expected_static_media": 2299,
     "expected_stroke_media": 2298,
     "expected_vector_glyphs": 14,
-    "output_apkg": "JLPT-MAX-kanji-addon-2.0.2.apkg",
-    "reused": false,
+    "output_apkg": "JLPT-MAX-kanji-addon-2.0.3.apkg",
+    "reused": true,
     "source_hash": "112de713aa86693227be2bf77f0d79052c70615ea2a9fb4aad024ef570e76daf"
   },
-  "payload_hash": "35786cac8f5fd26f2a1f181daad276ab8e3573b260afa9a71afd23e5f4654a3e",
+  "payload_hash": "b14a9c02ea9e9c6fa8efb619fad3d884816df7dc0b6c94f883cb7bdebc6576ed",
   "policy_version": "direct-core-plus-kanji-addon-v1",
-  "product_version": "2.0.2",
+  "product_version": "2.0.3",
   "schema_version": 3,
   "status": "passed",
   "unresolved": 0
