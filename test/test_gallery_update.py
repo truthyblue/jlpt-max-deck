@@ -31,6 +31,9 @@ V201_UPDATE = (
 V202_UPDATE = (
     ROOT / "docs" / "jlpt-gallery-updates" / "v2.0.2.html"
 ).read_text(encoding="utf-8")
+V203_UPDATE = (
+    ROOT / "docs" / "jlpt-gallery-updates" / "v2.0.3.html"
+).read_text(encoding="utf-8")
 RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.1.0.md").read_text(
     encoding="utf-8"
 )
@@ -91,6 +94,12 @@ TEST_LIFECYCLE = {
             "established feedback and GitHub Star calls to action. Earlier "
             "gallery tests do not cover this patch announcement."
         ),
+        "GalleryUpdateTests.test_v203_announcement_covers_recovery_scope": (
+            "The saved v2.0.3 gallery post covers records recovery, retry, "
+            "the JLPT target card, personal-best placement, grammar notice "
+            "styling, update instructions, and release links. Earlier "
+            "gallery tests do not cover this patch announcement."
+        ),
     },
 }
 
@@ -135,7 +144,8 @@ class GalleryUpdateTests(unittest.TestCase):
 
     def test_v202_announcement_covers_patch_scope(self) -> None:
         title_match = re.search(r"<!-- 게시글 제목: (.+?) -->", V202_UPDATE)
-        self.assertIsNotNone(title_match)
+        if title_match is None:
+            self.fail("v2.0.2 gallery title metadata is missing")
         self.assertLessEqual(len(title_match.group(1)), 40)
 
         for copy in (
@@ -174,6 +184,37 @@ class GalleryUpdateTests(unittest.TestCase):
             V202_UPDATE.index("v2.0.1 사용자"),
             V202_UPDATE.index("v2.0.2 다운로드"),
         )
+
+    def test_v203_announcement_covers_recovery_scope(self) -> None:
+        title_match = re.search(r"<!-- 게시글 제목: (.+?) -->", V203_UPDATE)
+        if title_match is None:
+            self.fail("v2.0.3 gallery title metadata is missing")
+        self.assertLessEqual(len(title_match.group(1)), 40)
+
+        for copy in (
+            "내 기록 자동 복구",
+            "잠깐 연결이 불안정하면 한 번 자동 재시도",
+            "일반 연결 오류와 실제 기록 복구 실패를 구분",
+            "초록색 JLPT 목표 카드 유지",
+            "동기화하지 못했어요",
+            "하루 개인 최고 기록 알림은 같은 날 한 번만 표시",
+            "문법 카드 공지도 어두운 배경·둥근 창·큰 버튼 스타일 적용",
+            "기존 덱을 지우지 말고 v2.0.3으로 업데이트",
+            "v2.0.3 한자 빌더 ZIP",
+            "25,324노트 덮어쓰기",
+            "v2.0.3 다운로드 · GitHub Release",
+            "v2.0.3 상세 변경 내역",
+            "★ GitHub에서 Star →",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, V203_UPDATE)
+
+        self.assertIn(
+            "https://truthyblue.github.io/jlpt-max-deck/assets/releases/"
+            "v2.0.3/gallery-v2.0.3-study-records-recovery.png",
+            V203_UPDATE,
+        )
+        self.assertNotIn("v2.0.1로 바꾸세요", V203_UPDATE)
 
     def test_v120_announcement_covers_every_important_learner_feature_once(
         self,
