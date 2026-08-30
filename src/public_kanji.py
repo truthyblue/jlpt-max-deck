@@ -20,10 +20,11 @@ from PIL import Image
 from direct_release_contract import sha256_file, sha256_json
 
 
-GILBUT_EXTRACTION_POLICY_VERSION = "public-gilbut-kanji-geometry-v1"
+GILBUT_EXTRACTION_POLICY_VERSION = "public-gilbut-kanji-geometry-v2"
 GILBUT_GLYPH_POLICY_VERSION = "public-gilbut-vector-glyph-png-v2"
 GILBUT_GLYPH_PNG_RESOLUTION = 576
 GILBUT_GLYPH_PNG_PADDING_PIXELS = 16
+GILBUT_MEANING_WORD_GAP_POINTS = 0.5
 EXPECTED_GILBUT_SLOT_COUNT = 2_337
 GILBUT_GLYPH_EQUIVALENTS = MappingProxyType({"戶": ("戸",)})
 _NUMBERED_SLOT_RE = re.compile(r"[0-9]{4}")
@@ -174,29 +175,59 @@ def _group_gilbut_rows(
     return rows
 
 
-def _group_words_by_line(
-    words: Sequence[Mapping[str, Any]],
+def _group_items_by_line(
+    items: Sequence[Mapping[str, Any]],
 ) -> list[list[Mapping[str, Any]]]:
     lines: list[list[Mapping[str, Any]]] = []
-    for word in sorted(
-        words,
+    for item in sorted(
+        items,
         key=lambda value: (_word_float(value, "top"), _word_float(value, "x0")),
     ):
-        if not lines or _word_float(word, "top") - _word_float(lines[-1][0], "top") > 1.5:
-            lines.append([word])
+        if (
+            not lines
+            or _word_float(item, "top") - _word_float(lines[-1][0], "top") > 1.5
+        ):
+            lines.append([item])
         else:
-            lines[-1].append(word)
+            lines[-1].append(item)
     for line in lines:
         line.sort(key=lambda value: _word_float(value, "x0"))
     return lines
 
 
-def _normalized_gilbut_meaning(words: Sequence[Mapping[str, Any]]) -> str:
-    lines = _group_words_by_line(words)
-    value = " ".join(
-        " ".join(str(word.get("text", "")) for word in line) for line in lines
+def _normalized_gilbut_meaning(
+    characters: Sequence[Mapping[str, Any]],
+) -> str:
+    lines = _group_items_by_line(characters)
+    rendered_lines: list[tuple[str, bool]] = []
+    for line in lines:
+        visible = [word for word in line if str(word.get("text", "")).strip()]
+        if not visible:
+            continue
+        fragments: list[str] = []
+        previous: Mapping[str, Any] | None = None
+        for word in visible:
+            if (
+                previous is not None
+                and _word_float(word, "x0") - _word_float(previous, "x1")
+                > GILBUT_MEANING_WORD_GAP_POINTS
+            ):
+                fragments.append(" ")
+            fragments.append(str(word.get("text", "")))
+            previous = word
+        last_visible_x0 = max(_word_float(word, "x0") for word in visible)
+        trailing_space = any(
+            not str(word.get("text", "")).strip()
+            and _word_float(word, "x0") > last_visible_x0
+            for word in line
+        )
+        rendered_lines.append(("".join(fragments), trailing_space))
+    value = "".join(
+        text + (" " if trailing_space and index + 1 < len(rendered_lines) else "")
+        for index, (text, trailing_space) in enumerate(rendered_lines)
     )
     value = unicodedata.normalize("NFC", re.sub(r"\s+", " ", value).strip())
+    value = re.sub(r"([^\s(（])([①-⑳])", r"\1 \2", value)
     return re.sub(r"\s*([·•])\s*", r"\1", value)
 
 
@@ -303,11 +334,21 @@ def extract_gilbut_kanji_slots(
                         if _word_float(word, "size") >= 12
                         and _word_float(word, "top") < min(row_bottom, row_top + 50)
                     ]
-                    meaning_words = [
-                        word
-                        for word in cell_words
-                        if _word_float(word, "size") <= 7.1
-                        and _word_float(word, "top") >= row_top + 20
+                    meaning_characters = [
+                        character
+                        for character in page.chars
+                        if left
+                        <= (
+                            _word_float(character, "x0")
+                            + _word_float(character, "x1")
+                        )
+                        / 2
+                        < right
+                        and row_top + 10
+                        < _word_float(character, "top")
+                        < row_bottom
+                        and _word_float(character, "size") <= 7.1
+                        and _word_float(character, "top") >= row_top + 20
                     ]
                     glyph_curves = [
                         curve
@@ -338,7 +379,7 @@ def extract_gilbut_kanji_slots(
                         glyph_kind = "vector"
                         glyph_text = ""
                         glyph_bbox = _rounded_bbox(glyph_curves)
-                    meaning = _normalized_gilbut_meaning(meaning_words)
+                    meaning = _normalized_gilbut_meaning(meaning_characters)
                     if not meaning:
                         raise PublicKanjiError(
                             "Gilbut slot has no Korean meaning: "

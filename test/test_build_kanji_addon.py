@@ -22,6 +22,7 @@ from build_kanji_addon import (  # noqa: E402
 )
 from public_kanji import (  # noqa: E402
     GilbutKanjiSlot,
+    _normalized_gilbut_meaning,
     gilbut_vector_glyph_png,
 )
 
@@ -50,6 +51,14 @@ TEST_LIFECYCLE = {
             ),
             "not_subsumed_by": (
                 "single-class text glyph tests can pass while the builder rejects the composite-class notes beginning at K000036"
+            ),
+        },
+        "KanjiAddonTest.test_pdf_meaning_geometry_preserves_korean_word_boundaries": {
+            "protected_contract": (
+                "the optional kanji builder uses visible PDF geometry and explicit trailing spaces to keep Korean words joined across fragmented text and wrapped lines"
+            ),
+            "not_subsumed_by": (
+                "note counts and nonempty meanings can pass while invisible PDF text fragments insert spaces inside Korean words"
             ),
         },
     }
@@ -225,6 +234,40 @@ class KanjiAddonTest(unittest.TestCase):
                         )
                     )
                     self.assertEqual(note["Meaning"], "복합 자형")
+
+    def test_pdf_meaning_geometry_preserves_korean_word_boundaries(self) -> None:
+        same_line = [
+            {"text": "속", "x0": 0.0, "x1": 5.8, "top": 0.0},
+            {"text": " ", "x0": 0.3, "x1": 2.5, "top": 0.0},
+            {"text": "마", "x0": 5.5, "x1": 11.3, "top": 0.0},
+            {"text": "음", "x0": 11.0, "x1": 16.8, "top": 0.0},
+            {"text": " ", "x0": 16.5, "x1": 18.7, "top": 0.0},
+            {"text": "충", "x0": 18.4, "x1": 24.2, "top": 0.0},
+        ]
+        wrapped_word = [
+            {"text": "더듬", "x0": 42.0, "x1": 53.0, "top": 0.0},
+            {"text": "어", "x0": 0.0, "x1": 5.8, "top": 8.0},
+            {"text": "찾을", "x0": 7.4, "x1": 18.8, "top": 8.0},
+            {"text": "색", "x0": 20.4, "x1": 26.2, "top": 8.0},
+        ]
+        wrapped_words = [
+            {"text": "두", "x0": 0.0, "x1": 5.8, "top": 0.0},
+            {"text": "선이", "x0": 7.4, "x1": 18.8, "top": 0.0},
+            {"text": " ", "x0": 20.4, "x1": 22.6, "top": 0.0},
+            {"text": "교차할", "x0": 0.0, "x1": 17.0, "top": 8.0},
+            {"text": "각", "x0": 18.6, "x1": 24.4, "top": 8.0},
+        ]
+        numbered_senses = [
+            {"text": "①", "x0": 0.0, "x1": 6.4, "top": 0.0},
+            {"text": "첫째", "x0": 8.0, "x1": 19.4, "top": 0.0},
+            {"text": "②", "x0": 19.1, "x1": 25.5, "top": 0.0},
+            {"text": "둘째", "x0": 27.1, "x1": 38.5, "top": 0.0},
+        ]
+
+        self.assertEqual(_normalized_gilbut_meaning(same_line), "속마음 충")
+        self.assertEqual(_normalized_gilbut_meaning(wrapped_word), "더듬어 찾을 색")
+        self.assertEqual(_normalized_gilbut_meaning(wrapped_words), "두 선이 교차할 각")
+        self.assertEqual(_normalized_gilbut_meaning(numbered_senses), "① 첫째 ② 둘째")
 
     def test_vector_slot_writes_png_media(self) -> None:
         note = FakeNote(
