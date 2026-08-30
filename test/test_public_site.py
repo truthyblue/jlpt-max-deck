@@ -377,7 +377,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn('id="start"', html)
         self.assertIn('id="meaning-focus"', html)
         self.assertIn('id="github-star-link"', html)
-        self.assertIn("외울 뜻이", html)
+        self.assertIn("학습할 뜻과 예문", html)
         self.assertIn("엄마, 어머니", html)
         self.assertIn("겹치는 표현은 하나로", html)
         self.assertIn("다의어는 뜻별로 분리", html)
@@ -387,7 +387,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("예문 2", html)
         self.assertIn("대표 예문 하나를 생성해 연결했습니다.", html)
         self.assertIn("GPT‑5.6 Sol", html)
-        self.assertIn("이중 검토", html)
+        self.assertIn("콘텐츠 작성과 검토", html)
         self.assertIn("GitHub에서 Star", html)
         self.assertEqual(4, html.count("data-audio="))
         self.assertEqual(6, html.count('class="practice-flip-card"'))
@@ -400,52 +400,50 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn("단어·첫 예문·모든 예문 선택</small>", html)
         self.assertIn("음성과 자동재생", html)
         self.assertIn("뜻마다 대표 예문", html)
-        self.assertIn("한자 정보를 바로", html)
+        self.assertIn("한자 정보", html)
         self.assertNotIn('class="deck-support-features reveal"', html)
         self.assertNotIn("BEYOND THIS CARD", html)
         self.assertIn("덱 안내와 업데이트", html)
-        self.assertIn("모든 어휘에는 한국어 뜻을 보고 일본어를 떠올리는 회상 카드", html)
+        self.assertIn("모든 어휘에는 한국어→일본어 회상 카드", html)
         self.assertIn("한국어→일본어 회상", html)
         self.assertIn("card-hannichi-formation.webp", html)
         self.assertIn("구어(일부 뜻)", html)
         self.assertIn("‘괜찮다’에만", html)
-        self.assertIn("기본 덱은 바로 받을 수 있습니다.", html)
-        self.assertIn("한국어권 학습자용 Anki 덱입니다.", html)
+        self.assertIn("JLPT 어휘와", html)
+        self.assertIn("실전 문제", html)
         self.assertIn("음성 · AivisSpeech 1.2.0 ·", html)
         self.assertIn("비공식 합성 음성 · AivisSpeech 1.2.0 ·", html)
         self.assertIn("한자 2,337자", html)
-        self.assertIn("읽기와 쓰기 4,674장", html)
+        self.assertIn("읽기와 쓰기 카드 4,674장", html)
         self.assertIn("선택형 한자 확장", html)
         self.assertIn("card-kanji-read-front-v2.webp", html)
         self.assertIn("card-kanji-write-front-v2.webp", html)
         self.assertIn("card-kanji-writing-v2.webp", html)
         self.assertIn("뜻·음독·훈독·연결 단어", html)
-        self.assertIn("획순을 한 획씩", html)
-        self.assertIn("화면에 직접 쓰고 비교", html)
-        self.assertIn("헷갈리는 한자 비교", html)
+        self.assertIn("획순 애니메이션", html)
+        self.assertIn("쓰기 연습", html)
+        self.assertIn("비슷한 한자", html)
         self.assertNotIn("NEW", html[html.index('id="kanji"') :])
         self.assertIn("한국어→일본어 회상", html)
-        self.assertIn("GPT‑5.6 Sol로 작성하고", html)
-        self.assertIn("이중 검토했습니다.", html)
+        self.assertIn("뜻·예문·번역·실전 문제 작성에 GPT‑5.6 Sol", html)
+        self.assertIn("별도 LLM 판정과 규칙 검사", html)
         self.assertIn("GPT‑5.6 Sol을 사용했습니다.", html)
-        self.assertIn("생성 결과를 그대로 넣지 않고", html)
         self.assertIn('class="quality-summary-facts reveal"', html)
         self.assertIn("1차 검토", html)
         self.assertIn("2차 검토", html)
         self.assertNotIn("생성된 내용을 곧바로 카드에 넣은 건 아닙니다.", html)
         self.assertNotIn("GPT‑5.6 Sol이 작성한 항목", html)
-        self.assertIn("한 단어가", html)
-        self.assertIn("카드에 들어가기까지.", html)
+        self.assertIn("제작 과정", html)
         self.assertIn("문제가 발견되면 원인을 반영해 다시 작성하거나 교체한 뒤", html)
         self.assertIn("같은 검증을 다시 거칩니다.", html)
         self.assertIn("재작성·교체 후 재검증", html)
         self.assertIn(">검증 완료</i>", html)
         self.assertNotIn("통과한 결과만 반영", html)
         self.assertNotIn("실패 항목 자동 수록 차단", html)
-        self.assertIn("표기·읽기·뜻 근거를 준비합니다", html)
-        self.assertIn("GPT‑5.6 Sol이 뜻·예문·문제를 작성합니다", html)
-        self.assertIn("작성 결과를 별도로 검증합니다", html)
-        self.assertIn("검증을 마친 최종본으로 덱을 만듭니다", html)
+        self.assertIn("표기·읽기·뜻 근거", html)
+        self.assertIn("뜻·예문·문제 작성", html)
+        self.assertIn("별도 검토", html)
+        self.assertIn("최종 덱 생성", html)
         self.assertIn("재검증을 마친 결과를 확정한 뒤", html)
         self.assertIn("<span>확정 데이터</span>", html)
         self.assertNotIn("승인", html)
@@ -503,7 +501,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("별도 선택 확장", html)
         self.assertIn("optional-addon-row", html)
         self.assertIn("JMdict·KANJIDIC2 EDRDG", html)
-        self.assertIn("각 급수 안에서", html)
+        self.assertIn("각 급수의 새 카드 순서", html)
         self.assertIn("급수별 BCCWJ 중요도 순", html)
         self.assertIn("일본어 균형 말뭉치인 BCCWJ의 사용 빈도를 기준으로", html)
         self.assertIn("말뭉치에서 찾지 못한 54개도", html)
@@ -557,10 +555,8 @@ class PublicSiteTests(unittest.TestCase):
     def test_start_guide_contains_complete_import_contract(self) -> None:
         html = (SITE / "getting-started.html").read_text(encoding="utf-8")
         parser = self.parsers["getting-started.html"]
-        self.assertIn(
-            '<p class="v2-kicker"><span></span>시작 가이드</p>',
-            html,
-        )
+        self.assertIn("<h1>시작 가이드</h1>", html)
+        self.assertNotIn("v2-hero-lead", html)
         self.assertNotIn(
             '<p class="v2-kicker"><span></span>시작 가이드 · v',
             html,
@@ -577,23 +573,23 @@ class PublicSiteTests(unittest.TestCase):
         ):
             self.assertIn(section_id, parser.ids)
         for token in (
-            "Anki가 처음이에요",
-            "Anki를 이미 사용 중이에요",
-            "JLPT MAX덱을 업데이트할게요",
+            "Anki 처음 사용",
+            "기존 Anki에 추가",
+            "JLPT MAX 업데이트",
             'href="study-guide.html"',
             'href="update.html"',
-            "받은 덱 파일을 Anki로 여세요.",
-            "사용하는 기기에서 아래 메뉴를 열면 FSRS를 켤 수 있습니다",
+            "<h2>기본 덱 가져오기</h2>",
+            "<h2>FSRS 설정</h2>",
             "JLPT MAX덱</code> 옆 톱니바퀴 누르기",
             "톱니바퀴 → <strong>학습 옵션</strong> 누르기",
             "덱 이름 길게 누르기",
             "컬렉션의 모든 덱에 함께 적용",
-            "<h2>어휘::N5를 열어 첫 카드가 나오는지 확인하세요.</h2>",
+            "<h2>첫 카드 확인</h2>",
             "채점 기준과 하루 학습량은 덱 학습법에서 이어집니다",
             'href="kanji.html"',
-            "학습 기록을 안전하게 보관하려면 동기화하세요",
+            "<h2>AnkiWeb 동기화</h2>",
             "권장 · AnkiWeb 동기화",
-            "처음 설치했다면 덱을 넣고 첫 학습을 마친 뒤 동기화하세요",
+            "첫 학습 뒤 동기화하세요",
             "한 기기만 쓰더라도 분실이나 고장에 대비해",
         ):
             self.assertIn(token, html)
@@ -641,10 +637,8 @@ class PublicSiteTests(unittest.TestCase):
     def test_kanji_guide_is_beginner_complete_and_private_by_default(self) -> None:
         html = (SITE / "kanji.html").read_text(encoding="utf-8")
         parser = self.parsers["kanji.html"]
-        self.assertIn(
-            '<p class="v2-kicker"><span></span>한자 덱 추가</p>',
-            html,
-        )
+        self.assertIn("<h1>일상무따 한자 확장</h1>", html)
+        self.assertNotIn("v2-kicker", html)
         self.assertNotIn(
             '<p class="v2-kicker"><span></span>선택 확장 · v',
             html,
@@ -663,7 +657,7 @@ class PublicSiteTests(unittest.TestCase):
             self.assertIn(section_id, parser.ids)
         for token in (
             "일상무따 한자 확장",
-            "초심자용 만들기 가이드",
+            "기본 덱과 다른 점",
             "한글 뜻이 든 완성본을 배포하지 않습니다",
             "한자 2,337개의 읽기·쓰기 카드",
             "읽기·쓰기 4,674장",
@@ -681,7 +675,7 @@ class PublicSiteTests(unittest.TestCase):
             "한글이나 띄어쓰기가 있는 폴더",
             f"JLPT-MAX-kanji-addon-{RELEASE_VERSION}.apkg",
             "kanji-builder.log",
-            "PDF와 완성 APKG는 사용자 컴퓨터 안에서만",
+            "PDF, 페이지 이미지와 생성한 APKG는 외부 서비스로 전송되지 않습니다",
         ):
             self.assertIn(token, html)
         self.assertNotIn("PDF 두 개를 고르면", html)
@@ -770,12 +764,13 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn('id="what-is-anki"', html)
         self.assertIn('id="apps"', html)
         self.assertIn('id="first-launch"', html)
-        self.assertIn("Anki는 잊을 때쯤 다시 보여주는 암기 앱입니다", html)
+        self.assertIn("<h2>Anki와 JLPT MAX덱</h2>", html)
         self.assertIn("카드를 보여주고 복습 일정을 관리합니다", html)
         self.assertIn("Anki에 넣어 공부할 일본어 단어와 문제 카드입니다", html)
         self.assertIn("직접 카드를 만들 필요는 없습니다", html)
         self.assertLess(html.index('id="what-is-anki"'), html.index('id="apps"'))
-        self.assertIn("평소 공부할 기기에", html)
+        self.assertIn("<h1>Anki 설치</h1>", html)
+        self.assertNotIn("v2-hero-lead", html)
         self.assertIn("data-tabs data-platform-tabs", html)
         self.assertEqual(3, html.count('class="v2-tab"'))
         self.assertEqual(3, html.count('class="v2-tab-panel v2-device-card"'))
@@ -838,15 +833,15 @@ class PublicSiteTests(unittest.TestCase):
         for token in (
             "N5 → N4 → N3 → N2",
             "선택 · 필터 덱",
-            "여러 급수의 어휘를 한 덱에 모아 보고 싶을 때만 사용하세요",
+            "앞서 공부한 급수의 복습과 현재 급수의 새 카드를 한곳에서 보고 싶다면",
             "처음이라면 이 부분은 건너뛰고",
             'details class="v2-optional-guide"',
             "필터 덱 설정 보기",
             "처음에 한 번 설정해야 하는 선택 기능입니다",
             "필터 덱이란?",
             "원래 덱을 합치거나 카드를 복사하는 기능이 아닙니다",
-            'class="v2-subsection-heading">처음 한 번만 필터 덱을 만드세요',
-            "두 칸에는 복습용·새 카드용 조건을 따로 넣으세요",
+            'class="v2-subsection-heading">필터 덱 만들기',
+            'class="v2-subsection-heading">필터 조건 입력',
             "검색식</code>은 Anki가 가져올 카드를 고르는 조건입니다",
             "복습용 필터",
             "새 카드용 필터",
@@ -886,10 +881,10 @@ class PublicSiteTests(unittest.TestCase):
             self.assertIn(token, html)
         self.assertLess(
             html.index("필터 덱이란?"),
-            html.index("처음 한 번만 필터 덱을 만드세요"),
+            html.index("필터 덱 만들기"),
         )
         self.assertLess(
-            html.index("처음 한 번만 필터 덱을 만드세요"),
+            html.index("필터 덱 만들기"),
             html.index('id="review-filter-tab-n5"'),
         )
         self.assertLess(
@@ -947,7 +942,7 @@ class PublicSiteTests(unittest.TestCase):
             "무작위 노트",
         ):
             self.assertIn(token, html)
-        self.assertIn("업데이트한 뒤에는 실전 설정만 확인하세요", html)
+        self.assertIn("<h2>업데이트 후 설정</h2>", html)
         self.assertIn("음성 덱의 새 카드 수를 포함한 나머지 옵션은 지금 설정을 그대로 두세요", html)
         self.assertIn(
             "기존 노트 업데이트</h3><span class=\"v2-state on\">항상",
@@ -1048,7 +1043,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("미사용 미디어를 삭제해 저장 공간을 확보합니다.", html)
         self.assertIn("도구 → 미디어 검사", html)
         self.assertIn("휴지통을 비워야 실제 여유 공간이 생깁니다.", html)
-        self.assertIn("<h2>한자 확장을 만들 수 없어요.</h2>", html)
+        self.assertIn("<h2>한자 확장 문제</h2>", html)
         self.assertIn("한자 확장 만들기 전체 가이드", html)
         for build_error in (
             "더블클릭할 실행 파일이 보이지 않아요.",
@@ -1065,8 +1060,8 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn("output root must be absent or empty", html)
         self.assertNotIn("한자 확장 문제는 PDF와 빌더 버전을 맞춥니다.", html)
         self.assertIn("<h2>자주 묻는 질문</h2>", html)
-        self.assertIn("<h2>오류를 제보하고 싶어요.</h2>", html)
-        self.assertIn("<h2>Anki 가져오기가 멈춰요.</h2>", html)
+        self.assertIn("<h2>오류 제보</h2>", html)
+        self.assertIn("<h2>Anki 가져오기 문제</h2>", html)
         self.assertIn("<h2>업데이트 기록</h2>", html)
         self.assertNotIn('id="update"', html)
         self.assertNotIn("짧게 답합니다.", html)
@@ -1087,10 +1082,10 @@ class PublicSiteTests(unittest.TestCase):
         ):
             self.assertIn(section_id, parser.ids)
         for token in (
-            "지금 막<br><em>설치하려고 해요</em>",
-            "<em>업데이트</em>하고<br>싶어요",
-            "공부 순서가<br><em>헷갈려요</em>",
-            "<em>소리·화면</em>이<br>이상해요",
+            "<h2>처음 설치</h2>",
+            "<h2>덱 업데이트</h2>",
+            "<h2>학습 순서</h2>",
+            "<h2>소리·화면 문제</h2>",
             "업데이트할 때 기존 덱을 지워야 하나요?",
             "N3·N2부터 공부해도 되나요? 어디서 시작하나요?",
             "카드를 뒤집기 전에 한자 없이 히라가나만 나와요.",
@@ -1110,6 +1105,9 @@ class PublicSiteTests(unittest.TestCase):
         ):
             self.assertIn(token, html)
         self.assertNotIn("도움말 검색", html)
+        self.assertNotIn("지금 내 상황을 선택하면", html)
+        self.assertNotIn("갤러리 질문과 카드 오류 제보에서", html)
+        self.assertNotIn("학습 기록을 지키고 교체하기", html)
         self.assertLess(html.index('id="quick"'), html.index('id="faq"'))
         self.assertLess(html.index('id="faq"'), html.index('id="history"'))
         self.assertLess(html.index('id="report"'), html.index('id="history"'))

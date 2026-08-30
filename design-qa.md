@@ -48,4 +48,16 @@
 - 추가 문구로 인한 잘림, 겹침, 가로 넘침은 없다.
 - 브라우저 오류 로그: 0건
 
+## 제목·설명 문구 전수 검토
+
+- 검토 화면: 홈, 시작 가이드, 업데이트, 덱 학습법, 한자 확장, 도움말, Anki 설치, 404
+- 검토 기준: 제목만 읽어도 구역을 알 수 있게 하고, 바로 아래에서 같은 말을 반복하는 설명은 삭제한다.
+- 문장형 큰 제목은 `시작 방법`, `업데이트 방법`, `덱별 학습 순서`, `오류 제보`, `업데이트 기록`처럼 짧은 이름으로 바꿨다.
+- 가이드 6곳의 큰 제목 아래 소개 문장을 삭제했다.
+- 도움말의 상황별 카드 설명 4개와 FAQ 소개 문장을 삭제했다.
+- 학습 순서, 업데이트 주의사항, 오류 해결 절차처럼 행동에 필요한 내용은 유지했다.
+- 수정 후 첫 화면: `build/product-design-audit/copy-cleanup-2026-08-31/*-after-top.jpg`
+- FAQ·업데이트 기록 확인: `build/product-design-audit/copy-cleanup-2026-08-31/09-support-update-faq-after-crop.jpg`, `10-support-audio-faq-after-crop.jpg`, `11-support-history-after-crop.jpg`
+- 8개 화면 모두 가로 넘침이 없고 브라우저 오류 로그는 0건이다.
+
 final result: passed

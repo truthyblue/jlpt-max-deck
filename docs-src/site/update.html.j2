@@ -5,24 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08120e">
   <meta name="robots" content="index,follow">
-  <meta name="description" content="JLPT MAX Deck을 기존 학습 기록과 개인 덱 옵션을 보존하며 업데이트하는 절차입니다.">
+  <meta name="description" content="학습 기록과 개인 설정을 유지하는 JLPT MAX덱 업데이트 방법.">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="ko_KR">
-  <meta property="og:title" content="업데이트 가이드 — JLPT MAX Deck">
-  <meta property="og:description" content="학습 기록을 유지하면서 JLPT MAX덱을 새 버전으로 업데이트하는 방법입니다.">
+  <meta property="og:title" content="업데이트 방법 — JLPT MAX Deck">
+  <meta property="og:description" content="학습 기록을 유지하는 JLPT MAX덱 업데이트 방법.">
   <meta property="og:url" content="{{ product.site_url }}/update.html">
   <meta property="og:image" content="{{ product.site_url }}/assets/social-card.jpg">
   <link rel="canonical" href="{{ product.site_url }}/update.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <title>업데이트 가이드 — JLPT MAX Deck</title>
+  <title>업데이트 방법 — JLPT MAX Deck</title>
 {% endblock %}
 {% block body_attributes %} class="v2-site"{% endblock %}
 {% block main %}  <main class="v2-main" id="main" tabindex="-1">
     <section class="v2-page-hero">
       <div class="v2-shell">
-        <p class="v2-kicker"><span></span>업데이트 가이드</p>
         <h1>업데이트 방법</h1>
-        <p class="v2-hero-lead">먼저 모든 기기를 동기화한 뒤, 지금 쓰는 버전과 상관없이 최신 덱을 바로 가져오세요.</p>
         <div class="v2-page-badges"><span>현재 {{ release.tag }}</span><span>기록 유지</span><span>개인 설정 보존</span></div>
       </div>
     </section>
@@ -45,14 +43,14 @@
       <div class="v2-guide-content">
         <section class="v2-guide-section" id="before">
           <span class="v2-step-label">00 · 먼저</span>
-          <h2>먼저 모든 기기를 동기화하세요.</h2>
+          <h2>동기화와 백업</h2>
           <p>여러 기기를 쓴다면 각 기기의 최신 복습 기록이 AnkiWeb에 반영됐는지 확인합니다. 가능하면 컬렉션 백업도 확인하세요.</p>
           <div class="v2-callout warning"><strong>최상위 <code>JLPT MAX덱</code>을 삭제하지 마세요.</strong><p>기존 카드와 학습 일정은 그대로 두고 새 덱 파일을 가져오면 됩니다.</p></div>
         </section>
 
         <section class="v2-guide-section" id="ordinary">
           <span class="v2-step-label">01 · 일반 업데이트</span>
-          <h2>기존 덱을 지우지 말고 새 파일을 가져오세요.</h2>
+          <h2>최신 덱 가져오기</h2>
           <div class="v2-download-card">
             <div><small>현재 기본 덱</small><h3>{{ release.artifacts.core.filename }}</h3><p>{{ release.tag }} · 약 {{ product.requirements.approximate_apkg_size_gb }}GB</p></div>
             <a class="v2-button" href="{{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.core.filename }}">다시 받기 <span aria-hidden="true">↓</span></a>
@@ -61,8 +59,8 @@
         </section>
 
         <section class="v2-guide-section" id="import-options">
-          <span class="v2-step-label">02 · 가져오기 옵션</span>
-          <h2>복습 기록은 유지하고 카드 내용만 새로 바꿉니다.</h2>
+          <span class="v2-step-label">02 · 옵션</span>
+          <h2>가져오기 옵션</h2>
           <div class="v2-option-grid">
             <article class="v2-option"><div class="v2-option-head"><h3>학습 진행 상태</h3><span class="v2-state off">끄기</span></div><p>기존 복습 기록과 일정을 그대로 둡니다.</p></article>
             <article class="v2-option"><div class="v2-option-head"><h3>기존 노트 업데이트</h3><span class="v2-state on">항상</span></div><p>모든 JLPT MAX 덱 업데이트에 같은 옵션을 사용합니다.</p></article>
@@ -75,7 +73,7 @@
 
         <section class="v2-guide-section" id="new-order">
           <span class="v2-step-label">03 · 새 어휘 순서</span>
-          <h2>학습하지 않은 급수만 새 중요도 순서로 다시 넣으세요.</h2>
+          <h2>미학습 급수의 새 어휘 순서</h2>
           <p>{{ release.tag }}은 각 급수 안에서 BCCWJ 중요도 순으로 새 카드가 나옵니다. Anki는 기존 카드의 순서와 학습 일정을 보존하므로 가져오기만 해서는 이미 있는 카드가 다시 배열되지 않습니다.</p>
           <div class="v2-callout warning"><strong>이미 한 장이라도 학습한 급수는 정렬만을 위해 삭제하지 마세요.</strong><p>학습 기록을 지우는 것보다 기존 순서를 유지하는 편이 안전합니다.</p></div>
           <ol class="v2-step-list">
@@ -87,7 +85,7 @@
 
         <section class="v2-guide-section" id="empty-cards">
           <span class="v2-step-label">04 · 빈 카드</span>
-          <h2>예전 가나 보조와 삭제된 카드를 정리하세요.</h2>
+          <h2>빈 카드 정리</h2>
           <p>Anki는 새 덱을 가져와도 예전 카드를 자동으로 지우지 않습니다. 출발 버전과 개인 컬렉션 상태에 따라 표시 수는 달라질 수 있습니다.</p>
           <div class="v2-option-grid">
             <article class="v2-option"><div class="v2-option-head"><h3>v1.2.1 이하에서 업데이트</h3><span class="v2-state">가나 보조</span></div><p><code>JLPT MAX덱 어휘 / 어휘(가나 보조)</code> 빈 카드를 삭제합니다. 앞면에서 히라가나만 나오던 예전 카드입니다.</p></article>
@@ -104,7 +102,7 @@
 
         <section class="v2-guide-section" id="misplaced-cards">
           <span class="v2-step-label">05 · 필요할 때만</span>
-          <h2>음성 카드가 어휘 덱에 나오면 위치만 고치세요.</h2>
+          <h2>카드 위치 복구</h2>
           <p>일부 하위 덱만 삭제한 뒤 APKG를 다시 가져오면 같은 노트의 다른 카드가 남아 있던 덱으로 들어갈 수 있습니다. 신규 설치나 하위 덱을 삭제하지 않은 일반 업데이트는 대부분 해당하지 않습니다.</p>
           <div class="v2-callout warning"><strong>먼저 백업하고 검색된 카드를 삭제하지 마세요.</strong><p>아래 작업은 카드의 덱 위치만 바꿉니다. 복습 기록과 일정은 유지됩니다.</p></div>
           <ol class="v2-step-list">
@@ -117,7 +115,7 @@
 
         <section class="v2-guide-section" id="recommended-settings">
           <span class="v2-step-label">06 · 설정</span>
-          <h2>업데이트한 뒤에는 실전 설정만 확인하세요.</h2>
+          <h2>업데이트 후 설정</h2>
           <p>개인 설정은 그대로 유지됩니다. 음성 덱의 새 카드 수를 포함한 나머지 옵션은 지금 설정을 그대로 두세요.</p>
           <div class="v2-option-grid v2-option-grid-single">
             <article class="v2-option"><div class="v2-option-head"><h3>JLPT MAX덱 · 실전</h3><span class="v2-state on">무작위 노트</span></div><p><strong>신규 카드 수집</strong>을 <code>무작위 노트</code>로 바꿉니다. 급수 덱을 눌렀을 때 문제 유형이 섞여 나옵니다.</p></article>
@@ -126,7 +124,7 @@
 
         <section class="v2-guide-section" id="verify">
           <span class="v2-step-label">07 · 확인</span>
-          <h2>업데이트가 잘 됐는지 확인하세요.</h2>
+          <h2>업데이트 확인</h2>
           <ol class="v2-step-list">
             <li><div><strong>전에 공부한 어휘 몇 장의 복습 일정이 그대로인지 확인합니다.</strong></div></li>
             <li><div><strong>새 카드 내용과 템플릿이 반영됐는지 확인합니다.</strong></div></li>
