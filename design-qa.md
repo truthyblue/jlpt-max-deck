@@ -33,4 +33,19 @@
 - 업데이트 복구 검색어의 복사 버튼이 실제 검색어를 복사하고 `복사됨`으로 바뀐다.
 - 브라우저 오류 로그: 0건
 
+## 브라우저 주석 반영
+
+- 업데이트 제목 비교: `build/design-qa/faq-guide/annotation-update-comparison.png`
+- 오래된 버전 FAQ 비교: `build/design-qa/faq-guide/annotation-support-faq-comparison.png`
+- 업데이트 기록 최종 화면: `build/design-qa/faq-guide/annotation-support-history-after.png`
+- 음성 동기화 FAQ 최종 화면: `build/design-qa/faq-guide/faq-media-sync-desktop.png`
+- AnkiDroid 저장 공간 FAQ 최종 화면: `build/design-qa/faq-guide/faq-ankidroid-import-desktop.png`
+- Viewport: 1280×720
+- `학습 기록은 그대로, 덱만 새 버전으로.`를 `업데이트 방법`으로 바꿔 제목을 한 번에 읽을 수 있게 했다.
+- `버전별 추가 안내`를 없애고 확인할 항목을 `빈 카드 정리`와 `카드 위치 복구`로 직접 적었다.
+- 변경 이력 구역의 표지와 제목을 모두 `업데이트 기록`으로 맞췄다.
+- 새 FAQ 해시로 이동하면 해당 항목이 자동으로 열린다.
+- 추가 문구로 인한 잘림, 겹침, 가로 넘침은 없다.
+- 브라우저 오류 로그: 0건
+
 final result: passed

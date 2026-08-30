@@ -116,6 +116,7 @@
           <div class="v2-popular-question-list">
             <a href="#faq-update-delete"><span>Q</span>기존 덱을 지워야 하나요?<b aria-hidden="true">→</b></a>
             <a href="#faq-update-delete"><span>Q</span>학습 기록은 그대로 남나요?<b aria-hidden="true">→</b></a>
+            <a href="#faq-media-sync"><span>Q</span>음성이 아예 안 나오거나 일부만 나와요?<b aria-hidden="true">→</b></a>
             <a href="#faq-start"><span>Q</span>N3 시험이면 어디부터 시작하나요?<b aria-hidden="true">→</b></a>
             <a href="#faq-kana"><span>Q</span>왜 앞면에 히라가나만 나오나요?<b aria-hidden="true">→</b></a>
           </div>
@@ -133,7 +134,7 @@
           <li><a href="#import">Anki 가져오기</a></li>
           <li><a href="#kanji-build">한자 확장</a></li>
           <li><a href="#report">오류 제보</a></li>
-          <li><a href="#history">버전별 변경점</a></li>
+          <li><a href="#history">업데이트 기록</a></li>
         </ol>
       </aside>
 
@@ -147,9 +148,10 @@
             <h3>설치·업데이트</h3>
             <div class="v2-faq">
               <details id="faq-update-delete"><summary>업데이트할 때 기존 덱을 지워야 하나요?</summary><div><strong>지우지 마세요.</strong> 모든 기기를 먼저 동기화하거나 백업한 뒤 최신 기본 덱 파일을 그대로 가져오면 됩니다. <strong>학습 진행 상태는 끄기</strong>, <strong>기존 노트·노트 유형 업데이트는 항상</strong>, <strong>노트 유형 병합은 켜기</strong>로 두면 기존 복습 기록과 일정은 남고 카드 내용만 새로 바뀝니다. <a href="update.html">업데이트 순서 전체 보기 →</a></div></details>
-              <details id="faq-update-old"><summary>아주 오래된 버전에서도 최신 버전으로 바로 올려도 되나요?</summary><div>네. 출발 버전에 따라 중간 버전을 차례로 설치할 필요는 없습니다. 최신 파일을 바로 가져온 뒤 <a href="update.html#empty-cards">빈 카드 정리</a>와 버전별 추가 안내를 확인하세요.</div></details>
+              <details id="faq-update-old"><summary>아주 오래된 버전에서도 최신 버전으로 바로 올려도 되나요?</summary><div>네. 중간 버전을 차례로 설치할 필요는 없습니다. 최신 파일을 바로 가져온 뒤, <a href="update.html#empty-cards">빈 카드 정리</a>와 <a href="update.html#misplaced-cards">카드 위치 복구</a>가 필요한지만 확인하세요.</div></details>
               <details id="faq-misplaced"><summary>어휘 덱에서 음성 카드가 나와요.</summary><div>일부 하위 덱만 삭제한 뒤 APKG를 다시 가져오면 카드가 다른 덱 위치에 들어갈 수 있습니다. 카드를 삭제하거나 다시 가져오지 말고, 카드 탐색기에서 위치만 고치세요. 복습 기록은 유지됩니다. <a href="update.html#misplaced-cards">카드 위치 확인·복구 순서 보기 →</a></div></details>
-              <details id="faq-other-deck"><summary>다른 일본어 덱의 학습 기록을 JLPT MAX덱으로 옮길 수 있나요?</summary><div>자동으로 합쳐지지 않습니다. 덱마다 카드와 노트가 달라서 기존 복습 일정을 그대로 연결할 수 없습니다. 기존 덱은 백업처럼 남겨 두고 JLPT MAX덱을 새로 시작한 뒤, 충분히 확인하기 전에는 기존 덱을 삭제하지 마세요.</div></details>
+              <details id="faq-other-deck"><summary>다른 일본어 덱의 학습 기록을 JLPT MAX덱으로 옮길 수 있나요?</summary><div>자동으로 합쳐지지는 않습니다. 다만 PC Anki의 <strong>Transfer Scheduling</strong> 부가 기능을 쓰면, 두 덱에서 단어 필드와 카드가 서로 맞는 항목의 복습 일정과 기록을 옮길 수 있습니다. 카드 구성이 다른 항목은 빠질 수 있습니다. 먼저 두 덱을 백업하고 적은 카드로 시험한 뒤 진행하세요. 이 방법은 공식 기능이 아닙니다. <a href="https://gall.dcinside.com/jlpt/169973" target="_blank" rel="noopener noreferrer">커뮤니티의 학습 진도 옮기기 글 보기 <span aria-hidden="true">↗</span></a></div></details>
+              <details id="faq-ankidroid-import"><summary>AnkiDroid에서 덱 가져오기가 실패해요.</summary><div>큰 APKG를 가져올 때는 압축을 푸는 임시 공간이 더 필요합니다. Android 설정에서 AnkiDroid를 완전히 종료하고 <strong>앱 → AnkiDroid → 저장 공간 → 캐시 삭제</strong>를 실행한 뒤, 기기 여유 공간을 5GB 이상 확보하고 다시 가져오세요. 캐시는 임시 파일입니다. <strong>데이터 삭제는 누르지 마세요.</strong> 공간이 부족하면 PC Anki에 먼저 가져온 뒤 동기화가 모두 끝날 때까지 기다리는 방법도 있습니다.</div></details>
               <details id="faq-web-import"><summary>AnkiWeb 사이트에서 APKG를 바로 가져올 수 있나요?</summary><div>아닙니다. 데스크톱 Anki, AnkiMobile 또는 AnkiDroid에 먼저 가져온 뒤 AnkiWeb로 동기화하세요.</div></details>
             </div>
           </div>
@@ -168,6 +170,7 @@
             <h3>표시·음성·내 기록</h3>
             <div class="v2-faq">
               <details id="faq-kana"><summary>카드를 뒤집기 전에 한자 없이 히라가나만 나와요.</summary><div>v1.2.1까지 있던 <code>어휘(가나 보조)</code> 카드입니다. 최신 버전에서는 이 카드 유형을 더 이상 사용하지 않습니다. 최신 덱을 가져온 뒤 Anki의 <strong>빈 카드</strong> 도구에서 <code>JLPT MAX덱 어휘 / 어휘(가나 보조)</code>만 골라 삭제하세요. 카드 탐색기의 노트 삭제는 사용하지 마세요. <a href="update.html#empty-cards">기기별 정리 방법 보기 →</a></div></details>
+              <details id="faq-media-sync"><summary>음성이 아예 안 나오거나 일부만 나와요.</summary><div>먼저 PC의 미디어 업로드와 모바일의 미디어 다운로드가 모두 끝났는지 확인하세요. PC에 덱을 가져온 직후 모바일에서 확인하면, 동기화 중인 음성은 아직 없거나 일부만 재생될 수 있습니다. 양쪽 동기화가 끝난 뒤 모바일 Anki를 완전히 닫았다가 다시 열어 확인하세요. 문법 덱에 음성이 없는 것은 정상입니다. 그래도 재생되지 않으면 아래 iPhone·iPad 설정을 확인하거나 대표 카드 한 장에서 오류를 제보하세요.</div></details>
               <details id="faq-ios-audio"><summary>iPhone·iPad에서 카드 소리가 안 나요.</summary><div>먼저 답안 오른쪽 위 <strong>설정 → 다른 앱 음악과 함께 재생</strong>이 켜져 있는지 확인하세요. 이 옵션을 켜면 무음 모드에서 카드 음성이 나오지 않을 수 있습니다. 다른 음악과 섞어 듣지 않는다면 옵션을 끄고 다시 재생해 보세요.</div></details>
               <details id="faq-records-pc"><summary>PC에서 공부한 내용도 ‘내 기록’에 들어가나요?</summary><div>현재 <strong>내 기록</strong>은 AnkiMobile과 AnkiDroid의 카드 화면에서만 기록합니다. PC에서 한 복습도 Anki 자체 학습 일정과 동기화에는 정상 반영되지만, JLPT MAX의 내 기록·랭킹 숫자에는 포함되지 않습니다. 휴대폰과 태블릿의 내 기록도 자동으로 하나로 합쳐지지 않습니다.</div></details>
               <details id="faq-record-popup"><summary>개인 최고 기록 알림을 끌 수 있나요?</summary><div>현재는 별도 끄기 설정이 없습니다. v2.0.3에서는 같은 날 한 번만 카드 가운데에 표시해 학습 버튼을 가리지 않도록 줄였습니다.</div></details>
@@ -182,7 +185,7 @@
           <div class="v2-option-grid">
             <article class="v2-option"><div class="v2-option-head"><h3>한자 대신 히라가나</h3><span class="v2-state">예전 카드</span></div><p>최신 덱을 가져온 뒤 가나 보조 빈 카드를 정리합니다.</p><a href="#faq-kana">정리 방법 보기 →</a></article>
             <article class="v2-option"><div class="v2-option-head"><h3>iPhone·iPad 무음</h3><span class="v2-state">설정 확인</span></div><p>다른 앱 음악과 함께 재생 옵션과 무음 모드를 함께 확인합니다.</p><a href="#faq-ios-audio">음성 설정 보기 →</a></article>
-            <article class="v2-option"><div class="v2-option-head"><h3>후리가나·글자 깨짐</h3><span class="v2-state">기기 정보</span></div><p>최신 덱에서도 반복되면 앱 이름·버전·기기와 함께 해당 카드에서 제보합니다.</p><a href="#report">오류 제보 방법 →</a></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>음성 전체·일부 없음</h3><span class="v2-state">동기화 확인</span></div><p>PC 업로드와 모바일 다운로드가 모두 끝날 때까지 기다립니다.</p><a href="#faq-media-sync">음성 동기화 확인 →</a></article>
             <article class="v2-option"><div class="v2-option-head"><h3>PC 내 기록 없음</h3><span class="v2-state">모바일 전용</span></div><p>PC 복습은 Anki 일정에는 남지만 JLPT MAX 내 기록에는 포함되지 않습니다.</p><a href="#faq-records-pc">내 기록 범위 보기 →</a></article>
           </div>
         </section>
@@ -208,6 +211,7 @@
           <p>앱, 저장 공간, 다운로드 파일을 순서대로 확인하세요.</p>
           <ol class="v2-step-list">
             <li><div><strong>기기에 맞는 Anki 앱인지 확인합니다.</strong><p>데스크톱은 Anki, iPhone·iPad는 AnkiMobile, Android는 AnkiDroid를 사용하세요. 이름이 비슷한 다른 앱은 APKG와 호환되지 않을 수 있습니다.</p></div></li>
+            <li><div><strong>AnkiDroid라면 캐시와 저장 공간을 먼저 확인합니다.</strong><p>AnkiDroid를 완전히 종료하고 Android 설정의 <strong>앱 → AnkiDroid → 저장 공간 → 캐시 삭제</strong>를 실행하세요. <strong>데이터 삭제는 누르지 마세요.</strong> 여유 공간은 5GB 이상 확보합니다. 그래도 부족하면 PC Anki에 먼저 가져온 뒤 미디어 동기화를 끝내세요.</p></div></li>
             <li><div><strong>미사용 미디어를 삭제해 저장 공간을 확보합니다.</strong><p>앱을 최신 안정 버전으로 업데이트하고, 여러 기기를 쓴다면 미디어 동기화를 먼저 끝내세요. 데스크톱 Anki에서 <strong>도구 → 미디어 검사</strong>를 열어 미사용 파일 목록을 확인한 뒤 삭제합니다. 삭제된 파일은 휴지통으로 이동하므로 필요한 파일이 없는지 확인한 뒤 휴지통을 비워야 실제 여유 공간이 생깁니다.</p></div></li>
             <li><div><strong>손상된 파일을 다시 받습니다.</strong><p>SHA-256이 다르면 기존 다운로드를 버리고 안정적인 네트워크에서 다시 받습니다.</p></div></li>
           </ol>
@@ -240,9 +244,9 @@
         </section>
 
         <section class="v2-guide-section" id="history">
-          <span class="v2-step-label">버전별 변경점</span>
-          <h2>새 버전으로 업데이트하고 싶어요.</h2>
-          <p>먼저 <a href="update.html">학습 기록을 보존하는 업데이트 순서</a>를 확인하세요. 아래 기록은 특정 버전에서 무엇이 바뀌었는지 확인할 때만 보면 됩니다.</p>
+          <span class="v2-step-label">업데이트 기록</span>
+          <h2>업데이트 기록</h2>
+          <p>최신 버전에서 무엇이 바뀌었는지 확인하는 곳입니다. 덱을 업데이트하려면 먼저 <a href="update.html">업데이트 방법</a>을 보세요.</p>
           <ol class="v2-release-history">
             <li class="v2-release-entry is-current">
               <header>

@@ -1067,7 +1067,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("<h2>자주 묻는 질문</h2>", html)
         self.assertIn("<h2>오류를 제보하고 싶어요.</h2>", html)
         self.assertIn("<h2>Anki 가져오기가 멈춰요.</h2>", html)
-        self.assertIn("<h2>새 버전으로 업데이트하고 싶어요.</h2>", html)
+        self.assertIn("<h2>업데이트 기록</h2>", html)
         self.assertNotIn('id="update"', html)
         self.assertNotIn("짧게 답합니다.", html)
         self.assertNotIn("민감한 원본 없이 재현 정보를 보냅니다.", html)
@@ -1095,8 +1095,15 @@ class PublicSiteTests(unittest.TestCase):
             "N3·N2부터 공부해도 되나요? 어디서 시작하나요?",
             "카드를 뒤집기 전에 한자 없이 히라가나만 나와요.",
             "iPhone·iPad에서 카드 소리가 안 나요.",
+            "음성이 아예 안 나오거나 일부만 나와요.",
+            "AnkiDroid에서 덱 가져오기가 실패해요.",
             "PC에서 공부한 내용도 ‘내 기록’에 들어가나요?",
             "어휘 덱에서 음성 카드가 나와요.",
+            "커뮤니티의 학습 진도 옮기기 글 보기",
+            "미디어 업로드와 모바일의 미디어 다운로드가 모두 끝났는지 확인하세요.",
+            "앱 → AnkiDroid → 저장 공간 → 캐시 삭제",
+            "데이터 삭제는 누르지 마세요.",
+            "<h2>업데이트 기록</h2>",
             'href="update.html#misplaced-cards"',
             'href="update.html#empty-cards"',
             'href="study-guide.html#tracks"',
@@ -1106,6 +1113,16 @@ class PublicSiteTests(unittest.TestCase):
         self.assertLess(html.index('id="quick"'), html.index('id="faq"'))
         self.assertLess(html.index('id="faq"'), html.index('id="history"'))
         self.assertLess(html.index('id="report"'), html.index('id="history"'))
+
+        transfer_link = (
+            '<a href="https://gall.dcinside.com/jlpt/169973" '
+            'target="_blank" rel="noopener noreferrer">'
+        )
+        self.assertIn(transfer_link, html)
+
+        update_html = (SITE / "update.html").read_text(encoding="utf-8")
+        self.assertIn("<h1>업데이트 방법</h1>", update_html)
+        self.assertNotIn("학습 기록은 그대로,<br>", update_html)
 
     def test_latest_release_feed_matches_the_closed_release_pin(self) -> None:
         release = json.loads(
