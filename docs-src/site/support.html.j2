@@ -5,50 +5,128 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08120e">
   <meta name="robots" content="index,follow">
-  <meta name="description" content="JLPT MAX 기본 덱 다운로드 확인, 업데이트, 일상무따 한자 확장 만들기와 안전한 오류 제보 안내입니다.">
+  <meta name="description" content="JLPT MAX 설치, 업데이트, 학습 순서, 음성·화면 문제와 자주 묻는 질문을 상황별로 확인하세요.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="지원 — JLPT MAX Deck">
-  <meta property="og:description" content="다운로드, Anki 가져오기, 한자 확장 만들기, 버전 교체 방법을 확인하세요.">
+  <meta property="og:title" content="도움말 — JLPT MAX Deck">
+  <meta property="og:description" content="지금 겪는 상황을 고르면 필요한 가이드와 답을 바로 확인할 수 있습니다.">
   <meta property="og:url" content="{{ product.site_url }}/support.html">
   <meta property="og:image" content="{{ product.site_url }}/assets/social-card.jpg">
   <link rel="canonical" href="{{ product.site_url }}/support.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <title>지원 — JLPT MAX Deck</title>
+  <title>도움말 — JLPT MAX Deck</title>
 {% endblock %}
 {% block body_attributes %} class="v2-site"{% endblock %}
 {% block main %}  <main class="v2-main" id="main" tabindex="-1">
-    <section class="v2-page-hero">
+    <section class="v2-page-hero v2-support-hero">
       <div class="v2-shell">
-        <h1>문제 해결과<br><em>업데이트 안내.</em></h1>
+        <h1>도움말</h1>
+        <p class="v2-hero-lead">지금 내 상황을 선택하면<br>바로 <strong>다음 행동</strong>을 안내해 드려요.</p>
+
+        <div class="v2-help-route-grid" id="quick" aria-label="상황별 도움말">
+          <a class="v2-help-route-card" href="getting-started.html">
+            <span class="v2-help-route-icon" aria-hidden="true"><img src="assets/icons/download.svg" alt="설치" width="26" height="26"></span>
+            <h2>지금 막<br><em>설치하려고 해요</em></h2>
+            <p>Anki 설치부터 첫 카드까지</p>
+            <span class="v2-help-route-link">설치부터 시작하기 <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="v2-help-route-card" href="update.html">
+            <span class="v2-help-route-icon" aria-hidden="true"><img src="assets/icons/arrow-repeat.svg" alt="업데이트" width="26" height="26"></span>
+            <h2><em>업데이트</em>하고<br>싶어요</h2>
+            <p>학습 기록을 지키고 교체하기</p>
+            <span class="v2-help-route-link">업데이트 방법 보기 <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="v2-help-route-card" href="study-guide.html#tracks">
+            <span class="v2-help-route-icon" aria-hidden="true"><img src="assets/icons/list-check.svg" alt="학습 순서" width="26" height="26"></span>
+            <h2>공부 순서가<br><em>헷갈려요</em></h2>
+            <p>N5부터 시험 급수까지</p>
+            <span class="v2-help-route-link">추천 학습 순서 보기 <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="v2-help-route-card" href="#device">
+            <span class="v2-help-route-icon" aria-hidden="true"><img src="assets/icons/volume-up.svg" alt="소리와 화면" width="26" height="26"></span>
+            <h2><em>소리·화면</em>이<br>이상해요</h2>
+            <p>기기와 카드 표시 확인하기</p>
+            <span class="v2-help-route-link">문제 해결 순서 보기 <span aria-hidden="true">→</span></span>
+          </a>
+        </div>
+
+        <div class="v2-popular-questions" aria-labelledby="popular-title">
+          <h2 id="popular-title">많이 찾는 질문</h2>
+          <div class="v2-popular-question-list">
+            <a href="#faq-update-delete"><span>Q</span>기존 덱을 지워야 하나요?<b aria-hidden="true">→</b></a>
+            <a href="#faq-update-delete"><span>Q</span>학습 기록은 그대로 남나요?<b aria-hidden="true">→</b></a>
+            <a href="#faq-start"><span>Q</span>N3 시험이면 어디부터 시작하나요?<b aria-hidden="true">→</b></a>
+            <a href="#faq-kana"><span>Q</span>왜 앞면에 히라가나만 나오나요?<b aria-hidden="true">→</b></a>
+          </div>
+        </div>
       </div>
     </section>
 
     <div class="v2-shell v2-guide-layout">
-      <aside class="v2-guide-toc" aria-label="지원 목차">
-        <strong>지원</strong>
+      <aside class="v2-guide-toc" aria-label="도움말 목차">
+        <strong>도움말</strong>
         <ol>
-          <li><a href="#quick">문제 선택</a></li>
-          <li><a href="#download">파일이 안 받아져요</a></li>
-          <li><a href="#import">가져오기가 멈춰요</a></li>
-          <li><a href="#kanji-build">한자 확장을 만들 수 없어요</a></li>
-          <li><a href="#history">업데이트하고 싶어요</a></li>
           <li><a href="#faq">자주 묻는 질문</a></li>
-          <li><a href="#report">오류를 제보하고 싶어요</a></li>
+          <li><a href="#device">소리·화면·내 기록</a></li>
+          <li><a href="#download">다운로드</a></li>
+          <li><a href="#import">Anki 가져오기</a></li>
+          <li><a href="#kanji-build">한자 확장</a></li>
+          <li><a href="#report">오류 제보</a></li>
+          <li><a href="#history">버전별 변경점</a></li>
         </ol>
       </aside>
 
       <div class="v2-guide-content">
-        <section class="v2-guide-section" id="quick">
-          <h2>어떤 문제가 있나요?</h2>
-          <div class="v2-support-grid">
-            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">↓</div><h3>파일이 안 받아져요</h3><p>공식 배포 파일과 SHA-256을 확인합니다.</p><a href="#download">다운로드 확인 →</a></article>
-            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">入</div><h3>Anki 가져오기가 멈춰요</h3><p>앱 버전, 저장 공간, 미디어 처리 상태를 확인합니다.</p><a href="#import">가져오기 진단 →</a></article>
-            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">漢</div><h3>한자 확장을 만들 수 없어요</h3><p>ZIP 풀기, 실행 파일, PDF 선택과 오류 문구를 확인합니다.</p><a href="#kanji-build">오류 확인 →</a></article>
-            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">↻</div><h3>업데이트하고 싶어요</h3><p>학습 기록을 지키는 순서와 현재 버전 변경점을 확인합니다.</p><a href="update.html">업데이트 가이드 →</a></article>
+        <section class="v2-guide-section v2-faq-section" id="faq">
+          <span class="v2-step-label">먼저 확인</span>
+          <h2>자주 묻는 질문</h2>
+          <p>갤러리 질문과 카드 오류 제보에서 여러 번 나온 내용을 짧고 바로 실행할 수 있게 정리했습니다.</p>
+
+          <div class="v2-faq-group">
+            <h3>설치·업데이트</h3>
+            <div class="v2-faq">
+              <details id="faq-update-delete"><summary>업데이트할 때 기존 덱을 지워야 하나요?</summary><div><strong>지우지 마세요.</strong> 모든 기기를 먼저 동기화하거나 백업한 뒤 최신 기본 덱 파일을 그대로 가져오면 됩니다. <strong>학습 진행 상태는 끄기</strong>, <strong>기존 노트·노트 유형 업데이트는 항상</strong>, <strong>노트 유형 병합은 켜기</strong>로 두면 기존 복습 기록과 일정은 남고 카드 내용만 새로 바뀝니다. <a href="update.html">업데이트 순서 전체 보기 →</a></div></details>
+              <details id="faq-update-old"><summary>아주 오래된 버전에서도 최신 버전으로 바로 올려도 되나요?</summary><div>네. 출발 버전에 따라 중간 버전을 차례로 설치할 필요는 없습니다. 최신 파일을 바로 가져온 뒤 <a href="update.html#empty-cards">빈 카드 정리</a>와 버전별 추가 안내를 확인하세요.</div></details>
+              <details id="faq-misplaced"><summary>어휘 덱에서 음성 카드가 나와요.</summary><div>일부 하위 덱만 삭제한 뒤 APKG를 다시 가져오면 카드가 다른 덱 위치에 들어갈 수 있습니다. 카드를 삭제하거나 다시 가져오지 말고, 카드 탐색기에서 위치만 고치세요. 복습 기록은 유지됩니다. <a href="update.html#misplaced-cards">카드 위치 확인·복구 순서 보기 →</a></div></details>
+              <details id="faq-other-deck"><summary>다른 일본어 덱의 학습 기록을 JLPT MAX덱으로 옮길 수 있나요?</summary><div>자동으로 합쳐지지 않습니다. 덱마다 카드와 노트가 달라서 기존 복습 일정을 그대로 연결할 수 없습니다. 기존 덱은 백업처럼 남겨 두고 JLPT MAX덱을 새로 시작한 뒤, 충분히 확인하기 전에는 기존 덱을 삭제하지 마세요.</div></details>
+              <details id="faq-web-import"><summary>AnkiWeb 사이트에서 APKG를 바로 가져올 수 있나요?</summary><div>아닙니다. 데스크톱 Anki, AnkiMobile 또는 AnkiDroid에 먼저 가져온 뒤 AnkiWeb로 동기화하세요.</div></details>
+            </div>
+          </div>
+
+          <div class="v2-faq-group">
+            <h3>학습 순서·덱 구성</h3>
+            <div class="v2-faq">
+              <details id="faq-start"><summary>N3·N2부터 공부해도 되나요? 어디서 시작하나요?</summary><div>어휘는 시험 급수와 상관없이 N5부터 시작합니다. N3 시험이라면 <code>N5 → N4 → N3</code> 순서로 새 카드를 보고 앞 급수 복습은 계속하세요. 종합 실전은 시험 볼 급수까지 어휘를 한 번 본 뒤 그 급수의 문제만 풉니다. <a href="study-guide.html">덱별 학습 순서 보기 →</a></div></details>
+              <details id="faq-subdecks"><summary>N5 아래 하위 덱을 하나씩 눌러야 하나요?</summary><div>아닙니다. <code>어휘::N5</code>를 누르면 수량 표현·날짜·월·요일 같은 하위 덱도 함께 나옵니다. 하위 덱을 따로 전부 끝낼 필요가 없습니다.</div></details>
+              <details id="faq-audio"><summary>음성 덱도 꼭 공부해야 하나요?</summary><div>선택입니다. 기본 어휘 카드에는 단어와 예문 음성이 이미 들어 있습니다. 별도 음성 덱은 소리만 듣고 단어를 떠올리는 연습이 더 필요할 때 하루 {{ product.study_defaults.suggested_audio_new_cards_min }}–{{ product.study_defaults.suggested_audio_new_cards_max }}장부터 시작하세요.</div></details>
+              <details id="faq-kanji"><summary>한자 쓰기 화면은 어디에 있나요?</summary><div>기본 덱에는 선택형 일상무따 한자 확장이 들어 있지 않습니다. 한자 읽기·쓰기 카드가 필요하면 Windows 또는 macOS 컴퓨터에서 현재 버전의 빌더와 지원 PDF 2개로 개인용 APKG를 만든 뒤 추가하세요. <a href="kanji.html">한자 확장 만들기 →</a></div></details>
+            </div>
+          </div>
+
+          <div class="v2-faq-group">
+            <h3>표시·음성·내 기록</h3>
+            <div class="v2-faq">
+              <details id="faq-kana"><summary>카드를 뒤집기 전에 한자 없이 히라가나만 나와요.</summary><div>v1.2.1까지 있던 <code>어휘(가나 보조)</code> 카드입니다. 최신 버전에서는 이 카드 유형을 더 이상 사용하지 않습니다. 최신 덱을 가져온 뒤 Anki의 <strong>빈 카드</strong> 도구에서 <code>JLPT MAX덱 어휘 / 어휘(가나 보조)</code>만 골라 삭제하세요. 카드 탐색기의 노트 삭제는 사용하지 마세요. <a href="update.html#empty-cards">기기별 정리 방법 보기 →</a></div></details>
+              <details id="faq-ios-audio"><summary>iPhone·iPad에서 카드 소리가 안 나요.</summary><div>먼저 답안 오른쪽 위 <strong>설정 → 다른 앱 음악과 함께 재생</strong>이 켜져 있는지 확인하세요. 이 옵션을 켜면 무음 모드에서 카드 음성이 나오지 않을 수 있습니다. 다른 음악과 섞어 듣지 않는다면 옵션을 끄고 다시 재생해 보세요.</div></details>
+              <details id="faq-records-pc"><summary>PC에서 공부한 내용도 ‘내 기록’에 들어가나요?</summary><div>현재 <strong>내 기록</strong>은 AnkiMobile과 AnkiDroid의 카드 화면에서만 기록합니다. PC에서 한 복습도 Anki 자체 학습 일정과 동기화에는 정상 반영되지만, JLPT MAX의 내 기록·랭킹 숫자에는 포함되지 않습니다. 휴대폰과 태블릿의 내 기록도 자동으로 하나로 합쳐지지 않습니다.</div></details>
+              <details id="faq-record-popup"><summary>개인 최고 기록 알림을 끌 수 있나요?</summary><div>현재는 별도 끄기 설정이 없습니다. {{ release.tag }}에서는 같은 날 한 번만 카드 가운데에 표시해 학습 버튼을 가리지 않도록 줄였습니다.</div></details>
+            </div>
+          </div>
+        </section>
+
+        <section class="v2-guide-section" id="device">
+          <span class="v2-step-label">소리·화면·내 기록</span>
+          <h2>먼저 버전과 기기를 확인하세요.</h2>
+          <p>같은 문제가 여러 카드에서 반복되면 카드 하나의 오타보다 앱·버전·설정 문제일 가능성이 큽니다.</p>
+          <div class="v2-option-grid">
+            <article class="v2-option"><div class="v2-option-head"><h3>한자 대신 히라가나</h3><span class="v2-state">예전 카드</span></div><p>최신 덱을 가져온 뒤 가나 보조 빈 카드를 정리합니다.</p><a href="#faq-kana">정리 방법 보기 →</a></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>iPhone·iPad 무음</h3><span class="v2-state">설정 확인</span></div><p>다른 앱 음악과 함께 재생 옵션과 무음 모드를 함께 확인합니다.</p><a href="#faq-ios-audio">음성 설정 보기 →</a></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>후리가나·글자 깨짐</h3><span class="v2-state">기기 정보</span></div><p>최신 덱에서도 반복되면 앱 이름·버전·기기와 함께 해당 카드에서 제보합니다.</p><a href="#report">오류 제보 방법 →</a></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>PC 내 기록 없음</h3><span class="v2-state">모바일 전용</span></div><p>PC 복습은 Anki 일정에는 남지만 JLPT MAX 내 기록에는 포함되지 않습니다.</p><a href="#faq-records-pc">내 기록 범위 보기 →</a></article>
           </div>
         </section>
 
         <section class="v2-guide-section" id="download">
+          <span class="v2-step-label">다운로드</span>
           <h2>파일이 받아지지 않거나 열리지 않아요.</h2>
           <p>공식 배포 페이지에서 받은 APKG의 파일명과 SHA-256을 아래 값과 대조하세요.</p>
           <table class="v2-release-facts">
@@ -63,6 +141,7 @@
         </section>
 
         <section class="v2-guide-section" id="import">
+          <span class="v2-step-label">Anki 가져오기</span>
           <h2>Anki 가져오기가 멈춰요.</h2>
           <p>앱, 저장 공간, 다운로드 파일을 순서대로 확인하세요.</p>
           <ol class="v2-step-list">
@@ -74,6 +153,7 @@
         </section>
 
         <section class="v2-guide-section" id="kanji-build">
+          <span class="v2-step-label">한자 확장</span>
           <h2>한자 확장을 만들 수 없어요.</h2>
           <p>기본 덱에 <code>일상무따</code>가 없는 것은 정상입니다. 한자 확장이 필요하다면 <a href="kanji.html">처음부터 따라가는 만들기 가이드</a>를 먼저 확인하세요.</p>
           <ol class="v2-step-list">
@@ -88,9 +168,19 @@
           <p><a href="kanji.html">한자 확장 만들기 전체 가이드 →</a></p>
         </section>
 
+        <section class="v2-guide-section" id="report">
+          <span class="v2-step-label">오류 제보</span>
+          <h2>오류를 제보하고 싶어요.</h2>
+          <p>카드 내용·표시·음성 문제는 해당 카드 답안 아래의 <strong>오류 제보</strong>를 사용하세요. 같은 문제가 여러 카드에서 반복되면 대표 카드 한 장에서 기기와 앱 정보를 함께 적어 주세요. 설치·다운로드·한자 빌더 문제는 GitHub 양식에 버전, 운영체제, Anki 버전, 실행 단계와 비민감 오류 문구를 적어 주세요.</p>
+          <div class="v2-callout"><strong>오류 제보는 익명이 기본입니다.</strong><p>답장을 원할 때만 이메일 답변에 동의하고 연락처를 입력하세요.</p></div>
+          <div class="v2-callout warning"><strong>첨부하면 안 되는 것</strong><p>출판사 PDF, 책 본문·페이지 이미지, 기본 덱/한자 확장 APKG, 개인 Anki 컬렉션, 실명이나 홈 폴더가 드러나는 전체 경로는 올리지 마세요.</p></div>
+          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="{{ product.repository_url }}/issues/new?template=bug.yml" target="_blank" rel="noopener noreferrer">설치·빌더 문제 제보 <span aria-hidden="true">↗</span></a><a class="v2-button v2-button-ghost" href="{{ product.repository_url }}/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">보안 제보 안내 <span aria-hidden="true">↗</span></a></div>
+        </section>
+
         <section class="v2-guide-section" id="history">
+          <span class="v2-step-label">버전별 변경점</span>
           <h2>새 버전으로 업데이트하고 싶어요.</h2>
-          <p>먼저 <a href="update.html">학습 기록을 보존하는 업데이트 순서</a>를 확인한 뒤, 아래에서 현재 버전의 변경점과 별도 교정이 있는지 확인하세요.</p>
+          <p>먼저 <a href="update.html">학습 기록을 보존하는 업데이트 순서</a>를 확인하세요. 아래 기록은 특정 버전에서 무엇이 바뀌었는지 확인할 때만 보면 됩니다.</p>
           <ol class="v2-release-history">{% for item in release_history %}
             <li class="v2-release-entry{% if item.current %} is-current{% endif %}">
               <header>
@@ -114,22 +204,6 @@
 {% endif %}
             </li>{% endfor %}
           </ol>
-        </section>
-
-        <section class="v2-guide-section v2-faq-section" id="faq">
-          <h2>자주 묻는 질문</h2>
-          <div class="v2-faq">
-            <details><summary>기본 덱에는 무엇이 들어 있나요?</summary><div>문법, 어휘, 음성, 실전 문제, 참조표가 들어 있습니다. 일상무따 한자 2,337개는 별도 선택 확장으로 추가할 수 있습니다.</div></details>
-            <details><summary>한자 빌더에 PDF를 업로드하나요?</summary><div>아닙니다. 빌더는 사용자 컴퓨터에서만 실행되며 PDF·이미지·생성 APKG를 외부로 전송하지 않습니다. 처음 실행할 때 빌드 도구와 Python을 받을 때만 프로그램 배포 서버와 패키지 저장소에 접속합니다.</div></details>
-            <details><summary>AnkiWeb 사이트에서 APKG를 바로 가져올 수 있나요?</summary><div>아닙니다. Desktop 또는 공식 모바일 앱에 먼저 가져온 뒤 AnkiWeb로 동기화하세요.</div></details>
-          </div>
-        </section>
-
-        <section class="v2-guide-section" id="report">
-          <h2>오류를 제보하고 싶어요.</h2>
-          <p>카드 내용·표시·음성 문제는 해당 카드 답안 아래의 <strong>오류 제보</strong>를 사용하세요. 설치·다운로드·한자 빌더 문제는 GitHub 양식에 버전, 운영체제, Anki 버전, 실행 단계와 비민감 오류 문구를 적어 주세요.</p>
-          <div class="v2-callout warning"><strong>첨부하면 안 되는 것</strong><p>출판사 PDF, 책 본문·페이지 이미지, 기본 덱/한자 확장 APKG, 개인 Anki 컬렉션, 실명이나 홈 폴더가 드러나는 전체 경로는 올리지 마세요.</p></div>
-          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="{{ product.repository_url }}/issues/new?template=bug.yml" target="_blank" rel="noopener noreferrer">설치·빌더 문제 제보 <span aria-hidden="true">↗</span></a><a class="v2-button v2-button-ghost" href="{{ product.repository_url }}/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">보안 제보 안내 <span aria-hidden="true">↗</span></a></div>
         </section>
       </div>
     </div>

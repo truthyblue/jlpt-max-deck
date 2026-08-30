@@ -31,6 +31,33 @@ PAGES = (
     "404.html",
 )
 
+TEST_LIFECYCLE = {
+    "test_contracts": {
+        "PublicSiteTests.test_help_page_prioritizes_repeated_learner_questions": {
+            "protected_contract": (
+                "the public help page routes learners by situation, answers the "
+                "repeated install, update, study-order, audio, kana-card, and "
+                "mobile-record questions before release history, and links to "
+                "the exact recovery guides"
+            ),
+            "not_subsumed_by": (
+                "link and heading tests can pass while common answers are buried "
+                "below long troubleshooting or release sections"
+            ),
+        },
+        "PublicSiteTests.test_update_guide_repairs_legacy_empty_and_misplaced_cards": {
+            "protected_contract": (
+                "the update guide gives a non-destructive path for legacy kana "
+                "cards and cards placed in the wrong deck after partial deletion"
+            ),
+            "not_subsumed_by": (
+                "general update tests can pass while learners delete notes or "
+                "reimport and repeat the misplaced-card problem"
+            ),
+        },
+    }
+}
+
 
 class PageParser(HTMLParser):
     def __init__(self) -> None:
@@ -108,9 +135,13 @@ class PublicSiteTests(unittest.TestCase):
                 )
                 self.assertNotIn('class="nav-group nav-section-links"', html)
                 self.assertNotIn('class="nav-group nav-guide-links"', html)
-                self.assertIn('aria-label="지원"', html)
+                self.assertIn('aria-label="도움말"', html)
                 self.assertIn(
-                    '<span class="nav-label-full">지원</span>',
+                    '<span class="nav-label-full">도움말</span>',
+                    html,
+                )
+                self.assertIn(
+                    '<span class="nav-label-compact">도움</span>',
                     html,
                 )
                 self.assertIn('aria-label="한자 확장"', html)
@@ -151,7 +182,7 @@ class PublicSiteTests(unittest.TestCase):
                 if name == "support.html":
                     self.assertIn(
                         'href="support.html" aria-current="page" '
-                        'aria-label="지원"',
+                        'aria-label="도움말"',
                         html,
                     )
                 if name == "kanji.html":
@@ -903,6 +934,7 @@ class PublicSiteTests(unittest.TestCase):
             "import-options",
             "new-order",
             "empty-cards",
+            "misplaced-cards",
             "recommended-settings",
             "verify",
         ):
@@ -929,6 +961,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("완전히 미학습 상태인 급수", html)
         self.assertIn("五万", html)
         self.assertIn("～キロ", html)
+        self.assertIn("JLPT MAX덱 어휘 / 어휘(가나 보조)", html)
         self.assertIn("기존 한자 읽기 카드는 현재 덱에 그대로 남습니다", html)
         self.assertIn("쓰기 순서가 포함된 카드 4,674장", html)
         self.assertIn("모든 기기에서 다시 전체 동기화합니다", html)
@@ -939,6 +972,27 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn('id="from-100"', html)
         self.assertNotIn("1.0.0", html)
         self.assertNotIn("JLPT MAX덱::종합 실전", html)
+
+    def test_update_guide_repairs_legacy_empty_and_misplaced_cards(self) -> None:
+        html = (SITE / "update.html").read_text(encoding="utf-8")
+        for token in (
+            'id="misplaced-cards"',
+            'note:"JLPT MAX덱 어휘" card:음성 -deck:"JLPT MAX덱::음성"',
+            'note:"JLPT MAX덱 어휘" card:어휘 -deck:"JLPT MAX덱::어휘"',
+            'card:"어휘(한국어→일본어)" -deck:"JLPT MAX덱::한→일"',
+            "검색된 카드를 삭제하지 마세요",
+            "카드의 덱 위치만 바꿉니다",
+            "복습 기록과 일정은 유지됩니다",
+        ):
+            self.assertIn(token, html)
+        self.assertLess(
+            html.index('id="empty-cards"'),
+            html.index('id="misplaced-cards"'),
+        )
+        self.assertLess(
+            html.index('id="misplaced-cards"'),
+            html.index('id="recommended-settings"'),
+        )
 
     def test_support_page_publishes_safe_diagnostic_boundary(self) -> None:
         html = (SITE / "support.html").read_text(encoding="utf-8")
@@ -1017,6 +1071,41 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn('id="update"', html)
         self.assertNotIn("짧게 답합니다.", html)
         self.assertNotIn("민감한 원본 없이 재현 정보를 보냅니다.", html)
+
+    def test_help_page_prioritizes_repeated_learner_questions(self) -> None:
+        html = (SITE / "support.html").read_text(encoding="utf-8")
+        parser = self.parsers["support.html"]
+        for section_id in (
+            "quick",
+            "faq",
+            "device",
+            "download",
+            "import",
+            "kanji-build",
+            "report",
+            "history",
+        ):
+            self.assertIn(section_id, parser.ids)
+        for token in (
+            "지금 막<br><em>설치하려고 해요</em>",
+            "<em>업데이트</em>하고<br>싶어요",
+            "공부 순서가<br><em>헷갈려요</em>",
+            "<em>소리·화면</em>이<br>이상해요",
+            "업데이트할 때 기존 덱을 지워야 하나요?",
+            "N3·N2부터 공부해도 되나요? 어디서 시작하나요?",
+            "카드를 뒤집기 전에 한자 없이 히라가나만 나와요.",
+            "iPhone·iPad에서 카드 소리가 안 나요.",
+            "PC에서 공부한 내용도 ‘내 기록’에 들어가나요?",
+            "어휘 덱에서 음성 카드가 나와요.",
+            'href="update.html#misplaced-cards"',
+            'href="update.html#empty-cards"',
+            'href="study-guide.html#tracks"',
+        ):
+            self.assertIn(token, html)
+        self.assertNotIn("도움말 검색", html)
+        self.assertLess(html.index('id="quick"'), html.index('id="faq"'))
+        self.assertLess(html.index('id="faq"'), html.index('id="history"'))
+        self.assertLess(html.index('id="report"'), html.index('id="history"'))
 
     def test_latest_release_feed_matches_the_closed_release_pin(self) -> None:
         release = json.loads(
