@@ -5,29 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08120e">
   <meta name="robots" content="index,follow">
-  <meta name="description" content="공식 PDF 2개와 JLPT MAX 한자 빌더로 일상무따 한자 확장 APKG를 만드는 방법.">
+  <meta name="description" content="공식 PDF 2개와 JLPT MAX 한자 빌더로 한자 읽기·쓰기 덱을 만드는 방법.">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="ko_KR">
-  <meta property="og:title" content="일상무따 한자 확장 — JLPT MAX Deck">
-  <meta property="og:description" content="명령어 입력 없이 만드는 일상무따 한자 확장.">
+  <meta property="og:title" content="한자 읽기·쓰기 덱 — JLPT MAX Deck">
+  <meta property="og:description" content="명령어 입력 없이 한자 읽기·쓰기 덱을 만드는 방법.">
   <meta property="og:url" content="{{ product.site_url }}/kanji.html">
   <meta property="og:image" content="{{ product.site_url }}/assets/social-card.jpg">
   <link rel="canonical" href="{{ product.site_url }}/kanji.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <title>일상무따 한자 확장 — JLPT MAX Deck</title>
+  <title>한자 읽기·쓰기 덱 — JLPT MAX Deck</title>
 {% endblock %}
 {% block body_attributes %} class="v2-site"{% endblock %}
 {% block main %}  <main class="v2-main" id="main" tabindex="-1">
     <section class="v2-page-hero">
       <div class="v2-shell">
-        <h1>일상무따 한자 확장</h1>
+        <h1>한자 읽기·쓰기 덱</h1>
         <div class="v2-hero-actions"><a class="v2-button" href="{{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.kanji_builder.filename }}">한자 빌더 다운로드 <span aria-hidden="true">↓</span></a><a class="v2-button v2-button-ghost" href="#pdfs">공식 PDF 확인 <span aria-hidden="true">→</span></a></div>
       </div>
     </section>
 
     <div class="v2-shell v2-guide-layout">
-      <aside class="v2-guide-toc" aria-label="한자 확장 만들기 순서">
-        <strong>한자 확장 만들기</strong>
+      <aside class="v2-guide-toc" aria-label="한자 덱 만들기 순서">
+        <strong>한자 덱 만들기</strong>
         <ol>
           <li><a href="#why">왜 따로 만드나요?</a></li>
           <li><a href="#study-order">언제 공부하나요?</a></li>
@@ -47,9 +47,9 @@
           <h2>기본 덱과 다른 점</h2>
           <div class="v2-option-grid">
             <article class="v2-option"><div class="v2-option-head"><h3>기본 덱</h3><span class="v2-state on">바로 받기</span></div><p>완성된 APKG를 내려받아 Anki에 가져옵니다. PDF나 제작 과정이 필요하지 않습니다.</p></article>
-            <article class="v2-option"><div class="v2-option-head"><h3>일상무따 한자 확장</h3><span class="v2-state">직접 완성</span></div><p>저작권 때문에 한글 뜻이 든 완성본을 배포하지 않습니다. 공식 PDF 2개를 사용자의 컴퓨터에서 읽어 한자 {{ product.deck.kanji_characters | number }}개의 읽기·쓰기 카드를 담은 개인용 APKG를 만듭니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>한자 읽기·쓰기 덱</h3><span class="v2-state">직접 완성</span></div><p>저작권 때문에 한글 뜻이 든 완성본을 배포하지 않습니다. 공식 PDF 2개를 사용자의 컴퓨터에서 읽어 한자 {{ product.deck.kanji_characters | number }}개의 읽기·쓰기 카드를 담은 개인용 APKG를 만듭니다.</p></article>
           </div>
-          <div class="v2-callout"><strong>한자 확장은 선택 사항입니다.</strong><p>기본 덱만으로 문법·어휘·음성·실전 문제·참조표를 모두 학습할 수 있습니다. 한자 확장이 필요한 경우에만 아래 과정을 진행하세요.</p></div>
+          <div class="v2-callout"><strong>한자 덱은 선택 사항입니다.</strong><p>기본 덱만으로 문법·어휘·음성·실전 문제·참조표를 모두 학습할 수 있습니다. 한자 읽기·쓰기도 공부할 때만 아래 과정을 진행하세요.</p></div>
         </section>
 
         <section class="v2-guide-section" id="study-order">
@@ -99,7 +99,7 @@
           <span class="v2-step-label">04 · 실행</span>
           <h2>한자 빌더 실행</h2>
           <div class="v2-tabs" data-tabs data-platform-tabs>
-            <div class="v2-tab-list" role="tablist" aria-label="운영체제별 한자 확장 실행 순서">
+            <div class="v2-tab-list" role="tablist" aria-label="운영체제별 한자 덱 만들기 순서">
               <button class="v2-tab" id="kanji-run-tab-macos" type="button" role="tab" aria-selected="true" aria-controls="kanji-run-panel-macos" data-platform="macos">macOS</button>
               <button class="v2-tab" id="kanji-run-tab-windows" type="button" role="tab" aria-selected="false" aria-controls="kanji-run-panel-windows" data-platform="windows" tabindex="-1">Windows</button>
             </div>
@@ -129,12 +129,12 @@
           <ol class="v2-step-list">
             <li><div><strong>완료 후 열린 폴더를 확인합니다.</strong><p><code>JLPT-MAX-kanji-addon-{{ release.version }}.apkg</code>와 검증 리포트가 있습니다.</p></div></li>
             <li><div><strong>기본 덱을 먼저 가져옵니다.</strong><p>아직 기본 덱이 없다면 <a href="getting-started.html#deck">기본 덱 시작 가이드</a>를 먼저 진행하세요.</p></div></li>
-            <li><div><strong>생성된 한자 확장 APKG를 같은 컬렉션에 가져옵니다.</strong><p><code>JLPT MAX덱::일상무따</code> 아래에 읽기·쓰기 덱이 추가됩니다.</p></div></li>
+            <li><div><strong>생성된 한자 덱 APKG를 같은 컬렉션에 가져옵니다.</strong><p>Anki에서는 기존 이름인 <code>JLPT MAX덱::일상무따</code> 아래에 읽기·쓰기 덱이 추가됩니다.</p></div></li>
           </ol>
           <div class="v2-verify-grid">
-            <article class="v2-verify-card"><strong>{{ product.deck.kanji_addon_notes | number }}</strong><span>한자 확장 읽기·쓰기 노트</span></article>
-            <article class="v2-verify-card"><strong>{{ product.deck.kanji_addon_cards | number }}</strong><span>한자 확장 읽기·쓰기 카드</span></article>
-            <article class="v2-verify-card"><strong>{{ product.deck.static_media | number }}</strong><span>한자 확장 자형 미디어</span></article>
+            <article class="v2-verify-card"><strong>{{ product.deck.kanji_addon_notes | number }}</strong><span>한자 읽기·쓰기 노트</span></article>
+            <article class="v2-verify-card"><strong>{{ product.deck.kanji_addon_cards | number }}</strong><span>한자 읽기·쓰기 카드</span></article>
+            <article class="v2-verify-card"><strong>{{ product.deck.static_media | number }}</strong><span>한자 자형 미디어</span></article>
           </div>
         </section>
 
@@ -155,7 +155,7 @@
           <span class="v2-step-label">개인정보 · 저작권</span>
           <h2>개인정보와 파일 처리</h2>
           <p>처음 실행할 때 빌드 도구와 Python을 받는 일반 네트워크 요청만 발생합니다. PDF, 페이지 이미지와 생성한 APKG는 외부 서비스로 전송되지 않습니다.</p>
-          <div class="v2-callout warning"><strong>완성한 한자 확장 APKG는 개인 학습용입니다.</strong><p>PDF, 책 본문·페이지 이미지, 생성 APKG를 업로드하거나 다른 사람에게 전달하지 마세요. 정확한 조건은 <a href="{{ product.repository_url }}/blob/main/NOTICE" target="_blank" rel="noopener noreferrer">NOTICE <span aria-hidden="true">↗</span></a>를 확인하세요.</p></div>
+          <div class="v2-callout warning"><strong>완성한 한자 덱 APKG는 개인 학습용입니다.</strong><p>PDF, 책 본문·페이지 이미지, 생성 APKG를 업로드하거나 다른 사람에게 전달하지 마세요. 정확한 조건은 <a href="{{ product.repository_url }}/blob/main/NOTICE" target="_blank" rel="noopener noreferrer">NOTICE <span aria-hidden="true">↗</span></a>를 확인하세요.</p></div>
         </section>
       </div>
     </div>

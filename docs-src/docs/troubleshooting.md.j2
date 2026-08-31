@@ -1,14 +1,14 @@
 # 문제 해결
 
-[README](../README.md) · [한자 확장 만들기](build.md) · [Anki 가이드](anki.md)
+[README](../README.md) · [한자 덱 만들기](build.md) · [Anki 가이드](anki.md)
 
 ## 먼저 경로를 구분하세요
 
 | 증상 | 확인할 곳 |
 | --- | --- |
 | 기본 덱 다운로드·가져오기·음성 | 아래 **기본 덱**과 **Anki** |
-| `일상무따` 덱이 없음 | 정상 동작 또는 [선택형 한자 확장](build.md) |
-| PDF·자동 준비·빌더 오류 | 아래 **한자 확장 빌더** |
+| 한자 읽기·쓰기 덱이 없음 | 정상 동작 또는 [한자 덱 만들기](build.md) |
+| PDF·자동 준비·빌더 오류 | 아래 **한자 덱 빌더** |
 | 민감 정보가 포함된 보안 문제 | [SECURITY](../SECURITY.md) |
 
 ## 기본 덱
@@ -37,9 +37,9 @@ Get-FileHash .\{{ release.artifacts.core.filename }} -Algorithm SHA256
 [{{ release.artifacts.checksums.filename }}]({{ product.repository_url }}/releases/download/{{ release.tag }}/{{ release.artifacts.checksums.filename }})와
 결과가 다르면 파일을 삭제하고 안정적인 네트워크에서 다시 받으세요.
 
-### 기본 덱에 `일상무따`가 없습니다
+### 기본 덱에 한자 읽기·쓰기 덱이 없습니다
 
-정상입니다. 기본 덱에는 문법·어휘·음성·실전 문제·참조표만 있습니다. 일상무따 한자는
+정상입니다. 기본 덱에는 문법·어휘·음성·실전 문제·참조표만 있습니다. 한자 읽기·쓰기 덱은
 필요한 학습자만 [별도 APKG로 만듭니다](build.md).
 
 ### 예상 수량과 다릅니다
@@ -80,7 +80,7 @@ Bluetooth·Android Auto에서는 연결 기기와 앱 버전에 따라 동작이
 연결되지 않을 수 있습니다. 먼저 백업을 보존하고, 새 프로필에서 현재 APKG만
 가져와 정상 수량을 확인한 뒤 issue에 버전과 수행한 가져오기 절차를 적어 주세요.
 
-## 한자 확장 빌더
+## 한자 덱 빌더
 
 ### 더블클릭할 실행 파일이 보이지 않습니다
 
@@ -130,5 +130,5 @@ APKG가 필요하면 다른 폴더에 복사해 둔 뒤 **다시 만들기**를 
 설치·다운로드·한자 빌더 문제는
 [GitHub 오류 제보 양식]({{ product.repository_url }}/issues/new?template=bug.yml)에
 버전, 운영체제, Anki 버전, 실패 단계와 비민감 오류 문구를 적어 주세요. PDF,
-책 본문, 페이지 이미지, 기본 덱이나 생성한 한자 확장 APKG, 개인 컬렉션과 전체
+책 본문, 페이지 이미지, 기본 덱이나 생성한 한자 덱 APKG, 개인 컬렉션과 전체
 로컬 경로는 올리지 마세요.
