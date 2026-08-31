@@ -97,7 +97,6 @@
           <li><a href="#new-order">새 어휘 순서</a></li>
           <li><a href="#empty-cards">빈 카드 정리</a></li>
           <li><a href="#removed-words">삭제된 어휘</a></li>
-          <li><a href="#misplaced-cards">카드 위치 복구</a></li>
           <li><a href="#recommended-settings">업데이트 뒤 설정</a></li>
           <li><a href="#verify">업데이트 확인</a></li>
         </ol>
@@ -174,21 +173,8 @@
           <div class="v2-callout warning"><strong>두 어휘는 빈 카드 메뉴에 나오지 않습니다.</strong><p>최신 덱에서 뺀 어휘지만 새 파일을 가져오는 것만으로 예전 컬렉션에서 지워지지는 않습니다.</p></div>
         </section>
 
-        <section class="v2-guide-section" id="misplaced-cards">
-          <span class="v2-step-label">06 · 필요할 때만</span>
-          <h2>카드 위치 복구</h2>
-          <p>일부 하위 덱만 삭제한 뒤 APKG를 다시 가져오면 같은 노트의 다른 카드가 남아 있던 덱으로 들어갈 수 있습니다. 신규 설치나 하위 덱을 삭제하지 않은 일반 업데이트는 대부분 해당하지 않습니다.</p>
-          <div class="v2-callout warning"><strong>먼저 백업하고 검색된 카드를 삭제하지 마세요.</strong><p>아래 작업은 카드의 덱 위치만 바꿉니다. 복습 기록과 일정은 유지됩니다.</p></div>
-          <ol class="v2-step-list">
-            <li><div><strong>카드 탐색기에서 잘못 놓인 음성 카드를 찾습니다.</strong><div class="v2-command"><code id="misplaced-audio-query">note:"JLPT MAX덱 어휘" card:음성 -deck:"JLPT MAX덱::음성"</code><button class="v2-copy" type="button" data-copy-target="misplaced-audio-query">복사</button></div><p>검색 결과가 0이면 정상입니다. 아래 복구는 건너뜁니다.</p></div></li>
-            <li><div><strong>결과가 있으면 N1부터 N5까지 급수별로 검색합니다.</strong><div class="v2-command"><code id="misplaced-audio-level-query">note:"JLPT MAX덱 어휘" card:음성 tag:jlpt::N1</code><button class="v2-copy" type="button" data-copy-target="misplaced-audio-level-query">복사</button></div><p><code>N1</code>을 <code>N2</code>·<code>N3</code>·<code>N4</code>·<code>N5</code>로 바꿔 한 번씩 실행합니다. 검색 결과를 모두 선택하고 <strong>덱 변경</strong>에서 같은 급수의 <code>JLPT MAX덱::음성::N○</code>로 이동합니다.</p></div></li>
-            <li><div><strong>어휘·한→일 하위 덱도 삭제한 적이 있다면 함께 확인합니다.</strong><div class="v2-command"><code id="misplaced-vocabulary-query">note:"JLPT MAX덱 어휘" card:어휘 -deck:"JLPT MAX덱::어휘"</code><button class="v2-copy" type="button" data-copy-target="misplaced-vocabulary-query">복사</button></div><div class="v2-command"><code id="misplaced-recall-query">note:"JLPT MAX덱 어휘" card:"어휘(한국어→일본어)" -deck:"JLPT MAX덱::한→일"</code><button class="v2-copy" type="button" data-copy-target="misplaced-recall-query">복사</button></div><p>결과가 있으면 같은 방식으로 <code>tag:jlpt::N1</code>부터 <code>N5</code>까지 나누어 어휘 카드는 <code>어휘::해당 급수</code>, 한→일 카드는 <code>한→일::해당 급수</code>로 이동합니다.</p></div></li>
-            <li><div><strong>첫 검색을 다시 실행해 결과가 0인지 확인합니다.</strong><p>한 기기에서 복구를 끝낸 뒤 동기화하고, 그다음 다른 기기를 사용하세요.</p></div></li>
-          </ol>
-        </section>
-
         <section class="v2-guide-section" id="recommended-settings">
-          <span class="v2-step-label">07 · 설정</span>
+          <span class="v2-step-label">06 · 설정</span>
           <h2>업데이트 후 설정</h2>
           <p>개인 설정은 그대로 유지됩니다. 음성 덱의 새 카드 수를 포함한 나머지 옵션은 지금 설정을 그대로 두세요.</p>
           <div class="v2-option-grid v2-option-grid-single">
@@ -197,7 +183,7 @@
         </section>
 
         <section class="v2-guide-section" id="verify">
-          <span class="v2-step-label">08 · 확인</span>
+          <span class="v2-step-label">07 · 확인</span>
           <h2>업데이트 확인</h2>
           <ol class="v2-step-list">
             <li><div><strong>전에 공부한 어휘 몇 장의 복습 일정이 그대로인지 확인합니다.</strong></div></li>

@@ -930,7 +930,6 @@ class PublicSiteTests(unittest.TestCase):
             "new-order",
             "empty-cards",
             "removed-words",
-            "misplaced-cards",
             "recommended-settings",
             "verify",
         ):
@@ -971,30 +970,33 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn("1.0.0", html)
         self.assertNotIn("JLPT MAX덱::종합 실전", html)
 
-    def test_update_guide_repairs_legacy_empty_and_misplaced_cards(self) -> None:
+    def test_update_guide_keeps_problem_solving_out_of_update_steps(self) -> None:
         html = (SITE / "update.html").read_text(encoding="utf-8")
-        for token in (
-            'id="misplaced-cards"',
-            'note:"JLPT MAX덱 어휘" card:음성 -deck:"JLPT MAX덱::음성"',
-            'note:"JLPT MAX덱 어휘" card:어휘 -deck:"JLPT MAX덱::어휘"',
-            'card:"어휘(한국어→일본어)" -deck:"JLPT MAX덱::한→일"',
-            "검색된 카드를 삭제하지 마세요",
-            "카드의 덱 위치만 바꿉니다",
-            "복습 기록과 일정은 유지됩니다",
-        ):
-            self.assertIn(token, html)
+        self.assertNotIn('id="misplaced-cards"', html)
+        self.assertNotIn("카드 위치 복구", html)
         self.assertLess(
             html.index('id="empty-cards"'),
             html.index('id="removed-words"'),
         )
         self.assertLess(
             html.index('id="removed-words"'),
-            html.index('id="misplaced-cards"'),
-        )
-        self.assertLess(
-            html.index('id="misplaced-cards"'),
             html.index('id="recommended-settings"'),
         )
+
+    def test_support_page_contains_card_location_repair(self) -> None:
+        html = (SITE / "support.html").read_text(encoding="utf-8")
+        for token in (
+            'id="card-location"',
+            'note:"JLPT MAX덱 어휘" card:음성 -deck:"JLPT MAX덱::음성"',
+            'note:"JLPT MAX덱 어휘" card:어휘 -deck:"JLPT MAX덱::어휘"',
+            'card:"어휘(한국어→일본어)" -deck:"JLPT MAX덱::한→일"',
+            '<span class="v2-step-label">문제 해결</span>',
+            "카드 위치 복구 순서 보기",
+            "검색된 카드를 삭제하지 마세요",
+            "카드의 덱 위치만 바꿉니다",
+            "복습 기록과 일정은 유지됩니다",
+        ):
+            self.assertIn(token, html)
 
     def test_support_page_publishes_safe_diagnostic_boundary(self) -> None:
         html = (SITE / "support.html").read_text(encoding="utf-8")
@@ -1083,6 +1085,7 @@ class PublicSiteTests(unittest.TestCase):
             "device",
             "download",
             "import",
+            "card-location",
             "kanji-build",
             "report",
             "history",
@@ -1106,7 +1109,7 @@ class PublicSiteTests(unittest.TestCase):
             "앱 → AnkiDroid → 저장 공간 → 캐시 삭제",
             "데이터 삭제는 누르지 마세요.",
             "<h2>업데이트 기록</h2>",
-            'href="update.html#misplaced-cards"',
+            'href="#card-location"',
             'href="update.html#empty-cards"',
             'href="study-guide.html#tracks"',
         ):
