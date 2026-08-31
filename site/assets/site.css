@@ -603,22 +603,6 @@ a {
   max-width: 760px;
 }
 
-.v2-page-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin-top: 28px;
-}
-
-.v2-page-badges span {
-  padding: 8px 12px;
-  border: 1px solid var(--line-light);
-  border-radius: 999px;
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 12px;
-  font-weight: 750;
-}
-
 .v2-support-hero {
   padding-bottom: 88px;
 }

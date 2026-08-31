@@ -45,14 +45,33 @@ TEST_LIFECYCLE = {
                 "below long troubleshooting or release sections"
             ),
         },
-        "PublicSiteTests.test_update_guide_repairs_legacy_empty_and_misplaced_cards": {
+        "PublicSiteTests.test_update_guide_keeps_problem_solving_out_of_update_steps": {
             "protected_contract": (
-                "the update guide gives a non-destructive path for legacy kana "
-                "cards and cards placed in the wrong deck after partial deletion"
+                "the update guide contains update steps while symptom-driven "
+                "card-location recovery stays on the support page"
             ),
             "not_subsumed_by": (
-                "general update tests can pass while learners delete notes or "
-                "reimport and repeat the misplaced-card problem"
+                "general heading tests can pass while troubleshooting is mixed "
+                "back into the ordinary update sequence"
+            ),
+        },
+        "PublicSiteTests.test_support_page_contains_card_location_repair": {
+            "protected_contract": (
+                "support keeps the non-destructive search and deck-move steps "
+                "for cards placed in the wrong deck"
+            ),
+            "not_subsumed_by": (
+                "a FAQ link can exist while the exact safe repair steps are "
+                "missing or tell learners to delete cards"
+            ),
+        },
+        "PublicSiteTests.test_page_heroes_do_not_repeat_summary_chips": {
+            "protected_contract": (
+                "guide page heroes show the page title without decorative "
+                "summary chips that repeat nearby content"
+            ),
+            "not_subsumed_by": (
+                "page content tests can pass while redundant hero badges return"
             ),
         },
     }
@@ -660,7 +679,7 @@ class PublicSiteTests(unittest.TestCase):
             "기본 덱과 다른 점",
             "한글 뜻이 든 완성본을 배포하지 않습니다",
             "한자 2,337개의 읽기·쓰기 카드",
-            "읽기·쓰기 4,674장",
+            "한자 확장 읽기·쓰기 카드",
             "1권이 상권이고 2권이 하권입니다",
             "N3 어휘를 시작할 때 1권(상권)",
             "이미 N1을 공부하고 있다면 2권을 지금 시작하면 됩니다",
@@ -969,6 +988,21 @@ class PublicSiteTests(unittest.TestCase):
         self.assertNotIn('id="from-100"', html)
         self.assertNotIn("1.0.0", html)
         self.assertNotIn("JLPT MAX덱::종합 실전", html)
+
+    def test_page_heroes_do_not_repeat_summary_chips(self) -> None:
+        for filename in (
+            "getting-started.html",
+            "install-anki.html",
+            "study-guide.html",
+            "update.html",
+            "kanji.html",
+        ):
+            html = (SITE / filename).read_text(encoding="utf-8")
+            with self.subTest(filename=filename):
+                self.assertNotIn('class="v2-page-badges"', html)
+
+        css = (SITE / "assets" / "site.css").read_text(encoding="utf-8")
+        self.assertNotIn(".v2-page-badges", css)
 
     def test_update_guide_keeps_problem_solving_out_of_update_steps(self) -> None:
         html = (SITE / "update.html").read_text(encoding="utf-8")
