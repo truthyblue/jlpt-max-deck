@@ -142,7 +142,7 @@
             <h3>설치·업데이트</h3>
             <div class="v2-faq">
               <details id="faq-update-delete"><summary>업데이트할 때 기존 덱을 지워야 하나요?</summary><div><strong>지우지 마세요.</strong> 모든 기기를 먼저 동기화하거나 백업한 뒤 최신 기본 덱 파일을 그대로 가져오면 됩니다. <strong>학습 진행 상태는 끄기</strong>, <strong>기존 노트·노트 유형 업데이트는 항상</strong>, <strong>노트 유형 병합은 켜기</strong>로 두면 기존 복습 기록과 일정은 남고 카드 내용만 새로 바뀝니다. <a href="update.html">업데이트 순서 전체 보기 →</a></div></details>
-              <details id="faq-update-old"><summary>아주 오래된 버전에서도 최신 버전으로 바로 올려도 되나요?</summary><div>네. 중간 버전을 차례로 설치할 필요는 없습니다. 최신 파일을 바로 가져온 뒤, <a href="update.html#empty-cards">빈 카드 정리</a>와 <a href="update.html#misplaced-cards">카드 위치 복구</a>가 필요한지만 확인하세요.</div></details>
+              <details id="faq-update-old"><summary>아주 오래된 버전에서도 최신 버전으로 바로 올려도 되나요?</summary><div>네. 중간 버전을 차례로 설치할 필요는 없습니다. 최신 파일을 바로 가져온 뒤, <a href="update.html#empty-cards">빈 카드 정리</a>, <a href="update.html#removed-words">삭제된 어휘 정리</a>, <a href="update.html#misplaced-cards">카드 위치 복구</a>가 필요한지만 확인하세요.</div></details>
               <details id="faq-misplaced"><summary>어휘 덱에서 음성 카드가 나와요.</summary><div>일부 하위 덱만 삭제한 뒤 APKG를 다시 가져오면 카드가 다른 덱 위치에 들어갈 수 있습니다. 카드를 삭제하거나 다시 가져오지 말고, 카드 탐색기에서 위치만 고치세요. 복습 기록은 유지됩니다. <a href="update.html#misplaced-cards">카드 위치 확인·복구 순서 보기 →</a></div></details>
               <details id="faq-other-deck"><summary>다른 일본어 덱의 학습 기록을 JLPT MAX덱으로 옮길 수 있나요?</summary><div>자동으로 합쳐지지는 않습니다. 다만 PC Anki의 <strong>Transfer Scheduling</strong> 부가 기능을 쓰면, 두 덱에서 단어 필드와 카드가 서로 맞는 항목의 복습 일정과 기록을 옮길 수 있습니다. 카드 구성이 다른 항목은 빠질 수 있습니다. 먼저 두 덱을 백업하고 적은 카드로 시험한 뒤 진행하세요. 이 방법은 공식 기능이 아닙니다. <a href="https://gall.dcinside.com/jlpt/169973" target="_blank" rel="noopener noreferrer">커뮤니티의 학습 진도 옮기기 글 보기 <span aria-hidden="true">↗</span></a></div></details>
               <details id="faq-ankidroid-import"><summary>AnkiDroid에서 덱 가져오기가 실패해요.</summary><div>큰 APKG를 가져올 때는 압축을 푸는 임시 공간이 더 필요합니다. Android 설정에서 AnkiDroid를 완전히 종료하고 <strong>앱 → AnkiDroid → 저장 공간 → 캐시 삭제</strong>를 실행한 뒤, 기기 여유 공간을 5GB 이상 확보하고 다시 가져오세요. 캐시는 임시 파일입니다. <strong>데이터 삭제는 누르지 마세요.</strong> 공간이 부족하면 PC Anki에 먼저 가져온 뒤 동기화가 모두 끝날 때까지 기다리는 방법도 있습니다.</div></details>
@@ -319,7 +319,7 @@
                 <li>모바일 Anki 답안 화면에 동의형 `내 기록`을 추가했습니다. 오늘 학습량·연속 학습·최근 기록·JLPT 100일 랭킹을 확인하고, 기록은 모바일에 먼저 저장한 뒤 연결되면 동기화합니다.</li>
                 <li>각 급수 안의 새 카드 순서를 BCCWJ 사용 빈도와 검토된 표기 연결에 맞췄습니다. 이미 학습 중인 덱의 순서와 일정은 가져오기만으로 다시 배열하지 않습니다.</li>
                 <li>새 중요도 순서를 처음부터 쓰고 싶은 급수가 하나도 학습되지 않았다면 그 급수의 어휘 덱과 음성 덱만 삭제한 뒤 다시 가져옵니다. 학습한 급수는 정렬만을 위해 삭제하지 않습니다.</li>
-                <li>독립 어휘로 두지 않는 五万과 중복된 ～キロ 노트를 정리했습니다. 기존 사용자는 업데이트 뒤 Anki의 빈 카드 도구에서 남은 카드 4장을 삭제해야 합니다.</li>
+                <li>독립 어휘로 두지 않는 五万과 중복된 ～キロ 노트를 덱에서 뺐습니다. v1.3.0을 사용한 적이 있다면 카드 탐색기에서 두 노트를 직접 삭제합니다.</li>
                 <li>한자 쓰기 화면에 일시정지·이전 획·다음 획·처음부터·속도·구간 개요를 넣고, 한자 구성 요소와 외부 참고 링크를 읽기·쓰기 카드에 추가했습니다.</li>
                 <li>iPad에서 Apple Pencil로 따라쓸 때 길게 누르기 선택·복사 메뉴가 끼어들어 필기가 끊기지 않도록 고쳤습니다.</li>
                 <li>후리가나·해석·표시와 음성 설정을 나눠 저장하고, 음성 카드가 처음 나타났을 때도 자동재생이 빠지지 않도록 고쳤습니다.</li>
@@ -329,7 +329,7 @@
                 <li>지원하지 않는 AnkiDroid 구형 학습 화면에서는 새 학습 화면을 켜야 하는 이유와 경로를 더 분명하게 안내합니다.</li>
                 <li>public 기본 APKG는 문법을 포함해 20,650노트·38,970카드이고, 한자 빌더가 읽기·쓰기 합계 4,674노트·4,674카드를 별도로 만듭니다. 두 APKG를 합친 전체는 25,324노트·43,644카드입니다.</li>
               </ul>
-              <p class="v2-release-migration"><strong>업데이트 안내</strong>기존 사용자는 모든 기기를 동기화하고 백업한 뒤 v2.0.0 기본 덱을 기존 덱 위에 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트 업데이트와 노트 유형 업데이트는 항상, 노트 유형 병합은 켜기를 선택합니다. 기존 덱 전체나 학습한 급수는 삭제하지 마세요. BCCWJ 중요도 순서를 처음부터 적용하고 싶은 급수가 완전히 미학습 상태라면 그 급수의 JLPT MAX덱::어휘::N○와 JLPT MAX덱::음성::N○만 함께 삭제한 뒤 같은 옵션으로 다시 가져옵니다. 업데이트가 끝나면 Anki의 빈 카드 도구에서 五万과 ～キロ의 남은 어휘·음성 카드 4장을 삭제하고 모든 기기에서 전체 동기화하세요. 카드 탐색기의 노트 삭제는 사용하지 마세요.</p>
+              <p class="v2-release-migration"><strong>업데이트 안내</strong>기존 사용자는 모든 기기를 동기화하고 백업한 뒤 v2.0.0 기본 덱을 기존 덱 위에 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트 업데이트와 노트 유형 업데이트는 항상, 노트 유형 병합은 켜기를 선택합니다. 기존 덱 전체나 학습한 급수는 삭제하지 마세요. BCCWJ 중요도 순서를 처음부터 적용하고 싶은 급수가 완전히 미학습 상태라면 그 급수의 JLPT MAX덱::어휘::N○와 JLPT MAX덱::음성::N○만 함께 삭제한 뒤 같은 옵션으로 다시 가져옵니다. v1.3.0을 사용한 적이 있다면 카드 탐색기에서 五万과 ～キロ 노트를 각각 찾아 삭제한 뒤 모든 기기에서 전체 동기화하세요.</p>
 
               <div class="v2-hero-actions">
                 <a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v2.0.0" target="_blank" rel="noopener noreferrer">v2.0.0 GitHub Release <span aria-hidden="true">↗</span></a>

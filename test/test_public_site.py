@@ -929,6 +929,7 @@ class PublicSiteTests(unittest.TestCase):
             "import-options",
             "new-order",
             "empty-cards",
+            "removed-words",
             "misplaced-cards",
             "recommended-settings",
             "verify",
@@ -956,6 +957,8 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("완전히 미학습 상태인 급수", html)
         self.assertIn("五万", html)
         self.assertIn("～キロ", html)
+        self.assertIn("두 어휘는 빈 카드 메뉴에 나오지 않습니다", html)
+        self.assertNotIn("더 이상 쓰지 않는 어휘·음성 카드가 보이면", html)
         self.assertIn("JLPT MAX덱 어휘 / 어휘(가나 보조)", html)
         self.assertIn("기존 한자 읽기 카드는 현재 덱에 그대로 남습니다", html)
         self.assertIn("쓰기 순서가 포함된 카드 4,674장", html)
@@ -982,6 +985,10 @@ class PublicSiteTests(unittest.TestCase):
             self.assertIn(token, html)
         self.assertLess(
             html.index('id="empty-cards"'),
+            html.index('id="removed-words"'),
+        )
+        self.assertLess(
+            html.index('id="removed-words"'),
             html.index('id="misplaced-cards"'),
         )
         self.assertLess(

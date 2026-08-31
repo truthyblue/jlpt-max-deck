@@ -604,6 +604,8 @@ class DocumentationRenderTest(unittest.TestCase):
         self.assertIn("완전히 미학습 상태인 급수", update_page)
         self.assertIn("五万", update_page)
         self.assertIn("～キロ", update_page)
+        self.assertIn("두 어휘는 빈 카드 메뉴에 나오지 않습니다", update_page)
+        self.assertNotIn("더 이상 쓰지 않는 어휘·음성 카드가 보이면", update_page)
         self.assertIn("기존 한자 읽기 카드는 현재 덱에 그대로 남습니다", update_page)
         self.assertIn("한자::읽기::상권·하권", anki_guide)
 

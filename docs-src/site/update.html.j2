@@ -34,6 +34,7 @@
           <li><a href="#import-options">가져오기 옵션</a></li>
           <li><a href="#new-order">새 어휘 순서</a></li>
           <li><a href="#empty-cards">빈 카드 정리</a></li>
+          <li><a href="#removed-words">삭제된 어휘</a></li>
           <li><a href="#misplaced-cards">카드 위치 복구</a></li>
           <li><a href="#recommended-settings">업데이트 뒤 설정</a></li>
           <li><a href="#verify">업데이트 확인</a></li>
@@ -86,10 +87,9 @@
         <section class="v2-guide-section" id="empty-cards">
           <span class="v2-step-label">04 · 빈 카드</span>
           <h2>빈 카드 정리</h2>
-          <p>Anki는 새 덱을 가져와도 예전 카드를 자동으로 지우지 않습니다. 출발 버전과 개인 컬렉션 상태에 따라 표시 수는 달라질 수 있습니다.</p>
+          <p>v1.2.1 이하에서 업데이트한 경우에만 확인하세요.</p>
           <div class="v2-option-grid">
-            <article class="v2-option"><div class="v2-option-head"><h3>v1.2.1 이하에서 업데이트</h3><span class="v2-state">가나 보조</span></div><p><code>JLPT MAX덱 어휘 / 어휘(가나 보조)</code> 빈 카드를 삭제합니다. 앞면에서 히라가나만 나오던 예전 카드입니다.</p></article>
-            <article class="v2-option"><div class="v2-option-head"><h3>v1.3.0 이후 컬렉션</h3><span class="v2-state">4장</span></div><p><code>五万</code>과 <code>～キロ</code>에서 더 이상 쓰지 않는 어휘·음성 카드가 보이면 삭제합니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>가나 보조 카드</h3></div><p><code>JLPT MAX덱 어휘 / 어휘(가나 보조)</code> 빈 카드를 삭제합니다.</p></article>
           </div>
           <h3 class="v2-option-group-title">기기별 빈 카드 메뉴</h3>
           <div class="v2-option-grid">
@@ -100,8 +100,20 @@
           <div class="v2-callout warning"><strong>이름을 확인한 뒤 빈 카드 도구의 삭제를 사용하세요.</strong><p>카드 탐색기의 노트 삭제는 같은 노트의 다른 어휘·음성 카드까지 지울 수 있으므로 사용하면 안 됩니다.</p></div>
         </section>
 
+        <section class="v2-guide-section" id="removed-words">
+          <span class="v2-step-label">05 · 삭제된 어휘</span>
+          <h2>삭제된 어휘 정리</h2>
+          <p>v1.3.0을 사용한 적이 있다면 확인하세요.</p>
+          <ol class="v2-step-list">
+            <li><div><strong>카드 탐색기에서 <code>五万</code>을 검색해 해당 노트를 삭제합니다.</strong></div></li>
+            <li><div><strong><code>～キロ</code>도 같은 방법으로 삭제합니다.</strong></div></li>
+            <li><div><strong>두 어휘가 없으면 건너뜁니다.</strong></div></li>
+          </ol>
+          <div class="v2-callout warning"><strong>두 어휘는 빈 카드 메뉴에 나오지 않습니다.</strong><p>최신 덱에서 뺀 어휘지만 새 파일을 가져오는 것만으로 예전 컬렉션에서 지워지지는 않습니다.</p></div>
+        </section>
+
         <section class="v2-guide-section" id="misplaced-cards">
-          <span class="v2-step-label">05 · 필요할 때만</span>
+          <span class="v2-step-label">06 · 필요할 때만</span>
           <h2>카드 위치 복구</h2>
           <p>일부 하위 덱만 삭제한 뒤 APKG를 다시 가져오면 같은 노트의 다른 카드가 남아 있던 덱으로 들어갈 수 있습니다. 신규 설치나 하위 덱을 삭제하지 않은 일반 업데이트는 대부분 해당하지 않습니다.</p>
           <div class="v2-callout warning"><strong>먼저 백업하고 검색된 카드를 삭제하지 마세요.</strong><p>아래 작업은 카드의 덱 위치만 바꿉니다. 복습 기록과 일정은 유지됩니다.</p></div>
@@ -114,7 +126,7 @@
         </section>
 
         <section class="v2-guide-section" id="recommended-settings">
-          <span class="v2-step-label">06 · 설정</span>
+          <span class="v2-step-label">07 · 설정</span>
           <h2>업데이트 후 설정</h2>
           <p>개인 설정은 그대로 유지됩니다. 음성 덱의 새 카드 수를 포함한 나머지 옵션은 지금 설정을 그대로 두세요.</p>
           <div class="v2-option-grid v2-option-grid-single">
@@ -123,7 +135,7 @@
         </section>
 
         <section class="v2-guide-section" id="verify">
-          <span class="v2-step-label">07 · 확인</span>
+          <span class="v2-step-label">08 · 확인</span>
           <h2>업데이트 확인</h2>
           <ol class="v2-step-list">
             <li><div><strong>전에 공부한 어휘 몇 장의 복습 일정이 그대로인지 확인합니다.</strong></div></li>
