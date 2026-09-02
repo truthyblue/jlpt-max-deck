@@ -253,7 +253,7 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         note.update(
             {
                 "KanjiID": "kanji-1",
-                "Volume": "상권",
+                "Volume": "⁣",
                 "Unit": "1",
                 "Meaning": "private meaning",
                 "KanjiFacts": "public-safe fact projection",
@@ -267,6 +267,9 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         )
         collection = Mock()
         collection.get_note.return_value = note
+        collection.find_cards.return_value = [101]
+        collection.get_card.return_value.did = 202
+        collection.decks.name.return_value = "JLPT MAX덱::한자::읽기::상권"
         with patch.object(subject, "EXPECTED_KANJI_NOTES", 1), patch.object(
             subject, "EXPECTED_KANJI_VECTOR_GLYPHS", 1
         ):
@@ -274,6 +277,7 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
 
         expected_projection = dict(note)
         expected_projection["Meaning"] = ""
+        expected_projection["Volume"] = "상권"
         expected_projection["GlyphHTML"] = ""
         self.assertEqual(len(records), 1)
         self.assertEqual(records[0]["note_hash"], sha256_json(expected_projection))

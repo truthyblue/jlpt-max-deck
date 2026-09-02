@@ -623,6 +623,7 @@ def _kanji_skeleton_records(
             raise PublicReleaseError("kanji notetype fields changed")
         projected = {field: note[field] for field in KANJI_FIELDS}
         projected["Meaning"] = ""
+        projected["Volume"] = _kanji_volume(collection, note_id)
         if _VECTOR_GLYPH_RE.fullmatch(projected["GlyphHTML"]):
             projected["GlyphHTML"] = ""
         records.append(skeleton_note_record(projected))
@@ -636,6 +637,21 @@ def _kanji_skeleton_records(
     ):
         raise PublicReleaseError("kanji skeleton vector count changed")
     return records
+
+
+def _kanji_volume(collection: Collection, note_id: int) -> str:
+    note = collection.get_note(note_id)
+    stored = note["Volume"]
+    if stored in {"상권", "하권"}:
+        return stored
+    card_ids = collection.find_cards(f"nid:{note_id}")
+    if len(card_ids) != 1:
+        raise PublicReleaseError("kanji volume route is ambiguous")
+    deck_name = collection.decks.name(collection.get_card(card_ids[0]).did)
+    for volume in ("상권", "하권"):
+        if deck_name == volume or deck_name.endswith(f"::{volume}"):
+            return volume
+    raise PublicReleaseError(f"kanji volume route changed: {deck_name}")
 
 
 def _kanji_skeleton_static_media(
@@ -742,6 +758,7 @@ def _build_skeleton(
             for note_id in private_kanji_ids:
                 note = collection.get_note(note_id)
                 note["Meaning"] = ""
+                note["Volume"] = _kanji_volume(collection, note_id)
                 if _VECTOR_GLYPH_RE.fullmatch(note["GlyphHTML"]):
                     note["GlyphHTML"] = ""
                 collection.update_note(note)
