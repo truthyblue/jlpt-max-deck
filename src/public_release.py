@@ -17,8 +17,11 @@ from pathlib import Path
 from typing import Any
 
 from anki.collection import Collection
+from anki.decks import DeckId
 from anki.exporting import AnkiPackageExporter
 from anki.import_export_pb2 import ImportAnkiPackageRequest
+from anki.models import NotetypeId
+from anki.notes import NoteId
 
 from direct_release_contract import (
     EXPECTED_KANJI_ADDON_CARDS,
@@ -360,12 +363,12 @@ def _remove_private_kanji_content(
     private_note_ids: Iterable[int],
 ) -> None:
     """Remove both private kanji note/deck families from a public core."""
-    collection.remove_notes(list(private_note_ids))
+    collection.remove_notes([NoteId(value) for value in private_note_ids])
     _remove_matching_decks(collection, keep_kanji=False)
     for name in PRIVATE_KANJI_NOTETYPE_NAMES:
         model = collection.models.by_name(name)
         if model is not None:
-            collection.models.remove(int(model["id"]))
+            collection.models.remove(NotetypeId(int(model["id"])))
 
 
 def _canonicalize_kanji_root(collection: Collection) -> None:
@@ -383,7 +386,7 @@ def _canonicalize_kanji_root(collection: Collection) -> None:
     if target is None:
         if not private_roots:
             raise PublicReleaseError("private kanji deck root is missing")
-        collection.decks.rename(int(private_roots[0]["id"]), KANJI_DECK_ROOT)
+        collection.decks.rename(DeckId(int(private_roots[0]["id"])), KANJI_DECK_ROOT)
     if collection.decks.by_name(KANJI_DECK_ROOT) is None:
         raise PublicReleaseError("builder kanji deck root is missing")
 
@@ -393,7 +396,7 @@ def _export_root(collection: Collection, output: Path) -> int:
     if deck is None:
         raise PublicReleaseError(f"root deck is missing: {ROOT_DECK_NAME}")
     exporter = AnkiPackageExporter(collection)
-    exporter.did = int(deck["id"])
+    exporter.did = DeckId(int(deck["id"]))
     exporter.includeSched = True
     exporter.includeMedia = True
     exporter.exportInto(str(output))
@@ -403,9 +406,10 @@ def _export_root(collection: Collection, output: Path) -> int:
 def _orphan_migration_note_guids(collection: Collection) -> tuple[str, ...]:
     """Return package-only migration notes that need an export carrier card."""
 
-    if getattr(collection, "db", None) is None:
+    database = getattr(collection, "db", None)
+    if database is None:
         return ()
-    note_ids = collection.db.list(
+    note_ids = database.list(
         "select n.id from notes n left join cards c on c.nid = n.id "
         "where c.id is null order by n.id"
     )
@@ -511,7 +515,7 @@ def _strip_migration_carrier_cards(
 
 def _remove_decks(collection: Collection, names: Iterable[str]) -> None:
     remove_ids = [
-        int(deck.id)
+        DeckId(deck.id)
         for deck in collection.decks.all_names_and_ids()
         if deck.name in set(names)
     ]
@@ -618,7 +622,7 @@ def _kanji_skeleton_records(
 ) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     for note_id in kanji_ids:
-        note = collection.get_note(note_id)
+        note = collection.get_note(NoteId(note_id))
         if tuple(note.keys()) != KANJI_FIELDS:
             raise PublicReleaseError("kanji notetype fields changed")
         projected = {field: note[field] for field in KANJI_FIELDS}
@@ -640,7 +644,7 @@ def _kanji_skeleton_records(
 
 
 def _kanji_volume(collection: Collection, note_id: int) -> str:
-    note = collection.get_note(note_id)
+    note = collection.get_note(NoteId(note_id))
     stored = note["Volume"]
     if stored in {"상권", "하권"}:
         return stored
@@ -660,7 +664,7 @@ def _kanji_skeleton_static_media(
 ) -> dict[str, str]:
     filenames: set[str] = set()
     for note_id in kanji_ids:
-        note = collection.get_note(note_id)
+        note = collection.get_note(NoteId(note_id))
         filenames.update(KANJI_STROKE_MEDIA_RE.findall(note["StrokeOrder"]))
     if len(filenames) != EXPECTED_KANJI_STROKE_MEDIA:
         raise PublicReleaseError(
@@ -747,7 +751,7 @@ def _build_skeleton(
             all_ids = {int(value) for value in collection.find_notes("")}
             other_ids = sorted(all_ids - kanji_ids)
             if other_ids:
-                collection.remove_notes(other_ids)
+                collection.remove_notes([NoteId(value) for value in other_ids])
             _remove_matching_decks(collection, keep_kanji=True)
             _canonicalize_kanji_root(collection)
             records = _kanji_skeleton_records(collection, reading_ids)
@@ -756,7 +760,7 @@ def _build_skeleton(
                 private_kanji_ids,
             )
             for note_id in private_kanji_ids:
-                note = collection.get_note(note_id)
+                note = collection.get_note(NoteId(note_id))
                 note["Meaning"] = ""
                 note["Volume"] = _kanji_volume(collection, note_id)
                 if _VECTOR_GLYPH_RE.fullmatch(note["GlyphHTML"]):
