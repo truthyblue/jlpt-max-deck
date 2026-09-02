@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08120e">
   <meta name="robots" content="index,follow">
-  <meta name="description" content="JLPT MAX Deck의 어휘, 일상무따 한자, 종합 실전, 음성 덱을 어떤 순서로 공부하는지 설명합니다.">
+  <meta name="description" content="JLPT MAX Deck의 어휘·한자 읽기·쓰기·종합 실전·음성 덱 학습 순서.">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="ko_KR">
   <meta property="og:title" content="덱 학습법 — JLPT MAX Deck">
-  <meta property="og:description" content="어휘는 N5부터 차례대로 공부하고, 실전은 시험 볼 급수의 문제만 풉니다.">
+  <meta property="og:description" content="어휘 N5부터 응시 급수까지의 학습 순서와 실전 문제 이용법.">
   <meta property="og:url" content="https://truthyblue.github.io/jlpt-max-deck/study-guide.html">
   <meta property="og:image" content="https://truthyblue.github.io/jlpt-max-deck/assets/social-card.jpg">
   <link rel="canonical" href="https://truthyblue.github.io/jlpt-max-deck/study-guide.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <title>덱 학습법 — JLPT MAX Deck</title>
-  <link rel="stylesheet" href="assets/site.css?v=575a7936a72e">
+  <link rel="stylesheet" href="assets/site.css?v=e30a60e5d032">
 </head>
 <body class="v2-site">
   <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -27,65 +27,19 @@
     </a>
     <nav aria-label="주요 메뉴">
       <div class="nav-group nav-primary-links" role="group" aria-label="주요 페이지">
-        <div class="nav-guide-menu" data-guide-menu data-open="false">
-          <a class="nav-guide-entry" href="getting-started.html"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">시작</span></a>
-          <button class="nav-guide-trigger" type="button" aria-label="시작 가이드 하위 메뉴 펼치기" aria-expanded="false" aria-controls="nav-guide-submenu" aria-haspopup="true"><span class="nav-guide-chevron" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="m3.5 5.75 4.5 4.5 4.5-4.5"/></svg></span></button>
-          <div class="nav-guide-submenu" id="nav-guide-submenu">
-            <a href="install-anki.html">Anki가 처음이에요</a>
-            <a href="getting-started.html#existing-user">Anki를 이미 사용 중이에요</a>
-            <a href="update.html">JLPT MAX덱 업데이트</a>
-          </div>
-        </div>
+        <a href="getting-started.html" aria-label="시작 가이드"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">시작</span></a>
         <a href="study-guide.html" aria-current="page" aria-label="덱 학습법"><span class="nav-label-full">덱 학습법</span><span class="nav-label-compact">학습</span></a>
-        <a href="kanji.html" aria-label="한자 확장"><span class="nav-label-full">한자 확장</span><span class="nav-label-compact">한자</span></a>
-        <a href="support.html" aria-label="지원"><span class="nav-label-full">지원</span><span class="nav-label-compact">지원</span></a>
+        <a href="kanji.html" aria-label="한자 덱"><span class="nav-label-full">한자 덱</span><span class="nav-label-compact">한자</span></a>
+        <a href="support.html" aria-label="도움말"><span class="nav-label-full">도움말</span><span class="nav-label-compact">도움</span></a>
       </div>
     </nav>
     <a class="nav-action" id="repo-link" href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer" aria-label="GitHub에서 Star, 새 탭에서 열림"><svg class="nav-action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.87c-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .08 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.86.09-.66.35-1.12.64-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.53a9.3 9.3 0 0 1 2.5.35c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg><span class="nav-action-label">GitHub에서 Star</span><span class="nav-action-arrow" aria-hidden="true">↗</span></a>
   </header>
-  <script>
-    (() => {
-      const menu = document.querySelector("[data-guide-menu]");
-      if (!menu) return;
-      const trigger = menu.querySelector(".nav-guide-trigger");
-      const submenu = menu.querySelector(".nav-guide-submenu");
-      if (!trigger || !submenu) return;
-
-      const setOpen = (open) => {
-        menu.dataset.open = String(open);
-        trigger.setAttribute("aria-expanded", String(open));
-        trigger.setAttribute(
-          "aria-label",
-          open ? "시작 가이드 하위 메뉴 닫기" : "시작 가이드 하위 메뉴 펼치기",
-        );
-      };
-
-      trigger.addEventListener("click", (event) => {
-        event.stopPropagation();
-        setOpen(menu.dataset.open !== "true");
-      });
-      submenu.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => setOpen(false));
-      });
-      document.addEventListener("click", (event) => {
-        if (!menu.contains(event.target)) setOpen(false);
-      });
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && menu.dataset.open === "true") {
-          setOpen(false);
-          trigger.focus();
-        }
-      });
-    })();
-  </script>
 
   <main class="v2-main" id="main" tabindex="-1">
     <section class="v2-page-hero">
       <div class="v2-shell">
-        <p class="v2-kicker"><span></span>덱 학습법</p>
-        <h1>어휘는 N5부터,<br><em>실전은 시험 볼 급수만.</em></h1>
-        <p class="v2-hero-lead">일상무따 1권(상권)은 N3, 2권(하권)은 N2·N1 어휘와 병행하고, 음성 카드는 필요할 때만 추가하세요.</p>
-        <div class="v2-page-badges"><span>복습 우선</span><span>새 카드 기본 20장</span><span>음성 선택</span></div>
+        <h1>덱 학습법</h1>
       </div>
     </section>
 
@@ -95,7 +49,7 @@
         <ol>
           <li><a href="#tracks">전체 학습 순서</a></li>
           <li><a href="#vocabulary">어휘</a></li>
-          <li><a href="#kanji">일상무따 한자</a></li>
+          <li><a href="#kanji">한자 읽기·쓰기</a></li>
           <li><a href="#practice">종합 실전</a></li>
           <li><a href="#audio">음성 <span class="sr-only">(선택)</span></a></li>
         </ol>
@@ -104,10 +58,10 @@
       <div class="v2-guide-content">
         <section class="v2-guide-section" id="tracks">
           <span class="v2-step-label">한눈에 보기</span>
-          <h2>각 덱은 이렇게 공부합니다.</h2>
+          <h2>덱별 학습 순서</h2>
           <div class="v2-option-grid">
             <article class="v2-option"><div class="v2-option-head"><h3>어휘</h3><span class="v2-state on">먼저 시작</span></div><p>N5부터 시험 볼 급수까지 순서대로 공부합니다.</p></article>
-            <article class="v2-option"><div class="v2-option-head"><h3>일상무따 한자</h3><span class="v2-state">N3부터</span></div><p>N3에는 1권(상권), N2·N1에는 2권(하권)을 병행합니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>한자 읽기·쓰기</h3><span class="v2-state">N3부터</span></div><p>N3에는 1권(상권), N2·N1에는 2권(하권)을 병행합니다.</p></article>
             <article class="v2-option"><div class="v2-option-head"><h3>종합 실전</h3><span class="v2-state">어휘 다음</span></div><p>어휘를 다 본 뒤 시험 볼 급수의 문제만 풉니다.</p></article>
             <article class="v2-option"><div class="v2-option-head"><h3>음성</h3><span class="v2-state off">필요할 때</span></div><p>소리만 듣고 단어를 떠올리는 연습에 사용합니다.</p></article>
           </div>
@@ -115,7 +69,7 @@
 
         <section class="v2-guide-section" id="vocabulary">
           <span class="v2-step-label">01 · 어휘</span>
-          <h2>어휘는 N5부터 차례대로 공부하세요.</h2>
+          <h2>어휘 학습</h2>
           <p>N2 시험을 본다면 <code>N5 → N4 → N3 → N2</code>, N4 시험을 본다면 <code>N5 → N4</code> 순서입니다. 지금 공부하는 급수의 새 카드가 0장이 되면 다음 급수로 넘어갑니다. 앞서 공부한 급수의 복습은 계속하세요.</p>
           <div class="v2-callout"><strong>처음에는 <code>어휘::N5</code>만 누르면 됩니다.</strong><p>그 아래 덱이나 태그를 따로 고르지 않아도 됩니다. 이미 아는 단어는 <code>Easy</code>로 빠르게 넘기세요.</p></div>
           <h3 class="v2-option-group-title">어휘 카드 채점</h3>
@@ -126,7 +80,7 @@
             <article class="v2-option"><div class="v2-option-head"><h3>Easy</h3><span class="v2-state on">이미 앎</span></div><p>보자마자 바로 알았다면 누릅니다.</p></article>
           </div>
           <div class="v2-guide-subsection" id="daily">
-          <h3>하루 학습은 복습부터 시작하세요.</h3>
+          <h3>하루 학습 순서</h3>
           <ol class="v2-step-list">
             <li><div><strong>밀린 복습부터 합니다.</strong><p>복습이 쌓였다면 새 카드를 0장으로 줄이세요.</p></div></li>
             <li><div><strong>앞서 공부한 급수의 복습을 합니다.</strong><p>N4를 공부하고 있다면 N5 복습부터 끝냅니다.</p></div></li>
@@ -136,33 +90,33 @@
           </div>
 
           <div class="v2-guide-subsection" id="n5-foundation">
-            <h3>N5에서는 수량 표현·날짜·월·요일도 꼭 보세요.</h3>
+            <h3>N5 하위 덱</h3>
             <p><code>어휘::N5</code> 덱을 누르면 <code>수량 표현</code>, <code>날짜</code>, <code>월</code>, <code>요일</code> 하위 덱도 함께 나옵니다. 하위 덱을 따로 누르지 않아도 됩니다. <code>참조표</code>는 외우는 덱이 아니라 헷갈릴 때 찾아보는 자료입니다.</p>
           </div>
 
           <div class="v2-guide-subsection" id="filtered">
             <span class="v2-step-label">선택 · 필터 덱</span>
-            <h3>여러 급수의 어휘를 한 덱에 모아 보고 싶을 때만 사용하세요.</h3>
+            <h3>여러 급수 함께 보기</h3>
             <p>처음이라면 이 부분은 건너뛰고 위 안내대로 <code>어휘::N5</code>부터 공부해도 됩니다. 앞서 공부한 급수의 복습과 현재 급수의 새 카드를 한곳에서 보고 싶다면 필터 덱을 설정하세요.</p>
             <details class="v2-optional-guide">
               <summary><span><strong>필터 덱 설정 보기</strong><small>처음에 한 번 설정해야 하는 선택 기능입니다.</small></span></summary>
               <div class="v2-optional-guide-body">
             <div class="v2-callout"><strong>필터 덱이란?</strong><p>원래 덱을 합치거나 카드를 복사하는 기능이 아닙니다. 검색 조건에 맞는 카드를 잠시 한곳에 모아 보여 주며, 학습 기록과 다음 복습 일정은 원래 덱에 그대로 남습니다.</p></div>
 
-            <h3 class="v2-subsection-heading">처음 한 번만 필터 덱을 만드세요.</h3>
+            <h3 class="v2-subsection-heading">필터 덱 만들기</h3>
             <div class="v2-tabs" data-tabs data-platform-tabs>
               <div class="v2-tab-list" role="tablist" aria-label="기기별 필터 덱 만들기 메뉴">
                 <button class="v2-tab" id="filter-create-tab-desktop" type="button" role="tab" aria-selected="true" aria-controls="filter-create-panel-desktop" data-platform="desktop">Desktop</button>
                 <button class="v2-tab" id="filter-create-tab-ios" type="button" role="tab" aria-selected="false" aria-controls="filter-create-panel-ios" data-platform="ios" tabindex="-1">iPhone / iPad</button>
                 <button class="v2-tab" id="filter-create-tab-android" type="button" role="tab" aria-selected="false" aria-controls="filter-create-panel-android" data-platform="android" tabindex="-1">Android</button>
               </div>
-              <article class="v2-tab-panel v2-device-card" id="filter-create-panel-desktop" role="tabpanel" aria-labelledby="filter-create-tab-desktop"><span>ANKI DESKTOP</span><h3>위쪽 메뉴에서 엽니다.</h3><ol><li>Anki의 덱 목록으로 이동</li><li><strong>도구 → 필터 덱 만들기</strong> 누르기</li></ol></article>
-              <article class="v2-tab-panel v2-device-card" id="filter-create-panel-ios" role="tabpanel" aria-labelledby="filter-create-tab-ios" hidden><span>ANKIMOBILE</span><h3>학습 화면의 도구에서 엽니다.</h3><ol><li>어휘 덱 하나를 열어 학습 화면으로 이동</li><li>오른쪽 아래 톱니바퀴 → <strong>Filter/Cram</strong> 누르기</li></ol></article>
-              <article class="v2-tab-panel v2-device-card" id="filter-create-panel-android" role="tabpanel" aria-labelledby="filter-create-tab-android" hidden><span>ANKIDROID</span><h3>덱 목록의 추가 메뉴에서 엽니다.</h3><ol><li>덱 목록 오른쪽 아래 <strong>+</strong> 누르기</li><li><strong>필터 덱 만들기</strong> 누르기</li></ol></article>
+              <article class="v2-tab-panel v2-device-card" id="filter-create-panel-desktop" role="tabpanel" aria-labelledby="filter-create-tab-desktop"><span>ANKI DESKTOP</span><h3>PC</h3><ol><li>Anki의 덱 목록으로 이동</li><li><strong>도구 → 필터 덱 만들기</strong> 누르기</li></ol></article>
+              <article class="v2-tab-panel v2-device-card" id="filter-create-panel-ios" role="tabpanel" aria-labelledby="filter-create-tab-ios" hidden><span>ANKIMOBILE</span><h3>iPhone·iPad</h3><ol><li>어휘 덱 하나를 열어 학습 화면으로 이동</li><li>오른쪽 아래 톱니바퀴 → <strong>Filter/Cram</strong> 누르기</li></ol></article>
+              <article class="v2-tab-panel v2-device-card" id="filter-create-panel-android" role="tabpanel" aria-labelledby="filter-create-tab-android" hidden><span>ANKIDROID</span><h3>Android</h3><ol><li>덱 목록 오른쪽 아래 <strong>+</strong> 누르기</li><li><strong>필터 덱 만들기</strong> 누르기</li></ol></article>
             </div>
             <div class="v2-callout"><strong>메뉴 이름은 표시 언어나 앱 버전에 따라 조금 다를 수 있습니다.</strong><p><code>Filtered Deck</code>, <code>Filter/Cram</code>, <code>필터 덱</code>이 들어간 항목을 찾으세요.</p></div>
 
-            <h3 class="v2-subsection-heading">두 칸에는 복습용·새 카드용 조건을 따로 넣으세요.</h3>
+            <h3 class="v2-subsection-heading">필터 조건 입력</h3>
             <p><code>검색식</code>은 Anki가 가져올 카드를 고르는 조건입니다. 내용을 이해하거나 외울 필요 없이 아래 값을 그대로 복사하면 됩니다.</p>
             <div class="v2-option-grid">
               <article class="v2-option"><div class="v2-option-head"><h3>복습용 필터</h3><span class="v2-state on">필터 1</span></div><p>N5부터 응시 급수까지 오늘 복습할 카드를 모두 모읍니다.</p></article>
@@ -209,11 +163,11 @@
 
         <section class="v2-guide-section" id="kanji">
           <span class="v2-step-label">02 · 한자</span>
-          <h2>N3에는 일상무따 1권, N2·N1에는 2권을 병행하세요.</h2>
+          <h2>한자 읽기·쓰기</h2>
           <p>1권이 상권이고 2권이 하권입니다. 한자 2,337개마다 읽기 카드와 쓰기 카드가 하나씩 있습니다.</p>
           <ol class="v2-step-list">
-            <li><div><strong>N3 어휘 + 일상무따 1권(상권)</strong><p>N3 어휘를 시작할 때 1권 덱도 함께 시작합니다.</p></div></li>
-            <li><div><strong>N2·N1 어휘 + 일상무따 2권(하권)</strong><p>N2 어휘를 시작할 때 2권 덱도 함께 시작하세요. 이미 N1을 공부하고 있다면 2권 덱을 지금 시작하면 됩니다.</p></div></li>
+            <li><div><strong>N3 어휘 + 1권(상권)</strong><p>N3 어휘를 시작할 때 1권 덱도 함께 시작합니다.</p></div></li>
+            <li><div><strong>N2·N1 어휘 + 2권(하권)</strong><p>N2 어휘를 시작할 때 2권 덱도 함께 시작하세요. 이미 N1을 공부하고 있다면 2권 덱을 지금 시작하면 됩니다.</p></div></li>
           </ol>
           <div class="v2-callout"><strong>읽기로 익힌 뒤 쓰기로 확인하세요.</strong><p>읽기 카드에서 뜻과 읽기를 익히고, 쓰기 카드에서 획순을 따라 써 봅니다. 복습을 먼저 끝내고 부담되면 한자 새 카드를 10장으로 줄이세요. 복습이 밀렸다면 새 카드를 0장으로 둡니다.</p></div>
           <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="kanji.html">한자 덱 만드는 법 <span aria-hidden="true">→</span></a></div>
@@ -221,7 +175,7 @@
 
         <section class="v2-guide-section" id="practice">
           <span class="v2-step-label">03 · 종합 실전</span>
-          <h2>어휘를 다 본 다음, 시험 볼 급수의 문제만 푸세요.</h2>
+          <h2>종합 실전</h2>
           <p>시험 볼 급수까지 어휘를 모두 한 번 본 뒤 시작합니다. N4 시험을 본다면 <code>종합 실전::어휘::N4</code>만, N2 시험을 본다면 <code>종합 실전::어휘::N2</code>만 누르세요. 실전 문제는 N5부터 차례대로 풀 필요가 없습니다.</p>
           <p>급수 덱을 누르면 한자 읽기·표기·문맥 규정·유의 표현·용법 문제가 <strong>무작위 노트</strong> 순서로 골고루 섞여 나옵니다. 한 유형만 따로 연습하고 싶을 때만 그 하위 덱을 누르세요.</p>
           <div class="v2-callout warning"><strong>기존 사용자는 실전 설정을 확인하세요.</strong><p><code>JLPT MAX덱 · 실전 → 신규 카드 수집</code>을 <code>무작위 노트</code>로 바꿉니다. 다른 개인 설정은 유지하세요. 자세한 순서는 <a href="update.html#recommended-settings">업데이트 뒤 권장 설정</a>에 있습니다.</p></div>
@@ -230,7 +184,7 @@
 
         <section class="v2-guide-section" id="audio">
           <span class="v2-step-label">선택 · 음성</span>
-          <h2>음성 덱은 필요할 때만 공부하세요.</h2>
+          <h2>음성 덱</h2>
           <p>소리만 듣고 단어를 떠올리는 연습용이며 처음에는 덱 목록에서 접혀 있습니다. 이미 음성 카드를 공부하고 있다면 지금 새 카드 설정을 유지하세요.</p>
           <p>처음 시작한다면 하루 5–10장부터 보세요. 문장을 듣고 이해하는 청해 연습은 나중에 별도 청해 덱으로 보강할 예정입니다.</p>
           <div class="v2-hero-actions"><a class="v2-button" href="getting-started.html">처음 설치 다시 보기 <span aria-hidden="true">→</span></a><a class="v2-button v2-button-ghost" href="support.html">문제 해결 <span aria-hidden="true">→</span></a></div>
@@ -252,12 +206,12 @@
         <a href="update.html">업데이트</a>
         <a href="kanji.html">한자 확장</a>
         <a href="install-anki.html">Anki 설치</a>
-        <a href="support.html">지원</a>
+        <a href="support.html">도움말</a>
         <a href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
     <div class="v2-footer-legal">
-      <span>v1.3.0 · Code AGPL-3.0-or-later</span>
+      <span>v2.1.0 · Code AGPL-3.0-or-later</span>
       <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/NOTICE">NOTICE</a>
       <span>Anki·JLPT·출판사의 공식 제품 또는 후원 프로젝트가 아닙니다.</span>
     </div>

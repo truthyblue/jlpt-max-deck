@@ -51,7 +51,7 @@ TEST_LIFECYCLE = {
     "test_contracts": {
         "DirectReleaseRepositoryTest.test_current_kanji_fields_close_skeleton_semantics": {
             "protected_contract": (
-                "the public builder accepts the approved 11-field kanji models and binds facts and stroke-order content into the skeleton proof"
+                "the public builder accepts the approved 11-field kanji models, recognizes the stable vector-glyph media namespace after private field-class compaction, and binds facts and stroke-order content into the skeleton proof"
             ),
             "not_subsumed_by": (
                 "family-count tests can pass while an older field list rejects the accepted private APKG before public artifacts are prepared"
@@ -253,16 +253,23 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         note.update(
             {
                 "KanjiID": "kanji-1",
-                "Volume": "상권",
+                "Volume": "⁣",
                 "Unit": "1",
                 "Meaning": "private meaning",
                 "KanjiFacts": "public-safe fact projection",
+                "GlyphHTML": (
+                    '<img class="_j42 _j43" '
+                    'src="jlpt-v2-kanji-0123456789abcdef01234567.png" alt="">'
+                ),
                 "StrokeOrder": "deterministic stroke projection",
                 "SortKey": "K000001",
             }
         )
         collection = Mock()
         collection.get_note.return_value = note
+        collection.find_cards.return_value = [101]
+        collection.get_card.return_value.did = 202
+        collection.decks.name.return_value = "JLPT MAX덱::한자::읽기::상권"
         with patch.object(subject, "EXPECTED_KANJI_NOTES", 1), patch.object(
             subject, "EXPECTED_KANJI_VECTOR_GLYPHS", 1
         ):
@@ -270,6 +277,8 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
 
         expected_projection = dict(note)
         expected_projection["Meaning"] = ""
+        expected_projection["Volume"] = "상권"
+        expected_projection["GlyphHTML"] = ""
         self.assertEqual(len(records), 1)
         self.assertEqual(records[0]["note_hash"], sha256_json(expected_projection))
         self.assertEqual(note["Meaning"], "private meaning")
@@ -1039,10 +1048,6 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                     f"`{artifact['sha256']}`",
                     draft,
                 )
-        self.assertIn(
-            f"전체 private APKG SHA-256: `{pin['full_source']['sha256']}`",
-            draft,
-        )
         self.assertNotIn("user-attachments/assets", draft)
         self.assertNotIn("/main/site/assets/releases/", draft)
         self.assertIn(

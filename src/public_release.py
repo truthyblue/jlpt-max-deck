@@ -59,7 +59,7 @@ PUBLIC_RELEASE_CODE_PATHS = (
     "src/public_kanji.py",
 )
 _VECTOR_GLYPH_RE = re.compile(
-    r'<img class="[^"]*\bkanji-glyph-image\b[^"]*" src="([^"]+)"[^>]*>'
+    r'<img\b[^>]*\bsrc="(jlpt-v2-kanji-[0-9a-f]{24}\.png)"[^>]*>'
 )
 
 
@@ -400,6 +400,115 @@ def _export_root(collection: Collection, output: Path) -> int:
     return int(exporter.count)
 
 
+def _orphan_migration_note_guids(collection: Collection) -> tuple[str, ...]:
+    """Return package-only migration notes that need an export carrier card."""
+
+    if getattr(collection, "db", None) is None:
+        return ()
+    note_ids = collection.db.list(
+        "select n.id from notes n left join cards c on c.nid = n.id "
+        "where c.id is null order by n.id"
+    )
+    guids: list[str] = []
+    for note_id in note_ids:
+        note = collection.get_note(note_id)
+        if (
+            "RetiredKanaAuxiliaryCard" not in note.keys()
+            or not note["RetiredKanaAuxiliaryCard"]
+        ):
+            raise PublicReleaseError(
+                f"public core contains an unknown orphan note: {note.guid}"
+            )
+        guids.append(note.guid)
+    return tuple(sorted(guids))
+
+
+def _restore_migration_carrier_cards(
+    collection: Collection, *, guids: Iterable[str]
+) -> None:
+    migration_guids = tuple(guids)
+    if not migration_guids:
+        return
+    note_ids_by_guid = {
+        collection.get_note(note_id).guid: note_id
+        for note_id in collection.find_notes("")
+    }
+    root_deck = collection.decks.by_name(ROOT_DECK_NAME)
+    if root_deck is None:
+        raise PublicReleaseError(f"root deck is missing: {ROOT_DECK_NAME}")
+    for guid in migration_guids:
+        note_id = note_ids_by_guid.get(guid)
+        if note_id is None or collection.find_cards(f"nid:{note_id}"):
+            raise PublicReleaseError(f"migration note carrier differs: {guid}")
+        collection.after_note_updates(
+            [note_id],
+            mark_modified=False,
+            generate_cards=True,
+        )
+        card_ids = collection.find_cards(f"nid:{note_id}")
+        if len(card_ids) != 1:
+            raise PublicReleaseError(
+                f"migration note carrier was not restored: {guid}"
+            )
+        collection.set_deck(card_ids, int(root_deck["id"]))
+
+
+def _strip_migration_carrier_cards(
+    package: Path, *, guids: Iterable[str]
+) -> None:
+    migration_guids = tuple(guids)
+    if not migration_guids:
+        return
+    with zipfile.ZipFile(package) as archive:
+        if "collection.anki21" not in archive.namelist():
+            raise PublicReleaseError("public APKG collection is missing")
+        collection_bytes = archive.read("collection.anki21")
+    with tempfile.TemporaryDirectory(
+        prefix=".public-migration-notes-", dir=package.parent
+    ) as temporary:
+        temporary_root = Path(temporary)
+        collection_path = temporary_root / "collection.anki21"
+        collection_path.write_bytes(collection_bytes)
+        collection = Collection(str(collection_path))
+        try:
+            notes_by_guid = {
+                collection.get_note(note_id).guid: note_id
+                for note_id in collection.find_notes("")
+            }
+            if collection.db is None:
+                raise PublicReleaseError("public APKG collection is unavailable")
+            for guid in migration_guids:
+                note_id = notes_by_guid.get(guid)
+                card_ids = (
+                    collection.find_cards(f"nid:{note_id}")
+                    if note_id is not None
+                    else []
+                )
+                if len(card_ids) != 1:
+                    raise PublicReleaseError(
+                        f"migration note carrier differs in public APKG: {guid}"
+                    )
+                collection.db.execute(
+                    "delete from cards where id = ?", int(card_ids[0])
+                )
+        finally:
+            collection.close(downgrade=False)
+        patched_collection = collection_path.read_bytes()
+        temporary_package = temporary_root / package.name
+        with zipfile.ZipFile(package) as source, zipfile.ZipFile(
+            temporary_package, mode="w"
+        ) as destination:
+            for info in source.infolist():
+                if info.filename == "collection.anki21":
+                    destination.writestr(info, patched_collection)
+                    continue
+                with source.open(info) as input_stream, destination.open(
+                    info, mode="w", force_zip64=True
+                ) as output_stream:
+                    shutil.copyfileobj(input_stream, output_stream)
+        os.replace(temporary_package, package)
+
+
 def _remove_decks(collection: Collection, names: Iterable[str]) -> None:
     remove_ids = [
         int(deck.id)
@@ -514,6 +623,7 @@ def _kanji_skeleton_records(
             raise PublicReleaseError("kanji notetype fields changed")
         projected = {field: note[field] for field in KANJI_FIELDS}
         projected["Meaning"] = ""
+        projected["Volume"] = _kanji_volume(collection, note_id)
         if _VECTOR_GLYPH_RE.fullmatch(projected["GlyphHTML"]):
             projected["GlyphHTML"] = ""
         records.append(skeleton_note_record(projected))
@@ -527,6 +637,21 @@ def _kanji_skeleton_records(
     ):
         raise PublicReleaseError("kanji skeleton vector count changed")
     return records
+
+
+def _kanji_volume(collection: Collection, note_id: int) -> str:
+    note = collection.get_note(note_id)
+    stored = note["Volume"]
+    if stored in {"상권", "하권"}:
+        return stored
+    card_ids = collection.find_cards(f"nid:{note_id}")
+    if len(card_ids) != 1:
+        raise PublicReleaseError("kanji volume route is ambiguous")
+    deck_name = collection.decks.name(collection.get_card(card_ids[0]).did)
+    for volume in ("상권", "하권"):
+        if deck_name == volume or deck_name.endswith(f"::{volume}"):
+            return volume
+    raise PublicReleaseError(f"kanji volume route changed: {deck_name}")
 
 
 def _kanji_skeleton_static_media(
@@ -569,19 +694,26 @@ def _build_core(
             }
             kanji_ids, private_kanji_ids = _private_kanji_note_ids(collection)
             kanji_records = _kanji_skeleton_records(collection, kanji_ids)
+            migration_guids = _orphan_migration_note_guids(collection)
             expected_cards = full_snapshot["cards"] - len(private_kanji_ids)
             expected_notes = full_snapshot["notes"] - len(private_kanji_ids)
             if reuse_core_apkg is None:
                 _remove_private_kanji_content(collection, private_kanji_ids)
+                _restore_migration_carrier_cards(
+                    collection, guids=migration_guids
+                )
                 exported = _export_root(collection, output)
-                if exported != expected_cards:
+                if exported != expected_cards + len(migration_guids):
                     raise PublicReleaseError(
-                        f"core export card count changed: {exported} != {expected_cards}"
+                        "core export card count changed: "
+                        f"{exported} != {expected_cards + len(migration_guids)}"
                     )
         finally:
             collection.close(downgrade=False)
     if reuse_core_apkg is not None:
         shutil.copy2(reuse_core_apkg, output)
+    else:
+        _strip_migration_carrier_cards(output, guids=migration_guids)
     snapshot = _package_snapshot(output)
     if (
         snapshot["notes"] != expected_notes
@@ -626,6 +758,7 @@ def _build_skeleton(
             for note_id in private_kanji_ids:
                 note = collection.get_note(note_id)
                 note["Meaning"] = ""
+                note["Volume"] = _kanji_volume(collection, note_id)
                 if _VECTOR_GLYPH_RE.fullmatch(note["GlyphHTML"]):
                     note["GlyphHTML"] = ""
                 collection.update_note(note)

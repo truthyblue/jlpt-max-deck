@@ -86,6 +86,17 @@
     select(initial);
   });
 
+  const openLinkedQuestion = () => {
+    if (!window.location.hash) return;
+    const target = document.getElementById(
+      decodeURIComponent(window.location.hash.slice(1)),
+    );
+    if (target instanceof HTMLDetailsElement) target.open = true;
+  };
+
+  openLinkedQuestion();
+  window.addEventListener('hashchange', openLinkedQuestion);
+
   const fallbackCopy = (value) => {
     const field = document.createElement('textarea');
     field.value = value;

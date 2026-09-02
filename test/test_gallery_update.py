@@ -22,6 +22,18 @@ HOTFIX_UPDATE = (
 V120_UPDATE = (
     ROOT / "docs" / "jlpt-gallery-updates" / "v1.2.0.html"
 ).read_text(encoding="utf-8")
+V200_UPDATE = (
+    ROOT / "docs" / "jlpt-gallery-updates" / "v2.0.0.html"
+).read_text(encoding="utf-8")
+V201_UPDATE = (
+    ROOT / "docs" / "jlpt-gallery-updates" / "v2.0.1.html"
+).read_text(encoding="utf-8")
+V202_UPDATE = (
+    ROOT / "docs" / "jlpt-gallery-updates" / "v2.0.2.html"
+).read_text(encoding="utf-8")
+V203_UPDATE = (
+    ROOT / "docs" / "jlpt-gallery-updates" / "v2.0.3.html"
+).read_text(encoding="utf-8")
 RELEASE_NOTES = (ROOT / "docs" / "releases" / "v1.1.0.md").read_text(
     encoding="utf-8"
 )
@@ -61,8 +73,148 @@ V120_FEATURES = (
     "new-review-mix",
 )
 
+TEST_LIFECYCLE = {
+    "test_contracts": {
+        "GalleryUpdateTests.test_v200_uses_tables_for_dcinside_layouts": (
+            "The saved DCInside v2.0.0 gallery post keeps its two-column "
+            "tables and puts every caption below its image after DCInside "
+            "sanitizes styles. Existing gallery tests do not cover this post."
+        ),
+        "GalleryUpdateTests.test_v201_uses_tables_for_dcinside_layouts": (
+            "The saved DCInside v2.0.1 gallery post keeps its two-column "
+            "tables, keeps captions below images, and prevents fixed-width "
+            "card images from overflowing their cells. "
+            "Existing gallery tests do not cover DCInside's image-style "
+            "sanitization."
+        ),
+        "GalleryUpdateTests.test_v202_announcement_covers_patch_scope": (
+            "The saved v2.0.2 gallery post covers the released grammar "
+            "furigana, local-first records, Android storage migration, "
+            "touch feedback, composite kanji builder fixes, and the "
+            "established feedback and GitHub Star calls to action. Earlier "
+            "gallery tests do not cover this patch announcement."
+        ),
+        "GalleryUpdateTests.test_v203_announcement_covers_recovery_scope": (
+            "The saved v2.0.3 gallery post covers records recovery, retry, "
+            "the JLPT target card, personal-best placement, grammar notice "
+            "styling, update instructions, and release links. Earlier "
+            "gallery tests do not cover this patch announcement."
+        ),
+    },
+}
+
 
 class GalleryUpdateTests(unittest.TestCase):
+    def assert_dcinside_safe_v2_tables(self, update: str) -> None:
+        table_markup = "\n".join(
+            re.findall(r"<table\b.*?</table>", update, flags=re.DOTALL)
+        )
+        self.assertEqual(update.count("<table"), 3)
+        self.assertIn('width="16%"', update)
+        self.assertIn('width="42%"', update)
+        self.assertIn('colspan="2"', update)
+        self.assertNotIn(
+            "grid-template-columns:repeat(2,minmax(0,1fr))",
+            update,
+        )
+        self.assertNotIn(
+            "grid-template-columns:52px minmax(0,1fr) minmax(0,1fr)",
+            update,
+        )
+        self.assertNotIn(
+            "grid-template-columns:repeat(auto-fit,minmax(260px,1fr))",
+            update,
+        )
+        self.assertEqual(table_markup.count("max-width:100%"), 9)
+        self.assertEqual(table_markup.count('align="center"'), 9)
+        self.assertEqual(
+            len(re.findall(r"<img\b[^>]*>\s*<br>", table_markup)),
+            9,
+        )
+        self.assertNotIn(
+            "width:100%;max-width:390px",
+            table_markup,
+        )
+
+    def test_v200_uses_tables_for_dcinside_layouts(self) -> None:
+        self.assert_dcinside_safe_v2_tables(V200_UPDATE)
+
+    def test_v201_uses_tables_for_dcinside_layouts(self) -> None:
+        self.assert_dcinside_safe_v2_tables(V201_UPDATE)
+
+    def test_v202_announcement_covers_patch_scope(self) -> None:
+        title_match = re.search(r"<!-- 게시글 제목: (.+?) -->", V202_UPDATE)
+        if title_match is None:
+            self.fail("v2.0.2 gallery title metadata is missing")
+        self.assertLessEqual(len(title_match.group(1)), 40)
+
+        for copy in (
+            "문법 4종 답면에 후리가나",
+            "첫 복원 뒤에는 기기에서 바로 계산",
+            "최근 90일은 일별, 최근 1년은 월별",
+            "7일·30일·이번 달·3개월·1년·전체의 기간 합계 유지",
+            "영역별·급수별 합계",
+            "최대 1시간에 한 번",
+            "월별 기록을 더 작게 압축",
+            "전체 합계를 없앤 게 아님",
+            "한자 빌더 복합 자형 수정",
+            "艹/䒑",
+            "巴/巳",
+            "兎(兔)",
+            "버튼을 눌렀다는 느낌도 보강",
+            "v2.0.2 한자 빌더 ZIP",
+            "v2.0.2 다운로드 · GitHub Release",
+            "써보고 괜찮았다면 개추 + GitHub Star 부탁함",
+            "뜻이나 예문이 이상한 부분은 카드의 오류 제보로 보내 주면",
+            "★ GitHub에서 Star →",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, V202_UPDATE)
+
+        self.assertIn(
+            "https://truthyblue.github.io/jlpt-max-deck/assets/releases/"
+            "v2.0.2/gallery-v2.0.2-study-records-analysis.png",
+            V202_UPDATE,
+        )
+        self.assertLess(
+            V202_UPDATE.index("확인한 범위"),
+            V202_UPDATE.index("v2.0.1 사용자"),
+        )
+        self.assertLess(
+            V202_UPDATE.index("v2.0.1 사용자"),
+            V202_UPDATE.index("v2.0.2 다운로드"),
+        )
+
+    def test_v203_announcement_covers_recovery_scope(self) -> None:
+        title_match = re.search(r"<!-- 게시글 제목: (.+?) -->", V203_UPDATE)
+        if title_match is None:
+            self.fail("v2.0.3 gallery title metadata is missing")
+        self.assertLessEqual(len(title_match.group(1)), 40)
+
+        for copy in (
+            "내 기록 자동 복구",
+            "잠깐 연결이 불안정하면 한 번 자동 재시도",
+            "일반 연결 오류와 실제 기록 복구 실패를 구분",
+            "초록색 JLPT 목표 카드 유지",
+            "동기화하지 못했어요",
+            "하루 개인 최고 기록 알림은 같은 날 한 번만 표시",
+            "문법 카드 공지도 어두운 배경·둥근 창·큰 버튼 스타일 적용",
+            "기존 덱을 지우지 말고 v2.0.3으로 업데이트",
+            "v2.0.3 한자 빌더 ZIP",
+            "v2.0.3 다운로드 · GitHub Release",
+            "v2.0.3 상세 변경 내역",
+            "★ GitHub에서 Star →",
+        ):
+            with self.subTest(copy=copy):
+                self.assertIn(copy, V203_UPDATE)
+
+        self.assertIn(
+            "https://truthyblue.github.io/jlpt-max-deck/assets/releases/"
+            "v2.0.3/gallery-v2.0.3-study-records-recovery.png",
+            V203_UPDATE,
+        )
+        self.assertNotIn("v2.0.1로 바꾸세요", V203_UPDATE)
+
     def test_v120_announcement_covers_every_important_learner_feature_once(
         self,
     ) -> None:

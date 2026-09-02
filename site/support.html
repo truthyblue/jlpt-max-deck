@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08120e">
   <meta name="robots" content="index,follow">
-  <meta name="description" content="JLPT MAX 기본 덱 다운로드 확인, 업데이트, 일상무따 한자 확장 만들기와 안전한 오류 제보 안내입니다.">
+  <meta name="description" content="JLPT MAX 설치, 업데이트, 학습 순서, 소리·화면 문제와 자주 묻는 질문.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="지원 — JLPT MAX Deck">
-  <meta property="og:description" content="다운로드, Anki 가져오기, 한자 확장 만들기, 버전 교체 방법을 확인하세요.">
+  <meta property="og:title" content="도움말 — JLPT MAX Deck">
+  <meta property="og:description" content="설치·업데이트·학습 순서·소리·화면 문제 해결.">
   <meta property="og:url" content="https://truthyblue.github.io/jlpt-max-deck/support.html">
   <meta property="og:image" content="https://truthyblue.github.io/jlpt-max-deck/assets/social-card.jpg">
   <link rel="canonical" href="https://truthyblue.github.io/jlpt-max-deck/support.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <title>지원 — JLPT MAX Deck</title>
-  <link rel="stylesheet" href="assets/site.css?v=575a7936a72e">
+  <title>도움말 — JLPT MAX Deck</title>
+  <link rel="stylesheet" href="assets/site.css?v=e30a60e5d032">
 </head>
 <body class="v2-site">
   <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -26,137 +26,313 @@
     </a>
     <nav aria-label="주요 메뉴">
       <div class="nav-group nav-primary-links" role="group" aria-label="주요 페이지">
-        <div class="nav-guide-menu" data-guide-menu data-open="false">
-          <a class="nav-guide-entry" href="getting-started.html"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">시작</span></a>
-          <button class="nav-guide-trigger" type="button" aria-label="시작 가이드 하위 메뉴 펼치기" aria-expanded="false" aria-controls="nav-guide-submenu" aria-haspopup="true"><span class="nav-guide-chevron" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="m3.5 5.75 4.5 4.5 4.5-4.5"/></svg></span></button>
-          <div class="nav-guide-submenu" id="nav-guide-submenu">
-            <a href="install-anki.html">Anki가 처음이에요</a>
-            <a href="getting-started.html#existing-user">Anki를 이미 사용 중이에요</a>
-            <a href="update.html">JLPT MAX덱 업데이트</a>
-          </div>
-        </div>
+        <a href="getting-started.html" aria-label="시작 가이드"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">시작</span></a>
         <a href="study-guide.html" aria-label="덱 학습법"><span class="nav-label-full">덱 학습법</span><span class="nav-label-compact">학습</span></a>
-        <a href="kanji.html" aria-label="한자 확장"><span class="nav-label-full">한자 확장</span><span class="nav-label-compact">한자</span></a>
-        <a href="support.html" aria-current="page" aria-label="지원"><span class="nav-label-full">지원</span><span class="nav-label-compact">지원</span></a>
+        <a href="kanji.html" aria-label="한자 덱"><span class="nav-label-full">한자 덱</span><span class="nav-label-compact">한자</span></a>
+        <a href="support.html" aria-current="page" aria-label="도움말"><span class="nav-label-full">도움말</span><span class="nav-label-compact">도움</span></a>
       </div>
     </nav>
     <a class="nav-action" id="repo-link" href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer" aria-label="GitHub에서 Star, 새 탭에서 열림"><svg class="nav-action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.87c-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .08 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.86.09-.66.35-1.12.64-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.53a9.3 9.3 0 0 1 2.5.35c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg><span class="nav-action-label">GitHub에서 Star</span><span class="nav-action-arrow" aria-hidden="true">↗</span></a>
   </header>
-  <script>
-    (() => {
-      const menu = document.querySelector("[data-guide-menu]");
-      if (!menu) return;
-      const trigger = menu.querySelector(".nav-guide-trigger");
-      const submenu = menu.querySelector(".nav-guide-submenu");
-      if (!trigger || !submenu) return;
-
-      const setOpen = (open) => {
-        menu.dataset.open = String(open);
-        trigger.setAttribute("aria-expanded", String(open));
-        trigger.setAttribute(
-          "aria-label",
-          open ? "시작 가이드 하위 메뉴 닫기" : "시작 가이드 하위 메뉴 펼치기",
-        );
-      };
-
-      trigger.addEventListener("click", (event) => {
-        event.stopPropagation();
-        setOpen(menu.dataset.open !== "true");
-      });
-      submenu.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => setOpen(false));
-      });
-      document.addEventListener("click", (event) => {
-        if (!menu.contains(event.target)) setOpen(false);
-      });
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && menu.dataset.open === "true") {
-          setOpen(false);
-          trigger.focus();
-        }
-      });
-    })();
-  </script>
 
   <main class="v2-main" id="main" tabindex="-1">
-    <section class="v2-page-hero">
+    <section class="v2-page-hero v2-support-hero">
       <div class="v2-shell">
-        <h1>문제 해결과<br><em>업데이트 안내.</em></h1>
+        <h1>도움말</h1>
+
+        <div class="v2-help-route-grid" id="quick" aria-label="상황별 도움말">
+          <a class="v2-help-route-card" href="getting-started.html">
+            <span class="v2-help-route-icon" aria-hidden="true"><img src="assets/icons/download.svg" alt="설치" width="26" height="26"></span>
+            <h2>처음 설치</h2>
+            <span class="v2-help-route-link">설치부터 시작하기 <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="v2-help-route-card" href="update.html">
+            <span class="v2-help-route-icon" aria-hidden="true"><img src="assets/icons/arrow-repeat.svg" alt="업데이트" width="26" height="26"></span>
+            <h2>덱 업데이트</h2>
+            <span class="v2-help-route-link">업데이트 방법 보기 <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="v2-help-route-card" href="study-guide.html#tracks">
+            <span class="v2-help-route-icon" aria-hidden="true"><img src="assets/icons/list-check.svg" alt="학습 순서" width="26" height="26"></span>
+            <h2>학습 순서</h2>
+            <span class="v2-help-route-link">추천 학습 순서 보기 <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="v2-help-route-card" href="#device">
+            <span class="v2-help-route-icon" aria-hidden="true"><img src="assets/icons/volume-up.svg" alt="소리와 화면" width="26" height="26"></span>
+            <h2>소리·화면 문제</h2>
+            <span class="v2-help-route-link">문제 해결 순서 보기 <span aria-hidden="true">→</span></span>
+          </a>
+        </div>
+
+        <div class="v2-popular-questions" aria-labelledby="popular-title">
+          <h2 id="popular-title">많이 찾는 질문</h2>
+          <div class="v2-popular-question-list">
+            <a href="#faq-update-delete"><span>Q</span>기존 덱을 지워야 하나요?<b aria-hidden="true">→</b></a>
+            <a href="#faq-update-delete"><span>Q</span>학습 기록은 그대로 남나요?<b aria-hidden="true">→</b></a>
+            <a href="#faq-media-sync"><span>Q</span>음성이 아예 안 나오거나 일부만 나와요?<b aria-hidden="true">→</b></a>
+            <a href="#faq-start"><span>Q</span>N3 시험이면 어디부터 시작하나요?<b aria-hidden="true">→</b></a>
+            <a href="#faq-kana"><span>Q</span>왜 앞면에 히라가나만 나오나요?<b aria-hidden="true">→</b></a>
+          </div>
+        </div>
       </div>
     </section>
 
     <div class="v2-shell v2-guide-layout">
-      <aside class="v2-guide-toc" aria-label="지원 목차">
-        <strong>지원</strong>
+      <aside class="v2-guide-toc" aria-label="도움말 목차">
+        <strong>도움말</strong>
         <ol>
-          <li><a href="#quick">문제 선택</a></li>
-          <li><a href="#download">파일이 안 받아져요</a></li>
-          <li><a href="#import">가져오기가 멈춰요</a></li>
-          <li><a href="#kanji-build">한자 확장을 만들 수 없어요</a></li>
-          <li><a href="#history">업데이트하고 싶어요</a></li>
           <li><a href="#faq">자주 묻는 질문</a></li>
-          <li><a href="#report">오류를 제보하고 싶어요</a></li>
+          <li><a href="#device">소리·화면·내 기록</a></li>
+          <li><a href="#download">다운로드</a></li>
+          <li><a href="#import">Anki 가져오기</a></li>
+          <li><a href="#card-location">카드 위치</a></li>
+          <li><a href="#kanji-build">한자 덱</a></li>
+          <li><a href="#report">오류 제보</a></li>
+          <li><a href="#history">업데이트 기록</a></li>
         </ol>
       </aside>
 
       <div class="v2-guide-content">
-        <section class="v2-guide-section" id="quick">
-          <h2>어떤 문제가 있나요?</h2>
-          <div class="v2-support-grid">
-            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">↓</div><h3>파일이 안 받아져요</h3><p>공식 배포 파일과 SHA-256을 확인합니다.</p><a href="#download">다운로드 확인 →</a></article>
-            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">入</div><h3>Anki 가져오기가 멈춰요</h3><p>앱 버전, 저장 공간, 미디어 처리 상태를 확인합니다.</p><a href="#import">가져오기 진단 →</a></article>
-            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">漢</div><h3>한자 확장을 만들 수 없어요</h3><p>ZIP 풀기, 실행 파일, PDF 선택과 오류 문구를 확인합니다.</p><a href="#kanji-build">오류 확인 →</a></article>
-            <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">↻</div><h3>업데이트하고 싶어요</h3><p>학습 기록을 지키는 순서와 현재 버전 변경점을 확인합니다.</p><a href="update.html">업데이트 가이드 →</a></article>
+        <section class="v2-guide-section v2-faq-section" id="faq">
+          <span class="v2-step-label">먼저 확인</span>
+          <h2>자주 묻는 질문</h2>
+
+          <div class="v2-faq-group">
+            <h3>설치·업데이트</h3>
+            <div class="v2-faq">
+              <details id="faq-update-delete"><summary>업데이트할 때 기존 덱을 지워야 하나요?</summary><div><strong>지우지 마세요.</strong> 모든 기기를 먼저 동기화하거나 백업한 뒤 최신 기본 덱 파일을 그대로 가져오면 됩니다. <strong>학습 진행 상태는 끄기</strong>, <strong>기존 노트·노트 유형 업데이트는 항상</strong>, <strong>노트 유형 병합은 켜기</strong>로 두면 기존 복습 기록과 일정은 남고 카드 내용만 새로 바뀝니다. <a href="update.html">업데이트 순서 전체 보기 →</a></div></details>
+              <details id="faq-update-old"><summary>아주 오래된 버전에서도 최신 버전으로 바로 올려도 되나요?</summary><div>네. 중간 버전을 차례로 설치할 필요는 없습니다. 최신 파일을 바로 가져온 뒤, <a href="update.html#empty-cards">빈 카드 정리</a>와 <a href="update.html#removed-words">삭제된 어휘 정리</a>가 필요한지만 확인하세요.</div></details>
+              <details id="faq-misplaced"><summary>어휘 덱에서 음성 카드가 나와요.</summary><div>일부 하위 덱만 삭제한 뒤 APKG를 다시 가져오면 카드가 다른 덱 위치에 들어갈 수 있습니다. 카드를 삭제하거나 다시 가져오지 말고, 카드 탐색기에서 위치만 고치세요. 복습 기록은 유지됩니다. <a href="#card-location">카드 위치 복구 순서 보기 →</a></div></details>
+              <details id="faq-other-deck"><summary>다른 일본어 덱의 학습 기록을 JLPT MAX덱으로 옮길 수 있나요?</summary><div>자동으로 합쳐지지는 않습니다. 다만 PC Anki의 <strong>Transfer Scheduling</strong> 부가 기능을 쓰면, 두 덱에서 단어 필드와 카드가 서로 맞는 항목의 복습 일정과 기록을 옮길 수 있습니다. 카드 구성이 다른 항목은 빠질 수 있습니다. 먼저 두 덱을 백업하고 적은 카드로 시험한 뒤 진행하세요. 이 방법은 공식 기능이 아닙니다. <a href="https://gall.dcinside.com/jlpt/169973" target="_blank" rel="noopener noreferrer">커뮤니티의 학습 진도 옮기기 글 보기 <span aria-hidden="true">↗</span></a></div></details>
+              <details id="faq-ankidroid-import"><summary>AnkiDroid에서 덱 가져오기가 실패해요.</summary><div>큰 APKG를 가져올 때는 압축을 푸는 임시 공간이 더 필요합니다. Android 설정에서 AnkiDroid를 완전히 종료하고 <strong>앱 → AnkiDroid → 저장 공간 → 캐시 삭제</strong>를 실행한 뒤, 기기 여유 공간을 5GB 이상 확보하고 다시 가져오세요. 캐시는 임시 파일입니다. <strong>데이터 삭제는 누르지 마세요.</strong> 공간이 부족하면 PC Anki에 먼저 가져온 뒤 동기화가 모두 끝날 때까지 기다리는 방법도 있습니다.</div></details>
+              <details id="faq-web-import"><summary>AnkiWeb 사이트에서 APKG를 바로 가져올 수 있나요?</summary><div>아닙니다. 데스크톱 Anki, AnkiMobile 또는 AnkiDroid에 먼저 가져온 뒤 AnkiWeb로 동기화하세요.</div></details>
+            </div>
+          </div>
+
+          <div class="v2-faq-group">
+            <h3>학습 순서·덱 구성</h3>
+            <div class="v2-faq">
+              <details id="faq-start"><summary>N3·N2부터 공부해도 되나요? 어디서 시작하나요?</summary><div>어휘는 시험 급수와 상관없이 N5부터 시작합니다. N3 시험이라면 <code>N5 → N4 → N3</code> 순서로 새 카드를 보고 앞 급수 복습은 계속하세요. 종합 실전은 시험 볼 급수까지 어휘를 한 번 본 뒤 그 급수의 문제만 풉니다. <a href="study-guide.html">덱별 학습 순서 보기 →</a></div></details>
+              <details id="faq-subdecks"><summary>N5 아래 하위 덱을 하나씩 눌러야 하나요?</summary><div>아닙니다. <code>어휘::N5</code>를 누르면 수량 표현·날짜·월·요일 같은 하위 덱도 함께 나옵니다. 하위 덱을 따로 전부 끝낼 필요가 없습니다.</div></details>
+              <details id="faq-audio"><summary>음성 덱도 꼭 공부해야 하나요?</summary><div>선택입니다. 기본 어휘 카드에는 단어와 예문 음성이 이미 들어 있습니다. 별도 음성 덱은 소리만 듣고 단어를 떠올리는 연습이 더 필요할 때 하루 5–10장부터 시작하세요.</div></details>
+              <details id="faq-kanji"><summary>한자 쓰기 화면은 어디에 있나요?</summary><div>한자 읽기·쓰기 덱은 기본 덱에 들어 있지 않습니다. 필요하면 Windows 또는 macOS 컴퓨터에서 현재 버전의 빌더와 지원 PDF 2개로 개인용 APKG를 만든 뒤 추가하세요. <a href="kanji.html">한자 덱 만들기 →</a></div></details>
+            </div>
+          </div>
+
+          <div class="v2-faq-group">
+            <h3>표시·음성·내 기록</h3>
+            <div class="v2-faq">
+              <details id="faq-kana"><summary>카드를 뒤집기 전에 한자 없이 히라가나만 나와요.</summary><div>v1.2.1까지 있던 <code>어휘(가나 보조)</code> 카드입니다. 최신 버전에서는 이 카드 유형을 더 이상 사용하지 않습니다. 최신 덱을 가져온 뒤 Anki의 <strong>빈 카드</strong> 도구에서 <code>JLPT MAX덱 어휘 / 어휘(가나 보조)</code>만 골라 삭제하세요. 카드 탐색기의 노트 삭제는 사용하지 마세요. <a href="update.html#empty-cards">기기별 정리 방법 보기 →</a></div></details>
+              <details id="faq-media-sync"><summary>음성이 아예 안 나오거나 일부만 나와요.</summary><div>먼저 PC의 미디어 업로드와 모바일의 미디어 다운로드가 모두 끝났는지 확인하세요. PC에 덱을 가져온 직후 모바일에서 확인하면, 동기화 중인 음성은 아직 없거나 일부만 재생될 수 있습니다. 양쪽 동기화가 끝난 뒤 모바일 Anki를 완전히 닫았다가 다시 열어 확인하세요. 문법 덱에 음성이 없는 것은 정상입니다. 그래도 재생되지 않으면 아래 iPhone·iPad 설정을 확인하거나 대표 카드 한 장에서 오류를 제보하세요.</div></details>
+              <details id="faq-ios-audio"><summary>iPhone·iPad에서 카드 소리가 안 나요.</summary><div>먼저 답안 오른쪽 위 <strong>설정 → 다른 앱 음악과 함께 재생</strong>이 켜져 있는지 확인하세요. 이 옵션을 켜면 무음 모드에서 카드 음성이 나오지 않을 수 있습니다. 다른 음악과 섞어 듣지 않는다면 옵션을 끄고 다시 재생해 보세요.</div></details>
+              <details id="faq-records-pc"><summary>PC에서 공부한 내용도 ‘내 기록’에 들어가나요?</summary><div>현재 <strong>내 기록</strong>은 AnkiMobile과 AnkiDroid의 카드 화면에서만 기록합니다. PC에서 한 복습도 Anki 자체 학습 일정과 동기화에는 정상 반영되지만, JLPT MAX의 내 기록·랭킹 숫자에는 포함되지 않습니다. 휴대폰과 태블릿의 내 기록도 자동으로 하나로 합쳐지지 않습니다.</div></details>
+              <details id="faq-record-popup"><summary>개인 최고 기록 알림을 끌 수 있나요?</summary><div>현재는 별도 끄기 설정이 없습니다. v2.1.0에서는 같은 날 한 번만 카드 가운데에 표시해 학습 버튼을 가리지 않도록 줄였습니다.</div></details>
+            </div>
+          </div>
+        </section>
+
+        <section class="v2-guide-section" id="device">
+          <span class="v2-step-label">문제 확인</span>
+          <h2>소리·화면·내 기록</h2>
+          <p>같은 문제가 여러 카드에서 반복되면 카드 하나의 오타보다 앱·버전·설정 문제일 가능성이 큽니다.</p>
+          <div class="v2-option-grid">
+            <article class="v2-option"><div class="v2-option-head"><h3>한자 대신 히라가나</h3><span class="v2-state">예전 카드</span></div><p>최신 덱을 가져온 뒤 가나 보조 빈 카드를 정리합니다.</p><a href="#faq-kana">정리 방법 보기 →</a></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>iPhone·iPad 무음</h3><span class="v2-state">설정 확인</span></div><p>다른 앱 음악과 함께 재생 옵션과 무음 모드를 함께 확인합니다.</p><a href="#faq-ios-audio">음성 설정 보기 →</a></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>음성 전체·일부 없음</h3><span class="v2-state">동기화 확인</span></div><p>PC 업로드와 모바일 다운로드가 모두 끝날 때까지 기다립니다.</p><a href="#faq-media-sync">음성 동기화 확인 →</a></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>PC 내 기록 없음</h3><span class="v2-state">모바일 전용</span></div><p>PC 복습은 Anki 일정에는 남지만 JLPT MAX 내 기록에는 포함되지 않습니다.</p><a href="#faq-records-pc">내 기록 범위 보기 →</a></article>
           </div>
         </section>
 
         <section class="v2-guide-section" id="download">
-          <h2>파일이 받아지지 않거나 열리지 않아요.</h2>
+          <span class="v2-step-label">다운로드</span>
+          <h2>다운로드 문제</h2>
           <p>공식 배포 페이지에서 받은 APKG의 파일명과 SHA-256을 아래 값과 대조하세요.</p>
           <table class="v2-release-facts">
             <tbody>
-              <tr><th scope="row">버전</th><td>v1.3.0</td></tr>
-              <tr><th scope="row">파일</th><td><code>JLPT-MAX-Deck-1.3.0.apkg</code></td></tr>
-              <tr><th scope="row">크기</th><td>약 0.90GB</td></tr>
-              <tr><th scope="row">SHA-256</th><td><code>9d2667bac17f781603ba3f2a92e496ea6ba9dad607de4058470d35cb0e2c64d3</code></td></tr>
+              <tr><th scope="row">버전</th><td>v2.1.0</td></tr>
+              <tr><th scope="row">파일</th><td><code>JLPT-MAX-Deck-2.1.0.apkg</code></td></tr>
+              <tr><th scope="row">크기</th><td>약 1.15GB</td></tr>
+              <tr><th scope="row">SHA-256</th><td><code>7b665606839b914e9845716079f7e76dca1cb0a423b0e4bd731eaa1530d27071</code></td></tr>
             </tbody>
           </table>
-          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.3.0/JLPT-MAX-Deck-1.3.0.apkg">기본 덱 다시 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a><a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.3.0/SHA256SUMS">SHA256SUMS</a></div>
+          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.0/JLPT-MAX-Deck-2.1.0.apkg">기본 덱 다시 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a><a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.0/SHA256SUMS">SHA256SUMS</a></div>
         </section>
 
         <section class="v2-guide-section" id="import">
-          <h2>Anki 가져오기가 멈춰요.</h2>
-          <p>앱, 저장 공간, 다운로드 파일을 순서대로 확인하세요.</p>
+          <span class="v2-step-label">Anki 가져오기</span>
+          <h2>Anki 가져오기 문제</h2>
           <ol class="v2-step-list">
             <li><div><strong>기기에 맞는 Anki 앱인지 확인합니다.</strong><p>데스크톱은 Anki, iPhone·iPad는 AnkiMobile, Android는 AnkiDroid를 사용하세요. 이름이 비슷한 다른 앱은 APKG와 호환되지 않을 수 있습니다.</p></div></li>
+            <li><div><strong>AnkiDroid라면 캐시와 저장 공간을 먼저 확인합니다.</strong><p>AnkiDroid를 완전히 종료하고 Android 설정의 <strong>앱 → AnkiDroid → 저장 공간 → 캐시 삭제</strong>를 실행하세요. <strong>데이터 삭제는 누르지 마세요.</strong> 여유 공간은 5GB 이상 확보합니다. 그래도 부족하면 PC Anki에 먼저 가져온 뒤 미디어 동기화를 끝내세요.</p></div></li>
             <li><div><strong>미사용 미디어를 삭제해 저장 공간을 확보합니다.</strong><p>앱을 최신 안정 버전으로 업데이트하고, 여러 기기를 쓴다면 미디어 동기화를 먼저 끝내세요. 데스크톱 Anki에서 <strong>도구 → 미디어 검사</strong>를 열어 미사용 파일 목록을 확인한 뒤 삭제합니다. 삭제된 파일은 휴지통으로 이동하므로 필요한 파일이 없는지 확인한 뒤 휴지통을 비워야 실제 여유 공간이 생깁니다.</p></div></li>
             <li><div><strong>손상된 파일을 다시 받습니다.</strong><p>SHA-256이 다르면 기존 다운로드를 버리고 안정적인 네트워크에서 다시 받습니다.</p></div></li>
           </ol>
-          <div class="v2-callout warning"><strong>처리 중 강제 종료하지 마세요.</strong><p>18,437개 미디어를 처리하므로 환경에 따라 시간이 걸립니다. 완료 메시지가 나오기 전까지 앱을 유지하세요.</p></div>
+          <div class="v2-callout warning"><strong>처리 중 강제 종료하지 마세요.</strong><p>25,511개 미디어를 처리하므로 환경에 따라 시간이 걸립니다. 완료 메시지가 나오기 전까지 앱을 유지하세요.</p></div>
+        </section>
+
+        <section class="v2-guide-section" id="card-location">
+          <span class="v2-step-label">문제 해결</span>
+          <h2>카드 위치 복구</h2>
+          <p>어휘 덱에서 음성 카드가 나오거나, 음성 덱에서 어휘 카드가 나올 때 확인하세요.</p>
+          <div class="v2-callout warning"><strong>검색된 카드를 삭제하지 마세요.</strong><p>아래 작업은 카드의 덱 위치만 바꿉니다. 복습 기록과 일정은 유지됩니다.</p></div>
+          <ol class="v2-step-list">
+            <li><div><strong>카드 탐색기에서 잘못 놓인 음성 카드를 찾습니다.</strong><div class="v2-command"><code id="misplaced-audio-query">note:"JLPT MAX덱 어휘" card:음성 -deck:"JLPT MAX덱::음성"</code><button class="v2-copy" type="button" data-copy-target="misplaced-audio-query">복사</button></div><p>검색 결과가 0이면 정상입니다. 아래 복구는 건너뜁니다.</p></div></li>
+            <li><div><strong>결과가 있으면 N1부터 N5까지 급수별로 검색합니다.</strong><div class="v2-command"><code id="misplaced-audio-level-query">note:"JLPT MAX덱 어휘" card:음성 tag:jlpt::N1</code><button class="v2-copy" type="button" data-copy-target="misplaced-audio-level-query">복사</button></div><p><code>N1</code>을 <code>N2</code>·<code>N3</code>·<code>N4</code>·<code>N5</code>로 바꿔 한 번씩 실행합니다. 검색 결과를 모두 선택하고 <strong>덱 변경</strong>에서 같은 급수의 <code>JLPT MAX덱::음성::N○</code>로 이동합니다.</p></div></li>
+            <li><div><strong>어휘·한→일 하위 덱도 삭제한 적이 있다면 함께 확인합니다.</strong><div class="v2-command"><code id="misplaced-vocabulary-query">note:"JLPT MAX덱 어휘" card:어휘 -deck:"JLPT MAX덱::어휘"</code><button class="v2-copy" type="button" data-copy-target="misplaced-vocabulary-query">복사</button></div><div class="v2-command"><code id="misplaced-recall-query">note:"JLPT MAX덱 어휘" card:"어휘(한국어→일본어)" -deck:"JLPT MAX덱::한→일"</code><button class="v2-copy" type="button" data-copy-target="misplaced-recall-query">복사</button></div><p>결과가 있으면 같은 방식으로 <code>tag:jlpt::N1</code>부터 <code>N5</code>까지 나누어 어휘 카드는 <code>어휘::해당 급수</code>, 한→일 카드는 <code>한→일::해당 급수</code>로 이동합니다.</p></div></li>
+            <li><div><strong>첫 검색을 다시 실행해 결과가 0인지 확인합니다.</strong><p>한 기기에서 복구를 끝낸 뒤 동기화하고, 그다음 다른 기기를 사용하세요.</p></div></li>
+          </ol>
         </section>
 
         <section class="v2-guide-section" id="kanji-build">
-          <h2>한자 확장을 만들 수 없어요.</h2>
-          <p>기본 덱에 <code>일상무따</code>가 없는 것은 정상입니다. 한자 확장이 필요하다면 <a href="kanji.html">처음부터 따라가는 만들기 가이드</a>를 먼저 확인하세요.</p>
+          <span class="v2-step-label">한자 덱</span>
+          <h2>한자 덱 만들기 문제</h2>
+          <p>기본 덱에 한자 읽기·쓰기 덱이 없는 것은 정상입니다. 필요하다면 <a href="kanji.html">한자 덱 만들기</a>를 확인하세요.</p>
           <ol class="v2-step-list">
             <li><div><strong>더블클릭할 실행 파일이 보이지 않아요.</strong><p>ZIP 미리보기 안이 아니라 압축을 푼 새 폴더를 여세요. Windows에는 <code>Windows에서 한자 확장 만들기.cmd</code>, macOS에는 <code>Mac에서 한자 확장 만들기.command</code>가 있습니다.</p></div></li>
             <li><div><strong>필요한 프로그램을 받지 못했다고 나와요.</strong><p>처음 실행할 때만 빌드 도구와 Python을 자동으로 받습니다. 인터넷 연결을 확인한 뒤 ZIP을 새 폴더에 다시 풀고 더블클릭 실행 파일을 다시 여세요.</p></div></li>
             <li><div><strong><code>PDF hash</code> 또는 <code>page count</code> 오류가 나요.</strong><p>공식 자료 페이지에서 정상적으로 받은 상·하권 소책자 PDF 2개와 순서를 확인하세요. 다시 저장·병합·최적화한 PDF나 미리보기 파일은 지원되지 않습니다.</p></div></li>
-            <li><div><strong><code>alignment</code> 오류가 나요.</strong><p>같은 v1.3.0의 빌더와 지원 PDF가 맞지 않거나 1권·2권 선택 순서가 바뀌었을 수 있습니다. 현재 빌더 ZIP을 새 폴더에 다시 풀고 실행하세요.</p></div></li>
+            <li><div><strong><code>alignment</code> 오류가 나요.</strong><p>같은 v2.1.0의 빌더와 지원 PDF가 맞지 않거나 1권·2권 선택 순서가 바뀌었을 수 있습니다. 현재 빌더 ZIP을 새 폴더에 다시 풀고 실행하세요.</p></div></li>
             <li><div><strong>PDF 선택창을 취소했어요.</strong><p>아무 파일도 바뀌지 않습니다. 실행 파일을 다시 더블클릭하고 처음부터 선택하면 됩니다.</p></div></li>
             <li><div><strong>완성 파일을 다시 만들고 싶어요.</strong><p>더블클릭 실행 파일을 다시 열면 기존 결과를 지우고 새로 만들지 묻습니다. <strong>다시 만들기</strong>를 선택한 뒤 PDF 두 개를 다시 고르세요.</p></div></li>
           </ol>
           <div class="v2-callout warning"><strong>실패하면 빌더 폴더의 <code>kanji-builder.log</code>를 확인하세요.</strong><p>공개 issue에 전체 로그나 PDF를 올리지 말고 개인 경로를 지운 오류 문구만 적어 주세요.</p></div>
-          <p><a href="kanji.html">한자 확장 만들기 전체 가이드 →</a></p>
+          <p><a href="kanji.html">한자 덱 만들기 전체 가이드 →</a></p>
+        </section>
+
+        <section class="v2-guide-section" id="report">
+          <span class="v2-step-label">오류 제보</span>
+          <h2>오류 제보</h2>
+          <p>카드 내용·표시·음성 문제는 해당 카드 답안 아래의 <strong>오류 제보</strong>를 사용하세요. 같은 문제가 여러 카드에서 반복되면 대표 카드 한 장에서 기기와 앱 정보를 함께 적어 주세요. 설치·다운로드·한자 빌더 문제는 GitHub 양식에 버전, 운영체제, Anki 버전, 실행 단계와 비민감 오류 문구를 적어 주세요.</p>
+          <div class="v2-callout"><strong>오류 제보는 익명이 기본입니다.</strong><p>답장을 원할 때만 이메일 답변에 동의하고 연락처를 입력하세요.</p></div>
+          <div class="v2-callout warning"><strong>첨부하면 안 되는 것</strong><p>출판사 PDF, 책 본문·페이지 이미지, 기본 덱/한자 덱 APKG, 개인 Anki 컬렉션, 실명이나 홈 폴더가 드러나는 전체 경로는 올리지 마세요.</p></div>
+          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/issues/new?template=bug.yml" target="_blank" rel="noopener noreferrer">설치·빌더 문제 제보 <span aria-hidden="true">↗</span></a><a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">보안 제보 안내 <span aria-hidden="true">↗</span></a></div>
         </section>
 
         <section class="v2-guide-section" id="history">
-          <h2>새 버전으로 업데이트하고 싶어요.</h2>
-          <p>먼저 <a href="update.html">학습 기록을 보존하는 업데이트 순서</a>를 확인한 뒤, 아래에서 현재 버전의 변경점과 별도 교정이 있는지 확인하세요.</p>
+          <span class="v2-step-label">버전별</span>
+          <h2>업데이트 기록</h2>
+          <p>최신 버전에서 무엇이 바뀌었는지 확인하는 곳입니다. 덱을 업데이트하려면 먼저 <a href="update.html">업데이트 방법</a>을 보세요.</p>
           <ol class="v2-release-history">
             <li class="v2-release-entry is-current">
               <header>
-                <div><strong>v1.3.0</strong><span>최신</span></div>
+                <div><strong>v2.1.0</strong><span>최신</span></div>
+                <time datetime="2026-09-03">2026-09-03</time>
+              </header>
+              <h3>어휘 9,160개의 뜻과 예문을 전부 다시 점검해 2,963개를 고치고, 업데이트 안내·JLPT 목표 선택·오류 제보와 모바일 기록을 다듬었습니다.</h3>
+              <ul>
+                <li>어휘 9,160개를 같은 학습 원칙으로 다시 점검하고, 실제로 공부하는 9,159개 가운데 뜻 또는 예문이 달라지는 2,963개를 고쳤습니다.</li>
+                <li>서로 바꿔 말할 수 있는 뜻은 가운데점으로 묶고, 따로 외워야 하는 용법은 슬래시로 나눴습니다. 너무 넓은 뜻에는 대상이나 문형을 덧붙였습니다.</li>
+                <li>뜻이 바뀌거나 부족했던 예문과 루비 2,397개를 손보고, 최종 뜻마다 맞는 대표 예문을 연결해 전체 예문을 10,997개로 늘렸습니다.</li>
+                <li>우산 한자 카드와 겹치던 笠 단독 어휘 카드는 업데이트 때 정리되며, 급수가 달라진 6개 어휘는 출판사 급수를 따릅니다.</li>
+                <li>카드의 새 버전 안내에서 기본 덱을 바로 받을 수 있고, 가져오기 옵션을 같은 화면에서 확인할 수 있습니다.</li>
+                <li>내 기록의 JLPT 목표 선택과 오류 재시도를 다듬고, 오류 제보 화면·Android 분석 기록·iPad의 빠른 Pencil 필기를 고쳤습니다.</li>
+                <li>한자 빌더가 출판사 PDF의 한국어 낱말 띄어쓰기를 보존하도록 고쳤습니다.</li>
+                <li>새 설치와 v2.0.3 업데이트, 기존 학습 상태 보존, 공개 기본 덱과 한자 빌더 구조를 확인했습니다.</li>
+              </ul>
+              <p class="v2-release-migration"><strong>업데이트 안내</strong>v2.0.3 사용자는 모든 기기를 AnkiWeb과 동기화하고 백업한 뒤 기존 덱을 지우지 않고 v2.1.0 기본 덱을 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트와 노트 유형 업데이트는 항상, 노트 유형 병합은 켜기를 선택합니다. 가져온 뒤 Anki의 빈 카드 도구에서 笠 카드 3장을 정리합니다. 한자 덱을 쓰는 경우에는 v2.1.0 한자 빌더로 다시 만드세요.</p>
+
+              <div class="v2-hero-actions">
+                <a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.0/JLPT-MAX-Deck-2.1.0.apkg">v2.1.0 기본 덱 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a>
+                <a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v2.1.0" target="_blank" rel="noopener noreferrer">v2.1.0 GitHub Release <span aria-hidden="true">↗</span></a>
+              </div>
+
+            </li>
+            <li class="v2-release-entry">
+              <header>
+                <div><strong>v2.0.3</strong></div>
+                <time datetime="2026-08-29">2026-08-29</time>
+              </header>
+              <h3>내 기록의 자동 복구와 연결 재시도를 보강하고 JLPT 목표 카드·개인 최고 기록 알림·문법 카드 공지 화면을 고쳤습니다.</h3>
+              <ul>
+                <li>기기에 기록이 남아 있는데 서버 응답이 비어 있을 때 기록과 JLPT 목표를 자동으로 다시 확인하도록 고쳤습니다.</li>
+                <li>잠깐 연결이 불안정한 경우에는 바로 실패로 표시하지 않고 한 번 자동으로 다시 시도하며, 실제 복구 실패와 일반 연결 오류를 구분해 안내합니다.</li>
+                <li>서버의 목표 급수가 먼저 확인되고 상세 일정이 늦게 도착해도 JLPT 목표 카드를 흰 빈 카드로 바꾸지 않고 기존 초록색 흐름을 유지합니다.</li>
+                <li>하루 개인 최고 기록 알림은 같은 날 한 번만 보여 주고 카드 가운데에 표시해 학습 버튼과 겹치지 않게 했습니다.</li>
+                <li>문법 카드에서도 업데이트 공지의 배경·테두리·버튼 모양이 다른 카드와 같게 보이도록 고쳤습니다.</li>
+                <li>새 설치와 v2.0.2 업데이트, 기존 학습 상태 보존, Android 16 AnkiDroid의 25,324노트 덮어쓰기와 내 기록 화면을 확인했습니다.</li>
+              </ul>
+              <p class="v2-release-migration"><strong>업데이트 안내</strong>v2.0.2 사용자는 모든 기기를 AnkiWeb과 동기화하고 백업한 뒤 기존 덱을 지우지 않고 v2.0.3 기본 덱을 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트와 노트 유형 업데이트는 항상, 노트 유형 병합은 켜기를 선택합니다. 한자 확장을 쓰는 경우에는 v2.0.3 한자 빌더로 다시 만드세요.</p>
+
+              <div class="v2-hero-actions">
+                <a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v2.0.3" target="_blank" rel="noopener noreferrer">v2.0.3 GitHub Release <span aria-hidden="true">↗</span></a>
+              </div>
+
+            </li>
+            <li class="v2-release-entry">
+              <header>
+                <div><strong>v2.0.2</strong></div>
+                <time datetime="2026-08-29">2026-08-29</time>
+              </header>
+              <h3>문법 답면에 후리가나를 추가하고, 모바일 내 기록을 기기 우선 방식으로 바꿨으며, Android 저장 공간·버튼 반응과 한자 빌더의 복합 자형 표시를 고쳤습니다.</h3>
+              <ul>
+                <li>문법 카드 답면의 예문·정답 문장·선택지·문장 배열·지문에 후리가나를 추가했습니다. 앞면은 문제를 그대로 유지하고 답면에서 후리가나 버튼으로 표시를 바꿀 수 있습니다.</li>
+                <li>내 기록은 첫 복원 뒤 기기에 저장된 기록으로 화면과 개인 분석을 바로 계산하며, 서버는 뒤에서 빠진 기록만 확인하고 교정하도록 바꿨습니다.</li>
+                <li>기기 기록이 비어 있을 때는 로딩 표시와 함께 첫 복원 자료를 한 요청으로 받고, 이후 이번 달 순위와 서버 확인은 최대 1시간에 한 번만 새로 받습니다.</li>
+                <li>최근 90일은 일별, 최근 1년은 월별로 기기에 보관합니다. 7일·30일·이번 달·3개월·1년·전체 합계와 각 기간의 영역별·급수별 합계는 계속 유지합니다.</li>
+                <li>AnkiDroid 기록 쿠키에서 다시 받을 수 있는 자료를 걷어 내고 월별 기록을 더 작게 압축했습니다. 기존 v2.0.1·v2.0.2 저장 구조도 자동으로 새 구조로 옮깁니다.</li>
+                <li>선택형 한자 빌더에서 艹/䒑·巴/巳·兎(兔)처럼 여러 자형이 함께 적힌 글자가 줄바꿈되거나 읽기·쓰기 정답 칸을 벗어나던 문제를 고쳤습니다.</li>
+                <li>내 기록의 탭·기간 선택 등 버튼이 눌린 상태를 눈으로 확인할 수 있도록 터치 반응을 다듬었습니다.</li>
+                <li>새 설치, v2.0.1 업데이트, 실제 AnkiDroid 기록 복원, 기간별·영역별·급수별 합계와 공개 파일 검증을 마쳤습니다.</li>
+              </ul>
+              <p class="v2-release-migration"><strong>업데이트 안내</strong>v2.0.1 사용자는 모든 기기를 AnkiWeb과 동기화하고 백업한 뒤 기존 덱을 지우지 않고 v2.0.2 기본 덱을 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트와 노트 유형 업데이트는 항상, 노트 유형 병합은 켜기를 선택합니다. 기존 내 기록은 첫 카드가 열릴 때 새 압축 구조로 자동 이전되며, 처음 한 번은 서버 기록을 다시 확인할 수 있습니다.</p>
+
+              <div class="v2-hero-actions">
+                <a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v2.0.2" target="_blank" rel="noopener noreferrer">v2.0.2 GitHub Release <span aria-hidden="true">↗</span></a>
+              </div>
+
+            </li>
+            <li class="v2-release-entry">
+              <header>
+                <div><strong>v2.0.1</strong></div>
+                <time datetime="2026-08-28">2026-08-28</time>
+              </header>
+              <h3>AnkiDroid에서 기록 데이터가 커졌을 때 가져오기나 카드 표시가 실패할 수 있던 문제를 고친 긴급 수정판입니다.</h3>
+              <ul>
+                <li>AnkiDroid에서 내 기록 통계 캐시가 커지면 가져오기나 카드 표시가 실패할 수 있던 문제를 고쳤습니다.</li>
+                <li>다시 받을 수 있는 통계·설정 캐시는 기기 내부 저장소로 옮기고, 쿠키에는 아직 보내지 않은 학습 기록처럼 꼭 보존해야 하는 값 한 벌만 남깁니다.</li>
+                <li>카드가 열리는 v2.0.0 사용자는 v2.0.1을 가져오면 기존 기록 저장 구조가 자동으로 바뀝니다.</li>
+                <li>새 Anki 프로필, v2.0.0 업데이트, Android 16 새 가상 기기의 순정 AnkiDroid 2.24.0에서 전체 가져오기를 확인했습니다.</li>
+                <li>문법 3,605개, 어휘 9,160개, 한국어→일본어 회상 카드와 모바일 내 기록 등 콘텐츠 범위는 v2.0.0과 같습니다.</li>
+              </ul>
+              <p class="v2-release-migration"><strong>업데이트 안내</strong>v2.0.0 사용자는 모든 기기를 AnkiWeb과 동기화하고 백업한 뒤 기존 덱을 지우지 않고 v2.0.1 기본 덱을 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트와 노트 유형 업데이트는 항상, 노트 유형 병합은 켜기를 선택합니다. 이미 500 또는 Protocol message contained an invalid tag 오류가 뜬다면 먼저 동기화와 백업을 끝낸 뒤 AnkiDroid 앱 데이터를 지우거나 앱을 다시 설치하고 v2.0.1을 가져오세요. 동기화하지 않은 기록은 앱 데이터 삭제·재설치 때 사라질 수 있습니다.</p>
+
+              <div class="v2-hero-actions">
+                <a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v2.0.1" target="_blank" rel="noopener noreferrer">v2.0.1 GitHub Release <span aria-hidden="true">↗</span></a>
+              </div>
+
+            </li>
+            <li class="v2-release-entry">
+              <header>
+                <div><strong>v2.0.0</strong></div>
+                <time datetime="2026-08-27">2026-08-27</time>
+              </header>
+              <h3>검토된 문법 3,605개를 더하고 어휘를 9,160개로 늘렸으며, 한국어→일본어 회상·내 기록과 BCCWJ 중요도 순서, 한자 학습 조작과 오류 제보 49건을 정리했습니다.</h3>
+              <ul>
+                <li>검토된 어휘를 6,018개에서 9,160개로 늘리고 모든 어휘에 대표 예문과 음성을 연결했습니다. 예문은 10,463개입니다.</li>
+                <li>N5부터 N1까지 검토된 문법 3,605개를 기본 덱에 추가했습니다. 기본 문법·문법 형태·지문 빈칸·문장 배열 네 가지 학습 카드를 제공합니다.</li>
+                <li>모든 어휘에 한국어 뜻을 보고 일본어 표기와 읽기를 떠올리는 회상 카드 9,160장을 추가했습니다. 기존 학습 일정은 가져오지 않고 새 카드로 시작합니다.</li>
+                <li>모바일 Anki 답안 화면에 동의형 `내 기록`을 추가했습니다. 오늘 학습량·연속 학습·최근 기록·JLPT 100일 랭킹을 확인하고, 기록은 모바일에 먼저 저장한 뒤 연결되면 동기화합니다.</li>
+                <li>각 급수 안의 새 카드 순서를 BCCWJ 사용 빈도와 검토된 표기 연결에 맞췄습니다. 이미 학습 중인 덱의 순서와 일정은 가져오기만으로 다시 배열하지 않습니다.</li>
+                <li>새 중요도 순서를 처음부터 쓰고 싶은 급수가 하나도 학습되지 않았다면 그 급수의 어휘 덱과 음성 덱만 삭제한 뒤 다시 가져옵니다. 학습한 급수는 정렬만을 위해 삭제하지 않습니다.</li>
+                <li>독립 어휘로 두지 않는 五万과 중복된 ～キロ 노트를 덱에서 뺐습니다. v1.3.0을 사용한 적이 있다면 카드 탐색기에서 두 노트를 직접 삭제합니다.</li>
+                <li>한자 쓰기 화면에 일시정지·이전 획·다음 획·처음부터·속도·구간 개요를 넣고, 한자 구성 요소와 외부 참고 링크를 읽기·쓰기 카드에 추가했습니다.</li>
+                <li>iPad에서 Apple Pencil로 따라쓸 때 길게 누르기 선택·복사 메뉴가 끼어들어 필기가 끊기지 않도록 고쳤습니다.</li>
+                <li>후리가나·해석·표시와 음성 설정을 나눠 저장하고, 음성 카드가 처음 나타났을 때도 자동재생이 빠지지 않도록 고쳤습니다.</li>
+                <li>음성 카드의 내 기록 HUD도 다른 카드와 같은 왼쪽 위에 표시하도록 맞췄습니다.</li>
+                <li>오류 제보 49건을 다시 확인해 35건을 수정으로 해결하고 14건은 현행 내용 유지 이유를 기록했습니다. 처리 결과 알림 버전은 모두 2.0.0으로 맞췄습니다.</li>
+                <li>뜻·예문·품사·읽기·고저 악센트·음성·한자 자형·모바일 표시와 실전 문제 해설을 고쳤습니다. 断る처럼 한 뜻에 섞여 있던 예문도 뜻별로 나눴습니다.</li>
+                <li>지원하지 않는 AnkiDroid 구형 학습 화면에서는 새 학습 화면을 켜야 하는 이유와 경로를 더 분명하게 안내합니다.</li>
+                <li>public 기본 APKG는 문법을 포함해 20,650노트·38,970카드이고, 한자 빌더가 읽기·쓰기 합계 4,674노트·4,674카드를 별도로 만듭니다. 두 APKG를 합친 전체는 25,324노트·43,644카드입니다.</li>
+              </ul>
+              <p class="v2-release-migration"><strong>업데이트 안내</strong>기존 사용자는 모든 기기를 동기화하고 백업한 뒤 v2.0.0 기본 덱을 기존 덱 위에 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트 업데이트와 노트 유형 업데이트는 항상, 노트 유형 병합은 켜기를 선택합니다. 기존 덱 전체나 학습한 급수는 삭제하지 마세요. BCCWJ 중요도 순서를 처음부터 적용하고 싶은 급수가 완전히 미학습 상태라면 그 급수의 JLPT MAX덱::어휘::N○와 JLPT MAX덱::음성::N○만 함께 삭제한 뒤 같은 옵션으로 다시 가져옵니다. v1.3.0을 사용한 적이 있다면 카드 탐색기에서 五万과 ～キロ 노트를 각각 찾아 삭제한 뒤 모든 기기에서 전체 동기화하세요.</p>
+
+              <div class="v2-hero-actions">
+                <a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v2.0.0" target="_blank" rel="noopener noreferrer">v2.0.0 GitHub Release <span aria-hidden="true">↗</span></a>
+              </div>
+
+            </li>
+            <li class="v2-release-entry">
+              <header>
+                <div><strong>v1.3.0</strong></div>
                 <time datetime="2026-08-22">2026-08-22</time>
               </header>
               <h3>한자 읽기·쓰기와 획순 연습을 추가하고 가나 보조 카드를 정리했으며, 카드 읽기·음성·예문·오류 제보를 다듬었습니다.</h3>
@@ -176,7 +352,6 @@
               <p class="v2-release-migration"><strong>업데이트 안내</strong>기존 사용자는 모든 기기를 동기화하거나 백업한 뒤 v1.3.0 기본 덱을 기존 덱 위에 가져오세요. 학습 진행 상태 가져오기는 끄고, 기존 노트 업데이트는 항상, 노트 유형 병합은 켜기를 선택합니다. 한자 확장을 사용한다면 v1.3.0 빌더와 지원 PDF 2개로 한자 APKG를 다시 만들어 가져오세요. 일반 APKG 가져오기는 기존 한자 카드의 덱 위치를 바꾸지 않으므로 한자::읽기::상권·하권은 비어 있을 수 있습니다. 새 폴더 구조를 쓰려면 카드 탐색기에서 기존 일상무따 상권·하권 카드를 읽기 상권·하권으로 직접 옮기세요. 이어서 Anki의 빈 카드 도구에서 JLPT MAX덱 어휘 / 어휘(가나 보조)만 골라 삭제하고 모든 기기에서 전체 동기화하세요. 카드 탐색기의 노트 삭제는 사용하지 마세요.</p>
 
               <div class="v2-hero-actions">
-                <a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.3.0/JLPT-MAX-Deck-1.3.0.apkg">v1.3.0 기본 덱 받기 <svg class="button-download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v1.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V17"/></svg></a>
                 <a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v1.3.0" target="_blank" rel="noopener noreferrer">v1.3.0 GitHub Release <span aria-hidden="true">↗</span></a>
               </div>
 
@@ -356,22 +531,6 @@
             </li>
           </ol>
         </section>
-
-        <section class="v2-guide-section v2-faq-section" id="faq">
-          <h2>자주 묻는 질문</h2>
-          <div class="v2-faq">
-            <details><summary>기본 덱에는 무엇이 들어 있나요?</summary><div>어휘, 음성, 실전 문제, 참조표가 들어 있습니다. 일상무따 한자 2,337개는 별도 선택 확장으로 추가할 수 있습니다.</div></details>
-            <details><summary>한자 빌더에 PDF를 업로드하나요?</summary><div>아닙니다. 빌더는 사용자 컴퓨터에서만 실행되며 PDF·이미지·생성 APKG를 외부로 전송하지 않습니다. 처음 실행할 때 빌드 도구와 Python을 받을 때만 프로그램 배포 서버와 패키지 저장소에 접속합니다.</div></details>
-            <details><summary>AnkiWeb 사이트에서 APKG를 바로 가져올 수 있나요?</summary><div>아닙니다. Desktop 또는 공식 모바일 앱에 먼저 가져온 뒤 AnkiWeb로 동기화하세요.</div></details>
-          </div>
-        </section>
-
-        <section class="v2-guide-section" id="report">
-          <h2>오류를 제보하고 싶어요.</h2>
-          <p>카드 내용·표시·음성 문제는 해당 카드 답안 아래의 <strong>오류 제보</strong>를 사용하세요. 설치·다운로드·한자 빌더 문제는 GitHub 양식에 버전, 운영체제, Anki 버전, 실행 단계와 비민감 오류 문구를 적어 주세요.</p>
-          <div class="v2-callout warning"><strong>첨부하면 안 되는 것</strong><p>출판사 PDF, 책 본문·페이지 이미지, 기본 덱/한자 확장 APKG, 개인 Anki 컬렉션, 실명이나 홈 폴더가 드러나는 전체 경로는 올리지 마세요.</p></div>
-          <div class="v2-hero-actions"><a class="v2-button v2-button-dark" href="https://github.com/truthyblue/jlpt-max-deck/issues/new?template=bug.yml" target="_blank" rel="noopener noreferrer">설치·빌더 문제 제보 <span aria-hidden="true">↗</span></a><a class="v2-button v2-button-ghost" href="https://github.com/truthyblue/jlpt-max-deck/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">보안 제보 안내 <span aria-hidden="true">↗</span></a></div>
-        </section>
       </div>
     </div>
   </main>
@@ -389,12 +548,12 @@
         <a href="update.html">업데이트</a>
         <a href="kanji.html">한자 확장</a>
         <a href="install-anki.html">Anki 설치</a>
-        <a href="support.html">지원</a>
+        <a href="support.html">도움말</a>
         <a href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
     <div class="v2-footer-legal">
-      <span>v1.3.0 · Code AGPL-3.0-or-later</span>
+      <span>v2.1.0 · Code AGPL-3.0-or-later</span>
       <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/NOTICE">NOTICE</a>
       <span>Anki·JLPT·출판사의 공식 제품 또는 후원 프로젝트가 아닙니다.</span>
     </div>

@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08120e">
   <meta name="robots" content="index,follow">
-  <meta name="description" content="공식 PDF 2개와 JLPT MAX 한자 빌더로 일상무따 한자 확장 APKG를 만드는 초심자용 안내입니다.">
+  <meta name="description" content="공식 PDF 2개와 JLPT MAX 한자 빌더로 한자 읽기·쓰기 덱을 만드는 방법.">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="ko_KR">
-  <meta property="og:title" content="일상무따 한자 확장 만들기 — JLPT MAX Deck">
-  <meta property="og:description" content="명령어 입력 없이 만드는 일상무따 한자 확장 덱 초심자용 가이드입니다.">
+  <meta property="og:title" content="한자 읽기·쓰기 덱 — JLPT MAX Deck">
+  <meta property="og:description" content="명령어 입력 없이 한자 읽기·쓰기 덱을 만드는 방법.">
   <meta property="og:url" content="https://truthyblue.github.io/jlpt-max-deck/kanji.html">
   <meta property="og:image" content="https://truthyblue.github.io/jlpt-max-deck/assets/social-card.jpg">
   <link rel="canonical" href="https://truthyblue.github.io/jlpt-max-deck/kanji.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <title>일상무따 한자 확장 만들기 — JLPT MAX Deck</title>
-  <link rel="stylesheet" href="assets/site.css?v=575a7936a72e">
+  <title>한자 읽기·쓰기 덱 — JLPT MAX Deck</title>
+  <link rel="stylesheet" href="assets/site.css?v=e30a60e5d032">
 </head>
 <body class="v2-site">
   <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -27,72 +27,26 @@
     </a>
     <nav aria-label="주요 메뉴">
       <div class="nav-group nav-primary-links" role="group" aria-label="주요 페이지">
-        <div class="nav-guide-menu" data-guide-menu data-open="false">
-          <a class="nav-guide-entry" href="getting-started.html"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">시작</span></a>
-          <button class="nav-guide-trigger" type="button" aria-label="시작 가이드 하위 메뉴 펼치기" aria-expanded="false" aria-controls="nav-guide-submenu" aria-haspopup="true"><span class="nav-guide-chevron" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="m3.5 5.75 4.5 4.5 4.5-4.5"/></svg></span></button>
-          <div class="nav-guide-submenu" id="nav-guide-submenu">
-            <a href="install-anki.html">Anki가 처음이에요</a>
-            <a href="getting-started.html#existing-user">Anki를 이미 사용 중이에요</a>
-            <a href="update.html">JLPT MAX덱 업데이트</a>
-          </div>
-        </div>
+        <a href="getting-started.html" aria-label="시작 가이드"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">시작</span></a>
         <a href="study-guide.html" aria-label="덱 학습법"><span class="nav-label-full">덱 학습법</span><span class="nav-label-compact">학습</span></a>
-        <a href="kanji.html" aria-current="page" aria-label="한자 확장"><span class="nav-label-full">한자 확장</span><span class="nav-label-compact">한자</span></a>
-        <a href="support.html" aria-label="지원"><span class="nav-label-full">지원</span><span class="nav-label-compact">지원</span></a>
+        <a href="kanji.html" aria-current="page" aria-label="한자 덱"><span class="nav-label-full">한자 덱</span><span class="nav-label-compact">한자</span></a>
+        <a href="support.html" aria-label="도움말"><span class="nav-label-full">도움말</span><span class="nav-label-compact">도움</span></a>
       </div>
     </nav>
     <a class="nav-action" id="repo-link" href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer" aria-label="GitHub에서 Star, 새 탭에서 열림"><svg class="nav-action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.87c-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .08 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.86.09-.66.35-1.12.64-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.53a9.3 9.3 0 0 1 2.5.35c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg><span class="nav-action-label">GitHub에서 Star</span><span class="nav-action-arrow" aria-hidden="true">↗</span></a>
   </header>
-  <script>
-    (() => {
-      const menu = document.querySelector("[data-guide-menu]");
-      if (!menu) return;
-      const trigger = menu.querySelector(".nav-guide-trigger");
-      const submenu = menu.querySelector(".nav-guide-submenu");
-      if (!trigger || !submenu) return;
-
-      const setOpen = (open) => {
-        menu.dataset.open = String(open);
-        trigger.setAttribute("aria-expanded", String(open));
-        trigger.setAttribute(
-          "aria-label",
-          open ? "시작 가이드 하위 메뉴 닫기" : "시작 가이드 하위 메뉴 펼치기",
-        );
-      };
-
-      trigger.addEventListener("click", (event) => {
-        event.stopPropagation();
-        setOpen(menu.dataset.open !== "true");
-      });
-      submenu.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => setOpen(false));
-      });
-      document.addEventListener("click", (event) => {
-        if (!menu.contains(event.target)) setOpen(false);
-      });
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && menu.dataset.open === "true") {
-          setOpen(false);
-          trigger.focus();
-        }
-      });
-    })();
-  </script>
 
   <main class="v2-main" id="main" tabindex="-1">
     <section class="v2-page-hero">
       <div class="v2-shell">
-        <p class="v2-kicker"><span></span>한자 덱 추가</p>
-        <h1>일상무따 한자 확장<br><em>초심자용 만들기 가이드</em></h1>
-        <p class="v2-hero-lead">PowerShell이나 터미널 명령어를 입력할 필요가 없습니다. ZIP을 풀고 운영체제에 맞는 실행 파일을 더블클릭하세요.</p>
-        <div class="v2-hero-actions"><a class="v2-button" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.3.0/JLPT-MAX-kanji-builder-1.3.0.zip">한자 빌더 다운로드 <span aria-hidden="true">↓</span></a><a class="v2-button v2-button-ghost" href="#pdfs">공식 PDF 확인 <span aria-hidden="true">→</span></a></div>
-        <div class="v2-page-badges"><span>한자 2,337개</span><span>읽기·쓰기 4,674장</span><span>macOS · Windows</span><span>PDF 외부 전송 없음</span></div>
+        <h1>한자 읽기·쓰기 덱</h1>
+        <div class="v2-hero-actions"><a class="v2-button" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.0/JLPT-MAX-kanji-builder-2.1.0.zip">한자 빌더 다운로드 <span aria-hidden="true">↓</span></a><a class="v2-button v2-button-ghost" href="#pdfs">공식 PDF 확인 <span aria-hidden="true">→</span></a></div>
       </div>
     </section>
 
     <div class="v2-shell v2-guide-layout">
-      <aside class="v2-guide-toc" aria-label="한자 확장 만들기 순서">
-        <strong>한자 확장 만들기</strong>
+      <aside class="v2-guide-toc" aria-label="한자 덱 만들기 순서">
+        <strong>한자 덱 만들기</strong>
         <ol>
           <li><a href="#why">왜 따로 만드나요?</a></li>
           <li><a href="#study-order">언제 공부하나요?</a></li>
@@ -109,26 +63,26 @@
       <div class="v2-guide-content">
         <section class="v2-guide-section" id="why">
           <span class="v2-step-label">먼저 읽기</span>
-          <h2>기본 덱과 한자 확장은 받는 방법이 다릅니다.</h2>
+          <h2>기본 덱과 다른 점</h2>
           <div class="v2-option-grid">
             <article class="v2-option"><div class="v2-option-head"><h3>기본 덱</h3><span class="v2-state on">바로 받기</span></div><p>완성된 APKG를 내려받아 Anki에 가져옵니다. PDF나 제작 과정이 필요하지 않습니다.</p></article>
-            <article class="v2-option"><div class="v2-option-head"><h3>일상무따 한자 확장</h3><span class="v2-state">직접 완성</span></div><p>저작권 때문에 한글 뜻이 든 완성본을 배포하지 않습니다. 공식 PDF 2개를 사용자의 컴퓨터에서 읽어 한자 2,337개의 읽기·쓰기 카드를 담은 개인용 APKG를 만듭니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>한자 읽기·쓰기 덱</h3><span class="v2-state">직접 완성</span></div><p>저작권 때문에 한글 뜻이 든 완성본을 배포하지 않습니다. 공식 PDF 2개를 사용자의 컴퓨터에서 읽어 한자 2,337개의 읽기·쓰기 카드를 담은 개인용 APKG를 만듭니다.</p></article>
           </div>
-          <div class="v2-callout"><strong>한자 확장은 선택 사항입니다.</strong><p>기본 덱만으로 어휘·음성·실전 문제·참조표를 모두 학습할 수 있습니다. 한자 확장이 필요한 경우에만 아래 과정을 진행하세요.</p></div>
+          <div class="v2-callout"><strong>한자 덱은 선택 사항입니다.</strong><p>기본 덱만으로 문법·어휘·음성·실전 문제·참조표를 모두 학습할 수 있습니다. 한자 읽기·쓰기도 공부할 때만 아래 과정을 진행하세요.</p></div>
         </section>
 
         <section class="v2-guide-section" id="study-order">
           <span class="v2-step-label">공부 순서</span>
-          <h2>일상무따 1권은 N3, 2권은 N2·N1 어휘와 함께 공부하세요.</h2>
+          <h2>추천 학습 순서</h2>
           <p>1권이 상권이고 2권이 하권입니다. N5와 N4는 어휘만 공부하고, N3 어휘를 시작할 때 1권(상권)을 함께 시작하세요. N2 어휘를 시작할 때는 2권(하권)을 함께 시작하고, 이미 N1을 공부하고 있다면 2권을 지금 시작하면 됩니다.</p>
           <div class="v2-callout"><strong>읽기로 익힌 뒤 쓰기로 확인하세요.</strong><p>한 글자마다 읽기 카드와 쓰기 카드가 하나씩 있습니다. 부담되면 한자 새 카드를 10장으로 먼저 줄입니다. 자세한 조절 방법은 <a href="study-guide.html#kanji">덱 학습법</a>에서 확인하세요.</p></div>
         </section>
 
         <section class="v2-guide-section" id="prepare">
           <span class="v2-step-label">01 · 준비물</span>
-          <h2>파일 세 개와 컴퓨터 한 대면 됩니다.</h2>
+          <h2>준비물</h2>
           <ol class="v2-step-list">
-            <li><div><strong>한자 빌더 ZIP</strong><p>현재 기본 덱과 같은 v1.3.0 파일을 사용합니다.</p></div></li>
+            <li><div><strong>한자 빌더 ZIP</strong><p>현재 기본 덱과 같은 v2.1.0 파일을 사용합니다.</p></div></li>
             <li><div><strong>1권 지원 소책자 PDF</strong><p>길벗 공식 자료 페이지에서 제공 방식과 이용 조건을 확인하고 받은 원본입니다.</p></div></li>
             <li><div><strong>2권 지원 소책자 PDF</strong><p>1권과 2권을 각각 받아 두세요. 첫 번째 선택창에는 1권, 두 번째에는 2권을 고릅니다.</p></div></li>
             <li><div><strong>macOS 또는 Windows 컴퓨터</strong><p>처음 실행할 때 필요한 프로그램을 자동으로 받으므로 인터넷 연결이 필요합니다. 완성된 APKG는 다른 Anki 기기로 옮겨 학습할 수 있습니다.</p></div></li>
@@ -137,7 +91,7 @@
 
         <section class="v2-guide-section" id="pdfs">
           <span class="v2-step-label">02 · 공식 PDF</span>
-          <h2>책 두 권의 지원 소책자 PDF를 받습니다.</h2>
+          <h2>공식 PDF 받기</h2>
           <p>아래 공식 자료 페이지에서 《일본어 상용한자 무작정 따라하기》 1권과 2권의 지원 소책자를 각각 확인하세요.</p>
           <div class="v2-support-grid">
             <article class="v2-support-card"><div class="v2-feature-icon" aria-hidden="true">上</div><h3>1권 · 상권</h3><p>첫 번째 PDF 선택창에서 고를 파일입니다.</p><a href="https://www.gilbut.co.kr/book/view?bookcode=BN003617" target="_blank" rel="noopener noreferrer">1권 공식 자료 페이지 <span aria-hidden="true">↗</span></a></article>
@@ -148,10 +102,10 @@
 
         <section class="v2-guide-section" id="builder">
           <span class="v2-step-label">03 · 빌더</span>
-          <h2>한자 빌더 ZIP을 받아 완전히 풉니다.</h2>
+          <h2>한자 빌더 받기</h2>
           <div class="v2-download-card">
-            <div><small>한자 덱 만들기 · v1.3.0</small><h3>JLPT-MAX-kanji-builder-1.3.0.zip</h3><p>출력: JLPT-MAX-kanji-addon-1.3.0.apkg</p></div>
-            <a class="v2-button" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.3.0/JLPT-MAX-kanji-builder-1.3.0.zip">다운로드 <span aria-hidden="true">↓</span></a>
+            <div><small>한자 덱 만들기 · v2.1.0</small><h3>JLPT-MAX-kanji-builder-2.1.0.zip</h3><p>출력: JLPT-MAX-kanji-addon-2.1.0.apkg</p></div>
+            <a class="v2-button" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.0/JLPT-MAX-kanji-builder-2.1.0.zip">다운로드 <span aria-hidden="true">↓</span></a>
           </div>
           <ol class="v2-step-list">
             <li><div><strong>Windows는 ZIP을 마우스 오른쪽 버튼으로 누릅니다.</strong><p><strong>모두 압축 풀기</strong>를 선택하고, 새로 생긴 폴더를 엽니다.</p></div></li>
@@ -162,9 +116,9 @@
 
         <section class="v2-guide-section" id="run">
           <span class="v2-step-label">04 · 실행</span>
-          <h2>실행 파일을 더블클릭하고 PDF를 순서대로 고릅니다.</h2>
+          <h2>한자 빌더 실행</h2>
           <div class="v2-tabs" data-tabs data-platform-tabs>
-            <div class="v2-tab-list" role="tablist" aria-label="운영체제별 한자 확장 실행 순서">
+            <div class="v2-tab-list" role="tablist" aria-label="운영체제별 한자 덱 만들기 순서">
               <button class="v2-tab" id="kanji-run-tab-macos" type="button" role="tab" aria-selected="true" aria-controls="kanji-run-panel-macos" data-platform="macos">macOS</button>
               <button class="v2-tab" id="kanji-run-tab-windows" type="button" role="tab" aria-selected="false" aria-controls="kanji-run-panel-windows" data-platform="windows" tabindex="-1">Windows</button>
             </div>
@@ -190,22 +144,22 @@
 
         <section class="v2-guide-section" id="finish">
           <span class="v2-step-label">05 · 가져오기</span>
-          <h2>자동으로 열린 폴더의 APKG를 Anki에 넣습니다.</h2>
+          <h2>완성한 APKG 가져오기</h2>
           <ol class="v2-step-list">
-            <li><div><strong>완료 후 열린 폴더를 확인합니다.</strong><p><code>JLPT-MAX-kanji-addon-1.3.0.apkg</code>와 검증 리포트가 있습니다.</p></div></li>
+            <li><div><strong>완료 후 열린 폴더를 확인합니다.</strong><p><code>JLPT-MAX-kanji-addon-2.1.0.apkg</code>와 검증 리포트가 있습니다.</p></div></li>
             <li><div><strong>기본 덱을 먼저 가져옵니다.</strong><p>아직 기본 덱이 없다면 <a href="getting-started.html#deck">기본 덱 시작 가이드</a>를 먼저 진행하세요.</p></div></li>
-            <li><div><strong>생성된 한자 확장 APKG를 같은 컬렉션에 가져옵니다.</strong><p><code>JLPT MAX덱::일상무따</code> 아래에 읽기·쓰기 덱이 추가됩니다.</p></div></li>
+            <li><div><strong>생성된 한자 덱 APKG를 같은 컬렉션에 가져옵니다.</strong><p>Anki에서는 기존 이름인 <code>JLPT MAX덱::일상무따</code> 아래에 읽기·쓰기 덱이 추가됩니다.</p></div></li>
           </ol>
           <div class="v2-verify-grid">
-            <article class="v2-verify-card"><strong>4,674</strong><span>한자 확장 읽기·쓰기 노트</span></article>
-            <article class="v2-verify-card"><strong>4,674</strong><span>한자 확장 읽기·쓰기 카드</span></article>
-            <article class="v2-verify-card"><strong>14</strong><span>한자 확장 자형 미디어</span></article>
+            <article class="v2-verify-card"><strong>4,674</strong><span>한자 읽기·쓰기 노트</span></article>
+            <article class="v2-verify-card"><strong>4,674</strong><span>한자 읽기·쓰기 카드</span></article>
+            <article class="v2-verify-card"><strong>14</strong><span>한자 자형 미디어</span></article>
           </div>
         </section>
 
         <section class="v2-guide-section" id="trouble">
           <span class="v2-step-label">막혔을 때</span>
-          <h2>오류 문구에 맞는 항목만 확인하세요.</h2>
+          <h2>문제 해결</h2>
           <div class="v2-faq">
             <details><summary>실행 파일이 보이지 않아요.</summary><div>ZIP 미리보기 안이 아니라 압축을 푼 새 폴더를 열었는지 확인하세요. Windows에는 <code>Windows에서 한자 확장 만들기.cmd</code>, macOS에는 <code>Mac에서 한자 확장 만들기.command</code>가 있습니다.</div></details>
             <details><summary>필요한 프로그램을 받지 못했다고 나와요.</summary><div>처음 실행에만 인터넷 연결이 필요합니다. 연결을 확인하고 ZIP을 새 폴더에 다시 푼 뒤 실행 파일을 다시 여세요. Python이나 별도 프로그램을 직접 설치할 필요는 없습니다.</div></details>
@@ -218,9 +172,9 @@
 
         <section class="v2-guide-section" id="privacy">
           <span class="v2-step-label">개인정보 · 저작권</span>
-          <h2>PDF와 완성 APKG는 사용자 컴퓨터 안에서만 처리됩니다.</h2>
+          <h2>개인정보와 파일 처리</h2>
           <p>처음 실행할 때 빌드 도구와 Python을 받는 일반 네트워크 요청만 발생합니다. PDF, 페이지 이미지와 생성한 APKG는 외부 서비스로 전송되지 않습니다.</p>
-          <div class="v2-callout warning"><strong>완성한 한자 확장 APKG는 개인 학습용입니다.</strong><p>PDF, 책 본문·페이지 이미지, 생성 APKG를 업로드하거나 다른 사람에게 전달하지 마세요. 정확한 조건은 <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/NOTICE" target="_blank" rel="noopener noreferrer">NOTICE <span aria-hidden="true">↗</span></a>를 확인하세요.</p></div>
+          <div class="v2-callout warning"><strong>완성한 한자 덱 APKG는 개인 학습용입니다.</strong><p>PDF, 책 본문·페이지 이미지, 생성 APKG를 업로드하거나 다른 사람에게 전달하지 마세요. 정확한 조건은 <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/NOTICE" target="_blank" rel="noopener noreferrer">NOTICE <span aria-hidden="true">↗</span></a>를 확인하세요.</p></div>
         </section>
       </div>
     </div>
@@ -239,12 +193,12 @@
         <a href="update.html">업데이트</a>
         <a href="kanji.html">한자 확장</a>
         <a href="install-anki.html">Anki 설치</a>
-        <a href="support.html">지원</a>
+        <a href="support.html">도움말</a>
         <a href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
     <div class="v2-footer-legal">
-      <span>v1.3.0 · Code AGPL-3.0-or-later</span>
+      <span>v2.1.0 · Code AGPL-3.0-or-later</span>
       <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/NOTICE">NOTICE</a>
       <span>Anki·JLPT·출판사의 공식 제품 또는 후원 프로젝트가 아닙니다.</span>
     </div>

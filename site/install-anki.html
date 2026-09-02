@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08120e">
   <meta name="robots" content="index,follow">
-  <meta name="description" content="Anki가 어떤 앱인지 알아보고 JLPT MAX Deck을 사용할 공식 앱을 기기별로 설치합니다.">
+  <meta name="description" content="공식 Anki 앱과 JLPT MAX덱 설치 순서.">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="ko_KR">
   <meta property="og:title" content="Anki 설치 — JLPT MAX Deck">
-  <meta property="og:description" content="평소 공부할 기기에 맞는 공식 Anki 앱을 설치하세요.">
+  <meta property="og:description" content="Desktop·iPhone·iPad·Android 공식 Anki 앱 다운로드 링크.">
   <meta property="og:url" content="https://truthyblue.github.io/jlpt-max-deck/install-anki.html">
   <meta property="og:image" content="https://truthyblue.github.io/jlpt-max-deck/assets/social-card.jpg">
   <link rel="canonical" href="https://truthyblue.github.io/jlpt-max-deck/install-anki.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <title>Anki 설치 — JLPT MAX Deck</title>
-  <link rel="stylesheet" href="assets/site.css?v=575a7936a72e">
+  <link rel="stylesheet" href="assets/site.css?v=e30a60e5d032">
 </head>
 <body class="v2-site">
   <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -27,65 +27,19 @@
     </a>
     <nav aria-label="주요 메뉴">
       <div class="nav-group nav-primary-links" role="group" aria-label="주요 페이지">
-        <div class="nav-guide-menu" data-guide-menu data-open="false" data-current="true">
-          <a class="nav-guide-entry" href="getting-started.html"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">시작</span></a>
-          <button class="nav-guide-trigger" type="button" aria-label="시작 가이드 하위 메뉴 펼치기" aria-expanded="false" aria-controls="nav-guide-submenu" aria-haspopup="true"><span class="nav-guide-chevron" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="m3.5 5.75 4.5 4.5 4.5-4.5"/></svg></span></button>
-          <div class="nav-guide-submenu" id="nav-guide-submenu">
-            <a href="install-anki.html" aria-current="page">Anki가 처음이에요</a>
-            <a href="getting-started.html#existing-user">Anki를 이미 사용 중이에요</a>
-            <a href="update.html">JLPT MAX덱 업데이트</a>
-          </div>
-        </div>
+        <a href="getting-started.html" aria-label="시작 가이드"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">시작</span></a>
         <a href="study-guide.html" aria-label="덱 학습법"><span class="nav-label-full">덱 학습법</span><span class="nav-label-compact">학습</span></a>
-        <a href="kanji.html" aria-label="한자 확장"><span class="nav-label-full">한자 확장</span><span class="nav-label-compact">한자</span></a>
-        <a href="support.html" aria-label="지원"><span class="nav-label-full">지원</span><span class="nav-label-compact">지원</span></a>
+        <a href="kanji.html" aria-label="한자 덱"><span class="nav-label-full">한자 덱</span><span class="nav-label-compact">한자</span></a>
+        <a href="support.html" aria-label="도움말"><span class="nav-label-full">도움말</span><span class="nav-label-compact">도움</span></a>
       </div>
     </nav>
     <a class="nav-action" id="repo-link" href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer" aria-label="GitHub에서 Star, 새 탭에서 열림"><svg class="nav-action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.87c-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .08 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.86.09-.66.35-1.12.64-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.53a9.3 9.3 0 0 1 2.5.35c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg><span class="nav-action-label">GitHub에서 Star</span><span class="nav-action-arrow" aria-hidden="true">↗</span></a>
   </header>
-  <script>
-    (() => {
-      const menu = document.querySelector("[data-guide-menu]");
-      if (!menu) return;
-      const trigger = menu.querySelector(".nav-guide-trigger");
-      const submenu = menu.querySelector(".nav-guide-submenu");
-      if (!trigger || !submenu) return;
-
-      const setOpen = (open) => {
-        menu.dataset.open = String(open);
-        trigger.setAttribute("aria-expanded", String(open));
-        trigger.setAttribute(
-          "aria-label",
-          open ? "시작 가이드 하위 메뉴 닫기" : "시작 가이드 하위 메뉴 펼치기",
-        );
-      };
-
-      trigger.addEventListener("click", (event) => {
-        event.stopPropagation();
-        setOpen(menu.dataset.open !== "true");
-      });
-      submenu.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => setOpen(false));
-      });
-      document.addEventListener("click", (event) => {
-        if (!menu.contains(event.target)) setOpen(false);
-      });
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && menu.dataset.open === "true") {
-          setOpen(false);
-          trigger.focus();
-        }
-      });
-    })();
-  </script>
 
   <main class="v2-main" id="main" tabindex="-1">
     <section class="v2-page-hero">
       <div class="v2-shell">
-        <p class="v2-kicker"><span></span>Anki 설치</p>
-        <h1>평소 공부할 기기에<br><em>Anki부터 설치하세요.</em></h1>
-        <p class="v2-hero-lead">휴대폰으로 공부할 거라면 휴대폰에 바로 설치하는 편이 좋습니다.</p>
-        <div class="v2-page-badges"><span>Desktop</span><span>iPhone·iPad</span><span>Android</span></div>
+        <h1>Anki 설치</h1>
       </div>
     </section>
 
@@ -102,7 +56,7 @@
       <div class="v2-guide-content">
         <section class="v2-guide-section" id="what-is-anki">
           <span class="v2-step-label">00 · 먼저</span>
-          <h2>Anki는 잊을 때쯤 다시 보여주는 암기 앱입니다.</h2>
+          <h2>Anki와 JLPT MAX덱</h2>
           <p>카드 앞면을 보고 답을 떠올린 뒤 뒷면에서 확인합니다. 답을 얼마나 잘 기억했는지 선택하면 Anki가 다음 복습 시점을 자동으로 정합니다.</p>
           <div class="v2-option-grid">
             <article class="v2-option"><div class="v2-option-head"><h3>Anki</h3><span class="v2-state on">학습 앱</span></div><p>카드를 보여주고 복습 일정을 관리합니다.</p></article>
@@ -113,7 +67,7 @@
 
         <section class="v2-guide-section" id="apps">
           <span class="v2-step-label">01 · 앱 선택</span>
-          <h2>내 기기에 맞는 공식 Anki 앱을 설치하세요.</h2>
+          <h2>공식 Anki 앱</h2>
           <div class="v2-tabs" data-tabs data-platform-tabs>
             <div class="v2-tab-list" role="tablist" aria-label="기기별 Anki 앱">
               <button class="v2-tab" id="install-tab-desktop" type="button" role="tab" aria-selected="true" aria-controls="install-panel-desktop" data-platform="desktop">Desktop</button>
@@ -129,7 +83,7 @@
 
         <section class="v2-guide-section" id="first-launch">
           <span class="v2-step-label">02 · 처음 실행</span>
-          <h2>앱을 열어 첫 화면이 보이는지 확인하세요.</h2>
+          <h2>설치 확인</h2>
           <p>Anki가 처음이라면 기본 프로필을 그대로 사용해도 됩니다. 지금은 계정을 만들지 않아도 되지만, 덱을 넣고 첫 학습을 마친 뒤에는 분실·고장에 대비해 AnkiWeb 동기화를 권합니다.</p>
           <div class="v2-hero-actions"><a class="v2-button" href="getting-started.html#deck">설치를 마쳤다면 시작 가이드로 돌아가기 <span aria-hidden="true">→</span></a></div>
         </section>
@@ -150,12 +104,12 @@
         <a href="update.html">업데이트</a>
         <a href="kanji.html">한자 확장</a>
         <a href="install-anki.html">Anki 설치</a>
-        <a href="support.html">지원</a>
+        <a href="support.html">도움말</a>
         <a href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
     <div class="v2-footer-legal">
-      <span>v1.3.0 · Code AGPL-3.0-or-later</span>
+      <span>v2.1.0 · Code AGPL-3.0-or-later</span>
       <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/NOTICE">NOTICE</a>
       <span>Anki·JLPT·출판사의 공식 제품 또는 후원 프로젝트가 아닙니다.</span>
     </div>

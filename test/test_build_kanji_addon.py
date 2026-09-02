@@ -45,6 +45,14 @@ TEST_LIFECYCLE = {
                 "checking the PNG filename and outer alpha cannot detect a black-filled inner counter"
             ),
         },
+        "KanjiAddonTest.test_composite_text_glyphs_fill_from_supported_pdfs": {
+            "protected_contract": (
+                "the optional kanji builder accepts every composite text glyph used by the supported Gilbut PDFs"
+            ),
+            "not_subsumed_by": (
+                "single-class text glyph tests can pass while the builder rejects the composite-class notes beginning at K000036"
+            ),
+        },
         "KanjiAddonTest.test_pdf_meaning_geometry_preserves_korean_word_boundaries": {
             "protected_contract": (
                 "the optional kanji builder uses visible PDF geometry and explicit trailing spaces to keep Korean words joined across fragmented text and wrapped lines"
@@ -173,6 +181,59 @@ class KanjiAddonTest(unittest.TestCase):
                 )
             )
         self.assertEqual(note["Meaning"], "하나 일")
+
+    def test_composite_text_glyphs_fill_from_supported_pdfs(self) -> None:
+        glyphs = (
+            "艹/䒑",
+            "兎(兔)",
+            "巴/巳",
+            "术/朮",
+            "遡/溯",
+            "杯/盃",
+            "襟/衿",
+            "剥/剝",
+            "竜/龍",
+            "籠/篭",
+            "掴/摑",
+            "夾/夹",
+            "峰/峯",
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            for sequence, glyph in enumerate(glyphs, start=1):
+                with self.subTest(glyph=glyph):
+                    note = FakeNote(
+                        SortKey=f"K{sequence:06d}",
+                        Volume="상권",
+                        Unit=str(sequence),
+                        Meaning="",
+                        GlyphHTML=(
+                            '<span class="kanji-card-glyph '
+                            f'kanji-card-glyph-composite" lang="ja">{glyph}</span>'
+                        ),
+                    )
+                    slot = GilbutKanjiSlot(
+                        sequence=sequence,
+                        source_id="ilsang-muutta-upper",
+                        source_sha256="0" * 64,
+                        volume_code="upper",
+                        page=1,
+                        row=1,
+                        column=1,
+                        source_label=str(sequence),
+                        glyph_kind="text",
+                        glyph_text=glyph,
+                        glyph_bbox=(0.0, 0.0, 1.0, 1.0),
+                        meaning="복합 자형",
+                    )
+                    self.assertIsNone(
+                        _fill_note(
+                            note,
+                            slot,
+                            source_paths={},
+                            media_root=Path(directory),
+                        )
+                    )
+                    self.assertEqual(note["Meaning"], "복합 자형")
 
     def test_pdf_meaning_geometry_preserves_korean_word_boundaries(self) -> None:
         same_line = [

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
   <title id="title">JLPT MAX Deck</title>
-  <desc id="description">단어는 더 깊이, 실전 문제까지. 어휘·음성·실전 문제를 담은 한국어권 JLPT Anki 덱.</desc>
+  <desc id="description">단어는 더 깊이, 실전 문제까지. 어휘·음성·한국어 회상·실전 문제를 담은 한국어권 JLPT Anki 덱.</desc>
   <defs>
     <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#0c1210"/>
@@ -28,12 +28,12 @@
   </g>
   <text x="72" y="285" fill="#fffdf7" font-family="Arial, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="70" font-weight="800" letter-spacing="-3">단어는 더 깊이,</text>
   <text x="72" y="371" fill="#d8ff62" font-family="Arial, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="70" font-weight="800" letter-spacing="-3">실전 문제까지.</text>
-  <text x="75" y="432" fill="#c8d0cb" font-family="Arial, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="28" font-weight="500">어휘·음성·실전 문제를 담은 한국어권 JLPT Anki 덱</text>
+  <text x="75" y="432" fill="#c8d0cb" font-family="Arial, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="28" font-weight="500">문법·어휘·음성·한국어 회상·실전 문제를 담은 한국어권 JLPT Anki 덱</text>
   <line x1="72" y1="485" x2="1128" y2="485" stroke="#fffdf7" stroke-opacity=".16"/>
   <g fill="#fffdf7" font-family="Arial, Apple SD Gothic Neo, Noto Sans KR, sans-serif">
-    <text x="74" y="547" font-size="26" font-weight="800">6,018 <tspan fill="#aab4ae" font-size="20" font-weight="600">어휘 노트</tspan></text>
+    <text x="74" y="547" font-size="26" font-weight="800">9,160 <tspan fill="#aab4ae" font-size="20" font-weight="600">어휘 노트</tspan></text>
     <text x="356" y="547" font-size="26" font-weight="800">7,876 <tspan fill="#aab4ae" font-size="20" font-weight="600">실전 문제</tspan></text>
-    <text x="638" y="547" font-size="26" font-weight="800">19,921 <tspan fill="#aab4ae" font-size="20" font-weight="600">기본 덱 카드</tspan></text>
+    <text x="638" y="547" font-size="26" font-weight="800">38,970 <tspan fill="#aab4ae" font-size="20" font-weight="600">기본 덱 카드</tspan></text>
   </g>
   <rect x="72" y="584" width="1056" height="5" rx="2.5" fill="#d8ff62"/>
 </svg>

@@ -1,0 +1,92 @@
+<meta charset="utf-8">
+<!-- 상태: v2.0.2 갤러리 게시용 원문. -->
+<!-- 게시글 제목: [Anki] JLPT MAX v2.0.2 - 후리가나·내 기록·한자 수정 -->
+<div style="max-width:760px;margin:0 auto;color:#1b211d;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;font-size:16px;line-height:1.8;word-break:keep-all;">
+  <div style="padding:48px 28px 40px;color:#fff;background:#101512;border-top:10px solid #d8ff62;">
+    <div style="color:#d8ff62;font-size:13px;font-weight:900;letter-spacing:.12em;">JLPT MAX DECK v2.0.2</div>
+    <div style="margin-top:10px;font-size:35px;font-weight:900;line-height:1.25;letter-spacing:-.055em;">문법 후리가나 추가<br>내 기록·한자 빌더 수정</div>
+    <p style="margin:20px 0 0;color:#d9dedb;font-size:18px;">문법 답면을 더 읽기 쉽게 만들고, 모바일 내 기록이 매번 서버를 기다리던 흐름과 한자 빌더의 복합 자형 표시를 고쳤음.</p>
+  </div>
+
+  <div style="padding:46px 8px 8px;">
+    <div style="padding-left:14px;border-left:7px solid #8ee6b1;font-size:27px;font-weight:900;letter-spacing:-.045em;">문법 4종 답면에 후리가나</div>
+    <p style="margin:16px 0 0;">문형 예문과 혼동 표현, 문법 형태의 완성 문장·선택지, 문장 배열의 완성 문장, 지문 빈칸의 제목·완성 지문·선택지에 후리가나를 넣었음.</p>
+    <ul style="margin:17px 0 0;padding-left:23px;">
+      <li>문제를 푸는 앞면은 그대로 유지</li>
+      <li>정답을 보는 답면에서만 후리가나 표시</li>
+      <li>오른쪽 위 후리가나 버튼으로 켜기·끄기</li>
+      <li>지문 문제의 긴 선택지는 모바일에서 읽기 쉽게 한 줄에 하나씩 표시</li>
+    </ul>
+  </div>
+
+  <div style="margin-top:30px;padding:30px 28px;background:#101512;color:#fff;border-left:9px solid #8ee6b1;">
+    <div style="color:#8ee6b1;font-size:13px;font-weight:900;letter-spacing:.08em;">모바일 내 기록</div>
+    <div style="margin-top:8px;font-size:25px;font-weight:900;line-height:1.35;">첫 복원 뒤에는 기기에서 바로 계산</div>
+    <p style="margin:16px 0 0;color:#d9dedb;">예전에는 내 기록에 들어갈 때 서버 결과를 기다리는 구간이 컸음. 이제 첫 복원이 끝나면 기기에 저장된 기록만으로 첫 화면과 개인 분석을 바로 만들고, 서버는 뒤에서 빠진 기록만 확인하고 교정함.</p>
+    <ul style="margin:17px 0 0;padding-left:23px;color:#d9dedb;">
+      <li>기기 기록이 비어 있을 때는 동그란 로딩 표시를 보여 주고 첫 복원 자료를 한 요청으로 받음</li>
+      <li>최근 90일은 일별, 최근 1년은 월별로 기기에 저장</li>
+      <li>7일·30일·이번 달·3개월·1년·전체의 기간 합계 유지</li>
+      <li>각 기간의 영역별·급수별 합계도 기간 총합과 맞게 계산</li>
+      <li>이번 달 순위와 서버 확인은 최대 1시간에 한 번만 새로 받음</li>
+      <li>Android 쿠키에서 다시 받을 수 있는 자료를 빼고 월별 기록을 더 작게 압축</li>
+      <li>v2.0.1과 시험판의 이전 기록 저장 구조는 자동으로 새 구조로 이전</li>
+    </ul>
+    <div style="margin-top:18px;padding:16px 17px;color:#101512;background:#d8ff62;line-height:1.65;"><strong>전체 합계를 없앤 게 아님.</strong> 오래된 일별 점은 줄여도 전체 답안 확인 합계와 기간별·영역별·급수별 분석에 필요한 값은 남김.</div>
+  </div>
+
+  <div style="margin:20px 0 0;padding:18px;background:#f4f7f5;border:1px solid #dfe5e1;">
+    <img src="https://truthyblue.github.io/jlpt-max-deck/assets/releases/v2.0.2/gallery-v2.0.2-study-records-analysis.png" alt="AnkiDroid에서 7일 총합과 영역별·급수별 분석을 보여 주는 v2.0.2 내 기록 화면" width="390" height="844" style="display:block;width:100%;max-width:390px;height:auto;margin:0 auto;border:0;">
+    <div style="margin-top:10px;color:#59645e;font-size:13px;text-align:center;">실제 AnkiDroid · 기간 총합과 영역별·급수별 분석</div>
+  </div>
+
+  <div style="padding:46px 8px 8px;">
+    <div style="padding-left:14px;border-left:7px solid #d8ff62;font-size:27px;font-weight:900;letter-spacing:-.045em;">한자 빌더 복합 자형 수정</div>
+    <p style="margin:16px 0 0;">한 칸에 여러 자형이 함께 적힌 글자가 모바일에서 두 줄로 갈라지거나 작은 쓰기 정답 칸을 벗어나던 문제를 고쳤음.</p>
+    <ul style="margin:17px 0 0;padding-left:23px;">
+      <li><strong>艹/䒑</strong>, <strong>巴/巳</strong>, <strong>兎(兔)</strong> 같은 복합 자형을 한 줄로 유지</li>
+      <li>읽기 카드 정답 영역에 맞는 크기로 자동 축소</li>
+      <li>더 작은 쓰기 카드 정답 칸에도 따로 맞춤</li>
+      <li>v2.0.2 빌더가 만든 읽기·쓰기 한자 카드에 함께 적용</li>
+    </ul>
+  </div>
+
+  <div style="margin-top:30px;padding:30px 28px;background:#fff4e5;border-left:9px solid #ff8b3d;">
+    <div style="font-size:24px;font-weight:900;line-height:1.35;">버튼을 눌렀다는 느낌도 보강</div>
+    <p style="margin:14px 0 0;color:#4e5852;">내 기록의 탭과 기간 선택을 포함해 카드 안의 버튼이 손을 뗀 순간 바로 튀어 오르지 않게 했음. 짧게 눌러도 눌린 상태가 눈에 보임.</p>
+  </div>
+
+  <div style="margin-top:28px;padding:24px 28px;background:#f3ffd1;border-left:9px solid #9fc90c;">
+    <div style="font-size:22px;font-weight:900;line-height:1.4;">확인한 범위</div>
+    <ul style="margin:13px 0 0;padding-left:23px;color:#4e5852;">
+      <li>새 설치와 v2.0.1 위 업데이트</li>
+      <li>기존 학습 상태 보존</li>
+      <li>실제 AnkiDroid 첫 기록 복원</li>
+      <li>기간 총합과 영역별·급수별 합계 일치</li>
+      <li>문법 4종 답면 후리가나</li>
+      <li>한자 읽기·쓰기 카드의 복합 자형 표시</li>
+    </ul>
+  </div>
+
+  <div style="margin:28px 0 0;padding:30px 28px;background:#f3ffd1;border-left:9px solid #9fc90c;">
+    <div style="color:#426000;font-size:13px;font-weight:900;letter-spacing:.08em;">v2.0.1 사용자</div>
+    <div style="margin-top:8px;font-size:25px;font-weight:900;line-height:1.35;">기존 덱을 지우지 말고 업데이트</div>
+    <p style="margin:16px 0 0;color:#4e5852;">모든 기기를 AnkiWeb과 동기화하고 백업한 뒤 v2.0.2 기본 APKG를 기존 덱 위에 가져오면 됨. <strong>학습 진행 상태 가져오기는 끄고</strong>, 기존 노트와 노트 유형 업데이트는 <strong>항상</strong>, 노트 유형 병합은 <strong>켜기</strong>로 선택.</p>
+    <p style="margin:14px 0 0;color:#4e5852;">한자 확장을 쓰면 v2.0.2 한자 빌더 ZIP으로 지원 PDF 2개를 다시 읽어 한자 APKG를 만든 뒤 가져와야 함. 기본 덱만 쓰면 빌더는 필요 없음.</p>
+  </div>
+
+  <div style="margin-top:42px;padding:34px 22px;text-align:center;color:#fff;background:#101512;border-top:9px solid #d8ff62;border-bottom:1px solid #2f3933;">
+    <div style="font-size:27px;font-weight:900;letter-spacing:-.045em;">v2.0.2 다운로드</div>
+    <p style="margin:14px auto 22px;max-width:600px;color:#d9dedb;">기본 덱 APKG와 한자 빌더 ZIP은 GitHub Release에서 받을 수 있음. 파일 해시와 자세한 변경 내역도 같이 공개했음.</p>
+    <div style="max-width:600px;margin:0 auto 23px;padding:19px 21px;text-align:left;color:#101512;background:#d8ff62;border-left:9px solid #8ee6b1;">
+      <strong style="font-size:20px;">써보고 괜찮았다면 개추 + GitHub Star 부탁함</strong><br>
+      <span style="color:#354039;">뜻이나 예문이 이상한 부분은 카드의 오류 제보로 보내 주면 다음 검토에 반영함.</span>
+    </div>
+    <div style="max-width:390px;margin:0 auto;">
+      <div style="margin:10px 0;padding:15px 18px;background:#d8ff62;border:1px solid #d8ff62;"><a href="https://truthyblue.github.io/jlpt-max-deck/update.html" target="_blank" rel="noopener noreferrer" style="color:#101512;font-weight:900;line-height:1.5;text-decoration:none;">업데이트 방법 자세히 보기 →</a></div>
+      <div style="margin:10px 0;padding:15px 18px;background:#101512;border:1px solid #d8ff62;"><a href="https://github.com/truthyblue/jlpt-max-deck/releases/tag/v2.0.2" target="_blank" rel="noopener noreferrer" style="color:#d8ff62;font-weight:900;line-height:1.5;text-decoration:none;">v2.0.2 다운로드 · GitHub Release →</a></div>
+      <div style="margin:10px 0;padding:15px 18px;background:#d8ff62;border:1px solid #d8ff62;"><a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/docs/release-details/v2.0.2.md" target="_blank" rel="noopener noreferrer" style="color:#101512;font-weight:900;line-height:1.5;text-decoration:none;">v2.0.2 상세 변경 내역 →</a></div>
+      <div style="margin:10px 0;padding:15px 18px;background:#101512;border:1px solid #d8ff62;"><a href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer" style="color:#d8ff62;font-weight:900;line-height:1.5;text-decoration:none;">★ GitHub에서 Star →</a></div>
+    </div>
+  </div>
+</div>

@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08120e">
   <meta name="robots" content="index,follow">
-  <meta name="description" content="JLPT MAX Deck을 기존 학습 기록과 개인 덱 옵션을 보존하며 업데이트하는 절차입니다.">
+  <meta name="description" content="학습 기록과 개인 설정을 유지하는 JLPT MAX덱 업데이트 방법.">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="ko_KR">
-  <meta property="og:title" content="업데이트 가이드 — JLPT MAX Deck">
-  <meta property="og:description" content="학습 기록을 유지하면서 JLPT MAX덱을 새 버전으로 업데이트하는 방법입니다.">
+  <meta property="og:title" content="업데이트 방법 — JLPT MAX Deck">
+  <meta property="og:description" content="학습 기록을 유지하는 JLPT MAX덱 업데이트 방법.">
   <meta property="og:url" content="https://truthyblue.github.io/jlpt-max-deck/update.html">
   <meta property="og:image" content="https://truthyblue.github.io/jlpt-max-deck/assets/social-card.jpg">
   <link rel="canonical" href="https://truthyblue.github.io/jlpt-max-deck/update.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <title>업데이트 가이드 — JLPT MAX Deck</title>
-  <link rel="stylesheet" href="assets/site.css?v=575a7936a72e">
+  <title>업데이트 방법 — JLPT MAX Deck</title>
+  <link rel="stylesheet" href="assets/site.css?v=e30a60e5d032">
 </head>
 <body class="v2-site">
   <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -27,65 +27,19 @@
     </a>
     <nav aria-label="주요 메뉴">
       <div class="nav-group nav-primary-links" role="group" aria-label="주요 페이지">
-        <div class="nav-guide-menu" data-guide-menu data-open="false" data-current="true">
-          <a class="nav-guide-entry" href="getting-started.html"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">시작</span></a>
-          <button class="nav-guide-trigger" type="button" aria-label="시작 가이드 하위 메뉴 펼치기" aria-expanded="false" aria-controls="nav-guide-submenu" aria-haspopup="true"><span class="nav-guide-chevron" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="m3.5 5.75 4.5 4.5 4.5-4.5"/></svg></span></button>
-          <div class="nav-guide-submenu" id="nav-guide-submenu">
-            <a href="install-anki.html">Anki가 처음이에요</a>
-            <a href="getting-started.html#existing-user">Anki를 이미 사용 중이에요</a>
-            <a href="update.html" aria-current="page">JLPT MAX덱 업데이트</a>
-          </div>
-        </div>
+        <a href="getting-started.html" aria-label="시작 가이드"><span class="nav-label-full">시작 가이드</span><span class="nav-label-compact">시작</span></a>
         <a href="study-guide.html" aria-label="덱 학습법"><span class="nav-label-full">덱 학습법</span><span class="nav-label-compact">학습</span></a>
-        <a href="kanji.html" aria-label="한자 확장"><span class="nav-label-full">한자 확장</span><span class="nav-label-compact">한자</span></a>
-        <a href="support.html" aria-label="지원"><span class="nav-label-full">지원</span><span class="nav-label-compact">지원</span></a>
+        <a href="kanji.html" aria-label="한자 덱"><span class="nav-label-full">한자 덱</span><span class="nav-label-compact">한자</span></a>
+        <a href="support.html" aria-label="도움말"><span class="nav-label-full">도움말</span><span class="nav-label-compact">도움</span></a>
       </div>
     </nav>
     <a class="nav-action" id="repo-link" href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer" aria-label="GitHub에서 Star, 새 탭에서 열림"><svg class="nav-action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.87c-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .08 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.86.09-.66.35-1.12.64-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.53a9.3 9.3 0 0 1 2.5.35c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg><span class="nav-action-label">GitHub에서 Star</span><span class="nav-action-arrow" aria-hidden="true">↗</span></a>
   </header>
-  <script>
-    (() => {
-      const menu = document.querySelector("[data-guide-menu]");
-      if (!menu) return;
-      const trigger = menu.querySelector(".nav-guide-trigger");
-      const submenu = menu.querySelector(".nav-guide-submenu");
-      if (!trigger || !submenu) return;
-
-      const setOpen = (open) => {
-        menu.dataset.open = String(open);
-        trigger.setAttribute("aria-expanded", String(open));
-        trigger.setAttribute(
-          "aria-label",
-          open ? "시작 가이드 하위 메뉴 닫기" : "시작 가이드 하위 메뉴 펼치기",
-        );
-      };
-
-      trigger.addEventListener("click", (event) => {
-        event.stopPropagation();
-        setOpen(menu.dataset.open !== "true");
-      });
-      submenu.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => setOpen(false));
-      });
-      document.addEventListener("click", (event) => {
-        if (!menu.contains(event.target)) setOpen(false);
-      });
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && menu.dataset.open === "true") {
-          setOpen(false);
-          trigger.focus();
-        }
-      });
-    })();
-  </script>
 
   <main class="v2-main" id="main" tabindex="-1">
     <section class="v2-page-hero">
       <div class="v2-shell">
-        <p class="v2-kicker"><span></span>업데이트 가이드</p>
-        <h1>학습 기록은 그대로,<br><em>덱만 새 버전으로.</em></h1>
-        <p class="v2-hero-lead">먼저 모든 기기를 동기화한 뒤, 지금 쓰는 버전에 맞는 방법으로 덱을 다시 가져오세요.</p>
-        <div class="v2-page-badges"><span>현재 v1.3.0</span><span>기록 유지</span><span>개인 설정 보존</span></div>
+        <h1>업데이트 방법</h1>
       </div>
     </section>
 
@@ -96,6 +50,9 @@
           <li><a href="#before">동기화·백업</a></li>
           <li><a href="#ordinary">일반 업데이트</a></li>
           <li><a href="#import-options">가져오기 옵션</a></li>
+          <li><a href="#new-order">새 어휘 순서</a></li>
+          <li><a href="#empty-cards">빈 카드 정리</a></li>
+          <li><a href="#removed-words">삭제된 어휘</a></li>
           <li><a href="#recommended-settings">업데이트 뒤 설정</a></li>
           <li><a href="#verify">업데이트 확인</a></li>
         </ol>
@@ -104,36 +61,78 @@
       <div class="v2-guide-content">
         <section class="v2-guide-section" id="before">
           <span class="v2-step-label">00 · 먼저</span>
-          <h2>먼저 모든 기기를 동기화하세요.</h2>
+          <h2>동기화와 백업</h2>
           <p>여러 기기를 쓴다면 각 기기의 최신 복습 기록이 AnkiWeb에 반영됐는지 확인합니다. 가능하면 컬렉션 백업도 확인하세요.</p>
           <div class="v2-callout warning"><strong>최상위 <code>JLPT MAX덱</code>을 삭제하지 마세요.</strong><p>기존 카드와 학습 일정은 그대로 두고 새 덱 파일을 가져오면 됩니다.</p></div>
         </section>
 
         <section class="v2-guide-section" id="ordinary">
           <span class="v2-step-label">01 · 일반 업데이트</span>
-          <h2>기존 덱을 지우지 말고 새 파일을 가져오세요.</h2>
+          <h2>최신 덱 가져오기</h2>
           <div class="v2-download-card">
-            <div><small>현재 기본 덱</small><h3>JLPT-MAX-Deck-1.3.0.apkg</h3><p>v1.3.0 · 약 0.90GB</p></div>
-            <a class="v2-button" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v1.3.0/JLPT-MAX-Deck-1.3.0.apkg">다시 받기 <span aria-hidden="true">↓</span></a>
+            <div><small>현재 기본 덱</small><h3>JLPT-MAX-Deck-2.1.0.apkg</h3><p>v2.1.0 · 약 1.15GB</p></div>
+            <a class="v2-button" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.0/JLPT-MAX-Deck-2.1.0.apkg">다시 받기 <span aria-hidden="true">↓</span></a>
           </div>
           <p>새 덱 파일을 가져오면 기존 학습 기록과 일정은 유지되고, 새 노트와 바뀐 카드 내용만 반영됩니다. 새 버전에서 없어진 카드가 있다면 해당 릴리스의 추가 안내를 따르세요.</p>
         </section>
 
         <section class="v2-guide-section" id="import-options">
-          <span class="v2-step-label">02 · 가져오기 옵션</span>
-          <h2>복습 기록은 유지하고 카드 내용만 새로 바꿉니다.</h2>
+          <span class="v2-step-label">02 · 옵션</span>
+          <h2>가져오기 옵션</h2>
           <div class="v2-option-grid">
             <article class="v2-option"><div class="v2-option-head"><h3>학습 진행 상태</h3><span class="v2-state off">끄기</span></div><p>기존 복습 기록과 일정을 그대로 둡니다.</p></article>
             <article class="v2-option"><div class="v2-option-head"><h3>기존 노트 업데이트</h3><span class="v2-state on">항상</span></div><p>모든 JLPT MAX 덱 업데이트에 같은 옵션을 사용합니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>노트 유형 업데이트</h3><span class="v2-state on">항상</span></div><p>한국어→일본어 회상처럼 새로 추가된 카드 유형을 적용합니다.</p></article>
             <article class="v2-option"><div class="v2-option-head"><h3>노트 유형 병합</h3><span class="v2-state on">켜기</span></div><p>기존 노트 유형을 새 버전과 연결합니다.</p></article>
             <article class="v2-option"><div class="v2-option-head"><h3>개인 덱 옵션</h3><span class="v2-state">보존</span></div><p>직접 바꾼 새 카드 수와 FSRS 설정을 그대로 둡니다.</p></article>
           </div>
           <div class="v2-callout warning"><strong>기존 노트 업데이트는 언제나 <code>항상</code>을 선택하세요.</strong><p>출발 버전에 따라 옵션을 다르게 고를 필요가 없습니다. <code>항상</code>은 직접 수정한 공식 노트 필드도 덮어쓸 수 있으므로 그런 수정이 있다면 먼저 동기화하거나 백업하세요.</p></div>
         </section>
 
+        <section class="v2-guide-section" id="new-order">
+          <span class="v2-step-label">03 · 새 어휘 순서</span>
+          <h2>미학습 급수의 새 어휘 순서</h2>
+          <p>v2.1.0은 각 급수 안에서 BCCWJ 중요도 순으로 새 카드가 나옵니다. Anki는 기존 카드의 순서와 학습 일정을 보존하므로 가져오기만 해서는 이미 있는 카드가 다시 배열되지 않습니다.</p>
+          <div class="v2-callout warning"><strong>이미 한 장이라도 학습한 급수는 정렬만을 위해 삭제하지 마세요.</strong><p>학습 기록을 지우는 것보다 기존 순서를 유지하는 편이 안전합니다.</p></div>
+          <ol class="v2-step-list">
+            <li><div><strong>완전히 미학습 상태인 급수인지 확인합니다.</strong><p>복습 기록이나 일정이 하나라도 있다면 이 절차를 건너뜁니다.</p></div></li>
+            <li><div><strong>그 급수의 어휘 덱과 음성 덱을 함께 삭제합니다.</strong><p>예: N2라면 <code>JLPT MAX덱::어휘::N2</code>와 <code>JLPT MAX덱::음성::N2</code>를 둘 다 삭제합니다.</p></div></li>
+            <li><div><strong>JLPT-MAX-Deck-2.1.0.apkg를 다시 가져옵니다.</strong><p>학습 진행 상태는 끄고, 기존 노트·노트 유형 업데이트는 항상, 노트 유형 병합은 켜기로 둡니다.</p></div></li>
+          </ol>
+        </section>
+
+        <section class="v2-guide-section" id="empty-cards">
+          <span class="v2-step-label">04 · 빈 카드</span>
+          <h2>빈 카드 정리</h2>
+          <p>업데이트한 버전에 따라 아래 카드만 정리합니다.</p>
+          <div class="v2-option-grid">
+            <article class="v2-option"><div class="v2-option-head"><h3>v2.1.0 · 중복 笠 카드</h3></div><p>최신 기본 덱을 가져온 뒤 빈 카드 목록에서 <code>笠</code>의 어휘·음성·한국어→일본어 카드 3장을 삭제합니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>v1.2.1 이하 · 가나 보조 카드</h3></div><p><code>JLPT MAX덱 어휘 / 어휘(가나 보조)</code> 빈 카드를 삭제합니다.</p></article>
+          </div>
+          <h3 class="v2-option-group-title">기기별 빈 카드 메뉴</h3>
+          <div class="v2-option-grid">
+            <article class="v2-option"><div class="v2-option-head"><h3>AnkiDroid</h3></div><p><code>⋮ → 확인 → 빈 카드</code></p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>AnkiMobile</h3></div><p><code>설정 → 빈 카드</code></p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>PC Anki</h3></div><p><code>도구 → 빈 카드</code></p></article>
+          </div>
+          <div class="v2-callout warning"><strong>이름을 확인한 뒤 빈 카드 도구의 삭제를 사용하세요.</strong><p>카드 탐색기의 노트 삭제는 같은 노트의 다른 어휘·음성 카드까지 지울 수 있으므로 사용하면 안 됩니다.</p></div>
+        </section>
+
+        <section class="v2-guide-section" id="removed-words">
+          <span class="v2-step-label">05 · 삭제된 어휘</span>
+          <h2>삭제된 어휘 정리</h2>
+          <p>v1.3.0을 사용한 적이 있다면 확인하세요.</p>
+          <ol class="v2-step-list">
+            <li><div><strong>카드 탐색기에서 <code>五万</code>을 검색해 해당 노트를 삭제합니다.</strong></div></li>
+            <li><div><strong><code>～キロ</code>도 같은 방법으로 삭제합니다.</strong></div></li>
+            <li><div><strong>두 어휘가 없으면 건너뜁니다.</strong></div></li>
+          </ol>
+          <div class="v2-callout warning"><strong>두 어휘는 빈 카드 메뉴에 나오지 않습니다.</strong><p>최신 덱에서 뺀 어휘지만 새 파일을 가져오는 것만으로 예전 컬렉션에서 지워지지는 않습니다.</p></div>
+        </section>
+
         <section class="v2-guide-section" id="recommended-settings">
-          <span class="v2-step-label">03 · 설정</span>
-          <h2>업데이트한 뒤에는 실전 설정만 확인하세요.</h2>
+          <span class="v2-step-label">06 · 설정</span>
+          <h2>업데이트 후 설정</h2>
           <p>개인 설정은 그대로 유지됩니다. 음성 덱의 새 카드 수를 포함한 나머지 옵션은 지금 설정을 그대로 두세요.</p>
           <div class="v2-option-grid v2-option-grid-single">
             <article class="v2-option"><div class="v2-option-head"><h3>JLPT MAX덱 · 실전</h3><span class="v2-state on">무작위 노트</span></div><p><strong>신규 카드 수집</strong>을 <code>무작위 노트</code>로 바꿉니다. 급수 덱을 눌렀을 때 문제 유형이 섞여 나옵니다.</p></article>
@@ -141,13 +140,13 @@
         </section>
 
         <section class="v2-guide-section" id="verify">
-          <span class="v2-step-label">04 · 확인</span>
-          <h2>업데이트가 잘 됐는지 확인하세요.</h2>
+          <span class="v2-step-label">07 · 확인</span>
+          <h2>업데이트 확인</h2>
           <ol class="v2-step-list">
             <li><div><strong>전에 공부한 어휘 몇 장의 복습 일정이 그대로인지 확인합니다.</strong></div></li>
             <li><div><strong>새 카드 내용과 템플릿이 반영됐는지 확인합니다.</strong></div></li>
             <li><div><strong>실전의 신규 카드 수집이 무작위 노트인지 확인합니다.</strong></div></li>
-            <li><div><strong>기존 한자 확장은 v1.3.0 빌더로 다시 만듭니다.</strong><p>한자 2,337개에 읽기와 쓰기 노트를 각각 만들고, 쓰기 순서가 포함된 카드 4,674장을 적용합니다.</p></div></li>
+            <li><div><strong>기존 한자 덱은 v2.1.0 빌더로 다시 만듭니다.</strong><p>한자 2,337개에 읽기와 쓰기 노트를 각각 만들고, 쓰기 순서가 포함된 카드 4,674장을 적용합니다.</p></div></li>
             <li><div><strong>기존 한자 읽기 카드는 현재 덱에 그대로 남습니다.</strong><p>일반 APKG 가져오기는 덱 위치를 바꾸지 않으므로 한자::읽기::상권·하권은 비어 있을 수 있습니다. 새 폴더 구조를 쓰려면 카드 탐색기에서 기존 일상무따 상권·하권 카드를 읽기 상권·하권으로 직접 옮기세요.</p></div></li>
             <li><div><strong>가져오기가 끝나면 모든 기기에서 다시 전체 동기화합니다.</strong></div></li>
             <li><div><strong>교체된 예전 음성이 남으면 데스크톱 Anki의 도구 → 미디어 검사에서 정리합니다.</strong><p>새 카드와 음성이 정상인지 확인하고 모든 기기의 미디어 동기화를 끝낸 뒤, 미사용 파일 목록을 확인해 삭제하고 다시 동기화합니다. 다른 덱의 미사용 파일도 함께 표시될 수 있으므로 목록을 먼저 확인하세요. 삭제한 파일은 운영체제 휴지통에서 복구할 수 있습니다.</p></div></li>
@@ -171,12 +170,12 @@
         <a href="update.html">업데이트</a>
         <a href="kanji.html">한자 확장</a>
         <a href="install-anki.html">Anki 설치</a>
-        <a href="support.html">지원</a>
+        <a href="support.html">도움말</a>
         <a href="https://github.com/truthyblue/jlpt-max-deck" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
     <div class="v2-footer-legal">
-      <span>v1.3.0 · Code AGPL-3.0-or-later</span>
+      <span>v2.1.0 · Code AGPL-3.0-or-later</span>
       <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/NOTICE">NOTICE</a>
       <span>Anki·JLPT·출판사의 공식 제품 또는 후원 프로젝트가 아닙니다.</span>
     </div>
