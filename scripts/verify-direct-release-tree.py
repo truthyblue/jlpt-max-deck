@@ -109,7 +109,9 @@ def _verify_pin(pin: dict[str, object]) -> None:
     parsed_version = tuple(int(part) for part in version.split("."))
     expected_core_notes = 20_650 if parsed_version >= (2, 0, 0) else 13_903
     expected_core_cards = (
-        38_970
+        38_967
+        if parsed_version >= (2, 1, 0)
+        else 38_970
         if parsed_version >= (2, 0, 0)
         else 19_921
         if parsed_version >= (1, 3, 0)

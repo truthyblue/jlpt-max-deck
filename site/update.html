@@ -70,8 +70,8 @@
           <span class="v2-step-label">01 · 일반 업데이트</span>
           <h2>최신 덱 가져오기</h2>
           <div class="v2-download-card">
-            <div><small>현재 기본 덱</small><h3>JLPT-MAX-Deck-2.0.3.apkg</h3><p>v2.0.3 · 약 1.12GB</p></div>
-            <a class="v2-button" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.0.3/JLPT-MAX-Deck-2.0.3.apkg">다시 받기 <span aria-hidden="true">↓</span></a>
+            <div><small>현재 기본 덱</small><h3>JLPT-MAX-Deck-2.1.0.apkg</h3><p>v2.1.0 · 약 1.15GB</p></div>
+            <a class="v2-button" href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.0/JLPT-MAX-Deck-2.1.0.apkg">다시 받기 <span aria-hidden="true">↓</span></a>
           </div>
           <p>새 덱 파일을 가져오면 기존 학습 기록과 일정은 유지되고, 새 노트와 바뀐 카드 내용만 반영됩니다. 새 버전에서 없어진 카드가 있다면 해당 릴리스의 추가 안내를 따르세요.</p>
         </section>
@@ -92,21 +92,22 @@
         <section class="v2-guide-section" id="new-order">
           <span class="v2-step-label">03 · 새 어휘 순서</span>
           <h2>미학습 급수의 새 어휘 순서</h2>
-          <p>v2.0.3은 각 급수 안에서 BCCWJ 중요도 순으로 새 카드가 나옵니다. Anki는 기존 카드의 순서와 학습 일정을 보존하므로 가져오기만 해서는 이미 있는 카드가 다시 배열되지 않습니다.</p>
+          <p>v2.1.0은 각 급수 안에서 BCCWJ 중요도 순으로 새 카드가 나옵니다. Anki는 기존 카드의 순서와 학습 일정을 보존하므로 가져오기만 해서는 이미 있는 카드가 다시 배열되지 않습니다.</p>
           <div class="v2-callout warning"><strong>이미 한 장이라도 학습한 급수는 정렬만을 위해 삭제하지 마세요.</strong><p>학습 기록을 지우는 것보다 기존 순서를 유지하는 편이 안전합니다.</p></div>
           <ol class="v2-step-list">
             <li><div><strong>완전히 미학습 상태인 급수인지 확인합니다.</strong><p>복습 기록이나 일정이 하나라도 있다면 이 절차를 건너뜁니다.</p></div></li>
             <li><div><strong>그 급수의 어휘 덱과 음성 덱을 함께 삭제합니다.</strong><p>예: N2라면 <code>JLPT MAX덱::어휘::N2</code>와 <code>JLPT MAX덱::음성::N2</code>를 둘 다 삭제합니다.</p></div></li>
-            <li><div><strong>JLPT-MAX-Deck-2.0.3.apkg를 다시 가져옵니다.</strong><p>학습 진행 상태는 끄고, 기존 노트·노트 유형 업데이트는 항상, 노트 유형 병합은 켜기로 둡니다.</p></div></li>
+            <li><div><strong>JLPT-MAX-Deck-2.1.0.apkg를 다시 가져옵니다.</strong><p>학습 진행 상태는 끄고, 기존 노트·노트 유형 업데이트는 항상, 노트 유형 병합은 켜기로 둡니다.</p></div></li>
           </ol>
         </section>
 
         <section class="v2-guide-section" id="empty-cards">
           <span class="v2-step-label">04 · 빈 카드</span>
           <h2>빈 카드 정리</h2>
-          <p>v1.2.1 이하에서 업데이트한 경우에만 확인하세요.</p>
+          <p>업데이트한 버전에 따라 아래 카드만 정리합니다.</p>
           <div class="v2-option-grid">
-            <article class="v2-option"><div class="v2-option-head"><h3>가나 보조 카드</h3></div><p><code>JLPT MAX덱 어휘 / 어휘(가나 보조)</code> 빈 카드를 삭제합니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>v2.1.0 · 중복 笠 카드</h3></div><p>최신 기본 덱을 가져온 뒤 빈 카드 목록에서 <code>笠</code>의 어휘·음성·한국어→일본어 카드 3장을 삭제합니다.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>v1.2.1 이하 · 가나 보조 카드</h3></div><p><code>JLPT MAX덱 어휘 / 어휘(가나 보조)</code> 빈 카드를 삭제합니다.</p></article>
           </div>
           <h3 class="v2-option-group-title">기기별 빈 카드 메뉴</h3>
           <div class="v2-option-grid">
@@ -145,7 +146,7 @@
             <li><div><strong>전에 공부한 어휘 몇 장의 복습 일정이 그대로인지 확인합니다.</strong></div></li>
             <li><div><strong>새 카드 내용과 템플릿이 반영됐는지 확인합니다.</strong></div></li>
             <li><div><strong>실전의 신규 카드 수집이 무작위 노트인지 확인합니다.</strong></div></li>
-            <li><div><strong>기존 한자 덱은 v2.0.3 빌더로 다시 만듭니다.</strong><p>한자 2,337개에 읽기와 쓰기 노트를 각각 만들고, 쓰기 순서가 포함된 카드 4,674장을 적용합니다.</p></div></li>
+            <li><div><strong>기존 한자 덱은 v2.1.0 빌더로 다시 만듭니다.</strong><p>한자 2,337개에 읽기와 쓰기 노트를 각각 만들고, 쓰기 순서가 포함된 카드 4,674장을 적용합니다.</p></div></li>
             <li><div><strong>기존 한자 읽기 카드는 현재 덱에 그대로 남습니다.</strong><p>일반 APKG 가져오기는 덱 위치를 바꾸지 않으므로 한자::읽기::상권·하권은 비어 있을 수 있습니다. 새 폴더 구조를 쓰려면 카드 탐색기에서 기존 일상무따 상권·하권 카드를 읽기 상권·하권으로 직접 옮기세요.</p></div></li>
             <li><div><strong>가져오기가 끝나면 모든 기기에서 다시 전체 동기화합니다.</strong></div></li>
             <li><div><strong>교체된 예전 음성이 남으면 데스크톱 Anki의 도구 → 미디어 검사에서 정리합니다.</strong><p>새 카드와 음성이 정상인지 확인하고 모든 기기의 미디어 동기화를 끝낸 뒤, 미사용 파일 목록을 확인해 삭제하고 다시 동기화합니다. 다른 덱의 미사용 파일도 함께 표시될 수 있으므로 목록을 먼저 확인하세요. 삭제한 파일은 운영체제 휴지통에서 복구할 수 있습니다.</p></div></li>
@@ -174,7 +175,7 @@
       </nav>
     </div>
     <div class="v2-footer-legal">
-      <span>v2.0.3 · Code AGPL-3.0-or-later</span>
+      <span>v2.1.0 · Code AGPL-3.0-or-later</span>
       <a href="https://github.com/truthyblue/jlpt-max-deck/blob/main/NOTICE">NOTICE</a>
       <span>Anki·JLPT·출판사의 공식 제품 또는 후원 프로젝트가 아닙니다.</span>
     </div>

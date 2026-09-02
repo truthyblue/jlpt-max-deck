@@ -17,24 +17,24 @@
 
 파일 이름과 크기가 현재 Release와 맞는지 확인한 뒤 SHA-256을 비교하세요.
 
-- 파일: `JLPT-MAX-Deck-2.0.3.apkg`
-- 크기: 약 1.12GB
-- SHA-256: `0d00085925655371b873f1f33cf2b71b63762065e6a661e4019ef358c3929ac1`
+- 파일: `JLPT-MAX-Deck-2.1.0.apkg`
+- 크기: 약 1.15GB
+- SHA-256: `e57b58fae3b9fe516a542f659129450abb8a3fe005bfdfbc29ac42c3544db9fa`
 
 macOS:
 
 ```bash
-shasum -a 256 JLPT-MAX-Deck-2.0.3.apkg
+shasum -a 256 JLPT-MAX-Deck-2.1.0.apkg
 ```
 
 Windows PowerShell:
 
 ```powershell
-Get-FileHash .\JLPT-MAX-Deck-2.0.3.apkg -Algorithm SHA256
+Get-FileHash .\JLPT-MAX-Deck-2.1.0.apkg -Algorithm SHA256
 ```
 
-같은 v2.0.3의
-[SHA256SUMS](https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.0.3/SHA256SUMS)와
+같은 v2.1.0의
+[SHA256SUMS](https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.0/SHA256SUMS)와
 결과가 다르면 파일을 삭제하고 안정적인 네트워크에서 다시 받으세요.
 
 ### 기본 덱에 한자 읽기·쓰기 덱이 없습니다
@@ -45,7 +45,7 @@ Get-FileHash .\JLPT-MAX-Deck-2.0.3.apkg -Algorithm SHA256
 ### 예상 수량과 다릅니다
 
 처음 설치한 기본 덱은 노트 20,650개, 카드
-38,970개, 미디어 24,978개입니다.
+38,967개, 미디어 25,511개입니다.
 기존 버전이나 다른 덱이 같은 컬렉션에 있으면 전체 컬렉션 수량은 더 클 수
 있습니다. 새 프로필에 현재 기본 덱만 가져와 비교하면 경계를 확인하기 쉽습니다.
 
@@ -98,7 +98,7 @@ ZIP 미리보기 안이 아니라 압축을 푼 새 폴더를 여세요. Windows
 
 ### `kanji skeleton/PDF ... alignment` 오류
 
-같은 v2.0.3의 빌더와 지원 PDF가 서로 맞지 않거나, PDF 표를 한자 골격과
+같은 v2.1.0의 빌더와 지원 PDF가 서로 맞지 않거나, PDF 표를 한자 골격과
 유일하게 대응하지 못했다는 뜻입니다. 빌더 ZIP을 새 폴더에 다시 풀고 첫 선택창에서
 1권(상권), 두 번째 선택창에서 2권(하권)을 고르세요.
 
@@ -122,7 +122,7 @@ APKG가 필요하면 다른 폴더에 복사해 둔 뒤 **다시 만들기**를 
 
 빌더 폴더의 `kanji-builder.log`를 확인하세요. 전체 로그에는 개인 경로가 들어갈
 수 있으므로 공개 issue에 파일을 그대로 첨부하지 마세요. 개인 경로를 지운 오류
-문구, 사용한 v2.0.3, 운영체제와 멈춘 단계만 알려주세요.
+문구, 사용한 v2.1.0, 운영체제와 멈춘 단계만 알려주세요.
 
 ## 제보할 때
 
