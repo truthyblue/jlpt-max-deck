@@ -4,20 +4,6 @@ v2.1.0은 어휘 9,160개의 뜻과 예문을 같은 기준으로 전부 다시 
 실제로 공부하는 어휘 9,159개 가운데 뜻 또는 예문이 달라지는 2,963개를 고쳤고,
 최종 뜻마다 맞는 대표 예문을 연결했습니다.
 
-## v2.0.3에서 업데이트
-
-1. 모든 기기를 AnkiWeb과 동기화하고 컬렉션을 백업합니다.
-2. 기존 덱을 지우지 않고 `JLPT-MAX-Deck-2.1.0.apkg`를 가져옵니다.
-3. 학습 진행 상태 가져오기는 끕니다.
-4. 기존 노트와 노트 유형 업데이트는 항상, 노트 유형 병합은 켜기로 둡니다.
-5. 가져오기가 끝나면 Anki의 빈 카드 도구를 열어 `笠` 카드 3장을 삭제합니다.
-6. 한자 덱을 쓰는 경우 `JLPT-MAX-kanji-builder-2.1.0.zip`으로 다시 만듭니다.
-7. 모든 기기에서 다시 전체 동기화합니다.
-
-기존 학습 일정과 복습 기록은 유지됩니다. `笠`는 같은 한자를 이미 가르치는 카드와
-겹쳐 단독 어휘 카드만 정리했습니다. 카드 탐색기에서 노트를 직접 지우지 말고,
-가져오기 뒤 생긴 빈 카드 3장만 빈 카드 도구로 삭제하세요.
-
 ## 어휘 9,160개 전수 재검토
 
 - 뜻이 달라진 어휘: 2,662개
@@ -32,9 +18,46 @@ v2.1.0은 어휘 9,160개의 뜻과 예문을 같은 기준으로 전부 다시 
 넓은 뜻에는 대상이나 문형을 덧붙였습니다. 뜻 순서는 사전 배열이 아니라 기본적이고
 자주 쓰는 용법부터 떠올리기 쉽게 정리했습니다.
 
-![여러 뜻과 뜻별 예문이 나뉘어 표시된 抜ける 카드](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-nukeru.png)
+### 겹치는 뜻은 짧게 — 越える
 
-![비슷한 뜻은 묶고 용법별 예문을 붙인 空く 카드](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-aku.png)
+- 전: 넘다 / 초과하다
+- 후: **넘다**
+
+![越える: 넘다](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-koeru.png)
+
+짧게 줄인 다른 사례입니다.
+
+- `繰り返し`: 반복 / 거듭 → **반복**
+- `重なる`: 겹치다 / 거듭되다 → **겹치다**
+- `値する`: ~할 가치가 있다 · ~할 만하다 → **~할 가치가 있다**
+
+### 같은 쓰임은 한 묶음으로 — 濃い
+
+- 전: (색·안개가) 짙다 / (맛·농도가) 진하다
+- 후: **짙다 · 진하다**
+
+![濃い: 짙다 · 진하다](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-koi.png)
+
+### 다른 용법은 따로 — 叩く
+
+- 전: 두드리다 / 비판하다
+- 후: **치다 · 두드리다 / 비판하다**
+
+![叩く: 치다 · 두드리다 / 비판하다](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-tataku.png)
+
+### 막연한 뜻에는 사용 조건 — する
+
+- 전: 하다 / 나다
+- 후: **하다 / (냄새나 소리가) 나다 / ~로 하다(Nにする)**
+
+![する: 하다 / (냄새나 소리가) 나다 / ~로 하다(Nにする)](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-suru.png)
+
+### 빠진 주요 뜻은 보완 — 種
+
+- 전: 씨
+- 후: **씨 / 원인 / 소재 · 이야깃거리**
+
+![種: 씨 / 원인 / 소재 · 이야깃거리](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-tane.png)
 
 급수가 달라진 6개 어휘는 출판사 급수를 따릅니다. 새 설치에서는 새 급수 덱에
 들어가며, 기존 설치에서는 학습 일정을 건드리지 않도록 카드의 원래 덱 위치가
@@ -42,15 +65,74 @@ v2.1.0은 어휘 9,160개의 뜻과 예문을 같은 기준으로 전부 다시 
 
 ## 카드 화면과 모바일 기록
 
-- 새 버전 안내에서 기본 덱을 바로 받고 가져오기 옵션을 같은 화면에서 확인할 수
-  있습니다.
-- 내 기록의 JLPT 목표 선택을 처음 설정할 때도 같은 선택 화면을 사용합니다.
-- 연결이 끊긴 상태에서 고른 목표는 다시 보낼 수 있도록 안내합니다.
-- 오류 제보에서 문제 종류와 설명, 답장을 받을 이메일을 더 분명하게 입력할 수
-  있습니다.
-- Android에서 기간별·영역별·급수별 분석 기록이 빠질 수 있던 경우를 막았습니다.
-- iPad에서 Apple Pencil을 빠르게 움직여도 획이 끊기지 않게 했습니다.
-- 한자 빌더가 출판사 PDF의 한국어 낱말 띄어쓰기를 보존하도록 고쳤습니다.
+아래 화면은 v2.1.0의 실제 카드 화면 코드를 390×844 크기로 연 미리보기입니다.
+학습 기록·순위 숫자는 예시입니다. 업데이트 버전과 필기도 화면 설명용 예시입니다.
+
+### JLPT 목표를 처음부터 쉽게
+
+내 기록에서 N1~N5를 바로 고를 수 있게 정리했습니다. 처음 목표를 정할 때도 같은 선택 화면을 사용합니다.
+
+![급수를 고르기 전 · 예시 기록](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-target.png)
+
+### 연결이 끊겨도 다시 고를 수 있게
+
+목표를 보내지 못했을 때 연결 상태와 다시 누를 위치를 안내합니다. 저장된 학습 기록은 계속 볼 수 있습니다.
+
+![오프라인 목표 선택 안내 · 예시 기록](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-target-offline.png)
+
+### 연속 학습 보호가 뭔지 한눈에
+
+보호가 언제 쓰이는지, 몇 개 남았는지, 다음 보호까지 며칠 필요한지를 한 화면에 모았습니다.
+
+![연속 학습·보호 상세 · 예시 기록](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-streak.png)
+
+### 분석 탭과 기간 선택 정리
+
+최신·분석·이력 탭을 평평하게 정리하고, 누를 때 화면이 튀는 움직임을 줄였습니다. Android에서 기간별·영역별·급수별 기록이 빠질 수 있던 문제도 고쳤습니다.
+
+![분석 화면을 아래로 스크롤한 모습 · 예시 기록](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-analysis-detail.png)
+
+### 오류 제보도 더 분명하게
+
+내용·화면·음성 문제와 기능 제안을 나눠 고를 수 있습니다. 이메일 답변 수신 동의와 함께 전송되는 정보도 확인할 수 있습니다.
+
+![의견 보내기 화면 · 입력 예시이며 실제로 전송하지 않음](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-report.png)
+
+### 새 버전 안내에서 바로 다운로드
+
+기본 덱 받기 버튼과 가져오기 옵션을 같은 화면에 넣었습니다. 파일을 받은 뒤에도 안내가 남아 옵션을 다시 확인할 수 있습니다.
+
+![새 업데이트 안내 화면 · 버전 전환 예시](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-update.png)
+
+### 필요한 안내를 순서대로
+
+업데이트 안내, 필요한 카드 정리, 내 기록 시작 안내가 한꺼번에 겹치지 않도록 순서를 정리했습니다.
+
+![내 기록 시작 안내](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-onboarding.png)
+
+### 한자 앞면은 문제에 집중
+
+한자 앞면에서는 쓰지 않는 표시 설정을 빼고, 학습 현황과 문제만 남겼습니다.
+
+![한자 카드 앞면](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-kanji-front.png)
+
+### 한자 쓰기와 획순 보기
+
+빠르게 그은 Pencil 획이 끊기는 경우를 고쳤습니다. 획순 그림은 쓰기 연습을 열 때 불러오도록 바꿨습니다.
+
+![쓰기 카드 · 브라우저에서 입력한 필기 예시](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-writing.png)
+
+![한자 카드 뒷면의 쓰기 연습 · 획순 불러오기](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-strokes.png)
+
+### 문법 후리가나 위치 수정
+
+문법 답안의 후리가나가 iPhone·iPad에서 본문과 어긋나는 경우를 고쳤습니다.
+
+![기본 문법 답안 · 후리가나를 켠 화면](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-grammar.png)
+
+### 한자 빌더의 낱말 띄어쓰기
+
+출판사 PDF에서 한국어 낱말을 읽어올 때 잘못 벌어지던 띄어쓰기를 고쳤습니다.
 
 ## 확인한 내용
 
@@ -60,7 +142,8 @@ v2.1.0은 어휘 9,160개의 뜻과 예문을 같은 기준으로 전부 다시 
 - 급수가 달라진 카드 18장의 기존 덱 위치 보존 확인
 - `笠` 빈 카드 3장 정리 뒤 다시 생기지 않는 것 확인
 - 공개 기본 덱과 한자 빌더 분리 검증 통과
-- 실제 어휘 카드 2장을 390×844에서 확인
+- 뜻 교정 5가지와 UI 변경 화면 11장을 390×844에서 확인
+- 긴 카드는 본문 전체를 캡처하고 가로 넘침이 없는지 확인
 
 기본 덱은 20,650노트·38,967카드·미디어 25,511개입니다. 이 노트 수에는 기존
 `笠` 카드를 안전하게 정리하기 위한 숨은 노트 1개가 포함됩니다. 한자 빌더는
@@ -73,3 +156,16 @@ v2.1.0은 어휘 9,160개의 뜻과 예문을 같은 기준으로 전부 다시 
 | `JLPT-MAX-Deck-2.1.0.apkg` | 1,148,886,194 | `7b665606839b914e9845716079f7e76dca1cb0a423b0e4bd731eaa1530d27071` |
 | `JLPT-MAX-kanji-builder-2.1.0.zip` | 8,729,309 | `169b7db0e82a5dc434c028af734a564bb306d69303f06a4ee8250a3186dfd8c1` |
 | `SHA256SUMS` | 190 | `28a73e40c777b9531acfea960435b4a462ef0c3fba92d66f93bf2feae382ee30` |
+
+## v2.0.3에서 업데이트
+
+1. 모든 기기를 AnkiWeb과 동기화하고 컬렉션을 백업합니다.
+2. 기존 덱을 지우지 않고 `JLPT-MAX-Deck-2.1.0.apkg`를 가져옵니다.
+3. 학습 진행 상태 가져오기는 끕니다.
+4. 기존 노트와 노트 유형 업데이트는 항상, 노트 유형 병합은 켜기로 둡니다.
+5. 가져오기가 끝나면 Anki의 빈 카드 도구를 열어 `笠` 카드 3장을 삭제합니다.
+6. 한자 덱을 쓰는 경우 `JLPT-MAX-kanji-builder-2.1.0.zip`으로 다시 만듭니다.
+7. 모든 기기에서 다시 전체 동기화합니다.
+
+기존 학습 일정과 복습 기록은 유지됩니다. 재검토에서 제외한 `笠` 단독 어휘 카드만 정리합니다. `傘(우산)` 카드는 유지합니다. 카드 탐색기에서 노트를 직접 지우지 말고,
+가져오기 뒤 생긴 빈 카드 3장만 빈 카드 도구로 삭제하세요.
