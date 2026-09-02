@@ -59,7 +59,7 @@ PUBLIC_RELEASE_CODE_PATHS = (
     "src/public_kanji.py",
 )
 _VECTOR_GLYPH_RE = re.compile(
-    r'<img class="[^"]*\bkanji-glyph-image\b[^"]*" src="([^"]+)"[^>]*>'
+    r'<img\b[^>]*\bsrc="(jlpt-v2-kanji-[0-9a-f]{24}\.png)"[^>]*>'
 )
 
 

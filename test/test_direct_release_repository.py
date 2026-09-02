@@ -51,7 +51,7 @@ TEST_LIFECYCLE = {
     "test_contracts": {
         "DirectReleaseRepositoryTest.test_current_kanji_fields_close_skeleton_semantics": {
             "protected_contract": (
-                "the public builder accepts the approved 11-field kanji models and binds facts and stroke-order content into the skeleton proof"
+                "the public builder accepts the approved 11-field kanji models, recognizes the stable vector-glyph media namespace after private field-class compaction, and binds facts and stroke-order content into the skeleton proof"
             ),
             "not_subsumed_by": (
                 "family-count tests can pass while an older field list rejects the accepted private APKG before public artifacts are prepared"
@@ -257,6 +257,10 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
                 "Unit": "1",
                 "Meaning": "private meaning",
                 "KanjiFacts": "public-safe fact projection",
+                "GlyphHTML": (
+                    '<img class="_j42 _j43" '
+                    'src="jlpt-v2-kanji-0123456789abcdef01234567.png" alt="">'
+                ),
                 "StrokeOrder": "deterministic stroke projection",
                 "SortKey": "K000001",
             }
@@ -270,6 +274,7 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
 
         expected_projection = dict(note)
         expected_projection["Meaning"] = ""
+        expected_projection["GlyphHTML"] = ""
         self.assertEqual(len(records), 1)
         self.assertEqual(records[0]["note_hash"], sha256_json(expected_projection))
         self.assertEqual(note["Meaning"], "private meaning")
