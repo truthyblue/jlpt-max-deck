@@ -29,6 +29,14 @@ from public_kanji import (  # noqa: E402
 
 TEST_LIFECYCLE = {
     "test_contracts": {
+        "KanjiAddonTest.test_text_glyph_validation_ignores_presentation_class_names": {
+            "protected_contract": (
+                "verified skeleton text glyphs accept compact presentation classes while rejecting different or malformed glyph content"
+            ),
+            "not_subsumed_by": (
+                "legacy composite-class fixtures do not exercise the compact markup shipped in current skeletons"
+            ),
+        },
         "KanjiAddonTest.test_vector_slot_writes_png_media": {
             "protected_contract": (
                 "the optional kanji builder writes the 14 PDF outline glyphs as transparent PNG media instead of SVG"
@@ -181,6 +189,39 @@ class KanjiAddonTest(unittest.TestCase):
                 )
             )
         self.assertEqual(note["Meaning"], "하나 일")
+
+    def test_text_glyph_validation_ignores_presentation_class_names(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            for classes in ("kanji-card-glyph", "_jfixture", "_jfirst _jsecond", ""):
+                attribute = f' class="{classes}"' if classes else ""
+                for glyph, valid in (
+                    ("一", True), ("&#19968;", True),
+                    ("二", False), ("<b>一</b>", False),
+                ):
+                    with self.subTest(classes=classes, glyph=glyph):
+                        markup = f'<span{attribute} lang="ja">{glyph}</span>'
+                        note = FakeNote(
+                            SortKey="K000001", Volume="상권", Unit="1",
+                            Meaning="", GlyphHTML=markup,
+                        )
+                        if valid:
+                            self.assertIsNone(
+                                _fill_note(
+                                    note, self._slot(1, "1"), source_paths={},
+                                    media_root=Path(directory),
+                                )
+                            )
+                            self.assertEqual(note["Meaning"], "하나 일")
+                        else:
+                            with self.assertRaisesRegex(
+                                KanjiAddonBuildError, "kanji text glyph changed"
+                            ):
+                                _fill_note(
+                                    note, self._slot(1, "1"), source_paths={},
+                                    media_root=Path(directory),
+                                )
+                            self.assertEqual(note["Meaning"], "")
+                        self.assertEqual(note["GlyphHTML"], markup)
 
     def test_composite_text_glyphs_fill_from_supported_pdfs(self) -> None:
         glyphs = (

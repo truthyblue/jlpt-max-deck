@@ -59,7 +59,7 @@ from public_kanji import (
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ASSET_ROOT = ROOT / "assets"
 _TEXT_GLYPH_RE = re.compile(
-    r'<span class="[^"]*\bkanji-card-glyph\b[^"]*" lang="ja">([^<]+)</span>'
+    r'<span(?: class="[^"]*")? lang="ja">([^<]+)</span>'
 )
 _ADDITIONAL_SLOT_RE = re.compile(r"추가자\s*([0-9]+)")
 
@@ -259,6 +259,7 @@ def _fill_note(
             f"kanji skeleton/PDF alignment changed: {expected_sort_key}"
         )
     if slot.glyph_kind == "text":
+        # The manifest already binds the markup; CSS aliases are not glyph identity.
         match = _TEXT_GLYPH_RE.fullmatch(note["GlyphHTML"])
         if match is None or not _glyph_matches(html.unescape(match.group(1)), slot.glyph_text):
             raise KanjiAddonBuildError(
