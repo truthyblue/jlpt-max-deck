@@ -19,7 +19,7 @@
 
 - 파일: `JLPT-MAX-Deck-2.1.1.apkg`
 - 크기: 약 1.15GB
-- SHA-256: `4e4c212fada6e6af8c268aba70f289784486b1c6eee787e38707a23e43837627`
+- SHA-256: `9d8be3ff6b23e11ef890a146dffec7ec4649de4bcbd491be439a11b991fd154d`
 
 macOS:
 
