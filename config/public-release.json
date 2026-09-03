@@ -1,19 +1,19 @@
 {
   "artifacts": {
     "JLPT-MAX-Deck-2.1.0.apkg": {
-      "bytes": 1148886194,
-      "sha256": "7b665606839b914e9845716079f7e76dca1cb0a423b0e4bd731eaa1530d27071"
+      "bytes": 1148894828,
+      "sha256": "32896502c56bd6a8f19435291da3daddd1eebc9e4397312268ba69cc90491367"
     },
     "JLPT-MAX-kanji-builder-2.1.0.zip": {
-      "bytes": 8729309,
-      "sha256": "169b7db0e82a5dc434c028af734a564bb306d69303f06a4ee8250a3186dfd8c1"
+      "bytes": 8730448,
+      "sha256": "7ff4417cc33cf41aa24b07ba1e8cb6d7b805ba2f856eceb43f501afcc20c507e"
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "28a73e40c777b9531acfea960435b4a462ef0c3fba92d66f93bf2feae382ee30"
+      "sha256": "7b595aa988d08a3c2d2b5ed97b9b4aca419c48c5195b5eb74a73422d8d955732"
     }
   },
-  "build_input_fingerprint_sha256": "1ed7640fd522892d31442ec27ca860978544bff68bf16ea61465fb9150d9922e",
+  "build_input_fingerprint_sha256": "c1ff0db1d747b33b8b3de41548db98090ce7cf8c5dc15f6a5217182745bf08b5",
   "core": {
     "cards": 38967,
     "custom_notetype_note_counts": {
@@ -37,7 +37,7 @@
   "full_source": {
     "cards": 43641,
     "notes": 25324,
-    "sha256": "cf4ddff71e877ea6cd25237b0e403924ca818d6820a5fc59be89a9591e087a8b"
+    "sha256": "4ca4cc38d949a0a242c97860a01492b8fb1329651c2ab418dcb066a7c220a692"
   },
   "kanji_builder": {
     "expected_kanji_addon_cards": 4674,
@@ -51,7 +51,7 @@
     "reused": false,
     "source_hash": "1ac06d8e0eb56e0b377cff7a91da8f3c50d5231e57ff782ee023458601c35728"
   },
-  "payload_hash": "0aba55d1cf64de4cca5c400fa14abb07391d0d856f71b8320416bc2f63278911",
+  "payload_hash": "9e9bedd0f8e7ba3f482fcb8f0373f903cafd17e5f1f8cc8d2cdef78bc850cec2",
   "policy_version": "direct-core-plus-kanji-addon-v1",
   "product_version": "2.1.0",
   "schema_version": 3,
