@@ -65,18 +65,24 @@ v2.1.0은 어휘 9,160개의 뜻과 예문을 같은 기준으로 전부 다시 
 
 ## 카드 화면과 모바일 기록
 
-아래 화면은 v2.1.0의 실제 카드 화면 코드를 390×844 크기로 연 미리보기입니다.
-학습 기록·순위 숫자는 예시입니다. 업데이트 버전과 필기도 화면 설명용 예시입니다.
+2.0.3에서 불편했던 카드 화면과 내 기록을 다듬었습니다.
+아래는 v2.1.0 화면 미리보기입니다. 학습 기록·순위·필기는 설명용 예시입니다.
+
+### iPhone·iPad 문법 후리가나 표시 수정
+
+2.0.3에서 iPhone·iPad의 문법 카드 후리가나가 한자 위가 아니라 본문 옆에 나란히 표시되던 문제를 고쳤습니다. 이제 문법 답안에서도 한자 바로 위에 읽기가 표시됩니다.
+
+![기본 문법 답안 · 후리가나를 켠 화면](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-grammar.png)
 
 ### JLPT 목표를 처음부터 쉽게
 
-내 기록에서 N1~N5를 바로 고를 수 있게 정리했습니다. 처음 목표를 정할 때도 같은 선택 화면을 사용합니다.
+JLPT 목표를 처음 정하거나 바꿀 때 N1~N5 중 원하는 급수를 바로 고를 수 있도록 선택 화면을 정리했습니다.
 
 ![급수를 고르기 전 · 예시 기록](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-target.png)
 
 ### 연결이 끊겨도 다시 고를 수 있게
 
-목표를 보내지 못했을 때 연결 상태와 다시 누를 위치를 안내합니다. 저장된 학습 기록은 계속 볼 수 있습니다.
+연결 문제로 목표 설정을 마치지 못했을 때 상태를 알리고 다시 시도할 수 있도록 했습니다. 연결이 끊겨도 기기에 저장된 학습 기록은 계속 볼 수 있습니다.
 
 ![오프라인 목표 선택 안내 · 예시 기록](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-target-offline.png)
 
@@ -86,63 +92,53 @@ v2.1.0은 어휘 9,160개의 뜻과 예문을 같은 기준으로 전부 다시 
 
 ![연속 학습·보호 상세 · 예시 기록](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-streak.png)
 
-### 분석 탭과 기간 선택 정리
+### Android 분석 기록 표시 수정
 
-최신·분석·이력 탭을 평평하게 정리하고, 누를 때 화면이 튀는 움직임을 줄였습니다. Android에서 기간별·영역별·급수별 기록이 빠질 수 있던 문제도 고쳤습니다.
+2.0.3에서 Android의 기간별·영역별·급수별 분석 기록이 일부 빠져 보일 수 있던 문제를 고쳤습니다. 보고 싶은 기록과 기간을 고르는 탭도 알아보기 쉽게 정리했습니다.
 
 ![분석 화면을 아래로 스크롤한 모습 · 예시 기록](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-analysis-detail.png)
 
 ### 오류 제보도 더 분명하게
 
-내용·화면·음성 문제와 기능 제안을 나눠 고를 수 있습니다. 이메일 답변 수신 동의와 함께 전송되는 정보도 확인할 수 있습니다.
+문제를 어떻게 설명할지 막막하지 않도록 유형별 작성 예시를 넣고, 기능 제안 항목을 추가했습니다. 보내기 전에 함께 전송되는 정보도 확인할 수 있습니다.
 
 ![의견 보내기 화면 · 입력 예시이며 실제로 전송하지 않음](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-report.png)
 
-전송 후에는 접수 완료 안내만 작은 창으로 화면 가운데 보여줍니다.
-
-![작아진 접수 완료 창 · 실제 전송 없이 확인한 화면](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-report-success.png)
-
 ### 새 버전 안내에서 바로 다운로드
 
-기본 덱 받기 버튼과 가져오기 옵션을 같은 화면에 넣었습니다. 파일을 받은 뒤에도 안내가 남아 옵션을 다시 확인할 수 있습니다.
+이제 카드의 새 버전 안내에서 기본 덱을 바로 받을 수 있습니다. 기존 학습 기록을 유지하려면 어떤 가져오기 옵션을 골라야 하는지도 함께 안내합니다.
 
 ![새 업데이트 안내 화면 · 버전 전환 예시](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-update.png)
 
 ### 필요한 안내를 순서대로
 
-업데이트 안내, 필요한 카드 정리, 내 기록 시작 안내가 한꺼번에 겹치지 않도록 순서를 정리했습니다.
+업데이트 후에는 필요한 카드 정리와 내 기록 시작 방법을 차례로 안내합니다. 지금 해야 할 일을 하나씩 확인할 수 있습니다.
 
 ![내 기록 시작 안내](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-onboarding.png)
 
 ### 한자 앞면은 문제에 집중
 
-한자 앞면에서는 쓰지 않는 표시 설정을 빼고, 학습 현황과 문제만 남겼습니다.
+한자 문제를 풀 때 필요하지 않은 표시 설정을 앞면에서 빼고, 학습 현황과 문제에 집중할 수 있도록 했습니다.
 
 ![한자 카드 앞면](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-kanji-front.png)
 
 ### 한자 쓰기와 획순 보기
 
-빠르게 그은 Pencil 획이 끊기는 경우를 고쳤습니다. 획순 그림은 쓰기 연습을 열 때 불러오도록 바꿨습니다.
+iPad에서 Apple Pencil로 빠르게 쓸 때 획이 끊기거나 빠지던 문제를 고쳤습니다. 획순 자료 때문에 카드가 처음 열릴 때 생기던 부담도 줄였습니다.
 
 ![쓰기 카드 · 브라우저에서 입력한 필기 예시](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-writing.png)
 
 ![한자 카드 뒷면의 쓰기 연습 · 획순 불러오기](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-strokes.png)
 
-### 한자 읽기 배치 정리
+### 비슷한 한자의 읽기를 더 보기 쉽게
 
-비슷한 한자의 음독·훈독 제목을 읽기 위로 옮겼습니다. 좁은 화면에서 읽기가 한 글자씩 세로로 끊기는 문제를 고쳤습니다.
+좁은 화면에서 비슷한 한자의 읽기가 한 글자씩 세로로 끊겨 보이던 문제를 고쳤습니다. 음독·훈독을 구분하면서 읽을 수 있도록 표시 공간을 넓혔습니다.
 
 ![한자 뒷면 · 비슷한 한자의 읽기 배치](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-kanji-readings.png)
 
-### 문장과 후리가나를 한 덩어리로 강조
-
-문법 답안의 강조할 본문과 후리가나를 하나의 붉은 배경으로 감쌌습니다. iPhone·iPad에서 후리가나 위치가 어긋나는 경우도 고쳤습니다.
-
-![기본 문법 답안 · 후리가나를 켠 화면](https://raw.githubusercontent.com/truthyblue/jlpt-max-deck/v2.1.0/site/assets/releases/v2.1.0/gallery-v2.1.0-grammar.png)
-
 ### 한자 빌더의 낱말 띄어쓰기
 
-출판사 PDF에서 한국어 낱말을 읽어올 때 잘못 벌어지던 띄어쓰기를 고쳤습니다.
+한자 빌더로 만든 카드에서 한국어 낱말 중간에 불필요한 공백이 들어가던 문제를 고쳤습니다. 한자 덱을 쓰는 경우 v2.1.0 빌더로 다시 만들면 반영됩니다.
 
 ## 확인한 내용
 
