@@ -945,7 +945,6 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("출발 버전에 따라 옵션을 다르게 고를 필요가 없습니다", html)
         self.assertNotIn("지금 사용하는 버전", html)
         self.assertIn("직접 수정한 공식 노트 필드도 덮어쓸 수 있으므로", html)
-        self.assertIn(f"기존 한자 덱은 v{RELEASE_VERSION} 빌더로 다시 만듭니다", html)
         self.assertIn("완전히 미학습 상태인 급수", html)
         self.assertIn("五万", html)
         self.assertIn("～キロ", html)

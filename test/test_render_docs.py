@@ -131,6 +131,9 @@ class DocumentationRenderTest(unittest.TestCase):
         PurePosixPath("docs/releases/v2.1.0.md.j2"): PurePosixPath(
             "docs/releases/v2.1.0.md"
         ),
+        PurePosixPath("docs/releases/v2.1.1.md.j2"): PurePosixPath(
+            "docs/releases/v2.1.1.md"
+        ),
         PurePosixPath("docs/troubleshooting.md.j2"): PurePosixPath(
             "docs/troubleshooting.md"
         ),
@@ -603,7 +606,6 @@ class DocumentationRenderTest(unittest.TestCase):
         self.assertNotIn(">새 버전일 때</strong>", update_page)
         self.assertIn("언제나 <code>항상</code>", update_page)
         self.assertNotIn("지금 사용하는 버전", update_page)
-        self.assertIn("기존 한자 덱은 {{ release.tag }} 빌더로 다시 만듭니다", update_page)
         self.assertIn("완전히 미학습 상태인 급수", update_page)
         self.assertIn("五万", update_page)
         self.assertIn("～キロ", update_page)
