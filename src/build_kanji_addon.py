@@ -62,10 +62,10 @@ _TEXT_GLYPH_RE = re.compile(
     r'<span(?: class="[^"]*")? lang="ja">([^<]+)</span>'
 )
 _VARIANT_GLYPH_RE = re.compile(
-    r'<span class="kanji-glyph-variants" lang="ja">'
-    r'<span class="kanji-card-glyph">([^<]+)</span>'
-    r'<span class="kanji-glyph-alternatives">'
-    r'<span class="kanji-glyph-alternative-label" lang="ko">함께 익힐 글자</span>'
+    r'<span class="[^"<>]*" lang="ja">'
+    r'<span class="[^"<>]*">([^<]+)</span>'
+    r'<span class="[^"<>]*">'
+    r'<span class="[^"<>]*" lang="ko">함께 익힐 글자</span>'
     r'([^<]+)</span></span>'
 )
 _ADDITIONAL_SLOT_RE = re.compile(r"추가자\s*([0-9]+)")

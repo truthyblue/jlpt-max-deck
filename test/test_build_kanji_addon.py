@@ -285,6 +285,11 @@ class KanjiAddonTest(unittest.TestCase):
                             '<span class="kanji-glyph-alternative-label" lang="ko">함께 익힐 글자</span>'
                             f'{shown_alternate}</span></span>'
                         )
+                        for index, css_class in enumerate((
+                            "kanji-glyph-variants", "kanji-card-glyph",
+                            "kanji-glyph-alternatives", "kanji-glyph-alternative-label",
+                        )):
+                            note["GlyphHTML"] = note["GlyphHTML"].replace(css_class, f"_j{index}")
                         if shown_alternate == alternate:
                             self.assertIsNone(_fill_note(
                                 note, slot, source_paths={}, media_root=Path(directory),
