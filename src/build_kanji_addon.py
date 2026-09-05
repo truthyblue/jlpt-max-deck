@@ -61,6 +61,13 @@ DEFAULT_ASSET_ROOT = ROOT / "assets"
 _TEXT_GLYPH_RE = re.compile(
     r'<span(?: class="[^"]*")? lang="ja">([^<]+)</span>'
 )
+_VARIANT_GLYPH_RE = re.compile(
+    r'<span class="kanji-glyph-variants" lang="ja">'
+    r'<span class="kanji-card-glyph">([^<]+)</span>'
+    r'<span class="kanji-glyph-alternatives">'
+    r'<span class="kanji-glyph-alternative-label" lang="ko">함께 익힐 글자</span>'
+    r'([^<]+)</span></span>'
+)
 _ADDITIONAL_SLOT_RE = re.compile(r"추가자\s*([0-9]+)")
 
 
@@ -261,7 +268,12 @@ def _fill_note(
     if slot.glyph_kind == "text":
         # The manifest already binds the markup; CSS aliases are not glyph identity.
         match = _TEXT_GLYPH_RE.fullmatch(note["GlyphHTML"])
-        if match is None or not _glyph_matches(html.unescape(match.group(1)), slot.glyph_text):
+        variants = _VARIANT_GLYPH_RE.fullmatch(note["GlyphHTML"])
+        candidates = [html.unescape(match.group(1))] if match else []
+        if variants:
+            primary, alternate = (html.unescape(value) for value in variants.groups())
+            candidates = [f"{primary}/{alternate}", f"{primary}({alternate})"]
+        if not any(_glyph_matches(value, slot.glyph_text) for value in candidates):
             raise KanjiAddonBuildError(
                 f"kanji text glyph changed: {expected_sort_key}"
             )

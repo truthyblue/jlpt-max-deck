@@ -275,6 +275,24 @@ class KanjiAddonTest(unittest.TestCase):
                         )
                     )
                     self.assertEqual(note["Meaning"], "복합 자형")
+                    primary, alternate = glyph[0], glyph[2]
+                    for shown_alternate in (alternate, "口"):
+                        note["Meaning"] = ""
+                        note["GlyphHTML"] = (
+                            '<span class="kanji-glyph-variants" lang="ja">'
+                            f'<span class="kanji-card-glyph">{primary}</span>'
+                            '<span class="kanji-glyph-alternatives">'
+                            '<span class="kanji-glyph-alternative-label" lang="ko">함께 익힐 글자</span>'
+                            f'{shown_alternate}</span></span>'
+                        )
+                        if shown_alternate == alternate:
+                            self.assertIsNone(_fill_note(
+                                note, slot, source_paths={}, media_root=Path(directory),
+                            ))
+                            self.assertEqual(note["Meaning"], "복합 자형")
+                        else:
+                            with self.assertRaisesRegex(KanjiAddonBuildError, "kanji text glyph changed"):
+                                _fill_note(note, slot, source_paths={}, media_root=Path(directory))
 
     def test_pdf_meaning_geometry_preserves_korean_word_boundaries(self) -> None:
         same_line = [
