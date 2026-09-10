@@ -26,7 +26,7 @@ TEST_LIFECYCLE = {
     "test_contracts": {
         "DocumentationRenderTest.test_current_kanji_counts_are_semantically_separate": {
             "protected_contract": (
-                "current public copy distinguishes 2,337 source characters from the 4,674 reading and writing addon notes and cards in the v1.3.0 physical release"
+                "current public copy distinguishes source characters, reading and writing cards, vector glyphs, and all addon media including stroke files"
             ),
             "not_subsumed_by": (
                 "package count tests can pass while learner documentation labels character count as note or card count"
@@ -133,6 +133,9 @@ class DocumentationRenderTest(unittest.TestCase):
         ),
         PurePosixPath("docs/releases/v2.1.1.md.j2"): PurePosixPath(
             "docs/releases/v2.1.1.md"
+        ),
+        PurePosixPath("docs/releases/v2.1.2.md.j2"): PurePosixPath(
+            "docs/releases/v2.1.2.md"
         ),
         PurePosixPath("docs/troubleshooting.md.j2"): PurePosixPath(
             "docs/troubleshooting.md"
@@ -461,8 +464,16 @@ class DocumentationRenderTest(unittest.TestCase):
         )
         self.assertEqual(
             deck["total_media"],
-            deck["core_media"] + deck["static_media"],
+            deck["core_media"] + deck["kanji_addon_media"],
         )
+
+        pin = json.loads((ROOT / "config/public-release.json").read_text(encoding="utf-8"))
+        self.assertEqual(
+            deck["kanji_addon_media"],
+            pin["kanji_builder"]["expected_static_media"]
+            + pin["kanji_builder"]["expected_vector_glyphs"],
+        )
+        self.assertEqual(deck["static_media"], pin["kanji_builder"]["expected_vector_glyphs"])
 
         current_templates = (
             "README.md.j2",

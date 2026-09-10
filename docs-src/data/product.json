@@ -14,12 +14,12 @@
     "reference_notes": 9,
     "total_notes": 25324,
     "total_cards": 43641,
-    "total_media": 25525,
+    "total_media": 27827,
     "static_media": 14,
     "core_notes": 20650,
     "core_cards": 38967,
-    "core_media": 25511,
-    "example_count": 10997,
+    "core_media": 25513,
+    "example_count": 10998,
     "coverage": {
       "vocabulary_with_examples": 9159,
       "conjugation_notes": 1843,
@@ -45,14 +45,15 @@
       "paraphrase": 855,
       "usage": 2083,
       "numeric_reading": 215
-    }
+    },
+    "kanji_addon_media": 2314
   },
   "requirements": {
     "python": "3.13",
     "macos_minimum": "12",
     "windows_architecture": "x64",
-    "approximate_apkg_size_mb": 1149,
-    "approximate_apkg_size_gb": "1.15"
+    "approximate_apkg_size_mb": 1170,
+    "approximate_apkg_size_gb": "1.17"
   },
   "study_defaults": {
     "desired_retention": "0.90",
