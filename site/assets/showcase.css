@@ -4434,3 +4434,54 @@ footer .disclaimer {
     display: none;
   }
 }
+
+/* Always-visible support actions, shared by the homepage and guide header. */
+.header-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+.sponsor-menu { position: relative; }
+.sponsor-trigger { cursor: pointer; list-style: none; }
+.sponsor-trigger::-webkit-details-marker { display: none; }
+.sponsor-heart { color: #f185bf; }
+.sponsor-coffee { color: #ffdd00; }
+.sponsor-options {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 230px;
+  padding: 6px;
+  border: 1px solid #505561;
+  border-radius: 14px;
+  background: #252a34;
+  box-shadow: 0 12px 32px #0006;
+}
+.sponsor-options a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.sponsor-options a:hover { background: #ffffff12; }
+.header-actions :is(a, summary):focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
+@media (max-width: 560px) {
+  .header-actions { gap: 6px; }
+  .header-actions .nav-action { padding: 0 10px; }
+  .header-actions .nav-action-arrow { display: none; }
+  .header-actions #repo-link .nav-action-icon { display: none; }
+  .header-actions #repo-link .nav-action-label { display: inline; }
+}
+@media (max-width: 360px) {
+  .site-header .brand-wordmark { display: none; }
+}

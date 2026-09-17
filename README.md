@@ -6,12 +6,13 @@
 
 # JLPT MAX Deck
 
-[![GitHub Sponsors](https://img.shields.io/badge/GitHub_Sponsors-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white)](https://github.com/sponsors/truthyblue?frequency=one-time)
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy_Me_a_Coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/truthyblue)
-
 > 한국어권 JLPT 학습용 Anki 덱. 문법·어휘·음성·실전 문제·참조표가 담긴 기본 덱으로
 > 시작하고, 원하면 한자 2,337개의
 > 읽기·쓰기 카드를 확장으로 추가할 수 있습니다.
+
+[![기본 덱 다운로드](https://img.shields.io/badge/기본_덱_다운로드-C8FF5F?style=for-the-badge&logo=github&logoColor=141820)](https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.2/JLPT-MAX-Deck-2.1.2.apkg) [![시작 가이드](https://img.shields.io/badge/시작_가이드-252A34?style=for-the-badge)](https://truthyblue.github.io/jlpt-max-deck/getting-started.html)
+
+[![GitHub Sponsors](https://img.shields.io/badge/GitHub_Sponsors-252A34?style=for-the-badge&logo=githubsponsors&logoColor=EA4AAA)](https://github.com/sponsors/truthyblue?frequency=one-time) [![Buy Me a Coffee](https://img.shields.io/badge/Buy_Me_a_Coffee-252A34?style=for-the-badge&logo=buymeacoffee&logoColor=FFDD00)](https://buymeacoffee.com/truthyblue)
 
 ## 어디서 시작하나요?
 

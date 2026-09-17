@@ -232,7 +232,7 @@ class PublicSiteTests(unittest.TestCase):
                     )
                 self.assertIn('id="repo-link"', html)
                 self.assertIn(
-                    '<span class="nav-action-label">GitHub에서 Star</span>',
+                    '<span class="nav-action-label">Star</span>',
                     html,
                 )
                 self.assertNotIn('class="v2-header"', html)
