@@ -4453,9 +4453,9 @@ footer .disclaimer {
   right: 0;
   width: 230px;
   padding: 6px;
-  border: 1px solid #505561;
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 14px;
-  background: #252a34;
+  background: #151e19;
   box-shadow: 0 12px 32px #0006;
 }
 .sponsor-options a {
@@ -4470,7 +4470,19 @@ footer .disclaimer {
   font-weight: 650;
   white-space: nowrap;
 }
-.sponsor-options a:hover { background: #ffffff12; }
+.sponsor-option-icon {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sponsor-options a:is(:hover, :focus-visible) {
+  background: rgba(200, 255, 95, 0.07);
+}
 .header-actions :is(a, summary):focus-visible {
   outline: 2px solid var(--lime);
   outline-offset: 3px;
