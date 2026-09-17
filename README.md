@@ -6,11 +6,12 @@
 
 # JLPT MAX Deck
 
+[![GitHub Sponsors](https://img.shields.io/badge/GitHub_Sponsors-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white)](https://github.com/sponsors/truthyblue?frequency=one-time)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy_Me_a_Coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/truthyblue)
+
 > 한국어권 JLPT 학습용 Anki 덱. 문법·어휘·음성·실전 문제·참조표가 담긴 기본 덱으로
 > 시작하고, 원하면 한자 2,337개의
 > 읽기·쓰기 카드를 확장으로 추가할 수 있습니다.
-
-[후원하기](#제작자-후원)
 
 ## 어디서 시작하나요?
 
