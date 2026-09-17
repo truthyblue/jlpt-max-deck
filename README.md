@@ -158,8 +158,7 @@ PowerShell·터미널 명령이나 Python 설치는 필요하지 않습니다. �
 | [GitHub Sponsors](https://github.com/sponsors/truthyblue?frequency=one-time) | GitHub 계정으로 일회성 또는 정기 후원 |
 | [Buy Me a Coffee](https://buymeacoffee.com/truthyblue) | GitHub 계정 없이 후원. 일회성은 회원가입 없이 가능 |
 
-금액은 자유롭게 선택할 수 있습니다. 후원 금액에 따른 별도 혜택은 없으며,
-향후 출시할 앱의 구매와도 별개입니다.
+금액은 자유롭게 선택할 수 있습니다.
 
 ## 개발과 기여
 
