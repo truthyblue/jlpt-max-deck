@@ -10,6 +10,8 @@
 > 시작하고, 원하면 한자 2,337개의
 > 읽기·쓰기 카드를 확장으로 추가할 수 있습니다.
 
+[후원하기](#제작자-후원)
+
 ## 어디서 시작하나요?
 
 전체 흐름은 [웹 시작 가이드](https://truthyblue.github.io/jlpt-max-deck/getting-started.html)에서
@@ -144,6 +146,19 @@ PowerShell·터미널 명령이나 Python 설치는 필요하지 않습니다. �
 공식 기본 덱 파일을 다시 올리는 대신 이 저장소나 공식 Release 링크를 공유해
 주세요. 사용자가 PDF로 만든 한자 덱 APKG는 개인 학습용입니다. 정확한 조건은
 [NOTICE](NOTICE)가 우선합니다.
+
+## 제작자 후원
+
+덱이 공부에 도움이 됐다면 커피 한 잔으로 응원해주세요. 후원은 JLPT MAX덱을
+만들고 개선하는 데 보탬이 됩니다. 감사합니다!
+
+| 후원 방법 | 안내 |
+| --- | --- |
+| [GitHub Sponsors](https://github.com/sponsors/truthyblue?frequency=one-time) | GitHub 계정으로 일회성 또는 정기 후원 |
+| [Buy Me a Coffee](https://buymeacoffee.com/truthyblue) | GitHub 계정 없이 후원. 일회성은 회원가입 없이 가능 |
+
+금액은 자유롭게 선택할 수 있습니다. 후원 금액에 따른 별도 혜택은 없으며,
+향후 출시할 앱의 구매와도 별개입니다.
 
 ## 개발과 기여
 
