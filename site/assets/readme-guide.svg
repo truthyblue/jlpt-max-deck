@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="104" height="36" viewBox="0 0 104 36" role="img" aria-label="시작 가이드">
+  <rect width="104" height="36" rx="6" fill="#252A34"/>
+  
+  <text x="52" y="18" dy=".35em" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600">시작 가이드</text>
+</svg>

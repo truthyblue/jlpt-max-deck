@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="148" height="36" viewBox="0 0 148 36" role="img" aria-label="기본 덱 다운로드">
+  <rect width="148" height="36" rx="6" fill="#C8FF5F"/>
+  <g transform="translate(10 10)" fill="none" stroke="#141820" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v9m-3-3 3 3 3-3M2 11v3h12v-3"/></g>
+  <text x="86" y="18" dy=".35em" text-anchor="middle" fill="#141820" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="13.5" font-weight="600">기본 덱 다운로드</text>
+</svg>

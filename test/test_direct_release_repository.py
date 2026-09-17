@@ -1085,7 +1085,7 @@ class DirectReleaseRepositoryTest(unittest.TestCase):
         names = release_filenames(release["product_version"])
         self.assertIn(
             '<img src="site/assets/brand-lockup.svg" '
-            'alt="JLPT MAX Deck" width="560">',
+            'alt="JLPT MAX Deck" width="480">',
             readme,
         )
         self.assertTrue((ROOT / "site" / "assets" / "brand-lockup.svg").is_file())
