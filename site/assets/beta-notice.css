@@ -1,0 +1,116 @@
+.beta-notice {
+  width: min(400px, calc(100vw - 32px));
+  padding: 30px 28px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 22px;
+  background: #08120e;
+  color: #fffdf7;
+  font-family: Inter, Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  word-break: keep-all;
+  box-shadow: 0 24px 70px rgba(8, 18, 14, 0.24);
+}
+
+.beta-notice:focus,
+.beta-notice:focus-visible {
+  outline: none;
+  box-shadow: 0 24px 70px rgba(8, 18, 14, 0.24) !important;
+}
+
+.beta-notice::backdrop {
+  background: rgba(8, 18, 14, 0.58);
+}
+
+.beta-notice p {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.beta-notice .beta-notice-kicker {
+  margin-bottom: 6px;
+  color: #d9ff57;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.beta-notice h2 {
+  margin: 0 0 12px;
+  color: inherit;
+  font-size: 26px;
+  line-height: 1.25;
+}
+
+.beta-notice ul {
+  display: grid;
+  gap: 4px;
+  margin: 18px 0 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.beta-notice li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.beta-notice li::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #d9ff57;
+}
+
+.beta-notice-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.beta-notice-apply,
+.beta-notice-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.beta-notice-apply {
+  background: #d9ff57;
+  color: #08120e;
+}
+
+.beta-notice-apply:hover {
+  background: #b6e22e;
+}
+
+.beta-notice-close {
+  border-color: rgba(255, 253, 247, 0.4);
+  background: transparent;
+  color: inherit;
+}
+
+.beta-notice-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.beta-notice .beta-notice-deadline {
+  margin-top: 14px;
+  color: rgba(255, 253, 247, 0.62);
+  font-size: 13px;
+  text-align: center;
+}

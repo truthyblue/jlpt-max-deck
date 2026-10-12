@@ -62,5 +62,9 @@
     "suggested_new_cards_min": 10,
     "suggested_audio_new_cards_min": 5,
     "suggested_audio_new_cards_max": 10
+  },
+  "app_beta": {
+    "form_url": "#",
+    "closes_at": "2026-12-01T00:00:00+09:00"
   }
 }

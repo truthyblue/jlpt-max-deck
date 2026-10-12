@@ -9,6 +9,6 @@
 {% include "_components/nav.html.j2" %}
 {% block main %}{% endblock %}
 {% include "_components/footer.html.j2" -%}
-  <script src="{% if absolute_links %}{{ product.site_url }}/{% endif %}assets/site.js" defer></script>
+{% include "_components/beta-notice.html.j2" %}  <script src="{% if absolute_links %}{{ product.site_url }}/{% endif %}assets/site.js" defer></script>
 {% block scripts %}{% endblock %}</body>
 </html>
