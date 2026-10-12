@@ -24,7 +24,10 @@
 
 .beta-notice p {
   margin: 0;
-  text-wrap: balance;
+}
+
+.beta-notice p span {
+  display: inline-block;
 }
 
 .beta-notice .beta-notice-kicker {
