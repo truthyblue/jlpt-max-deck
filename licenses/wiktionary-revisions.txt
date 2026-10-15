@@ -1,0 +1,66 @@
+Wiktionary pages used by the vocabulary-card kanji panel
+
+Each value was taken from the page revision linked below. Wiktionary text is
+available under the Creative Commons Attribution-ShareAlike 4.0 International
+license (https://creativecommons.org/licenses/by-sa/4.0/); the revision link
+identifies the page's contributors through its history, as the Wikimedia Terms
+of Use (section 7) allow. Only character decompositions and character
+glosses (훈·음) were copied; quotations were not.
+
+三	https://en.wiktionary.org/w/index.php?title=%E4%B8%89&oldid=92536907
+令	https://en.wiktionary.org/w/index.php?title=%E4%BB%A4&oldid=92358388
+以	https://en.wiktionary.org/w/index.php?title=%E4%BB%A5&oldid=93374923
+余	https://en.wiktionary.org/w/index.php?title=%E4%BD%99&oldid=93377083
+免	https://en.wiktionary.org/w/index.php?title=%E5%85%8D&oldid=92160260
+前	https://en.wiktionary.org/w/index.php?title=%E5%89%8D&oldid=93409464
+卑	https://en.wiktionary.org/w/index.php?title=%E5%8D%91&oldid=93382395
+印	https://en.wiktionary.org/w/index.php?title=%E5%8D%B0&oldid=92200059
+合	https://en.wiktionary.org/w/index.php?title=%E5%90%88&oldid=92641892
+向	https://en.wiktionary.org/w/index.php?title=%E5%90%91&oldid=92644169
+呂	https://en.wiktionary.org/w/index.php?title=%E5%91%82&oldid=92200102
+命	https://en.wiktionary.org/w/index.php?title=%E5%91%BD&oldid=92695530
+売	https://en.wiktionary.org/w/index.php?title=%E5%A3%B2&oldid=89932407
+巨	https://en.wiktionary.org/w/index.php?title=%E5%B7%A8&oldid=92161032
+憂	https://en.wiktionary.org/w/index.php?title=%E6%86%82&oldid=92491076
+才	https://en.wiktionary.org/w/index.php?title=%E6%89%8D&oldid=92200519
+族	https://en.wiktionary.org/w/index.php?title=%E6%97%8F&oldid=92200644
+旗	https://en.wiktionary.org/w/index.php?title=%E6%97%97&oldid=92200647
+棄	https://en.wiktionary.org/w/index.php?title=%E6%A3%84&oldid=91508473
+様	https://en.wiktionary.org/w/index.php?title=%E6%A7%98&oldid=92161686
+欠	https://en.wiktionary.org/w/index.php?title=%E6%AC%A0&oldid=89922818
+発	https://en.wiktionary.org/w/index.php?title=%E7%99%BA&oldid=92067985
+白	https://en.wiktionary.org/w/index.php?title=%E7%99%BD&oldid=92746945
+竹	https://en.wiktionary.org/w/index.php?title=%E7%AB%B9&oldid=92810007
+索	https://en.wiktionary.org/w/index.php?title=%E7%B4%A2&oldid=93386124
+自	https://en.wiktionary.org/w/index.php?title=%E8%87%AA&oldid=92691450
+血	https://en.wiktionary.org/w/index.php?title=%E8%A1%80&oldid=93374847
+衷	https://en.wiktionary.org/w/index.php?title=%E8%A1%B7&oldid=92527497
+遷	https://en.wiktionary.org/w/index.php?title=%E9%81%B7&oldid=92129505
+鳥	https://en.wiktionary.org/w/index.php?title=%E9%B3%A5&oldid=92725343
+⺀	https://ko.wiktionary.org/w/index.php?title=%E2%BA%80&oldid=4062623
+㐬	https://ko.wiktionary.org/w/index.php?title=%E3%90%AC&oldid=4390192
+㑒	https://ko.wiktionary.org/w/index.php?title=%E3%91%92&oldid=4393185
+㠯	https://ko.wiktionary.org/w/index.php?title=%E3%A0%AF&oldid=4049901
+丂	https://ko.wiktionary.org/w/index.php?title=%E4%B8%82&oldid=3880510
+丄	https://ko.wiktionary.org/w/index.php?title=%E4%B8%84&oldid=4050485
+丗	https://ko.wiktionary.org/w/index.php?title=%E4%B8%97&oldid=3659280
+业	https://ko.wiktionary.org/w/index.php?title=%E4%B8%9A&oldid=4390186
+丩	https://ko.wiktionary.org/w/index.php?title=%E4%B8%A9&oldid=3881206
+乁	https://ko.wiktionary.org/w/index.php?title=%E4%B9%81&oldid=3881452
+乇	https://ko.wiktionary.org/w/index.php?title=%E4%B9%87&oldid=4393154
+亼	https://ko.wiktionary.org/w/index.php?title=%E4%BA%BC&oldid=3501321
+侌	https://ko.wiktionary.org/w/index.php?title=%E4%BE%8C&oldid=4485952
+冝	https://ko.wiktionary.org/w/index.php?title=%E5%86%9D&oldid=3884045
+厷	https://ko.wiktionary.org/w/index.php?title=%E5%8E%B7&oldid=4390293
+叚	https://ko.wiktionary.org/w/index.php?title=%E5%8F%9A&oldid=4012024
+夌	https://ko.wiktionary.org/w/index.php?title=%E5%A4%8C&oldid=3888260
+帀	https://ko.wiktionary.org/w/index.php?title=%E5%B8%80&oldid=3890755
+戉	https://ko.wiktionary.org/w/index.php?title=%E6%88%89&oldid=4389904
+斦	https://ko.wiktionary.org/w/index.php?title=%E6%96%A6&oldid=4010783
+昍	https://ko.wiktionary.org/w/index.php?title=%E6%98%8D&oldid=3895118
+昜	https://ko.wiktionary.org/w/index.php?title=%E6%98%9C&oldid=4393240
+类	https://ko.wiktionary.org/w/index.php?title=%E7%B1%BB&oldid=4390273
+臤	https://ko.wiktionary.org/w/index.php?title=%E8%87%A4&oldid=3904478
+𠂇	https://ko.wiktionary.org/w/index.php?title=%F0%A0%82%87&oldid=4062627
+𠄌	https://ko.wiktionary.org/w/index.php?title=%F0%A0%84%8C&oldid=4062648
+𦰩	https://ko.wiktionary.org/w/index.php?title=%F0%A6%B0%A9&oldid=4052437

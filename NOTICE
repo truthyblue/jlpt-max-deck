@@ -64,7 +64,62 @@ license unrelated project-authored examples, translations, questions, audio,
 or independently protected publisher material. Rights granted directly by
 EDRDG remain unaffected by the additional conditions described below.
 
-4. Project-authored and generated content
+4. Kanjium pitch-accent data
+
+The word pitch-accent display in the JLPT MAX Deck APKG contains an adapted
+subset of the Kanjium pitch-accent database by Uros O. and contributors:
+    https://github.com/mifunetoshiro/kanjium
+    (data/source_files/raw/accents.txt at commit
+    8a0cdaa16d64a281a2048de2eee2ec5e3a440fa6)
+
+Kanjium is licensed under the Creative Commons Attribution-ShareAlike 4.0
+International license (CC BY-SA 4.0):
+    https://creativecommons.org/licenses/by-sa/4.0/
+
+The adapted Kanjium-derived accent values are distributed under the same
+license. Accent displays that Kanjium does not cover, and sentence contours,
+are project estimates from the synthesis inputs and pyopenjtalk-plus.
+
+5. Vocabulary-card kanji panel
+
+The kanji panel on vocabulary cards shows a dictionary-style reading and
+meaning (훈음) for each kanji and, where available, a 모양 line naming the
+kanji's first-level parts. These fields are selected from the following
+sources; a part name not found there comes from the project's own reviewed
+table.
+
+  * libhangul data/hanja/hanja.txt (commit
+    a34aef73378c0992316861bbf13fc914ee7577d9), Copyright (c) 2005,2006
+    Choe Hwanjin, BSD 3-Clause license. The license text is in
+    licenses/libhangul-hanja-BSD-3-Clause.txt.
+  * KanjiVG (commit 422b5538595676da918c288a4230cb5e22a1ee7e),
+    (c) Ulrich Apel, Creative Commons Attribution-ShareAlike 3.0 Unported
+    (https://creativecommons.org/licenses/by-sa/3.0/). Only the first-level
+    components of each kanji are copied: https://kanjivg.tagaini.net/
+    Those KanjiVG-derived 모양 values are distributed under the same license.
+  * BabelStone IDS (IDS.TXT, file date 2025-06-27) by Andrew West:
+    https://babelstone.co.uk/CJK/IDS.TXT. Its header waives rights in the
+    data; attribution is given voluntarily.
+  * CJK Decomposition Data (cjk-decomp, commit
+    c29b391fd6267e7a3541387e03a3dd60b1cd34d1) by Aaron Madlon-Kay, used under
+    the Apache License 2.0 (licenses/cjk-decomp-Apache-2.0.txt). Nine
+    decompositions are copied; the values are not modified.
+  * Wiktionary (English and Korean editions), CC BY-SA 4.0. Each copied
+    decomposition or gloss is listed with its page revision in
+    licenses/wiktionary-revisions.txt.
+  * Unihan (Unicode 17.0.0) and KANJIDIC2 variant data are used to choose
+    which libhangul line applies to a kanji; their values are not shown.
+
+6. Fonts
+
+The APKG embeds Noto Sans KR, Noto Sans JP and Noto Serif JP under the SIL
+Open Font License 1.1 (licenses/OFL-*.txt). It also embeds
+_jlpt_max_kanji_components.woff2, a subset of Jigmo 20230816
+(https://kamichikoichi.github.io/jigmo/) that draws rare kanji parts. Jigmo
+is dedicated to the public domain under CC0 1.0
+(licenses/Jigmo-CC0-1.0.txt).
+
+7. Project-authored and generated content
 
 The JLPT MAX Deck APKG contains project-authored or generated examples, Korean
 translations, practice questions, reviewed learner-facing fields, templates,
@@ -82,7 +137,7 @@ They are feature demonstrations, not a distributable excerpt of the finished
 deck. Their inclusion does not grant permission to extract or repackage deck
 content.
 
-5. Generated audio
+8. Generated audio
 
 The official JLPT MAX Deck APKG contains MP3 files generated locally with:
 
@@ -108,7 +163,7 @@ assets and are not licensed under AGPL merely because the software references
 them. This notice does not grant permission to extract, republish, sell, or
 otherwise redistribute the APKG audio collection.
 
-6. User-supplied publisher PDFs
+9. User-supplied publisher PDFs
 
 No publisher PDF, page image, or extracted publisher text is included in this
 repository or the official release. The optional kanji builder requires only
@@ -124,7 +179,7 @@ Neither the AGPL license nor this notice grants permission to copy or
 redistribute the PDFs, extracted publisher text, or publisher-derived fields
 in a locally generated kanji APKG.
 
-7. Final APKG boundary
+10. Final APKG boundary
 
 The kanji APKG produced locally from the user's Gilbut PDFs is intended for
 that user's personal study only. Do not upload, mirror, sell, share, or
@@ -138,7 +193,7 @@ study, not as deck distribution. This does not authorize sharing an APKG,
 account access, or a public download link. Users remain responsible for the
 AnkiWeb terms and for any independently applicable source terms.
 
-8. No endorsement or warranty
+11. No endorsement or warranty
 
 Publisher names and product names identify source editions only. They do not
 imply sponsorship or endorsement. The software warranty disclaimer and
