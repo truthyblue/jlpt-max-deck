@@ -1,5 +1,8 @@
 {
   "latest_version": "{{ release.version }}",
   "schema_version": 1,
+{%- if product.app_launch %}
+  "app_launch": {{ product.app_launch | tojson }},
+{%- endif %}
   "summary": {{ release_history[0].summary | tojson }}
 }
