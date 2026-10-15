@@ -28,7 +28,7 @@
       <aside class="v2-guide-toc" aria-label="업데이트 목차">
         <strong>업데이트 순서</strong>
         <ol>
-          <li><a href="#before">동기화·백업</a></li>
+          <li><a href="#before">표시·동기화·백업</a></li>
           <li><a href="#ordinary">일반 업데이트</a></li>
           <li><a href="#import-options">가져오기 옵션</a></li>
           <li><a href="#new-order">새 어휘 순서</a></li>
@@ -36,13 +36,15 @@
           <li><a href="#removed-words">삭제된 어휘</a></li>
           <li><a href="#recommended-settings">업데이트 뒤 설정</a></li>
           <li><a href="#verify">업데이트 확인</a></li>
+          <li><a href="#trouble">자주 생기는 문제</a></li>
         </ol>
       </aside>
 
       <div class="v2-guide-content">
         <section class="v2-guide-section" id="before">
           <span class="v2-step-label">00 · 먼저</span>
-          <h2>동기화와 백업</h2>
+          <h2>표시한 카드, 동기화와 백업</h2>
+          <p>표시(★)해 둔 카드가 있다면 먼저 깃발로 바꿔 두세요. 덱 파일을 가져오면 노트의 태그가 새 판으로 바뀌어 표시가 풀립니다. 카드 탐색기에서 <code>tag:marked</code>를 검색해 모두 선택하고 깃발을 붙이면, 업데이트 뒤 <code>flag:1</code>처럼 그 깃발로 다시 찾을 수 있습니다.</p>
           <p>여러 기기를 쓴다면 각 기기의 최신 복습 기록이 AnkiWeb에 반영됐는지 확인합니다. 가능하면 컬렉션 백업도 확인하세요.</p>
           <div class="v2-callout warning"><strong>최상위 <code>JLPT MAX덱</code>을 삭제하지 마세요.</strong><p>기존 카드와 학습 일정은 그대로 두고 새 덱 파일을 가져오면 됩니다.</p></div>
         </section>
@@ -87,6 +89,7 @@
           <h2>빈 카드 정리</h2>
           <p>업데이트한 버전에 따라 아래 카드만 정리합니다.</p>
           <div class="v2-option-grid">
+            <article class="v2-option"><div class="v2-option-head"><h3>v2.1.3 · 중복 어휘 카드</h3></div><p>최신 기본 덱을 가져온 뒤 빈 카드 목록에서 <code>かんごし</code>, <code>おんなの人</code>, <code>どうぞ、よろしく</code>의 어휘·음성·한국어→일본어 카드를 삭제합니다. 같은 단어는 <code>看護師</code>, <code>女の人</code>, <code>どうぞよろしく</code> 카드로 계속 공부합니다.</p></article>
             <article class="v2-option"><div class="v2-option-head"><h3>v2.1.0 · 중복 笠 카드</h3></div><p>최신 기본 덱을 가져온 뒤 빈 카드 목록에서 <code>笠</code>의 어휘·음성·한국어→일본어 카드 3장을 삭제합니다.</p></article>
             <article class="v2-option"><div class="v2-option-head"><h3>v1.2.1 이하 · 가나 보조 카드</h3></div><p><code>JLPT MAX덱 어휘 / 어휘(가나 보조)</code> 빈 카드를 삭제합니다.</p></article>
           </div>
@@ -132,6 +135,17 @@
             <li><div><strong>가져오기가 끝나면 모든 기기에서 다시 전체 동기화합니다.</strong></div></li>
             <li><div><strong>교체된 예전 음성이 남으면 데스크톱 Anki의 도구 → 미디어 검사에서 정리합니다.</strong><p>새 카드와 음성이 정상인지 확인하고 모든 기기의 미디어 동기화를 끝낸 뒤, 미사용 파일 목록을 확인해 삭제하고 다시 동기화합니다. 다른 덱의 미사용 파일도 함께 표시될 수 있으므로 목록을 먼저 확인하세요. 삭제한 파일은 운영체제 휴지통에서 복구할 수 있습니다.</p></div></li>
           </ol>
+        </section>
+
+        <section class="v2-guide-section" id="trouble">
+          <span class="v2-step-label">08 · 문제 해결</span>
+          <h2>자주 생기는 문제</h2>
+          <div class="v2-option-grid">
+            <article class="v2-option"><div class="v2-option-head"><h3>표시한 카드가 사라졌어요</h3></div><p>가져오기가 노트의 태그를 새 판으로 바꾸면서 <code>marked</code> 표시가 풀린 것입니다. 카드와 학습 기록은 그대로입니다. 다음 업데이트부터는 위 방법으로 깃발을 붙여 두세요.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>어휘 덱에 음성 카드가 섞였어요</h3></div><p>음성 덱만 지우고 가져오면 음성 카드가 어휘 덱에 새로 생깁니다. 카드 탐색기에서 <code>"deck:JLPT MAX덱::어휘::N2" card:음성</code>처럼 급수마다 검색해 모두 선택하고 덱 변경으로 <code>JLPT MAX덱::음성::N2</code>에 옮기세요.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>가져왔는데 버전이 그대로예요</h3></div><p>카드의 버전 표시는 노트 유형에 들어 있습니다. 가져오기 화면에서 노트 유형 업데이트를 <code>항상</code>, 노트 유형 병합을 <code>켜기</code>로 두고 같은 파일을 다시 가져오세요.</p></article>
+            <article class="v2-option"><div class="v2-option-head"><h3>N2 문법 카드가 두 장씩 보여요</h3></div><p>v2.1.3에서 같은 문형인 <code>～できるものなら</code>와 <code>～末に</code> 카드를 <code>～ものなら</code>, <code>～すえに</code>로 합쳤습니다. 기존 컬렉션에는 예전 카드가 남지만 내용은 맞으므로 그대로 공부해도 됩니다.</p></article>
+          </div>
           <div class="v2-hero-actions"><a class="v2-button" href="study-guide.html">덱 학습법 보기 <span aria-hidden="true">→</span></a><a class="v2-button v2-button-ghost" href="support.html#import">업데이트 문제 해결 <span aria-hidden="true">→</span></a></div>
         </section>
       </div>
