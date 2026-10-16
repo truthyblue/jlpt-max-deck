@@ -1,25 +1,25 @@
 .beta-notice {
   width: min(400px, calc(100vw - 32px));
   padding: 30px 28px 22px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--band-line);
   border-radius: 22px;
-  background: #08120e;
-  color: #fffdf7;
+  background: var(--band-bg);
+  color: var(--band-ink);
   font-family: Inter, Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 16px;
   line-height: 1.65;
   word-break: keep-all;
-  box-shadow: 0 24px 70px rgba(8, 18, 14, 0.24);
+  box-shadow: 0 24px 70px rgba(43, 38, 32, 0.192);
 }
 
 .beta-notice:focus,
 .beta-notice:focus-visible {
   outline: none;
-  box-shadow: 0 24px 70px rgba(8, 18, 14, 0.24) !important;
+  box-shadow: 0 24px 70px rgba(43, 38, 32, 0.192) !important;
 }
 
 .beta-notice::backdrop {
-  background: rgba(8, 18, 14, 0.58);
+  background: rgba(43, 38, 32, 0.45);
 }
 
 .beta-notice p {
@@ -32,7 +32,7 @@
 
 .beta-notice .beta-notice-kicker {
   margin-bottom: 6px;
-  color: #d9ff57;
+  color: var(--band-accent);
   font-size: 13px;
   font-weight: 900;
 }
@@ -67,7 +67,7 @@
   width: 6px;
   height: 6px;
   border-radius: 999px;
-  background: #d9ff57;
+  background: var(--accent);
 }
 
 .beta-notice-actions {
@@ -93,27 +93,27 @@
 }
 
 .beta-notice-apply {
-  background: #d9ff57;
-  color: #08120e;
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 .beta-notice-apply:hover {
-  background: #b6e22e;
+  background: var(--accent-hover);
 }
 
 .beta-notice-close {
-  border-color: rgba(255, 253, 247, 0.4);
+  border-color: var(--band-line);
   background: transparent;
   color: inherit;
 }
 
 .beta-notice-close:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--band-tint);
 }
 
 .beta-notice .beta-notice-deadline {
   margin-top: 14px;
-  color: rgba(255, 253, 247, 0.62);
+  color: var(--band-muted);
   font-size: 13px;
   text-align: center;
 }

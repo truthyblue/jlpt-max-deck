@@ -259,6 +259,20 @@ class PublicSiteTests(unittest.TestCase):
             self.assertIn("letter-spacing: normal;", header.group(1))
         self.assertEqual(nav_font_values[0], nav_font_values[1])
 
+    def test_home_and_guide_pages_share_the_same_color_tokens(self) -> None:
+        token_blocks: list[str] = []
+        for asset in ("site.css", "showcase.css"):
+            css = (SITE / "assets" / asset).read_text(encoding="utf-8")
+            block = re.match(
+                r"/\* B-tone .*?\n\}\n\n@media \(prefers-color-scheme: dark\) \{.*?\n\}\n",
+                css,
+                re.S,
+            )
+            if block is None:
+                self.fail(f"{asset} does not start with the shared token block")
+            token_blocks.append(block.group(0))
+        self.assertEqual(token_blocks[0], token_blocks[1])
+
     def test_home_and_guide_navigation_use_the_same_spacing(self) -> None:
         expected = {
             ".site-header nav": {"gap": "20px"},
@@ -546,14 +560,11 @@ class PublicSiteTests(unittest.TestCase):
             'class="button button-secondary" id="beginner-guide-link"',
             html,
         )
-        self.assertIn(
-            "border: 1px solid rgba(47, 89, 59, .18);",
+        addon_row = css_declarations(
             (SITE / "assets" / "showcase.css").read_text(encoding="utf-8"),
+            ".optional-addon-row",
         )
-        self.assertNotIn(
-            "border: 1px dashed rgba(47, 89, 59, .27);",
-            (SITE / "assets" / "showcase.css").read_text(encoding="utf-8"),
-        )
+        self.assertTrue(addon_row.get("border", "").startswith("1px solid "))
         for image in (
             "practice-kanji-reading-answer.webp",
             "practice-orthography-answer.webp",
