@@ -2,6 +2,7 @@
   const notice = document.querySelector('[data-beta-notice]');
   const storageKey = 'jlpt-max-app-beta-notice-v1';
   if (!notice?.showModal || Date.now() >= Date.parse(notice.dataset.closesAt)) return;
+  if (location.hash === '#sponsor') return;
 
   try {
     if (localStorage.getItem(storageKey) === 'seen') return;
