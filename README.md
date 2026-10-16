@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.2/JLPT-MAX-Deck-2.1.2.apkg"><img src="site/assets/readme-download.svg" alt="기본 덱 다운로드" height="36"></a>
+  <a href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.3/JLPT-MAX-Deck-2.1.3.apkg"><img src="site/assets/readme-download.svg" alt="기본 덱 다운로드" height="36"></a>
   <a href="https://truthyblue.github.io/jlpt-max-deck/getting-started.html"><img src="site/assets/readme-guide.svg" alt="시작 가이드" height="36"></a><br>
   <a href="https://github.com/sponsors/truthyblue?frequency=one-time"><img src="site/assets/readme-sponsors.svg" alt="GitHub Sponsors" height="36"></a>
   <a href="https://buymeacoffee.com/truthyblue"><img src="site/assets/readme-coffee.svg" alt="Buy Me a Coffee" height="36"></a>
@@ -42,18 +42,18 @@
 
 | 원하는 구성 | 받을 파일 | 추가 준비물 |
 | --- | --- | --- |
-| 문법·어휘·음성·실전 문제·참조표 | `JLPT-MAX-Deck-2.1.2.apkg` | Anki·AnkiMobile·AnkiDroid |
-| 위 구성 + 한자 읽기·쓰기 | 기본 덱 + `JLPT-MAX-kanji-builder-2.1.2.zip` | 지원 PDF 2개, macOS 또는 Windows 컴퓨터 |
+| 문법·어휘·음성·실전 문제·참조표 | `JLPT-MAX-Deck-2.1.3.apkg` | Anki·AnkiMobile·AnkiDroid |
+| 위 구성 + 한자 읽기·쓰기 | 기본 덱 + `JLPT-MAX-kanji-builder-2.1.3.zip` | 지원 PDF 2개, macOS 또는 Windows 컴퓨터 |
 
 ## 덱 구성
 
 | 구성 | 노트 | 카드 | 미디어 |
 | --- | ---: | ---: | ---: |
-| 기본 덱: 문법·어휘·음성·실전 문제·참조표 | 20,650 | 38,967 | 25,513 |
+| 기본 덱: 문법·어휘·음성·실전 문제·참조표 | 20,644 | 38,952 | 25,505 |
 | 선택형 한자 읽기·쓰기 덱 | 4,674 | 4,674 | 2,314 |
-| 두 APKG를 같은 컬렉션에 가져온 전체 | 25,324 | 43,641 | 27,827 |
+| 두 APKG를 같은 컬렉션에 가져온 전체 | 25,318 | 43,626 | 27,819 |
 
-기본 덱에는 문법 3,605개, 어휘 9,159개, 실전 문제
+기본 덱에는 문법 3,599개, 어휘 9,156개, 실전 문제
 7,876개, 참조표 9개와
 단어·예문 음성이 들어 있습니다. 한자
 2,337개는 읽기·쓰기 노트
@@ -88,7 +88,7 @@ v1.3.0부터 한자마다 읽기 카드와 쓰기 카드를 따로 제공합니�
 끝나면 모든 기기에서 다시 전체 동기화하세요. 한자 덱은 현재 버전 빌더로 다시
 만들어 가져와야 새 읽기·쓰기 구조와 쓰기 순서가 모두 적용됩니다.
 
-v2.0.1은 v2.0.0의 문법 3,605개·어휘 9,160개·한국어→일본어 회상 카드와 모바일 내 기록을 그대로 담고,
+v2.0.1은 v2.0.0의 문법 3,599개·어휘 9,160개·한국어→일본어 회상 카드와 모바일 내 기록을 그대로 담고,
 AnkiDroid에서 기록 데이터가 커졌을 때 가져오기나 카드 표시가 실패할 수 있던
 문제를 고쳤습니다. 기존 사용자는 학습 진행 상태를 끄고 기존 노트·노트 유형 업데이트를
 항상, 노트 유형 병합을 켜서 가져옵니다. 새 BCCWJ 중요도 순서를 쓰기 위해 이미
@@ -126,13 +126,13 @@ v2.1.1은 한자 덱 생성 오류와 iPhone·iPad 기본 문법 카드의 후�
 1. [1권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003617)와
    [2권 공식 자료 페이지](https://www.gilbut.co.kr/book/view?bookcode=BN003669)에서
    지원 소책자 PDF를 각각 받습니다.
-2. 같은 v2.1.2의
-   [JLPT-MAX-kanji-builder-2.1.2.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.2/JLPT-MAX-kanji-builder-2.1.2.zip)을
+2. 같은 v2.1.3의
+   [JLPT-MAX-kanji-builder-2.1.3.zip](https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.3/JLPT-MAX-kanji-builder-2.1.3.zip)을
    받아 압축을 완전히 풉니다.
 3. Windows는 `Windows에서 한자 확장 만들기.cmd`, macOS는
    `Mac에서 한자 확장 만들기.command`를 더블클릭합니다.
 4. 첫 번째 PDF 선택창에 1권, 두 번째 선택창에 2권을 고르고 완료될 때까지 기다립니다.
-5. 자동으로 열린 폴더의 `JLPT-MAX-kanji-addon-2.1.2.apkg`를
+5. 자동으로 열린 폴더의 `JLPT-MAX-kanji-addon-2.1.3.apkg`를
    기본 덱과 같은 Anki 컬렉션에 가져옵니다.
 
 PowerShell·터미널 명령이나 Python 설치는 필요하지 않습니다. 빌더는 처음 한 번
@@ -144,7 +144,7 @@ PowerShell·터미널 명령이나 Python 설치는 필요하지 않습니다. �
 
 - 기존 학습 기록을 유지하는 업데이트: [웹 업데이트 가이드](https://truthyblue.github.io/jlpt-max-deck/update.html)
 - 다운로드, 음성, PDF 또는 빌더 오류: [문제 해결](docs/troubleshooting.md)
-- 현재 자산과 검증 결과: [v2.1.2 릴리스 노트](docs/releases/v2.1.2.md)
+- 현재 자산과 검증 결과: [v2.1.3 릴리스 노트](docs/releases/v2.1.3.md)
 - 개인정보와 재배포 범위: [개인정보·저작권·라이선스](docs/privacy-and-licensing.md)
 
 공식 기본 덱 파일을 다시 올리는 대신 이 저장소나 공식 Release 링크를 공유해

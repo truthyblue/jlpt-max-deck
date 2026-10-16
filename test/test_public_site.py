@@ -517,15 +517,15 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn("각 급수의 새 카드 순서", html)
         self.assertIn("급수별 BCCWJ 중요도 순", html)
         self.assertIn("일본어 균형 말뭉치인 BCCWJ의 사용 빈도를 기준으로", html)
-        self.assertIn("말뭉치에서 찾지 못한 54개도", html)
+        self.assertIn("말뭉치에서 찾지 못한 53개도", html)
         self.assertNotIn("priority::", html)
         self.assertNotIn("jlpt::", html)
         self.assertIn('class="essential"', html)
         self.assertIn('class="standard"', html)
         self.assertIn('class="extended"', html)
-        self.assertIn('<i class="legend-essential"></i>같은 표기</dt><dd>8,172', html)
-        self.assertIn('<i class="legend-standard"></i>검토 연결</dt><dd>934', html)
-        self.assertIn('<i class="legend-extended"></i>말뭉치 미관측</dt><dd>54', html)
+        self.assertIn('<i class="legend-essential"></i>같은 표기</dt><dd>8,170', html)
+        self.assertIn('<i class="legend-standard"></i>검토 연결</dt><dd>933', html)
+        self.assertIn('<i class="legend-extended"></i>말뭉치 미관측</dt><dd>53', html)
         release_cta = re.search(r'<a [^>]*id="release-cta"[^>]*>.*?</a>', html)
         if release_cta is None:
             self.fail("release CTA is missing")
@@ -1148,13 +1148,19 @@ class PublicSiteTests(unittest.TestCase):
         feed = json.loads(
             (SITE / "latest-release.json").read_text(encoding="utf-8")
         )
-        self.assertEqual(
-            feed,
-            {
-                "latest_version": release["product_version"],
-                "schema_version": 1,
-            },
-        )
+        history = json.loads(
+            (ROOT / "docs-src" / "data" / "release-history.json").read_text(
+                encoding="utf-8"
+            )
+        )["releases"]
+        expected = {
+            "latest_version": release["product_version"],
+            "schema_version": 1,
+            "summary": history[0]["summary"],
+        }
+        if PRODUCT["app_launch"]:
+            expected["app_launch"] = PRODUCT["app_launch"]
+        self.assertEqual(feed, expected)
 
     def test_social_card_matches_current_direct_release(self) -> None:
         source = (SITE / "assets" / "social-card.svg").read_text(encoding="utf-8")
