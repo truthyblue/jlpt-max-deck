@@ -6,8 +6,8 @@
   --card: #fffdf8;
   --ink: #2b2620;
   --ink-soft: #554d44;
-  --muted: #7a7166;
-  --faint: #a39a8e;
+  --muted: #6b6358;
+  --faint: #6b6358;
   --line: #e3dccf;
   --line-strong: #cfc5b5;
   --ink-tint: rgba(43, 38, 32, 0.05);
@@ -15,7 +15,7 @@
   --accent-hover: #93452f;
   --accent-mid: #d59b84;
   --accent-soft: #f6e3db;
-  --accent-text: #a8523a;
+  --accent-text: #9c4a33;
   --on-accent: #ffffff;
   --sample-bg: #f3f0e9;
   --icon-filter: none;
@@ -41,7 +41,7 @@
     --ink: #efe8dd;
     --ink-soft: #d2c9bc;
     --muted: #a99f92;
-    --faint: #7f766a;
+    --faint: #a99f92;
     --line: #3b342d;
     --line-strong: #4d453c;
     --ink-tint: rgba(239, 232, 221, 0.06);
@@ -259,7 +259,7 @@ main:focus {
 
 .site-header .nav-primary-links a:hover,
 .site-header .nav-primary-links a[aria-current="page"] {
-  background: var(--band-tint);
+  background: var(--band-card);
 }
 
 .nav-label-compact,
@@ -276,7 +276,7 @@ main:focus {
   min-height: 44px;
   padding: 0 14px;
   color: var(--band-muted);
-  background: var(--band-tint);
+  background: var(--band-card);
   border: 1px solid var(--band-line);
   border-radius: 999px;
   font-size: 16px;
@@ -2017,7 +2017,7 @@ main:focus {
   align-items: center;
   padding: 12px 15px;
   color: var(--ink-soft);
-  background: #f3f0e9;
+  background: var(--sample-bg);
   border-radius: 0 0 14px 14px;
   font-size: 14px;
   font-weight: 720;
@@ -2026,8 +2026,8 @@ main:focus {
 .practice-flip-state {
   padding: 3px 8px;
   color: var(--accent-text);
-  background: rgba(168, 82, 58, .28);
-  border: 1px solid rgba(168, 82, 58, .16);
+  background: var(--accent-soft);
+  border: 1px solid var(--line);
   border-radius: 999px;
   font-size: 11px;
   font-weight: 850;
@@ -2035,8 +2035,8 @@ main:focus {
 
 .practice-slide.is-flipped .practice-flip-state {
   color: var(--accent-text);
-  background: rgba(168, 82, 58, .22);
-  border-color: rgba(168, 82, 58, .14);
+  background: var(--accent-soft);
+  border-color: var(--line);
 }
 
 .practice-answer-link {
@@ -2324,7 +2324,7 @@ main:focus {
 .reference-unit-list span {
   padding: 6px 11px;
   color: var(--accent-text);
-  background: rgba(168, 82, 58, .22);
+  background: var(--accent-soft);
   border: 1px solid rgba(168, 82, 58, .2);
   border-radius: 999px;
   font-family: var(--font-word);
@@ -2466,7 +2466,7 @@ main:focus {
 }
 
 .meaning-focus-merge span:first-child {
-  color: var(--band-muted);
+  color: var(--band-ink);
   background: var(--band-tint);
   box-shadow: inset 0 0 0 1px var(--band-line);
 }
@@ -2788,7 +2788,7 @@ main:focus {
 .optional-addon-row > span {
   padding: 6px 9px;
   color: var(--accent-text);
-  background: rgba(168, 82, 58, .24);
+  background: var(--accent-soft);
   border-radius: 999px;
   font-size: 12px;
   font-weight: 850;

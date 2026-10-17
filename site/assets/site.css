@@ -6,8 +6,8 @@
   --card: #fffdf8;
   --ink: #2b2620;
   --ink-soft: #554d44;
-  --muted: #7a7166;
-  --faint: #a39a8e;
+  --muted: #6b6358;
+  --faint: #6b6358;
   --line: #e3dccf;
   --line-strong: #cfc5b5;
   --ink-tint: rgba(43, 38, 32, 0.05);
@@ -15,7 +15,7 @@
   --accent-hover: #93452f;
   --accent-mid: #d59b84;
   --accent-soft: #f6e3db;
-  --accent-text: #a8523a;
+  --accent-text: #9c4a33;
   --on-accent: #ffffff;
   --sample-bg: #f3f0e9;
   --icon-filter: none;
@@ -41,7 +41,7 @@
     --ink: #efe8dd;
     --ink-soft: #d2c9bc;
     --muted: #a99f92;
-    --faint: #7f766a;
+    --faint: #a99f92;
     --line: #3b342d;
     --line-strong: #4d453c;
     --ink-tint: rgba(239, 232, 221, 0.06);
@@ -274,7 +274,7 @@ a {
 
 .site-header .nav-primary-links a:hover,
 .site-header .nav-primary-links a[aria-current="page"] {
-  background: var(--band-tint);
+  background: var(--band-card);
 }
 
 .nav-label-compact,
@@ -290,7 +290,7 @@ a {
   min-height: 44px;
   padding: 0 14px;
   color: var(--band-muted);
-  background: var(--band-tint);
+  background: var(--band-card);
   border: 1px solid var(--band-line);
   border-radius: 999px;
   font-size: 16px;
@@ -983,6 +983,7 @@ a {
 
 .v2-option .v2-option-button {
   min-height: 40px;
+  color: var(--on-accent);
   margin-top: 16px;
   padding-inline: 15px;
   font-size: 13px;
