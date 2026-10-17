@@ -59,10 +59,10 @@
 :root {
   --max: 1180px;
   --site: min(1240px, calc(100vw - 48px));
-  --radius-sm: 12px;
-  --radius: 22px;
-  --radius-lg: 36px;
-  --shadow: 0 24px 70px rgba(43, 38, 32, 0.1);
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 * {
@@ -145,7 +145,7 @@ a {
   top: 12px;
   left: 12px;
   padding: 10px 14px;
-  border-radius: 8px;
+  border-radius: 6px;
   background: var(--accent);
   color: var(--on-accent);
   font-weight: 850;
@@ -205,7 +205,7 @@ a {
   height: 52px;
   color: var(--on-accent);
   background: var(--accent);
-  border-radius: 12px;
+  border-radius: 6px;
   font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   transform: rotate(-4deg);
 }
@@ -441,7 +441,7 @@ a {
   height: 42px;
   place-items: center;
   margin-bottom: 54px;
-  border-radius: 13px;
+  border-radius: 6px;
   background: var(--paper-2);
   font-size: 18px;
   font-weight: 900;
@@ -552,7 +552,7 @@ a {
   height: 52px;
   place-items: center;
   margin-bottom: 34px;
-  border-radius: 13px;
+  border-radius: 6px;
   background: var(--paper);
 }
 
@@ -759,7 +759,7 @@ a {
 
 .v2-faq details:target {
   scroll-margin-top: 120px;
-  border-radius: 8px;
+  border-radius: 6px;
   background: rgba(168, 82, 58, 0.16);
 }
 
@@ -916,10 +916,13 @@ a {
   letter-spacing: 0.13em;
 }
 
-.v2-download-card h3 {
+.v2-download-card h3,
+.v2-download-card .v2-card-query {
   margin: 7px 0 5px;
+  color: inherit;
   font-family: var(--font-mono);
   font-size: clamp(16px, 2.3vw, 22px);
+  font-weight: 700;
   word-break: break-all;
 }
 
@@ -1095,7 +1098,7 @@ a {
   right: 9px;
   padding: 7px 10px;
   border: 1px solid var(--band-line);
-  border-radius: 8px;
+  border-radius: 6px;
   background: var(--band-tint);
   color: var(--band-ink);
   font-size: 11px;
@@ -1198,10 +1201,49 @@ a {
   list-style: none;
 }
 
+.v2-release-older {
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+}
+
+.v2-release-older > summary {
+  position: relative;
+  padding: 18px 56px 18px 20px;
+  cursor: pointer;
+  font-weight: 800;
+  list-style: none;
+}
+
+.v2-release-older > summary::-webkit-details-marker {
+  display: none;
+}
+
+.v2-release-older > summary::after {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  content: "+";
+  color: var(--accent-text);
+  font-size: 26px;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.v2-release-older[open] > summary::after {
+  content: "−";
+}
+
+.v2-release-older .v2-release-history {
+  margin: 0;
+  padding: 0 16px 16px;
+}
+
 .v2-release-entry {
   padding: 24px;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 10px;
   background: var(--card);
 }
 
@@ -1266,7 +1308,7 @@ a {
   gap: 5px;
   margin: 18px 0 0;
   padding: 14px 16px;
-  border-radius: 12px;
+  border-radius: 6px;
   background: var(--paper-2);
   color: var(--ink-soft);
   font-size: 13px;
@@ -1668,7 +1710,7 @@ a {
   .brand-mark {
     width: 44px;
     height: 44px;
-    border-radius: 10px;
+    border-radius: 6px;
   }
 
   .brand-mark-jlpt {
@@ -1797,7 +1839,7 @@ a {
   width: 230px;
   padding: 6px;
   border: 1px solid var(--band-line);
-  border-radius: 14px;
+  border-radius: 10px;
   background: var(--band-card);
   box-shadow: 0 12px 32px #0006;
 }
@@ -1807,7 +1849,7 @@ a {
   gap: 9px;
   min-height: 44px;
   padding: 8px 10px;
-  border-radius: 8px;
+  border-radius: 6px;
   color: var(--band-ink);
   font-size: 14px;
   font-weight: 650;

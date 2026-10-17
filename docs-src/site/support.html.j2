@@ -193,7 +193,11 @@
           <span class="v2-step-label">버전별</span>
           <h2>업데이트 기록</h2>
           <p>최신 버전에서 무엇이 바뀌었는지 확인하는 곳입니다. 덱을 업데이트하려면 먼저 <a href="update.html">업데이트 방법</a>을 보세요.</p>
-          <ol class="v2-release-history">{% for item in release_history %}
+          <ol class="v2-release-history">{% for item in release_history %}{% if loop.index == 3 %}
+          </ol>
+          <details class="v2-release-older">
+            <summary>이전 버전 {{ release_history | length - 2 }}개 보기</summary>
+          <ol class="v2-release-history">{% endif %}
             <li class="v2-release-entry{% if item.current %} is-current{% endif %}">
               <header>
                 <div><strong>v{{ item.version }}</strong>{% if item.label %}<span>{{ item.label }}</span>{% endif %}</div>
@@ -215,7 +219,8 @@
               </div>
 {% endif %}
             </li>{% endfor %}
-          </ol>
+          </ol>{% if release_history | length > 2 %}
+          </details>{% endif %}
         </section>
       </div>
     </div>
