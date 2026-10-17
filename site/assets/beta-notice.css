@@ -9,13 +9,13 @@
   font-size: 16px;
   line-height: 1.65;
   word-break: keep-all;
-  box-shadow: 0 24px 70px rgba(43, 38, 32, 0.192);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .beta-notice:focus,
 .beta-notice:focus-visible {
   outline: none;
-  box-shadow: 0 24px 70px rgba(43, 38, 32, 0.192) !important;
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06) !important;
 }
 
 .beta-notice::backdrop {

@@ -317,7 +317,7 @@ a {
 
 .v2-button:hover {
   background: var(--accent-hover);
-  box-shadow: 0 10px 30px rgba(168, 82, 58, 0.18);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
   transform: translateY(-2px);
 }
 
@@ -328,7 +328,7 @@ a {
 
 .v2-button-dark:hover {
   background: var(--ink-soft);
-  box-shadow: 0 10px 30px rgba(43, 38, 32, 0.16);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .button-download-icon {
@@ -1806,7 +1806,7 @@ a {
   border: 1px solid var(--band-line);
   border-radius: 10px;
   background: var(--band-card);
-  box-shadow: 0 12px 32px #0006;
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 .sponsor-options a {
   display: flex;

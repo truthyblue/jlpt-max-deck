@@ -288,25 +288,11 @@ main:focus {
   min-height: 860px;
   padding: 150px max(24px, calc((100vw - 1240px) / 2)) 110px;
   color: var(--band-ink);
-  background:
-    radial-gradient(circle at 72% 32%, rgba(168, 82, 58, .12), transparent 27%),
-    radial-gradient(circle at 12% 90%, rgba(168, 82, 58, .07), transparent 28%),
-    var(--band-bg);
+  background: var(--band-bg);
   isolation: isolate;
   overflow: hidden;
 }
 
-.hero-noise {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  opacity: .28;
-  background-image:
-    linear-gradient(var(--band-tint) 1px, transparent 1px),
-    linear-gradient(90deg, var(--band-tint) 1px, transparent 1px);
-  background-size: 54px 54px;
-  mask-image: linear-gradient(to bottom, transparent 4%, black 36%, black 80%, transparent);
-}
 
 .hero-copy {
   max-width: 710px;
@@ -377,23 +363,23 @@ main:focus {
 .button-primary {
   color: var(--on-accent);
   background: var(--accent);
-  box-shadow: 0 14px 42px rgba(168, 82, 58, .15);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .button-primary:hover {
-  box-shadow: 0 18px 52px rgba(168, 82, 58, .24);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .button-secondary {
   color: var(--ink);
   background: var(--card);
   border-color: var(--line-strong);
-  box-shadow: 0 12px 34px rgba(43, 38, 32, 0.08);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .button-secondary:hover {
   background: var(--card);
-  box-shadow: 0 16px 42px rgba(43, 38, 32, 0.12);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .button-download-icon {
@@ -470,7 +456,7 @@ main:focus {
   height: 7px;
   background: var(--accent);
   border-radius: 50%;
-  box-shadow: 0 0 14px var(--accent);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 /* Learner-first deck showcase */
@@ -493,7 +479,7 @@ main:focus {
   background: linear-gradient(155deg, var(--band-tint), var(--band-tint));
   border: 1px solid var(--band-line);
   border-radius: 10px;
-  box-shadow: 0 48px 120px rgba(43, 38, 32, 0.304);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
   backdrop-filter: blur(15px);
   transform: rotate(1.1deg);
 }
@@ -548,7 +534,7 @@ main:focus {
   background: var(--line-strong);
   border: 1px solid var(--line);
   border-radius: 10px;
-  box-shadow: 0 30px 80px rgba(43, 38, 32, 0.112);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
   overflow: hidden;
 }
 
@@ -784,7 +770,7 @@ main:focus {
   background: var(--band-card);
   border: 1px solid var(--band-line);
   border-radius: 999px;
-  box-shadow: 0 5px 18px rgba(43, 38, 32, 0.16);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
   white-space: nowrap;
 }
 
@@ -851,7 +837,7 @@ main:focus {
   background: var(--band-card);
   border: 1px solid var(--band-line);
   border-radius: 999px;
-  box-shadow: 0 5px 18px rgba(43, 38, 32, 0.144);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
   font-size: 12px;
   line-height: 1.25;
   white-space: nowrap;
@@ -932,7 +918,7 @@ main:focus {
   padding: 10px;
   background: var(--band-card);
   border-radius: 10px;
-  box-shadow: 0 20px 60px rgba(43, 38, 32, 0.088);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .support-register-sample {
@@ -972,7 +958,7 @@ main:focus {
   background: var(--band-card);
   border: 1px solid var(--band-line);
   border-radius: 999px;
-  box-shadow: 0 7px 20px rgba(43, 38, 32, 0.192);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
   font-size: 13px;
   font-weight: 800;
   letter-spacing: -.01em;
@@ -1080,7 +1066,7 @@ main:focus {
   background: var(--band-card);
   border: 1px solid var(--band-line);
   border-radius: 999px;
-  box-shadow: 0 5px 18px rgba(43, 38, 32, 0.16);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
   content: "‘괜찮다’ 뜻에만";
   font-size: 12px;
   font-weight: 820;
@@ -1188,7 +1174,7 @@ main:focus {
   background: var(--band-card);
   border: 1px solid var(--line-strong);
   border-radius: 10px;
-  box-shadow: 0 18px 48px rgba(43, 38, 32, 0.128);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .kanji-front-sample figcaption {
@@ -1229,7 +1215,7 @@ main:focus {
 .kanji-card-sample {
   background: var(--band-card);
   border-color: var(--line-strong);
-  box-shadow: 0 38px 100px rgba(43, 38, 32, 0.176);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .kanji-card-sample .anki-frame-bar,
@@ -1274,7 +1260,7 @@ main:focus {
   background: var(--band-card);
   border: 1px solid var(--band-line);
   border-radius: 999px;
-  box-shadow: 0 8px 24px rgba(43, 38, 32, 0.192);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
   font-size: 15px;
   font-weight: 800;
   letter-spacing: -.01em;
@@ -1853,7 +1839,7 @@ main:focus {
   background: var(--band-raised);
   border: 1px solid var(--band-line);
   border-radius: 10px;
-  box-shadow: 0 28px 80px rgba(43, 38, 32, 0.176);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
   overflow: hidden;
 }
 
@@ -2006,7 +1992,7 @@ main:focus {
 
 .practice-slide.is-flipped .practice-card-back {
   border-color: rgba(168, 82, 58, .72);
-  box-shadow: 0 28px 80px rgba(43, 38, 32, 0.224), 0 0 0 1px rgba(168, 82, 58, .18);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06), 0 0 0 1px rgba(168, 82, 58, .18);
 }
 
 .practice-card-face figcaption {
@@ -2137,7 +2123,7 @@ main:focus {
   color: var(--band-muted);
   background: var(--band-card);
   border-radius: 10px;
-  box-shadow: 0 38px 100px rgba(43, 38, 32, 0.16);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .reference-preview-card {
@@ -2825,11 +2811,11 @@ main:focus {
   width: 100%;
   justify-content: space-between;
   border-color: var(--line);
-  box-shadow: 0 16px 42px rgba(168, 82, 58, .18);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .kanji-guide-cta:hover {
-  box-shadow: 0 20px 50px rgba(168, 82, 58, .26);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .start-actions {
@@ -3221,19 +3207,19 @@ main:focus {
 .closing .button-primary {
   color: var(--accent-text);
   background: var(--card);
-  box-shadow: 0 18px 45px rgba(43, 38, 32, 0.16);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .closing .button-star {
   color: var(--on-accent);
   background: transparent;
   border-color: rgba(255, 255, 255, .7);
-  box-shadow: 0 14px 36px rgba(43, 38, 32, 0.096);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .closing .button-star:hover {
   background: rgba(255, 255, 255, .12);
-  box-shadow: 0 18px 45px rgba(43, 38, 32, 0.136);
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 
 .closing .button-download-icon {
@@ -4426,7 +4412,7 @@ footer .disclaimer {
   border: 1px solid var(--band-line);
   border-radius: 10px;
   background: var(--band-card);
-  box-shadow: 0 12px 32px #0006;
+  box-shadow: 0 1px 2px rgba(43, 38, 32, 0.06);
 }
 .sponsor-options a {
   display: flex;
