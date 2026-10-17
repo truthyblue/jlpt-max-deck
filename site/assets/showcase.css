@@ -192,9 +192,6 @@ main:focus {
   color: var(--band-muted);
 }
 
-
-
-
 .site-header nav {
   display: flex;
   align-items: center;
@@ -247,7 +244,6 @@ main:focus {
 .mobile-label {
   display: none;
 }
-
 
 .nav-action {
   display: inline-flex;
@@ -310,21 +306,6 @@ main:focus {
     linear-gradient(90deg, var(--band-tint) 1px, transparent 1px);
   background-size: 54px 54px;
   mask-image: linear-gradient(to bottom, transparent 4%, black 36%, black 80%, transparent);
-}
-
-.hero-glyphs {
-  position: absolute;
-  z-index: -1;
-  right: -60px;
-  bottom: -115px;
-  color: rgba(168, 82, 58, .04);
-  font-family: var(--font-word);
-  font-size: clamp(160px, 22vw, 350px);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -.14em;
-  -webkit-text-stroke: 1px rgba(168, 82, 58, .1);
-  white-space: nowrap;
 }
 
 .hero-copy {
@@ -491,7 +472,6 @@ main:focus {
   border-radius: 50%;
   box-shadow: 0 0 14px var(--accent);
 }
-
 
 /* Learner-first deck showcase */
 .hero {
@@ -1119,7 +1099,6 @@ main:focus {
   border-radius: 10px;
 }
 
-
 .coverage-heading h3 {
   margin: 0;
   font-size: clamp(32px, 3.5vw, 49px);
@@ -1655,7 +1634,6 @@ main:focus {
   background: var(--band-card);
   border-radius: 10px;
 }
-
 
 .priority-copy h3 {
   margin: 13px 0 0;
@@ -2645,7 +2623,6 @@ main:focus {
   margin-bottom: 70px;
 }
 
-
 .section-heading h2,
 .start-copy h2,
 .closing h2 {
@@ -2668,7 +2645,6 @@ main:focus {
   display: block;
   max-width: 780px;
 }
-
 
 .section-heading.compact h2 + p {
   max-width: 680px;
@@ -2988,7 +2964,6 @@ main:focus {
   transform: translateX(4px);
 }
 
-
 .source-section {
   background: var(--paper-2);
 }
@@ -3228,22 +3203,9 @@ main:focus {
   isolation: isolate;
 }
 
-.closing-kanji {
-  position: absolute;
-  z-index: -1;
-  right: 4vw;
-  bottom: -19vw;
-  color: rgba(255, 255, 255, .08);
-  font-family: var(--font-word);
-  font-size: min(65vw, 840px);
-  font-weight: 900;
-  line-height: 1;
-}
-
 .closing-copy {
   max-width: 790px;
 }
-
 
 .closing h2 {
   font-size: clamp(54px, 7.5vw, 102px);
@@ -3402,10 +3364,6 @@ footer .disclaimer {
     margin-top: 35px;
   }
 
-
-
-
-
   .boundary-card h3 {
     margin-top: 60px;
   }
@@ -3483,9 +3441,6 @@ footer .disclaimer {
     font-size: 18px;
   }
 
-
-
-
   .nav-action {
     min-height: 44px;
     padding: 0 12px;
@@ -3556,8 +3511,6 @@ footer .disclaimer {
   .section-heading {
     display: block;
   }
-
-
 
   .section-heading h2 + p {
     margin-top: 24px;
@@ -3653,8 +3606,6 @@ footer .disclaimer {
     min-height: 400px;
   }
 
-
-
   .closing {
     min-height: 540px;
     padding-top: 108px;
@@ -3700,9 +3651,6 @@ footer .disclaimer {
     gap: 9px;
     font-size: 16px;
   }
-
-
-
 
   .nav-action {
     min-height: 44px;
@@ -3878,8 +3826,6 @@ footer .disclaimer {
     margin-bottom: 44px;
   }
 
-
-
   .section-heading h2,
   .start-copy h2,
   .closing h2 {
@@ -4051,20 +3997,6 @@ footer .disclaimer {
     display: flex;
     margin: 9px 0 0;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   .mini-card-sample,
   .support-register-sample {
@@ -4373,23 +4305,11 @@ footer .disclaimer {
     margin-top: 20px;
   }
 
-
-
-
-
-
-
-
-
-
-
   .source-links a,
   .text-link,
   .boundary-links a {
     min-height: 44px;
   }
-
-
 
   .source-row {
     padding: 18px 4px;
