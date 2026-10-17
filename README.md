@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://truthyblue.github.io/jlpt-max-deck/">
-    <img src="site/assets/brand-lockup.svg" alt="JLPT MAX Deck" width="480">
+    <picture><source media="(prefers-color-scheme: dark)" srcset="site/assets/brand-lockup-dark.svg"><img src="site/assets/brand-lockup.svg" alt="JLPT MAX Deck" width="480"></picture>
   </a>
 </p>
 
@@ -10,10 +10,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.3/JLPT-MAX-Deck-2.1.3.apkg"><img src="site/assets/readme-download.svg" alt="기본 덱 다운로드" height="36"></a>
-  <a href="https://truthyblue.github.io/jlpt-max-deck/getting-started.html"><img src="site/assets/readme-guide.svg" alt="시작 가이드" height="36"></a><br>
-  <a href="https://github.com/sponsors/truthyblue?frequency=one-time"><img src="site/assets/readme-sponsors.svg" alt="GitHub Sponsors" height="36"></a>
-  <a href="https://buymeacoffee.com/truthyblue"><img src="site/assets/readme-coffee.svg" alt="Buy Me a Coffee" height="36"></a>
+  <a href="https://github.com/truthyblue/jlpt-max-deck/releases/download/v2.1.3/JLPT-MAX-Deck-2.1.3.apkg"><picture><source media="(prefers-color-scheme: dark)" srcset="site/assets/readme-download-dark.svg"><img src="site/assets/readme-download.svg" alt="기본 덱 다운로드" height="36"></picture></a>
+  <a href="https://truthyblue.github.io/jlpt-max-deck/getting-started.html"><picture><source media="(prefers-color-scheme: dark)" srcset="site/assets/readme-guide-dark.svg"><img src="site/assets/readme-guide.svg" alt="시작 가이드" height="36"></picture></a><br>
+  <a href="https://github.com/sponsors/truthyblue?frequency=one-time"><picture><source media="(prefers-color-scheme: dark)" srcset="site/assets/readme-sponsors-dark.svg"><img src="site/assets/readme-sponsors.svg" alt="GitHub Sponsors" height="36"></picture></a>
+  <a href="https://buymeacoffee.com/truthyblue"><picture><source media="(prefers-color-scheme: dark)" srcset="site/assets/readme-coffee-dark.svg"><img src="site/assets/readme-coffee.svg" alt="Buy Me a Coffee" height="36"></picture></a>
 </p>
 
 ## 어디서 시작하나요?
