@@ -8,7 +8,7 @@ import re
 import statistics
 import unicodedata
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from io import BytesIO
 from pathlib import Path
 from types import MappingProxyType
@@ -27,6 +27,12 @@ GILBUT_GLYPH_PNG_PADDING_PIXELS = 16
 GILBUT_MEANING_WORD_GAP_POINTS = 0.5
 EXPECTED_GILBUT_SLOT_COUNT = 2_337
 GILBUT_GLYPH_EQUIVALENTS = MappingProxyType({"戶": ("戸",)})
+# 음 that the printed meaning gets wrong for a kanji's own reading, as
+# (printed, corrected). The pinned PDFs must print each glyph once with either.
+GILBUT_MEANING_SOUND_CORRECTIONS = MappingProxyType({
+    # 娠 is read シン, but the lower volume prints 妊's 음 (임) for it.
+    "娠": ("임", "신"),
+})
 _NUMBERED_SLOT_RE = re.compile(r"[0-9]{4}")
 
 
@@ -431,7 +437,38 @@ def extract_all_gilbut_kanji_slots(
         slot.sequence for slot in slots
     ] != list(range(1, EXPECTED_GILBUT_SLOT_COUNT + 1)):
         raise PublicKanjiError("combined Gilbut kanji sequence changed")
-    return slots
+    return corrected_gilbut_meanings(slots)
+
+
+def corrected_gilbut_meanings(
+    slots: Sequence[GilbutKanjiSlot],
+) -> list[GilbutKanjiSlot]:
+    """Replace each known misprinted 음, failing if its glyph is not printed once."""
+    corrected: list[GilbutKanjiSlot] = []
+    seen = {glyph: 0 for glyph in GILBUT_MEANING_SOUND_CORRECTIONS}
+    for slot in slots:
+        sounds = GILBUT_MEANING_SOUND_CORRECTIONS.get(slot.glyph_text)
+        if sounds is not None:
+            seen[slot.glyph_text] += 1
+            printed, expected = sounds
+            # Each sense ends in its 음: "아이 밸 임·임신할 임" or "① … 임 ② … 임".
+            senses = re.split(r"\s*(?:[·,]|[①-⑳])\s*", slot.meaning)
+            endings = {sense.rsplit(" ", 1)[-1] for sense in senses if sense}
+            if not endings <= {printed, expected}:
+                raise PublicKanjiError(
+                    f"Gilbut meaning correction no longer applies: {slot.glyph_text}:{slot.meaning}"
+                )
+            slot = replace(
+                slot,
+                meaning=re.sub(
+                    rf"(?<=\s){printed}(?=$|\s*[·,①-⑳])", expected, slot.meaning
+                ),
+            )
+        corrected.append(slot)
+    missing = sorted(glyph for glyph, count in seen.items() if count != 1)
+    if missing:
+        raise PublicKanjiError(f"Gilbut meaning correction glyph is not printed once: {missing}")
+    return corrected
 
 
 def gilbut_glyph_media_filename(slot: GilbutKanjiSlot) -> str:
