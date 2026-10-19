@@ -42,6 +42,10 @@ KANJI_REQUIRED_STATIC_MEDIA = {
 EXPECTED_KANJI_STATIC_MEDIA = (
     EXPECTED_KANJI_STROKE_MEDIA + len(KANJI_REQUIRED_STATIC_MEDIA)
 )
+# The builder writes the learner's 일상무따 훈음 here. The kanji templates reference
+# it so Anki imports it, and vocabulary cards read it in place of dictionary 훈음.
+# The core APKG and the skeleton never contain it.
+KANJI_ADDON_HUN_EUM_MEDIA = "_jlpt_max_ilsang_muutta_hun_eum_v1.json"
 KANJI_FIELDS = (
     "KanjiID",
     "Volume",

@@ -30,6 +30,7 @@ from direct_release_contract import (
     EXPECTED_KANJI_STATIC_MEDIA,
     EXPECTED_KANJI_STROKE_MEDIA,
     EXPECTED_KANJI_VECTOR_GLYPHS,
+    KANJI_ADDON_HUN_EUM_MEDIA,
     KANJI_DECK_ROOT,
     KANJI_FIELDS,
     KANJI_NOTETYPE_NAME,
@@ -302,6 +303,37 @@ def _fill_note(
     return media_record
 
 
+def _glyph_characters(note: Mapping[str, str]) -> tuple[str, ...]:
+    """Return the text characters a filled note shows; an image glyph has none."""
+    variants = _VARIANT_GLYPH_RE.fullmatch(note["GlyphHTML"])
+    if variants:
+        return tuple(html.unescape(value) for value in variants.groups())
+    match = _TEXT_GLYPH_RE.fullmatch(note["GlyphHTML"])
+    if match is None:
+        return ()
+    # A composite text glyph such as 艹/䒑 or 兎(兔) names both characters.
+    return tuple(
+        value for value in re.split(r"[/()]", html.unescape(match.group(1))) if value
+    )
+
+
+def _hun_eum_media(
+    notes: Sequence[Mapping[str, str]],
+    slots: Sequence[GilbutKanjiSlot],
+) -> bytes:
+    """Map each 일상무따 character to its 훈음; the first note in book order wins."""
+    table: dict[str, str] = {}
+    for note, slot in zip(notes, slots, strict=True):
+        for character in _glyph_characters(note):
+            table.setdefault(unicodedata.normalize("NFC", character), slot.meaning)
+    return json.dumps(
+        {"hun_eum": table, "schema_version": 1},
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+
+
 def _verify_addon(path: Path, expected_media: Mapping[str, str]) -> dict[str, Any]:
     with tempfile.TemporaryDirectory(prefix="jlpt-kanji-addon-verify-") as directory:
         collection = _import_package(path, Path(directory) / "verify.anki2")
@@ -341,6 +373,10 @@ def _verify_addon(path: Path, expected_media: Mapping[str, str]) -> dict[str, An
     }
     if stroke_references != packaged_strokes:
         raise KanjiAddonBuildError("kanji addon stroke media is incomplete")
+    if packaged_media.get(KANJI_ADDON_HUN_EUM_MEDIA) != expected_media.get(
+        KANJI_ADDON_HUN_EUM_MEDIA
+    ):
+        raise KanjiAddonBuildError("kanji addon 훈음 table is missing or changed")
     if packaged_media != dict(expected_media):
         raise KanjiAddonBuildError("kanji addon media changed")
     return {
@@ -425,6 +461,9 @@ def build_kanji_addon(
             EXPECTED_KANJI_VECTOR_GLYPHS + EXPECTED_KANJI_STATIC_MEDIA
         ):
             raise KanjiAddonBuildError("kanji vector glyph count changed")
+        hun_eum = _hun_eum_media(notes, aligned_slots)
+        (media_root / KANJI_ADDON_HUN_EUM_MEDIA).write_bytes(hun_eum)
+        expected_media[KANJI_ADDON_HUN_EUM_MEDIA] = hashlib.sha256(hun_eum).hexdigest()
         if len(_kanji_stroke_references(families)) != EXPECTED_KANJI_STROKE_MEDIA:
             raise KanjiAddonBuildError("kanji stroke media reference count changed")
         package = staged / names["kanji_addon"]
