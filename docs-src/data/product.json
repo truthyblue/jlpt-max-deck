@@ -63,9 +63,9 @@
     "suggested_audio_new_cards_min": 5,
     "suggested_audio_new_cards_max": 10
   },
-  "app_beta": {
-    "form_url": "https://docs.google.com/forms/d/e/1FAIpQLScTC-I-mirvBantXhGfZOb599eLCohncYKWqedLDi0Dz-JyAQ/viewform",
-    "closes_at": "2026-12-01T00:00:00+09:00"
+  "app_alert": {
+    "form_url": "https://docs.google.com/forms/d/e/1FAIpQLSfiG9Jp3aRvHGcU-9rp2RUieJ5rWnHJXqdolhZzrY98UKp2kg/viewform",
+    "closes_at": "2027-01-01T00:00:00+09:00"
   },
   "app_launch": null
 }
