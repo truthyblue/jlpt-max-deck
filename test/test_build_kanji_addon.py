@@ -22,7 +22,9 @@ from build_kanji_addon import (  # noqa: E402
 )
 from public_kanji import (  # noqa: E402
     GilbutKanjiSlot,
+    PublicKanjiError,
     _normalized_gilbut_meaning,
+    corrected_gilbut_meanings,
     gilbut_vector_glyph_png,
 )
 
@@ -59,6 +61,14 @@ TEST_LIFECYCLE = {
             ),
             "not_subsumed_by": (
                 "single-class text glyph tests can pass while the builder rejects the composite-class notes beginning at K000036"
+            ),
+        },
+        "KanjiAddonTest.test_misprinted_meaning_is_corrected_exactly_once": {
+            "protected_contract": (
+                "the builder shows 娠 with its own 음 신 instead of the book's misprinted 임, keeps every 훈, and fails if 娠 stops appearing exactly once or prints another 음"
+            ),
+            "not_subsumed_by": (
+                "geometry and fill tests copy whatever the PDF prints, so a misprint would reach the learner unchanged"
             ),
         },
         "KanjiAddonTest.test_pdf_meaning_geometry_preserves_korean_word_boundaries": {
@@ -332,6 +342,45 @@ class KanjiAddonTest(unittest.TestCase):
         self.assertEqual(_normalized_gilbut_meaning(wrapped_word), "더듬어 찾을 색")
         self.assertEqual(_normalized_gilbut_meaning(wrapped_words), "두 선이 교차할 각")
         self.assertEqual(_normalized_gilbut_meaning(numbered_senses), "① 첫째 ② 둘째")
+
+    def test_misprinted_meaning_is_corrected_exactly_once(self) -> None:
+        def slot(sequence: int, glyph: str, meaning: str) -> GilbutKanjiSlot:
+            return GilbutKanjiSlot(
+                sequence=sequence,
+                source_id="ilsang-muutta-lower",
+                source_sha256="0" * 64,
+                volume_code="lower",
+                page=1,
+                row=1,
+                column=sequence,
+                source_label=str(sequence),
+                glyph_kind="text",
+                glyph_text=glyph,
+                glyph_bbox=(0.0, 0.0, 1.0, 1.0),
+                meaning=meaning,
+            )
+
+        corrected = corrected_gilbut_meanings(
+            [slot(1, "妊", "임신할 임"), slot(2, "娠", "아이 밸 임·임신할 임")]
+        )
+        self.assertEqual(
+            [item.meaning for item in corrected], ["임신할 임", "아이 밸 신·임신할 신"]
+        )
+        self.assertEqual(
+            corrected_gilbut_meanings([slot(1, "娠", "임신할 임")])[0].meaning,
+            "임신할 신",
+        )
+        self.assertEqual(
+            corrected_gilbut_meanings([slot(1, "娠", "임신할 신")])[0].meaning,
+            "임신할 신",
+        )
+        for printed in (
+            [slot(1, "妊", "임신할 임")],
+            [slot(1, "娠", "임신할 임")] * 2,
+            [slot(1, "娠", "임신할 진")],
+        ):
+            with self.assertRaisesRegex(PublicKanjiError, "娠"):
+                corrected_gilbut_meanings(printed)
 
     def test_vector_slot_writes_png_media(self) -> None:
         note = FakeNote(
