@@ -88,6 +88,11 @@ kanji's first-level parts. These fields are selected from the following
 sources; a part name not found there comes from the project's own reviewed
 table.
 
+When a learner imports the kanji addon built from their own Gilbut PDFs,
+the panel shows that addon's 훈음 instead for every kanji and part it
+covers. Those values are extracted on the learner's computer and are not
+distributed in this repository, the core APKG, or the builder.
+
   * libhangul data/hanja/hanja.txt (commit
     a34aef73378c0992316861bbf13fc914ee7577d9), Copyright (c) 2005,2006
     Choe Hwanjin, BSD 3-Clause license. The license text is in

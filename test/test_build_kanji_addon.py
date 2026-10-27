@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import sys
 import tempfile
 import unittest
@@ -18,6 +19,7 @@ from build_kanji_addon import (  # noqa: E402
     _align_pdf_slots,
     _fill_note,
     _glyph_matches,
+    _hun_eum_media,
     _unit_matches,
 )
 from public_kanji import (  # noqa: E402
@@ -69,6 +71,14 @@ TEST_LIFECYCLE = {
             ),
             "not_subsumed_by": (
                 "geometry and fill tests copy whatever the PDF prints, so a misprint would reach the learner unchanged"
+              ),
+          },
+        "KanjiAddonTest.test_hun_eum_table_names_every_text_glyph_character": {
+            "protected_contract": (
+                "the addon's 훈음 table gives vocabulary cards the learner's 일상무따 훈음 for every single, composite, and variant text glyph, keeps the first book entry for a repeated character, and skips image glyphs"
+            ),
+            "not_subsumed_by": (
+                "Meaning-field tests fill kanji notes only and cannot show that vocabulary cards receive any 일상무따 훈음"
             ),
         },
         "KanjiAddonTest.test_pdf_meaning_geometry_preserves_korean_word_boundaries": {
@@ -232,6 +242,49 @@ class KanjiAddonTest(unittest.TestCase):
                                 )
                             self.assertEqual(note["Meaning"], "")
                         self.assertEqual(note["GlyphHTML"], markup)
+
+    def test_hun_eum_table_names_every_text_glyph_character(self) -> None:
+        glyphs = (
+            '<span class="kanji-card-glyph" lang="ja">木</span>',
+            '<span class="_j0" lang="ja">竜/龍</span>',
+            '<span class="_j0" lang="ja"><span class="_j1">剥</span>'
+            '<span class="_j2"><span class="_j3" lang="ko">함께 익힐 글자</span>'
+            '剝</span></span>',
+            '<img class="kanji-glyph-image" src="jlpt-public-kanji-x.png" alt="">',
+            '<span class="kanji-card-glyph" lang="ja">木</span>',
+        )
+        meanings = ("나무 목", "용 룡", "벗길 박", "그림 자형", "다른 뜻")
+        notes = [FakeNote(GlyphHTML=glyph) for glyph in glyphs]
+        slots = [
+            GilbutKanjiSlot(
+                sequence=index,
+                source_id="ilsang-muutta-upper",
+                source_sha256="0" * 64,
+                volume_code="upper",
+                page=1,
+                row=1,
+                column=1,
+                source_label=str(index),
+                glyph_kind="text",
+                glyph_text="",
+                glyph_bbox=(0.0, 0.0, 1.0, 1.0),
+                meaning=meaning,
+            )
+            for index, meaning in enumerate(meanings, start=1)
+        ]
+        self.assertEqual(
+            json.loads(_hun_eum_media(notes, slots)),
+            {
+                "schema_version": 1,
+                "hun_eum": {
+                    "木": "나무 목",
+                    "竜": "용 룡",
+                    "龍": "용 룡",
+                    "剥": "벗길 박",
+                    "剝": "벗길 박",
+                },
+            },
+        )
 
     def test_composite_text_glyphs_fill_from_supported_pdfs(self) -> None:
         glyphs = (

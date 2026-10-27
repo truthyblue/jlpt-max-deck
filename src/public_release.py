@@ -30,6 +30,7 @@ from direct_release_contract import (
     EXPECTED_KANJI_STATIC_MEDIA,
     EXPECTED_KANJI_STROKE_MEDIA,
     EXPECTED_KANJI_VECTOR_GLYPHS,
+    KANJI_ADDON_HUN_EUM_MEDIA,
     KANJI_BUILDER_FILES,
     KANJI_DECK_ROOT,
     KANJI_FIELDS,
@@ -729,6 +730,7 @@ def _build_core(
         or any(_is_private_kanji_deck(name) for name in snapshot["deck_names"])
         or any(
             name.startswith("jlpt-public-kanji-")
+            or name == KANJI_ADDON_HUN_EUM_MEDIA
             or KANJI_STROKE_MEDIA_RE.fullmatch(name)
             for name in _package_media(output)
         )
