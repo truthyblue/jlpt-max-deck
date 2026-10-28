@@ -1172,6 +1172,9 @@ class PublicSiteTests(unittest.TestCase):
         if PRODUCT["app_launch"]:
             expected["app_launch"] = PRODUCT["app_launch"]
         self.assertEqual(feed, expected)
+        # 덱 안 업데이트 알림(src/webview/notices/update.js)은 120자를 넘는
+        # 요약을 버리고 일반 문구를 띄운다.
+        self.assertLessEqual(len(feed["summary"]), 120)
 
     def test_social_card_matches_current_direct_release(self) -> None:
         source = (SITE / "assets" / "social-card.svg").read_text(encoding="utf-8")
