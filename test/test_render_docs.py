@@ -146,6 +146,9 @@ class DocumentationRenderTest(unittest.TestCase):
         PurePosixPath("docs/releases/v2.1.5.md.j2"): PurePosixPath(
             "docs/releases/v2.1.5.md"
         ),
+        PurePosixPath("docs/releases/v2.1.6.md.j2"): PurePosixPath(
+            "docs/releases/v2.1.6.md"
+        ),
         PurePosixPath("docs/troubleshooting.md.j2"): PurePosixPath(
             "docs/troubleshooting.md"
         ),

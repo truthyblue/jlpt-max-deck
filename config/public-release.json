@@ -1,19 +1,19 @@
 {
   "artifacts": {
-    "JLPT-MAX-Deck-2.1.5.apkg": {
-      "bytes": 1170023827,
-      "sha256": "8b2f48915309f7fa2ea82e2d78fde896be1fa57cbce785b05006e0294bbf28fd"
+    "JLPT-MAX-Deck-2.1.6.apkg": {
+      "bytes": 1170016849,
+      "sha256": "3d502550cdc43c4e2579d1c09c3d9436e288178a328e0b3a7601b6ca31cc2224"
     },
-    "JLPT-MAX-kanji-builder-2.1.5.zip": {
-      "bytes": 8847847,
-      "sha256": "5446618f17dabaf8f70986f2f1d9ae0b41ecbe349051203a351b250fcfb223e2"
+    "JLPT-MAX-kanji-builder-2.1.6.zip": {
+      "bytes": 8845119,
+      "sha256": "d08f462d4af6b66839e29de77a210d1d2e2ce11c6e681971c3b212d8c5f04064"
     },
     "SHA256SUMS": {
       "bytes": 190,
-      "sha256": "21e5b60d21f8c34fc01ffe8bfdc5e446d6ec48e5927320c5cb4f135735d13698"
+      "sha256": "87fc1e3d561dec73c1f180b0cc0c21b4a31ad448524d10ddf00cf47a2e05752a"
     }
   },
-  "build_input_fingerprint_sha256": "e77d17a1fcaef7c96371821e5535ebe8b9b2e2cb0b221556a45603a4a6cab76c",
+  "build_input_fingerprint_sha256": "270dcc65195efff07cfce7926a51518b720999b08fad507f202e114d9ecc3bd2",
   "core": {
     "cards": 38952,
     "custom_notetype_note_counts": {
@@ -37,7 +37,7 @@
   "full_source": {
     "cards": 43626,
     "notes": 25318,
-    "sha256": "9bc754c5877fa59a503fe60ebbd331ba53e03bb9d63ca7bc2b1cb46574d81051"
+    "sha256": "b8d50e52e5b4a6c65ae1a20774cf7224cecf8a9ada3e4153bfda156f75663563"
   },
   "kanji_builder": {
     "expected_kanji_addon_cards": 4674,
@@ -47,13 +47,13 @@
     "expected_static_media": 2300,
     "expected_stroke_media": 2299,
     "expected_vector_glyphs": 14,
-    "output_apkg": "JLPT-MAX-kanji-addon-2.1.5.apkg",
+    "output_apkg": "JLPT-MAX-kanji-addon-2.1.6.apkg",
     "reused": false,
     "source_hash": "e6c0ec0171d7583b032b9e58e92a6b65593b1f910c38f6572297a1b38f6fb710"
   },
-  "payload_hash": "0ed6ef54560da13ea182968c44c603c9e34a46a43a4ed9d6df92e8e37ffa5649",
+  "payload_hash": "765885d8d8250e14f4891dc47f35e60165e90b6eac9775e51fb3e1c7f78a48bc",
   "policy_version": "direct-core-plus-kanji-addon-v1",
-  "product_version": "2.1.5",
+  "product_version": "2.1.6",
   "schema_version": 3,
   "status": "passed",
   "unresolved": 0
