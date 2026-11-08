@@ -1,6 +1,6 @@
 (() => {
   const notice = document.querySelector('[data-beta-notice]');
-  const storageKey = 'jlpt-max-app-launch-alert-v1';
+  const storageKey = 'jlpt-max-app-launch-alert-v2';
   if (!notice?.showModal || Date.now() >= Date.parse(notice.dataset.closesAt)) return;
   if (location.hash === '#sponsor') return;
 
