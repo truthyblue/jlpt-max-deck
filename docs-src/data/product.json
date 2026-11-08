@@ -64,7 +64,7 @@
     "suggested_audio_new_cards_max": 10
   },
   "app_alert": {
-    "form_url": "https://docs.google.com/forms/d/e/1FAIpQLSfiG9Jp3aRvHGcU-9rp2RUieJ5rWnHJXqdolhZzrY98UKp2kg/viewform",
+    "url": "https://jlptmax.com/",
     "closes_at": "2027-01-01T00:00:00+09:00"
   },
   "app_launch": null
