@@ -4,37 +4,37 @@
   "repository_url": "https://github.com/truthyblue/jlpt-max-deck",
   "site_url": "https://truthyblue.github.io/jlpt-max-deck",
   "deck": {
-    "vocabulary_notes": 9156,
-    "grammar_notes": 3599,
-    "grammar_cards": 3599,
+    "vocabulary_notes": 9155,
+    "grammar_notes": 3593,
+    "grammar_cards": 3593,
     "practice_notes": 7876,
     "kanji_characters": 2337,
     "kanji_addon_notes": 4674,
     "kanji_addon_cards": 4674,
     "reference_notes": 9,
-    "total_notes": 25318,
-    "total_cards": 43626,
-    "total_media": 27820,
+    "total_notes": 25312,
+    "total_cards": 43617,
+    "total_media": 27841,
     "static_media": 14,
-    "core_notes": 20644,
-    "core_cards": 38952,
-    "core_media": 25506,
+    "core_notes": 20638,
+    "core_cards": 38943,
+    "core_media": 25505,
     "example_count": 10993,
     "coverage": {
-      "vocabulary_with_examples": 9156,
+      "vocabulary_with_examples": 9155,
       "conjugation_notes": 2525,
-      "related_word_notes": 1223,
-      "related_word_links": 1517,
+      "related_word_notes": 1222,
+      "related_word_links": 1515,
       "word_formation_notes": 21,
       "usage_register_notes": 182,
       "usage_register_items": 194,
       "usage_detail_notes": 89,
       "usage_detail_items": 90,
-      "korean_recall_cards": 9156
+      "korean_recall_cards": 9155
     },
     "importance_match": {
       "exact_notes": 8170,
-      "reviewed_variant_notes": 933,
+      "reviewed_variant_notes": 932,
       "unobserved_notes": 53
     },
     "practice": {
@@ -46,7 +46,7 @@
       "usage": 2083,
       "numeric_reading": 215
     },
-    "kanji_addon_media": 2314
+    "kanji_addon_media": 2336
   },
   "requirements": {
     "python": "3.13",

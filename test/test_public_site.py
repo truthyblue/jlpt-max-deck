@@ -538,7 +538,7 @@ class PublicSiteTests(unittest.TestCase):
         self.assertIn('class="standard"', html)
         self.assertIn('class="extended"', html)
         self.assertIn('<i class="legend-essential"></i>같은 표기</dt><dd>8,170', html)
-        self.assertIn('<i class="legend-standard"></i>검토 연결</dt><dd>933', html)
+        self.assertIn('<i class="legend-standard"></i>검토 연결</dt><dd>932', html)
         self.assertIn('<i class="legend-extended"></i>말뭉치 미관측</dt><dd>53', html)
         release_cta = re.search(r'<a [^>]*id="release-cta"[^>]*>.*?</a>', html)
         if release_cta is None:

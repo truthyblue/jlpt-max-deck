@@ -1,6 +1,6 @@
 {
-  "latest_version": "2.1.6",
+  "latest_version": "2.1.7",
   "schema_version": 1,
   "app_launch": {"app_store_url": "https://apps.apple.com/kr/app/id6814101659", "body": "MAX\ub371 \uc81c\uc791\uc790\uc758 \uc0c8 \uc571\uc774\uc5d0\uc694. MAX\ub371\uc740 \uc9c0\uae08\ucc98\ub7fc \ubb34\ub8cc\uc774\uace0, \uc624\ub958\ub3c4 \uacc4\uc18d \uace0\uce69\ub2c8\ub2e4.", "google_play_url": "https://play.google.com/store/apps/details?id=com.truthyblue.jlptmax", "id": "app-launch-2026-11", "records": {"link_text": "jlptmax.com/maxdeck", "text": "\uad6c\ub9e4\ud55c \ub4a4 MAX\ub371 \ubcf5\uc2b5 \uae30\ub85d\uc744 \uc571\uc73c\ub85c \uac00\uc838\uc62c \uc218 \uc788\uc5b4\uc694.\n{link}", "url": "https://jlptmax.com/maxdeck"}, "title": "JLPT MAX \uc571\uc774 \ub098\uc654\uc5b4\uc694"},
-  "summary": "MAX\ub371 \uc81c\uc791\uc790\uac00 \ub9cc\ub4e0 JLPT \ub2e8\uc5b4\u00b7\ud55c\uc790 \uc571\uc774 \ub098\uc654\uc5b4\uc694. jlptmax.com\uc5d0\uc11c \ubcfc \uc218 \uc788\uc5b4\uc694. MAX\ub371\uc740 \uc9c0\uae08\ucc98\ub7fc \ubb34\ub8cc\ub85c \uacc4\uc18d \uc5c5\ub370\uc774\ud2b8\ub3fc\uc694."
+  "summary": "\uc81c\ubcf4\ub41c \ub2e8\uc5b4 \ub73b\u00b7\uc608\ubb38\uacfc \uc798\ubabb \uc77d\ub358 \uc74c\uc131 99\uac1c\ub97c \uace0\ucce4\uc2b5\ub2c8\ub2e4. \ubc1b\uae30 \uc804\uc5d0 \u2605 \uce74\ub4dc\ub97c tag:marked\ub85c \ucc3e\uc544 \uae43\ubc1c\uc744 \ubd99\uc5ec \ub450\uc138\uc694."
 }

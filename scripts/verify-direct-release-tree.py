@@ -108,14 +108,18 @@ def _verify_pin(pin: dict[str, object]) -> None:
         _fail("direct-release logical metadata is missing")
     parsed_version = tuple(int(part) for part in version.split("."))
     expected_core_notes = (
-        20_644
+        20_638
+        if parsed_version >= (2, 1, 7)
+        else 20_644
         if parsed_version >= (2, 1, 3)
         else 20_650
         if parsed_version >= (2, 0, 0)
         else 13_903
     )
     expected_core_cards = (
-        38_952
+        38_943
+        if parsed_version >= (2, 1, 7)
+        else 38_952
         if parsed_version >= (2, 1, 3)
         else 38_967
         if parsed_version >= (2, 1, 0)
