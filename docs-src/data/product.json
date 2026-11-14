@@ -67,6 +67,10 @@
     "url": "https://jlptmax.com/",
     "closes_at": "2027-01-01T00:00:00+09:00"
   },
+  "update_summary": {
+    "version": "2.1.6",
+    "text": "MAX덱 제작자가 만든 JLPT 단어·한자 앱이 나왔어요. jlptmax.com에서 볼 수 있어요. MAX덱은 지금처럼 무료로 계속 업데이트돼요."
+  },
   "app_launch": {
     "id": "app-launch-2026-11",
     "title": "JLPT MAX 앱이 나왔어요",

@@ -1169,6 +1169,9 @@ class PublicSiteTests(unittest.TestCase):
             "schema_version": 1,
             "summary": history[0]["summary"],
         }
+        update_summary = PRODUCT.get("update_summary")
+        if update_summary and update_summary["version"] == release["product_version"]:
+            expected["summary"] = update_summary["text"]
         if PRODUCT["app_launch"]:
             expected["app_launch"] = PRODUCT["app_launch"]
         self.assertEqual(feed, expected)
