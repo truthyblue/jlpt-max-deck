@@ -1,0 +1,108 @@
+/* The app's own sheet: app paper and ink in both site themes, like the card sheet in the deck. */
+.app-notice {
+  width: min(400px, calc(100vw - 32px));
+  padding: 32px 26px 14px;
+  border: 0;
+  border-radius: 24px;
+  background: #FDFCF9;
+  color: #1B1F2E;
+  font-family: var(--font-sans);
+  text-align: center;
+  word-break: keep-all;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+.app-notice:focus,
+.app-notice:focus-visible {
+  outline: none;
+  /* showcase.css draws its focus ring as a box shadow. */
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18) !important;
+}
+
+.app-notice::backdrop {
+  background: rgba(12, 18, 28, 0.5);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.app-notice-icon {
+  display: block;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  border-radius: 22.5%;
+}
+
+.app-notice h2 {
+  margin: 0;
+  color: inherit;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.app-notice p {
+  margin: 0;
+  color: #4A4F5C;
+  font-weight: 500;
+  white-space: pre-line;
+}
+
+.app-notice .app-notice-body {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.app-notice .app-notice-records {
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.app-notice-records a {
+  color: #1B1F2E;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.app-notice-open,
+.app-notice-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 0;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.app-notice-open {
+  height: 50px;
+  margin-top: 24px;
+  border-radius: 14px;
+  background: #1B1F2E;
+  color: #FDFCF9;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.app-notice-open:hover {
+  background: #2C3245;
+}
+
+.app-notice-close {
+  height: 44px;
+  margin-top: 6px;
+  background: transparent;
+  color: #6B7080;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.app-notice-close:hover {
+  color: #1B1F2E;
+}

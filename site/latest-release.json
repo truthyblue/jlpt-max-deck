@@ -1,5 +1,6 @@
 {
   "latest_version": "2.1.6",
   "schema_version": 1,
-  "summary": "v2.1.5\uc5d0\uc11c \ube60\uc9c4 \uc77c\ubcf8\uc5b4 \ud55c\uc790 \uacf5\ubd80\ubc29 \ub9c1\ud06c \uc218\uc815\uc744 \uc2e4\uc81c\ub85c \ub2f4\uc558\uc2b5\ub2c8\ub2e4. v2.1.5\ub97c \uac00\uc838\uc654\uc5b4\ub3c4 v2.1.6\uc744 \ub2e4\uc2dc \uac00\uc838\uc624\uc138\uc694."
+  "app_launch": {"app_store_url": "https://apps.apple.com/kr/app/id6814101659", "body": "MAX\ub371 \uc81c\uc791\uc790\uc758 \uc0c8 \uc571\uc774\uc5d0\uc694. MAX\ub371\uc740 \uc9c0\uae08\ucc98\ub7fc \ubb34\ub8cc\uc774\uace0, \uc624\ub958\ub3c4 \uacc4\uc18d \uace0\uce69\ub2c8\ub2e4.", "google_play_url": "https://play.google.com/store/apps/details?id=com.truthyblue.jlptmax", "id": "app-launch-2026-11", "records": {"link_text": "jlptmax.com/maxdeck", "text": "\uad6c\ub9e4\ud55c \ub4a4 MAX\ub371 \ubcf5\uc2b5 \uae30\ub85d\uc744 \uc571\uc73c\ub85c \uac00\uc838\uc62c \uc218 \uc788\uc5b4\uc694.\n{link}", "url": "https://jlptmax.com/maxdeck"}, "title": "JLPT MAX \uc571\uc774 \ub098\uc654\uc5b4\uc694"},
+  "summary": "MAX\ub371 \uc81c\uc791\uc790\uc758 \uc0c8 \uc571 \u300cJLPT MAX\u300d\uac00 App Store\u00b7Google Play\uc5d0 \ub098\uc654\uc5b4\uc694. MAX\ub371\uc740 \uc9c0\uae08\ucc98\ub7fc \ubb34\ub8cc\uc774\uace0, \uc624\ub958\ub3c4 \uacc4\uc18d \uace0\uce69\ub2c8\ub2e4."
 }

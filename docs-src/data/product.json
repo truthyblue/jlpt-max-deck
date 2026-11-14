@@ -67,5 +67,16 @@
     "url": "https://jlptmax.com/",
     "closes_at": "2027-01-01T00:00:00+09:00"
   },
-  "app_launch": null
+  "app_launch": {
+    "id": "app-launch-2026-11",
+    "title": "JLPT MAX 앱이 나왔어요",
+    "body": "MAX덱 제작자의 새 앱이에요. MAX덱은 지금처럼 무료이고, 오류도 계속 고칩니다.",
+    "app_store_url": "https://apps.apple.com/kr/app/id6814101659",
+    "google_play_url": "https://play.google.com/store/apps/details?id=com.truthyblue.jlptmax",
+    "records": {
+      "text": "구매한 뒤 MAX덱 복습 기록을 앱으로 가져올 수 있어요.\n{link}",
+      "link_text": "jlptmax.com/maxdeck",
+      "url": "https://jlptmax.com/maxdeck"
+    }
+  }
 }
